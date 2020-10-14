@@ -1,0 +1,611 @@
+# DoctemplateApi
+
+All URIs are relative to *https://kraken.icure.dev*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**createDocumentTemplate**](DoctemplateApi.md#createDocumentTemplate) | **POST** /rest/v1/doctemplate | Create a document template with the current user
+[**deleteDocumentTemplate**](DoctemplateApi.md#deleteDocumentTemplate) | **DELETE** /rest/v1/doctemplate/{documentTemplateIds} | Deletes a document template
+[**findAllDocumentTemplates**](DoctemplateApi.md#findAllDocumentTemplates) | **GET** /rest/v1/doctemplate/find/all | Gets all document templates for all users
+[**findDocumentTemplates**](DoctemplateApi.md#findDocumentTemplates) | **GET** /rest/v1/doctemplate | Gets all document templates for current user
+[**findDocumentTemplatesByDocumentType**](DoctemplateApi.md#findDocumentTemplatesByDocumentType) | **GET** /rest/v1/doctemplate/byDocumentType/{documentTypeCode} | Gets all document templates by Type
+[**findDocumentTemplatesByDocumentTypeForCurrentUser**](DoctemplateApi.md#findDocumentTemplatesByDocumentTypeForCurrentUser) | **GET** /rest/v1/doctemplate/byDocumentTypeForCurrentUser/{documentTypeCode} | Gets all document templates by Type For currentUser
+[**findDocumentTemplatesBySpeciality**](DoctemplateApi.md#findDocumentTemplatesBySpeciality) | **GET** /rest/v1/doctemplate/bySpecialty/{specialityCode} | Gets all document templates
+[**getAttachmentText**](DoctemplateApi.md#getAttachmentText) | **GET** /rest/v1/doctemplate/{documentTemplateId}/attachmentText/{attachmentId} | Download a the document template attachment
+[**getDocumentTemplate**](DoctemplateApi.md#getDocumentTemplate) | **GET** /rest/v1/doctemplate/{documentTemplateId} | Gets a document template
+[**getDocumentTemplateAttachment**](DoctemplateApi.md#getDocumentTemplateAttachment) | **GET** /rest/v1/doctemplate/{documentTemplateId}/attachment/{attachmentId} | Download a the document template attachment
+[**setDocumentTemplateAttachment**](DoctemplateApi.md#setDocumentTemplateAttachment) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachment | Creates a document&#x27;s attachment
+[**setDocumentTemplateAttachmentJson**](DoctemplateApi.md#setDocumentTemplateAttachmentJson) | **PUT** /rest/v1/doctemplate/{documentTemplateId}/attachmentJson | Creates a document&#x27;s attachment
+[**updateDocumentTemplate**](DoctemplateApi.md#updateDocumentTemplate) | **PUT** /rest/v1/doctemplate/{documentTemplateId} | Modify a document template with the current user
+
+<a name="createDocumentTemplate"></a>
+# **createDocumentTemplate**
+> DocumentTemplateDto createDocumentTemplate(body)
+
+Create a document template with the current user
+
+Returns an instance of created document template.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val body : DocumentTemplateDto =  // DocumentTemplateDto | 
+try {
+    val result : DocumentTemplateDto = apiInstance.createDocumentTemplate(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#createDocumentTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#createDocumentTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentTemplateDto**](DocumentTemplateDto.md)|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="deleteDocumentTemplate"></a>
+# **deleteDocumentTemplate**
+> kotlin.Array&lt;DocIdentifier&gt; deleteDocumentTemplate(documentTemplateIds)
+
+Deletes a document template
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTemplateIds : kotlin.String = documentTemplateIds_example // kotlin.String | 
+try {
+    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteDocumentTemplate(documentTemplateIds)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#deleteDocumentTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#deleteDocumentTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateIds** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findAllDocumentTemplates"></a>
+# **findAllDocumentTemplates**
+> kotlin.Array&lt;DocumentTemplateDto&gt; findAllDocumentTemplates()
+
+Gets all document templates for all users
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+try {
+    val result : kotlin.Array<DocumentTemplateDto> = apiInstance.findAllDocumentTemplates()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#findAllDocumentTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#findAllDocumentTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.Array&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDocumentTemplates"></a>
+# **findDocumentTemplates**
+> kotlin.Array&lt;DocumentTemplateDto&gt; findDocumentTemplates()
+
+Gets all document templates for current user
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+try {
+    val result : kotlin.Array<DocumentTemplateDto> = apiInstance.findDocumentTemplates()
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#findDocumentTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#findDocumentTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**kotlin.Array&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDocumentTemplatesByDocumentType"></a>
+# **findDocumentTemplatesByDocumentType**
+> kotlin.Array&lt;DocumentTemplateDto&gt; findDocumentTemplatesByDocumentType(documentTypeCode)
+
+Gets all document templates by Type
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+try {
+    val result : kotlin.Array<DocumentTemplateDto> = apiInstance.findDocumentTemplatesByDocumentType(documentTypeCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#findDocumentTemplatesByDocumentType")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#findDocumentTemplatesByDocumentType")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTypeCode** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDocumentTemplatesByDocumentTypeForCurrentUser"></a>
+# **findDocumentTemplatesByDocumentTypeForCurrentUser**
+> kotlin.Array&lt;DocumentTemplateDto&gt; findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
+
+Gets all document templates by Type For currentUser
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+try {
+    val result : kotlin.Array<DocumentTemplateDto> = apiInstance.findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#findDocumentTemplatesByDocumentTypeForCurrentUser")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#findDocumentTemplatesByDocumentTypeForCurrentUser")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTypeCode** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findDocumentTemplatesBySpeciality"></a>
+# **findDocumentTemplatesBySpeciality**
+> kotlin.Array&lt;DocumentTemplateDto&gt; findDocumentTemplatesBySpeciality(specialityCode)
+
+Gets all document templates
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+try {
+    val result : kotlin.Array<DocumentTemplateDto> = apiInstance.findDocumentTemplatesBySpeciality(specialityCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#findDocumentTemplatesBySpeciality")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#findDocumentTemplatesBySpeciality")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **specialityCode** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;DocumentTemplateDto&gt;**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getAttachmentText"></a>
+# **getAttachmentText**
+> kotlin.Array&lt;kotlin.Byte&gt; getAttachmentText(documentTemplateId, attachmentId)
+
+Download a the document template attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+try {
+    val result : kotlin.Array<kotlin.Byte> = apiInstance.getAttachmentText(documentTemplateId, attachmentId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#getAttachmentText")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#getAttachmentText")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateId** | **kotlin.String**|  |
+ **attachmentId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
+
+<a name="getDocumentTemplate"></a>
+# **getDocumentTemplate**
+> DocumentTemplateDto getDocumentTemplate(documentTemplateId)
+
+Gets a document template
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+try {
+    val result : DocumentTemplateDto = apiInstance.getDocumentTemplate(documentTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#getDocumentTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#getDocumentTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getDocumentTemplateAttachment"></a>
+# **getDocumentTemplateAttachment**
+> kotlin.Array&lt;kotlin.Byte&gt; getDocumentTemplateAttachment(documentTemplateId, attachmentId)
+
+Download a the document template attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+try {
+    val result : kotlin.Array<kotlin.Byte> = apiInstance.getDocumentTemplateAttachment(documentTemplateId, attachmentId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#getDocumentTemplateAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#getDocumentTemplateAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **documentTemplateId** | **kotlin.String**|  |
+ **attachmentId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
+
+<a name="setDocumentTemplateAttachment"></a>
+# **setDocumentTemplateAttachment**
+> DocumentTemplateDto setDocumentTemplateAttachment(body, documentTemplateId)
+
+Creates a document&#x27;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+try {
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(body, documentTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#setDocumentTemplateAttachment")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#setDocumentTemplateAttachment")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **documentTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="setDocumentTemplateAttachmentJson"></a>
+# **setDocumentTemplateAttachmentJson**
+> DocumentTemplateDto setDocumentTemplateAttachmentJson(body, documentTemplateId)
+
+Creates a document&#x27;s attachment
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val body : ByteArray =  // ByteArray | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+try {
+    val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(body, documentTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#setDocumentTemplateAttachmentJson")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#setDocumentTemplateAttachmentJson")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ByteArray**](ByteArray.md)|  |
+ **documentTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/octet-stream
+ - **Accept**: */*
+
+<a name="updateDocumentTemplate"></a>
+# **updateDocumentTemplate**
+> DocumentTemplateDto updateDocumentTemplate(body, documentTemplateId)
+
+Modify a document template with the current user
+
+Returns an instance of created document template.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = DoctemplateApi()
+val body : DocumentTemplateDto =  // DocumentTemplateDto | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+try {
+    val result : DocumentTemplateDto = apiInstance.updateDocumentTemplate(body, documentTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling DoctemplateApi#updateDocumentTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling DoctemplateApi#updateDocumentTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentTemplateDto**](DocumentTemplateDto.md)|  |
+ **documentTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocumentTemplateDto**](DocumentTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+

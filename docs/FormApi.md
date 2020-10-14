@@ -1,0 +1,925 @@
+# FormApi
+
+All URIs are relative to *https://kraken.icure.dev*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**createForm**](FormApi.md#createForm) | **POST** /rest/v1/form | Create a form with the current user
+[**createFormTemplate**](FormApi.md#createFormTemplate) | **POST** /rest/v1/form/template | Create a form template with the current user
+[**deleteFormTemplate**](FormApi.md#deleteFormTemplate) | **DELETE** /rest/v1/form/template/{formTemplateId} | Delete a form template
+[**deleteForms**](FormApi.md#deleteForms) | **DELETE** /rest/v1/form/{formIds} | Delete forms.
+[**findFormTemplates**](FormApi.md#findFormTemplates) | **GET** /rest/v1/form/template | Gets all form templates for current user
+[**findFormTemplatesBySpeciality**](FormApi.md#findFormTemplatesBySpeciality) | **GET** /rest/v1/form/template/bySpecialty/{specialityCode} | Gets all form templates
+[**findFormsByHCPartyPatientForeignKeys**](FormApi.md#findFormsByHCPartyPatientForeignKeys) | **GET** /rest/v1/form/byHcPartySecretForeignKeys | List forms found By Healthcare Party and secret foreign keys.
+[**findFormsDelegationsStubsByHCPartyPatientForeignKeys**](FormApi.md#findFormsDelegationsStubsByHCPartyPatientForeignKeys) | **GET** /rest/v1/form/byHcPartySecretForeignKeys/delegations | List form stubs found By Healthcare Party and secret foreign keys.
+[**getChildrenForms**](FormApi.md#getChildrenForms) | **GET** /rest/v1/form/childrenOf/{formId}/{hcPartyId} | Get a list of forms by ids
+[**getForm**](FormApi.md#getForm) | **GET** /rest/v1/form/{formId} | Gets a form
+[**getFormTemplate**](FormApi.md#getFormTemplate) | **GET** /rest/v1/form/template/{formTemplateId} | Gets a form template by guid
+[**getFormTemplatesByGuid**](FormApi.md#getFormTemplatesByGuid) | **GET** /rest/v1/form/template/{specialityCode}/guid/{formTemplateGuid} | Gets a form template
+[**getForms**](FormApi.md#getForms) | **POST** /rest/v1/form/byIds | Get a list of forms by ids
+[**modifyForm**](FormApi.md#modifyForm) | **PUT** /rest/v1/form | Modify a form
+[**modifyForms**](FormApi.md#modifyForms) | **PUT** /rest/v1/form/batch | Modify a batch of forms
+[**newFormDelegations**](FormApi.md#newFormDelegations) | **POST** /rest/v1/form/delegate/{formId} | Delegates a form to a healthcare party
+[**setFormsDelegations**](FormApi.md#setFormsDelegations) | **POST** /rest/v1/form/delegations | Update delegations in form.
+[**setTemplateAttachmentMulti**](FormApi.md#setTemplateAttachmentMulti) | **PUT** /rest/v1/form/template/{formTemplateId}/attachment/multipart | Update a form template&#x27;s layout
+[**updateFormTemplate**](FormApi.md#updateFormTemplate) | **PUT** /rest/v1/form/template/{formTemplateId} | Modify a form template with the current user
+
+<a name="createForm"></a>
+# **createForm**
+> FormDto createForm(body)
+
+Create a form with the current user
+
+Returns an instance of created form.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : FormDto =  // FormDto | 
+try {
+    val result : FormDto = apiInstance.createForm(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#createForm")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#createForm")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**FormDto**](FormDto.md)|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createFormTemplate"></a>
+# **createFormTemplate**
+> FormTemplateDto createFormTemplate(body)
+
+Create a form template with the current user
+
+Returns an instance of created form template.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : FormTemplateDto =  // FormTemplateDto | 
+try {
+    val result : FormTemplateDto = apiInstance.createFormTemplate(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#createFormTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#createFormTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**FormTemplateDto**](FormTemplateDto.md)|  |
+
+### Return type
+
+[**FormTemplateDto**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="deleteFormTemplate"></a>
+# **deleteFormTemplate**
+> DocIdentifier deleteFormTemplate(formTemplateId)
+
+Delete a form template
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+try {
+    val result : DocIdentifier = apiInstance.deleteFormTemplate(formTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#deleteFormTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#deleteFormTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**DocIdentifier**](DocIdentifier.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="deleteForms"></a>
+# **deleteForms**
+> kotlin.Array&lt;DocIdentifier&gt; deleteForms(formIds)
+
+Delete forms.
+
+Response is a set containing the ID&#x27;s of deleted forms.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formIds : kotlin.String = formIds_example // kotlin.String | 
+try {
+    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteForms(formIds)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#deleteForms")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#deleteForms")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formIds** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findFormTemplates"></a>
+# **findFormTemplates**
+> kotlin.Array&lt;FormTemplateDto&gt; findFormTemplates(loadLayout)
+
+Gets all form templates for current user
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : kotlin.Array<FormTemplateDto> = apiInstance.findFormTemplates(loadLayout)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#findFormTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#findFormTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **loadLayout** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findFormTemplatesBySpeciality"></a>
+# **findFormTemplatesBySpeciality**
+> kotlin.Array&lt;FormTemplateDto&gt; findFormTemplatesBySpeciality(specialityCode, loadLayout)
+
+Gets all form templates
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : kotlin.Array<FormTemplateDto> = apiInstance.findFormTemplatesBySpeciality(specialityCode, loadLayout)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#findFormTemplatesBySpeciality")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#findFormTemplatesBySpeciality")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **specialityCode** | **kotlin.String**|  |
+ **loadLayout** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findFormsByHCPartyPatientForeignKeys"></a>
+# **findFormsByHCPartyPatientForeignKeys**
+> kotlin.Array&lt;FormDto&gt; findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
+
+List forms found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
+val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+try {
+    val result : kotlin.Array<FormDto> = apiInstance.findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#findFormsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#findFormsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+ **healthElementId** | **kotlin.String**|  | [optional]
+ **planOfActionId** | **kotlin.String**|  | [optional]
+ **formTemplateId** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findFormsDelegationsStubsByHCPartyPatientForeignKeys"></a>
+# **findFormsDelegationsStubsByHCPartyPatientForeignKeys**
+> kotlin.Array&lt;IcureStubDto&gt; findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+
+List form stubs found By Healthcare Party and secret foreign keys.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+try {
+    val result : kotlin.Array<IcureStubDto> = apiInstance.findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#findFormsDelegationsStubsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#findFormsDelegationsStubsByHCPartyPatientForeignKeys")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcPartyId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getChildrenForms"></a>
+# **getChildrenForms**
+> kotlin.Array&lt;FormDto&gt; getChildrenForms(formId, hcPartyId)
+
+Get a list of forms by ids
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formId : kotlin.String = formId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+try {
+    val result : kotlin.Array<FormDto> = apiInstance.getChildrenForms(formId, hcPartyId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getChildrenForms")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getChildrenForms")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formId** | **kotlin.String**|  |
+ **hcPartyId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getForm"></a>
+# **getForm**
+> FormDto getForm(formId)
+
+Gets a form
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formId : kotlin.String = formId_example // kotlin.String | 
+try {
+    val result : FormDto = apiInstance.getForm(formId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getForm")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getForm")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formId** | **kotlin.String**|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getFormTemplate"></a>
+# **getFormTemplate**
+> FormTemplateDto getFormTemplate(formTemplateId)
+
+Gets a form template by guid
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+try {
+    val result : FormTemplateDto = apiInstance.getFormTemplate(formTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**FormTemplateDto**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getFormTemplatesByGuid"></a>
+# **getFormTemplatesByGuid**
+> kotlin.Array&lt;FormTemplateDto&gt; getFormTemplatesByGuid(formTemplateGuid, specialityCode)
+
+Gets a form template
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formTemplateGuid : kotlin.String = formTemplateGuid_example // kotlin.String | 
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+try {
+    val result : kotlin.Array<FormTemplateDto> = apiInstance.getFormTemplatesByGuid(formTemplateGuid, specialityCode)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormTemplatesByGuid")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormTemplatesByGuid")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formTemplateGuid** | **kotlin.String**|  |
+ **specialityCode** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getForms"></a>
+# **getForms**
+> kotlin.Array&lt;FormDto&gt; getForms(body)
+
+Get a list of forms by ids
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.Array<FormDto> = apiInstance.getForms(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getForms")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getForms")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyForm"></a>
+# **modifyForm**
+> FormDto modifyForm(body)
+
+Modify a form
+
+Returns the modified form.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : FormDto =  // FormDto | 
+try {
+    val result : FormDto = apiInstance.modifyForm(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#modifyForm")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#modifyForm")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**FormDto**](FormDto.md)|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyForms"></a>
+# **modifyForms**
+> kotlin.Array&lt;FormDto&gt; modifyForms(body)
+
+Modify a batch of forms
+
+Returns the modified forms.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : kotlin.Array<FormDto> =  // kotlin.Array<FormDto> | 
+try {
+    val result : kotlin.Array<FormDto> = apiInstance.modifyForms(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#modifyForms")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#modifyForms")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**kotlin.Array&lt;FormDto&gt;**](FormDto.md)|  |
+
+### Return type
+
+[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="newFormDelegations"></a>
+# **newFormDelegations**
+> FormDto newFormDelegations(body, formId)
+
+Delegates a form to a healthcare party
+
+It delegates a form to a healthcare party. Returns the form with the new delegations.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : kotlin.Array<DelegationDto> =  // kotlin.Array<DelegationDto> | 
+val formId : kotlin.String = formId_example // kotlin.String | 
+try {
+    val result : FormDto = apiInstance.newFormDelegations(body, formId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#newFormDelegations")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#newFormDelegations")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**kotlin.Array&lt;DelegationDto&gt;**](DelegationDto.md)|  |
+ **formId** | **kotlin.String**|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="setFormsDelegations"></a>
+# **setFormsDelegations**
+> kotlin.Array&lt;IcureStubDto&gt; setFormsDelegations(body)
+
+Update delegations in form.
+
+Keys must be delimited by coma
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : kotlin.Array<IcureStubDto> =  // kotlin.Array<IcureStubDto> | 
+try {
+    val result : kotlin.Array<IcureStubDto> = apiInstance.setFormsDelegations(body)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#setFormsDelegations")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#setFormsDelegations")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
+
+### Return type
+
+[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="setTemplateAttachmentMulti"></a>
+# **setTemplateAttachmentMulti**
+> kotlin.String setTemplateAttachmentMulti(formTemplateId)
+
+Update a form template&#x27;s layout
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+try {
+    val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#setTemplateAttachmentMulti")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#setTemplateAttachmentMulti")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+**kotlin.String**
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: */*
+
+<a name="updateFormTemplate"></a>
+# **updateFormTemplate**
+> FormTemplateDto updateFormTemplate(body, formTemplateId)
+
+Modify a form template with the current user
+
+Returns an instance of created form template.
+
+### Example
+```kotlin
+// Import classes:
+//import io.swagger.client.infrastructure.*
+//import io.swagger.client.models.*;
+
+val apiInstance = FormApi()
+val body : FormTemplateDto =  // FormTemplateDto | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+try {
+    val result : FormTemplateDto = apiInstance.updateFormTemplate(body, formTemplateId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#updateFormTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#updateFormTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**FormTemplateDto**](FormTemplateDto.md)|  |
+ **formTemplateId** | **kotlin.String**|  |
+
+### Return type
+
+[**FormTemplateDto**](FormTemplateDto.md)
+
+### Authorization
+
+[basicScheme](../README.md#basicScheme)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+

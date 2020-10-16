@@ -1,6 +1,10 @@
+val repoUsername: String by project
+val repoPassword: String by project
+
 plugins {
     java
     kotlin("jvm") version "1.3.72"
+    `maven-publish`
 }
 
 group = "org.taktik.icure"
@@ -10,6 +14,24 @@ repositories {
     mavenCentral()
     maven {
         url = uri("https://maven.taktik.be/content/repositories/snapshots")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username = repoUsername
+                password = repoPassword
+            }
+            url = uri("https://maven.taktik.be/content/repositories/snapshots")
+        }
     }
 }
 

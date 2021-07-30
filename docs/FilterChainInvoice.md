@@ -1,7 +1,11 @@
+
 # FilterChainInvoice
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**filter** | [**AbstractFilterDtoInvoice**](AbstractFilterDtoInvoice.md) |  |  [optional]
-**predicate** | [**Predicate**](Predicate.md) |  |  [optional]
+**filter** | [**AbstractFilterDtoInvoice**](AbstractFilterDtoInvoice.md) |  | 
+**predicate** | [**kotlin.Any**](.md) |  |  [optional]
+
+
+

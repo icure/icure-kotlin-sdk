@@ -1,24 +1,28 @@
+
 # FormTemplateDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**rev** | [**kotlin.String**](.md) |  |  [optional]
-**deletionDate** | [**kotlin.Long**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**reports** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
+**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
+**rev** | **kotlin.String** |  |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **layout** | [**FormLayout**](FormLayout.md) |  |  [optional]
-**name** | [**kotlin.String**](.md) |  |  [optional]
-**guid** | [**kotlin.String**](.md) |  |  [optional]
+**name** | **kotlin.String** |  |  [optional]
+**guid** | **kotlin.String** |  |  [optional]
 **group** | [**DocumentGroupDto**](DocumentGroupDto.md) |  |  [optional]
-**descr** | [**kotlin.String**](.md) |  |  [optional]
-**disabled** | [**kotlin.String**](.md) |  |  [optional]
+**descr** | **kotlin.String** |  |  [optional]
+**disabled** | **kotlin.String** |  |  [optional]
 **specialty** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
-**author** | [**kotlin.String**](.md) |  |  [optional]
-**formInstancePreferredLocation** | [**kotlin.String**](.md) |  |  [optional]
-**keyboardShortcut** | [**kotlin.String**](.md) |  |  [optional]
-**shortReport** | [**kotlin.String**](.md) |  |  [optional]
-**mediumReport** | [**kotlin.String**](.md) |  |  [optional]
-**longReport** | [**kotlin.String**](.md) |  |  [optional]
-**reports** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**tags** | [**kotlin.Array&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
-**layoutAttachmentId** | [**kotlin.String**](.md) |  |  [optional]
+**author** | **kotlin.String** |  |  [optional]
+**formInstancePreferredLocation** | **kotlin.String** |  |  [optional]
+**keyboardShortcut** | **kotlin.String** |  |  [optional]
+**shortReport** | **kotlin.String** |  |  [optional]
+**mediumReport** | **kotlin.String** |  |  [optional]
+**longReport** | **kotlin.String** |  |  [optional]
+**layoutAttachmentId** | **kotlin.String** |  |  [optional]
+
+
+

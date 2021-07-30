@@ -1,7 +1,11 @@
+
 # DurationDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | [**kotlin.Double**](.md) |  |  [optional]
+**value** | **kotlin.Double** |  |  [optional]
 **unit** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
+
+
+

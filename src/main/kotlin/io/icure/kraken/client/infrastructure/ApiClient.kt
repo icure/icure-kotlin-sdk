@@ -40,7 +40,8 @@ open class ApiClient(val baseUrl: String) {
         val apiKey: MutableMap<String, String> = mutableMapOf()
         val apiKeyPrefix: MutableMap<String, String> = mutableMapOf()
         var username: String? = null
-        var password: String? = null
+        var password: String? = null 
+ 		var authHeader: String? = null
         var accessToken: String? = null
 
         @JvmStatic
@@ -147,7 +148,8 @@ open class ApiClient(val baseUrl: String) {
         val httpUrl = baseUrl.toHttpUrlOrNull() ?: throw IllegalStateException("baseUrl is invalid.")
 
         // take authMethod from operation
-        updateAuthParams(requestConfig)
+        authHeader?.let { requestConfig.headers[Authorization] = it } 
+ 		updateAuthParams(requestConfig)
 
         val url = httpUrl.newBuilder()
             .addPathSegments(requestConfig.path.trimStart('/'))

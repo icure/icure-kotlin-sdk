@@ -1,16 +1,20 @@
+
 # DiaryNoteExportInfoDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**secretForeignKeys** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**excludedIds** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
+**secretForeignKeys** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**excludedIds** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**tags** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**contexts** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
 **recipient** | [**HealthcarePartyDto**](HealthcarePartyDto.md) |  |  [optional]
-**softwareName** | [**kotlin.String**](.md) |  |  [optional]
-**softwareVersion** | [**kotlin.String**](.md) |  |  [optional]
-**tags** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**contexts** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**psy** | [**kotlin.Boolean**](.md) |  |  [optional]
-**documentId** | [**kotlin.String**](.md) |  |  [optional]
-**attachmentId** | [**kotlin.String**](.md) |  |  [optional]
-**note** | [**kotlin.String**](.md) |  |  [optional]
+**softwareName** | **kotlin.String** |  |  [optional]
+**softwareVersion** | **kotlin.String** |  |  [optional]
+**psy** | **kotlin.Boolean** |  |  [optional]
+**documentId** | **kotlin.String** |  |  [optional]
+**attachmentId** | **kotlin.String** |  |  [optional]
+**note** | **kotlin.String** |  |  [optional]
+
+
+

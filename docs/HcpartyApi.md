@@ -23,9 +23,10 @@ Method | HTTP request | Description
 [**modifyHealthcareParty**](HcpartyApi.md#modifyHealthcareParty) | **PUT** /rest/v1/hcparty | Modify a Healthcare Party.
 [**modifyHealthcarePartyInGroup**](HcpartyApi.md#modifyHealthcarePartyInGroup) | **PUT** /rest/v1/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 
+
 <a name="createHealthcareParty"></a>
 # **createHealthcareParty**
-> HealthcarePartyDto createHealthcareParty(body)
+> HealthcarePartyDto createHealthcareParty(healthcarePartyDto)
 
 Create a healthcare party
 
@@ -34,13 +35,13 @@ One of Name or Last name+First name, Nihii, and Public key are required.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
-val body : HealthcarePartyDto =  // HealthcarePartyDto | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
 try {
-    val result : HealthcarePartyDto = apiInstance.createHealthcareParty(body)
+    val result : HealthcarePartyDto = apiInstance.createHealthcareParty(healthcarePartyDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#createHealthcareParty")
@@ -55,7 +56,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
+ **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
 
 ### Return type
 
@@ -63,7 +64,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -72,7 +76,7 @@ Name | Type | Description  | Notes
 
 <a name="createHealthcarePartyInGroup"></a>
 # **createHealthcarePartyInGroup**
-> HealthcarePartyDto createHealthcarePartyInGroup(body, groupId)
+> HealthcarePartyDto createHealthcarePartyInGroup(groupId, healthcarePartyDto)
 
 Create a healthcare party
 
@@ -81,14 +85,14 @@ One of Name or Last name+First name, Nihii, and Public key are required.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
-val body : HealthcarePartyDto =  // HealthcarePartyDto | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
 try {
-    val result : HealthcarePartyDto = apiInstance.createHealthcarePartyInGroup(body, groupId)
+    val result : HealthcarePartyDto = apiInstance.createHealthcarePartyInGroup(groupId, healthcarePartyDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#createHealthcarePartyInGroup")
@@ -103,8 +107,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
  **groupId** | **kotlin.String**|  |
+ **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
 
 ### Return type
 
@@ -112,7 +116,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -121,7 +128,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteHealthcareParties"></a>
 # **deleteHealthcareParties**
-> kotlin.Array&lt;DocIdentifier&gt; deleteHealthcareParties(healthcarePartyIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthcareParties(healthcarePartyIds)
 
 Delete a healthcare party
 
@@ -130,13 +137,13 @@ Deleting a healthcareParty. Response is an array containing the id of deleted he
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val healthcarePartyIds : kotlin.String = healthcarePartyIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteHealthcareParties(healthcarePartyIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthcareParties(healthcarePartyIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#deleteHealthcareParties")
@@ -155,11 +162,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -168,7 +178,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteHealthcarePartiesInGroup"></a>
 # **deleteHealthcarePartiesInGroup**
-> kotlin.Array&lt;DocIdentifier&gt; deleteHealthcarePartiesInGroup(groupId, healthcarePartyIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteHealthcarePartiesInGroup(groupId, healthcarePartyIds)
 
 Delete a healthcare party
 
@@ -177,14 +187,14 @@ Deleting a healthcareParty. Response is an array containing the id of deleted he
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 val healthcarePartyIds : kotlin.String = healthcarePartyIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteHealthcarePartiesInGroup(groupId, healthcarePartyIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthcarePartiesInGroup(groupId, healthcarePartyIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#deleteHealthcarePartiesInGroup")
@@ -204,11 +214,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -226,8 +239,8 @@ Returns a list of healthcare parties.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val name : kotlin.String = name_example // kotlin.String | The Last name search value
@@ -263,7 +276,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -281,8 +297,8 @@ Returns a list of healthcare parties.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val type : kotlin.String = type_example // kotlin.String | The type of the HCP (persphysician)
@@ -318,7 +334,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -336,8 +355,8 @@ Returns a list of healthcare parties.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val searchValue : kotlin.String = searchValue_example // kotlin.String | 
@@ -373,7 +392,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -391,8 +413,8 @@ General information about the current healthcare Party
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 try {
@@ -416,7 +438,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -434,8 +459,8 @@ Get the HcParty encrypted AES keys indexed by owner
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
@@ -463,7 +488,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -472,7 +500,7 @@ Name | Type | Description  | Notes
 
 <a name="getHealthcareParties"></a>
 # **getHealthcareParties**
-> kotlin.Array&lt;HealthcarePartyDto&gt; getHealthcareParties(healthcarePartyIds)
+> kotlin.collections.List&lt;HealthcarePartyDto&gt; getHealthcareParties(healthcarePartyIds)
 
 Get healthcareParties by their IDs
 
@@ -481,13 +509,13 @@ General information about the healthcare Party
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val healthcarePartyIds : kotlin.String = healthcarePartyIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<HealthcarePartyDto> = apiInstance.getHealthcareParties(healthcarePartyIds)
+    val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.getHealthcareParties(healthcarePartyIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#getHealthcareParties")
@@ -506,11 +534,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
+[**kotlin.collections.List&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -519,7 +550,7 @@ Name | Type | Description  | Notes
 
 <a name="getHealthcarePartiesByParentId"></a>
 # **getHealthcarePartiesByParentId**
-> kotlin.Array&lt;HealthcarePartyDto&gt; getHealthcarePartiesByParentId(parentId)
+> kotlin.collections.List&lt;HealthcarePartyDto&gt; getHealthcarePartiesByParentId(parentId)
 
 Find children of an healthcare parties
 
@@ -528,13 +559,13 @@ Return a list of children hcp.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val parentId : kotlin.String = parentId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<HealthcarePartyDto> = apiInstance.getHealthcarePartiesByParentId(parentId)
+    val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.getHealthcarePartiesByParentId(parentId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#getHealthcarePartiesByParentId")
@@ -553,11 +584,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
+[**kotlin.collections.List&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -566,7 +600,7 @@ Name | Type | Description  | Notes
 
 <a name="getHealthcarePartiesInGroup"></a>
 # **getHealthcarePartiesInGroup**
-> kotlin.Array&lt;HealthcarePartyDto&gt; getHealthcarePartiesInGroup(body, groupId)
+> kotlin.collections.List&lt;HealthcarePartyDto&gt; getHealthcarePartiesInGroup(groupId, listOfIdsDto)
 
 Get healthcareParties by their IDs
 
@@ -575,14 +609,14 @@ General information about the healthcare Party
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<HealthcarePartyDto> = apiInstance.getHealthcarePartiesInGroup(body, groupId)
+    val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.getHealthcarePartiesInGroup(groupId, listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#getHealthcarePartiesInGroup")
@@ -597,16 +631,19 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
  **groupId** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
+[**kotlin.collections.List&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -624,8 +661,8 @@ General information about the healthcare Party
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
@@ -653,7 +690,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -671,8 +711,8 @@ Returns the public key of a healthcare party in Hex
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
@@ -700,7 +740,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -709,7 +752,7 @@ Name | Type | Description  | Notes
 
 <a name="listByName"></a>
 # **listByName**
-> kotlin.Array&lt;HealthcarePartyDto&gt; listByName(name)
+> kotlin.collections.List&lt;HealthcarePartyDto&gt; listByName(name)
 
 Find healthcare parties by name with(out) pagination
 
@@ -718,13 +761,13 @@ Returns a list of healthcare parties.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val name : kotlin.String = name_example // kotlin.String | The Last name search value
 try {
-    val result : kotlin.Array<HealthcarePartyDto> = apiInstance.listByName(name)
+    val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.listByName(name)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#listByName")
@@ -743,11 +786,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
+[**kotlin.collections.List&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -765,8 +811,8 @@ Returns a list of healthcare parties.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | A healthcare party Last name
@@ -800,7 +846,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -809,22 +858,22 @@ Name | Type | Description  | Notes
 
 <a name="modifyHealthcareParty"></a>
 # **modifyHealthcareParty**
-> HealthcarePartyDto modifyHealthcareParty(body)
+> HealthcarePartyDto modifyHealthcareParty(healthcarePartyDto)
 
 Modify a Healthcare Party.
 
-No particular return value. It&#x27;s just a message.
+No particular return value. It&#39;s just a message.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
-val body : HealthcarePartyDto =  // HealthcarePartyDto | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
 try {
-    val result : HealthcarePartyDto = apiInstance.modifyHealthcareParty(body)
+    val result : HealthcarePartyDto = apiInstance.modifyHealthcareParty(healthcarePartyDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#modifyHealthcareParty")
@@ -839,7 +888,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
+ **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
 
 ### Return type
 
@@ -847,7 +896,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -856,23 +908,23 @@ Name | Type | Description  | Notes
 
 <a name="modifyHealthcarePartyInGroup"></a>
 # **modifyHealthcarePartyInGroup**
-> HealthcarePartyDto modifyHealthcarePartyInGroup(body, groupId)
+> HealthcarePartyDto modifyHealthcarePartyInGroup(groupId, healthcarePartyDto)
 
 Modify a Healthcare Party.
 
-No particular return value. It&#x27;s just a message.
+No particular return value. It&#39;s just a message.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = HcpartyApi()
-val body : HealthcarePartyDto =  // HealthcarePartyDto | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
 try {
-    val result : HealthcarePartyDto = apiInstance.modifyHealthcarePartyInGroup(body, groupId)
+    val result : HealthcarePartyDto = apiInstance.modifyHealthcarePartyInGroup(groupId, healthcarePartyDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling HcpartyApi#modifyHealthcarePartyInGroup")
@@ -887,8 +939,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
  **groupId** | **kotlin.String**|  |
+ **healthcarePartyDto** | [**HealthcarePartyDto**](HealthcarePartyDto.md)|  |
 
 ### Return type
 
@@ -896,7 +948,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

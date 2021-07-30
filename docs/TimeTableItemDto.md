@@ -1,12 +1,16 @@
+
 # TimeTableItemDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**days** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**hours** | [**kotlin.Array&lt;TimeTableHourDto&gt;**](TimeTableHourDto.md) |  | 
-**recurrenceTypes** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**calendarItemTypeId** | [**kotlin.String**](.md) |  |  [optional]
-**homeVisit** | [**kotlin.Boolean**](.md) |  | 
-**placeId** | [**kotlin.String**](.md) |  |  [optional]
-**unavailable** | [**kotlin.Boolean**](.md) |  | 
+**days** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**hours** | [**kotlin.collections.List&lt;TimeTableHourDto&gt;**](TimeTableHourDto.md) |  | 
+**recurrenceTypes** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**homeVisit** | **kotlin.Boolean** |  | 
+**unavailable** | **kotlin.Boolean** |  | 
+**calendarItemTypeId** | **kotlin.String** |  |  [optional]
+**placeId** | **kotlin.String** |  |  [optional]
+
+
+

@@ -10,22 +10,23 @@ Method | HTTP request | Description
 [**getMedicalLocations**](MedicallocationApi.md#getMedicalLocations) | **GET** /rest/v1/medicallocation | Gets all medical locations
 [**modifyMedicalLocation**](MedicallocationApi.md#modifyMedicalLocation) | **PUT** /rest/v1/medicallocation | Modifies a medical location
 
+
 <a name="createMedicalLocation"></a>
 # **createMedicalLocation**
-> MedicalLocationDto createMedicalLocation(body)
+> MedicalLocationDto createMedicalLocation(medicalLocationDto)
 
 Creates a medical location
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedicallocationApi()
-val body : MedicalLocationDto =  // MedicalLocationDto | 
+val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
 try {
-    val result : MedicalLocationDto = apiInstance.createMedicalLocation(body)
+    val result : MedicalLocationDto = apiInstance.createMedicalLocation(medicalLocationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MedicallocationApi#createMedicalLocation")
@@ -40,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MedicalLocationDto**](MedicalLocationDto.md)|  |
+ **medicalLocationDto** | [**MedicalLocationDto**](MedicalLocationDto.md)|  |
 
 ### Return type
 
@@ -48,7 +49,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -57,20 +61,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteMedicalLocation"></a>
 # **deleteMedicalLocation**
-> kotlin.Array&lt;DocIdentifier&gt; deleteMedicalLocation(locationIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteMedicalLocation(locationIds)
 
 Deletes a medical location
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedicallocationApi()
 val locationIds : kotlin.String = locationIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteMedicalLocation(locationIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMedicalLocation(locationIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MedicallocationApi#deleteMedicalLocation")
@@ -89,11 +93,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,8 +116,8 @@ Gets a medical location
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedicallocationApi()
 val locationId : kotlin.String = locationId_example // kotlin.String | 
@@ -138,7 +145,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -147,19 +157,19 @@ Name | Type | Description  | Notes
 
 <a name="getMedicalLocations"></a>
 # **getMedicalLocations**
-> kotlin.Array&lt;MedicalLocationDto&gt; getMedicalLocations()
+> kotlin.collections.List&lt;MedicalLocationDto&gt; getMedicalLocations()
 
 Gets all medical locations
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedicallocationApi()
 try {
-    val result : kotlin.Array<MedicalLocationDto> = apiInstance.getMedicalLocations()
+    val result : kotlin.collections.List<MedicalLocationDto> = apiInstance.getMedicalLocations()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MedicallocationApi#getMedicalLocations")
@@ -175,11 +185,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;MedicalLocationDto&gt;**](MedicalLocationDto.md)
+[**kotlin.collections.List&lt;MedicalLocationDto&gt;**](MedicalLocationDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -188,20 +201,20 @@ This endpoint does not need any parameter.
 
 <a name="modifyMedicalLocation"></a>
 # **modifyMedicalLocation**
-> MedicalLocationDto modifyMedicalLocation(body)
+> MedicalLocationDto modifyMedicalLocation(medicalLocationDto)
 
 Modifies a medical location
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedicallocationApi()
-val body : MedicalLocationDto =  // MedicalLocationDto | 
+val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
 try {
-    val result : MedicalLocationDto = apiInstance.modifyMedicalLocation(body)
+    val result : MedicalLocationDto = apiInstance.modifyMedicalLocation(medicalLocationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MedicallocationApi#modifyMedicalLocation")
@@ -216,7 +229,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MedicalLocationDto**](MedicalLocationDto.md)|  |
+ **medicalLocationDto** | [**MedicalLocationDto**](MedicalLocationDto.md)|  |
 
 ### Return type
 
@@ -224,7 +237,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

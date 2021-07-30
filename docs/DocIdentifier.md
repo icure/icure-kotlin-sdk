@@ -1,7 +1,11 @@
+
 # DocIdentifier
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  |  [optional]
-**rev** | [**kotlin.String**](.md) |  |  [optional]
+**id** | **kotlin.String** |  |  [optional]
+**rev** | **kotlin.String** |  |  [optional]
+
+
+

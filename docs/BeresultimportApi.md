@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**doImport**](BeresultimportApi.md#doImport) | **GET** /rest/v1/be_result_import/import/{documentId}/{hcpId}/{language} | import document
 [**getInfos**](BeresultimportApi.md#getInfos) | **GET** /rest/v1/be_result_import/infos/{id} | Extract general infos from document
 
+
 <a name="canHandle"></a>
 # **canHandle**
 > kotlin.Boolean canHandle(id, enckeys)
@@ -17,8 +18,8 @@ Can we handle this document
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -48,7 +49,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -64,8 +68,8 @@ import document
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
 val documentId : kotlin.String = documentId_example // kotlin.String | 
@@ -107,7 +111,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -116,15 +123,15 @@ Name | Type | Description  | Notes
 
 <a name="getInfos"></a>
 # **getInfos**
-> kotlin.Array&lt;ResultInfoDto&gt; getInfos(id, language, enckeys, full)
+> kotlin.collections.List&lt;ResultInfoDto&gt; getInfos(id, language, enckeys, full)
 
 Extract general infos from document
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -132,7 +139,7 @@ val language : kotlin.String = language_example // kotlin.String |
 val enckeys : kotlin.String = enckeys_example // kotlin.String | 
 val full : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<ResultInfoDto> = apiInstance.getInfos(id, language, enckeys, full)
+    val result : kotlin.collections.List<ResultInfoDto> = apiInstance.getInfos(id, language, enckeys, full)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultimportApi#getInfos")
@@ -154,11 +161,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;ResultInfoDto&gt;**](ResultInfoDto.md)
+[**kotlin.collections.List&lt;ResultInfoDto&gt;**](ResultInfoDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

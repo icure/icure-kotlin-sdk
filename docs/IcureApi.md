@@ -6,20 +6,19 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getIndexingInfo**](IcureApi.md#getIndexingInfo) | **GET** /rest/v1/icure/i | Get index info
 [**getProcessInfo**](IcureApi.md#getProcessInfo) | **GET** /rest/v1/icure/p | Get process info
-[**getPropertyTypes**](IcureApi.md#getPropertyTypes) | **GET** /rest/v1/icure/propertytypes/{type} | Get property types
-[**getReplicationInfo**](IcureApi.md#getReplicationInfo) | **GET** /rest/v1/icure/r | Get index info
-[**getUsers**](IcureApi.md#getUsers) | **GET** /rest/v1/icure/u | Get users stubs
+[**getReplicationInfo**](IcureApi.md#getReplicationInfo) | **GET** /rest/v1/icure/r | Get replication info
+[**getReplicatorInfo**](IcureApi.md#getReplicatorInfo) | **GET** /rest/v1/icure/r/{id} | Get replication info
 [**getVersion**](IcureApi.md#getVersion) | **GET** /rest/v1/icure/v | Get version
-[**isPatientReady**](IcureApi.md#isPatientReady) | **GET** /rest/v1/icure/pok | Check if a patient exists
 [**isReady**](IcureApi.md#isReady) | **GET** /rest/v1/icure/ok | Check if a user exists
 [**resolveContactsConflicts**](IcureApi.md#resolveContactsConflicts) | **POST** /rest/v1/icure/conflicts/contact | Resolve contacts conflicts
 [**resolveDocumentsConflicts**](IcureApi.md#resolveDocumentsConflicts) | **POST** /rest/v1/icure/conflicts/document | resolve documents conflicts
 [**resolveFormsConflicts**](IcureApi.md#resolveFormsConflicts) | **POST** /rest/v1/icure/conflicts/form | resolve forms conflicts
-[**resolveHealthElementsConflicts**](IcureApi.md#resolveHealthElementsConflicts) | **POST** /rest/v1/icure/conflicts/healthelement | resolve health elements conflicts
+[**resolveHealthElementsConflicts**](IcureApi.md#resolveHealthElementsConflicts) | **POST** /rest/v1/icure/conflicts/healthelement | resolve healthcare elements conflicts
 [**resolveInvoicesConflicts**](IcureApi.md#resolveInvoicesConflicts) | **POST** /rest/v1/icure/conflicts/invoice | resolve invoices conflicts
 [**resolveMessagesConflicts**](IcureApi.md#resolveMessagesConflicts) | **POST** /rest/v1/icure/conflicts/message | resolve messages conflicts
 [**resolvePatientsConflicts**](IcureApi.md#resolvePatientsConflicts) | **POST** /rest/v1/icure/conflicts/patient | Resolve patients conflicts
 [**updateDesignDoc**](IcureApi.md#updateDesignDoc) | **POST** /rest/v1/icure/dd/{entityName} | Force update design doc
+
 
 <a name="getIndexingInfo"></a>
 # **getIndexingInfo**
@@ -30,8 +29,8 @@ Get index info
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
@@ -55,7 +54,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -71,8 +73,8 @@ Get process info
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
@@ -96,69 +98,27 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: text/plain
 
-<a name="getPropertyTypes"></a>
-# **getPropertyTypes**
-> kotlin.Array&lt;kotlin.String&gt; getPropertyTypes(type)
-
-Get property types
-
-### Example
-```kotlin
-// Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
-
-val apiInstance = IcureApi()
-val type : kotlin.String = type_example // kotlin.String | 
-try {
-    val result : kotlin.Array<kotlin.String> = apiInstance.getPropertyTypes(type)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling IcureApi#getPropertyTypes")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling IcureApi#getPropertyTypes")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **type** | **kotlin.String**|  |
-
-### Return type
-
-**kotlin.Array&lt;kotlin.String&gt;**
-
-### Authorization
-
-[basicScheme](../README.md#basicScheme)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
 <a name="getReplicationInfo"></a>
 # **getReplicationInfo**
 > ReplicationInfoDto getReplicationInfo()
 
-Get index info
+Get replication info
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
@@ -182,48 +142,58 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
  - **Accept**: */*
 
-<a name="getUsers"></a>
-# **getUsers**
-> kotlin.Array&lt;UserDto&gt; getUsers()
+<a name="getReplicatorInfo"></a>
+# **getReplicatorInfo**
+> ReplicatorDocument getReplicatorInfo(id)
 
-Get users stubs
+Get replication info
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
+val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : kotlin.Array<UserDto> = apiInstance.getUsers()
+    val result : ReplicatorDocument = apiInstance.getReplicatorInfo(id)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling IcureApi#getUsers")
+    println("4xx response calling IcureApi#getReplicatorInfo")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling IcureApi#getUsers")
+    println("5xx response calling IcureApi#getReplicatorInfo")
     e.printStackTrace()
 }
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**|  |
 
 ### Return type
 
-[**kotlin.Array&lt;UserDto&gt;**](UserDto.md)
+[**ReplicatorDocument**](ReplicatorDocument.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -239,8 +209,8 @@ Get version
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
@@ -264,48 +234,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
 
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain
-
-<a name="isPatientReady"></a>
-# **isPatientReady**
-> kotlin.String isPatientReady()
-
-Check if a patient exists
-
-### Example
-```kotlin
-// Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
-
-val apiInstance = IcureApi()
-try {
-    val result : kotlin.String = apiInstance.isPatientReady()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling IcureApi#isPatientReady")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling IcureApi#isPatientReady")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-**kotlin.String**
-
-### Authorization
-
-[basicScheme](../README.md#basicScheme)
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -321,8 +253,8 @@ Check if a user exists
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
@@ -346,7 +278,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -355,19 +290,19 @@ This endpoint does not need any parameter.
 
 <a name="resolveContactsConflicts"></a>
 # **resolveContactsConflicts**
-> Unit resolveContactsConflicts()
+> kotlin.collections.List&lt;ContactDto&gt; resolveContactsConflicts()
 
 Resolve contacts conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolveContactsConflicts()
+    val result : kotlin.collections.List<ContactDto> = apiInstance.resolveContactsConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveContactsConflicts")
@@ -383,11 +318,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;ContactDto&gt;**](ContactDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -396,20 +334,20 @@ This endpoint does not need any parameter.
 
 <a name="resolveDocumentsConflicts"></a>
 # **resolveDocumentsConflicts**
-> Unit resolveDocumentsConflicts(ids)
+> kotlin.collections.List&lt;DocumentDto&gt; resolveDocumentsConflicts(ids)
 
 resolve documents conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 val ids : kotlin.String = ids_example // kotlin.String | 
 try {
-    val result : Unit = apiInstance.resolveDocumentsConflicts(ids)
+    val result : kotlin.collections.List<DocumentDto> = apiInstance.resolveDocumentsConflicts(ids)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveDocumentsConflicts")
@@ -428,11 +366,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -441,19 +382,19 @@ Name | Type | Description  | Notes
 
 <a name="resolveFormsConflicts"></a>
 # **resolveFormsConflicts**
-> Unit resolveFormsConflicts()
+> kotlin.collections.List&lt;FormDto&gt; resolveFormsConflicts()
 
 resolve forms conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolveFormsConflicts()
+    val result : kotlin.collections.List<FormDto> = apiInstance.resolveFormsConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveFormsConflicts")
@@ -469,11 +410,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -482,19 +426,19 @@ This endpoint does not need any parameter.
 
 <a name="resolveHealthElementsConflicts"></a>
 # **resolveHealthElementsConflicts**
-> Unit resolveHealthElementsConflicts()
+> kotlin.collections.List&lt;HealthElementDto&gt; resolveHealthElementsConflicts()
 
-resolve health elements conflicts
+resolve healthcare elements conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolveHealthElementsConflicts()
+    val result : kotlin.collections.List<HealthElementDto> = apiInstance.resolveHealthElementsConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveHealthElementsConflicts")
@@ -510,11 +454,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -523,19 +470,19 @@ This endpoint does not need any parameter.
 
 <a name="resolveInvoicesConflicts"></a>
 # **resolveInvoicesConflicts**
-> Unit resolveInvoicesConflicts()
+> kotlin.collections.List&lt;InvoiceDto&gt; resolveInvoicesConflicts()
 
 resolve invoices conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolveInvoicesConflicts()
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.resolveInvoicesConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveInvoicesConflicts")
@@ -551,11 +498,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -564,19 +514,19 @@ This endpoint does not need any parameter.
 
 <a name="resolveMessagesConflicts"></a>
 # **resolveMessagesConflicts**
-> Unit resolveMessagesConflicts()
+> kotlin.collections.List&lt;MessageDto&gt; resolveMessagesConflicts()
 
 resolve messages conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolveMessagesConflicts()
+    val result : kotlin.collections.List<MessageDto> = apiInstance.resolveMessagesConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolveMessagesConflicts")
@@ -592,11 +542,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -605,19 +558,19 @@ This endpoint does not need any parameter.
 
 <a name="resolvePatientsConflicts"></a>
 # **resolvePatientsConflicts**
-> Unit resolvePatientsConflicts()
+> kotlin.collections.List&lt;PatientDto&gt; resolvePatientsConflicts()
 
 Resolve patients conflicts
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 try {
-    val result : Unit = apiInstance.resolvePatientsConflicts()
+    val result : kotlin.collections.List<PatientDto> = apiInstance.resolvePatientsConflicts()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling IcureApi#resolvePatientsConflicts")
@@ -633,11 +586,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.collections.List&lt;PatientDto&gt;**](PatientDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -653,8 +609,8 @@ Force update design doc
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
 val entityName : kotlin.String = entityName_example // kotlin.String | 
@@ -684,7 +640,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

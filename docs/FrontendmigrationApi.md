@@ -11,22 +11,23 @@ Method | HTTP request | Description
 [**getFrontEndMigrations**](FrontendmigrationApi.md#getFrontEndMigrations) | **GET** /rest/v1/frontendmigration | Gets a front end migration
 [**modifyFrontEndMigration**](FrontendmigrationApi.md#modifyFrontEndMigration) | **PUT** /rest/v1/frontendmigration | Modifies a front end migration
 
+
 <a name="createFrontEndMigration"></a>
 # **createFrontEndMigration**
-> FrontEndMigrationDto createFrontEndMigration(body)
+> FrontEndMigrationDto createFrontEndMigration(frontEndMigrationDto)
 
 Creates a front end migration
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
-val body : FrontEndMigrationDto =  // FrontEndMigrationDto | 
+val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
 try {
-    val result : FrontEndMigrationDto = apiInstance.createFrontEndMigration(body)
+    val result : FrontEndMigrationDto = apiInstance.createFrontEndMigration(frontEndMigrationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FrontendmigrationApi#createFrontEndMigration")
@@ -41,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FrontEndMigrationDto**](FrontEndMigrationDto.md)|  |
+ **frontEndMigrationDto** | [**FrontEndMigrationDto**](FrontEndMigrationDto.md)|  |
 
 ### Return type
 
@@ -49,7 +50,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -65,8 +69,8 @@ Deletes a front end migration
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
 val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
@@ -94,7 +98,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -110,8 +117,8 @@ Gets a front end migration
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
 val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
@@ -139,7 +146,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -148,20 +158,20 @@ Name | Type | Description  | Notes
 
 <a name="getFrontEndMigrationByName"></a>
 # **getFrontEndMigrationByName**
-> kotlin.Array&lt;FrontEndMigrationDto&gt; getFrontEndMigrationByName(frontEndMigrationName)
+> kotlin.collections.List&lt;FrontEndMigrationDto&gt; getFrontEndMigrationByName(frontEndMigrationName)
 
 Gets an front end migration
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
 val frontEndMigrationName : kotlin.String = frontEndMigrationName_example // kotlin.String | 
 try {
-    val result : kotlin.Array<FrontEndMigrationDto> = apiInstance.getFrontEndMigrationByName(frontEndMigrationName)
+    val result : kotlin.collections.List<FrontEndMigrationDto> = apiInstance.getFrontEndMigrationByName(frontEndMigrationName)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FrontendmigrationApi#getFrontEndMigrationByName")
@@ -180,11 +190,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FrontEndMigrationDto&gt;**](FrontEndMigrationDto.md)
+[**kotlin.collections.List&lt;FrontEndMigrationDto&gt;**](FrontEndMigrationDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -193,19 +206,19 @@ Name | Type | Description  | Notes
 
 <a name="getFrontEndMigrations"></a>
 # **getFrontEndMigrations**
-> kotlin.Array&lt;FrontEndMigrationDto&gt; getFrontEndMigrations()
+> kotlin.collections.List&lt;FrontEndMigrationDto&gt; getFrontEndMigrations()
 
 Gets a front end migration
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
 try {
-    val result : kotlin.Array<FrontEndMigrationDto> = apiInstance.getFrontEndMigrations()
+    val result : kotlin.collections.List<FrontEndMigrationDto> = apiInstance.getFrontEndMigrations()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FrontendmigrationApi#getFrontEndMigrations")
@@ -221,11 +234,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;FrontEndMigrationDto&gt;**](FrontEndMigrationDto.md)
+[**kotlin.collections.List&lt;FrontEndMigrationDto&gt;**](FrontEndMigrationDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -234,20 +250,20 @@ This endpoint does not need any parameter.
 
 <a name="modifyFrontEndMigration"></a>
 # **modifyFrontEndMigration**
-> FrontEndMigrationDto modifyFrontEndMigration(body)
+> FrontEndMigrationDto modifyFrontEndMigration(frontEndMigrationDto)
 
 Modifies a front end migration
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FrontendmigrationApi()
-val body : FrontEndMigrationDto =  // FrontEndMigrationDto | 
+val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
 try {
-    val result : FrontEndMigrationDto = apiInstance.modifyFrontEndMigration(body)
+    val result : FrontEndMigrationDto = apiInstance.modifyFrontEndMigration(frontEndMigrationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FrontendmigrationApi#modifyFrontEndMigration")
@@ -262,7 +278,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FrontEndMigrationDto**](FrontEndMigrationDto.md)|  |
+ **frontEndMigrationDto** | [**FrontEndMigrationDto**](FrontEndMigrationDto.md)|  |
 
 ### Return type
 
@@ -270,7 +286,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

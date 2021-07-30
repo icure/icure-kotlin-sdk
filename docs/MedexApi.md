@@ -6,22 +6,23 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**generateMedex**](MedexApi.md#generateMedex) | **POST** /rest/v1/medex/generate | Generate a Medex XML String
 
+
 <a name="generateMedex"></a>
 # **generateMedex**
-> kotlin.String generateMedex(body)
+> kotlin.String generateMedex(medexInfoDto)
 
 Generate a Medex XML String
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MedexApi()
-val body : MedexInfoDto =  // MedexInfoDto | 
+val medexInfoDto : MedexInfoDto =  // MedexInfoDto | 
 try {
-    val result : kotlin.String = apiInstance.generateMedex(body)
+    val result : kotlin.String = apiInstance.generateMedex(medexInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MedexApi#generateMedex")
@@ -36,7 +37,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MedexInfoDto**](MedexInfoDto.md)|  |
+ **medexInfoDto** | [**MedexInfoDto**](MedexInfoDto.md)|  |
 
 ### Return type
 
@@ -44,7 +45,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

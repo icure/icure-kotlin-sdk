@@ -7,22 +7,23 @@ Method | HTTP request | Description
 [**createEntityReference**](EntityrefApi.md#createEntityReference) | **POST** /rest/v1/entityref | Create an entity reference
 [**getLatest**](EntityrefApi.md#getLatest) | **GET** /rest/v1/entityref/latest/{prefix} | Find latest reference for a prefix 
 
+
 <a name="createEntityReference"></a>
 # **createEntityReference**
-> EntityReferenceDto createEntityReference(body)
+> EntityReferenceDto createEntityReference(entityReferenceDto)
 
 Create an entity reference
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntityrefApi()
-val body : EntityReferenceDto =  // EntityReferenceDto | 
+val entityReferenceDto : EntityReferenceDto =  // EntityReferenceDto | 
 try {
-    val result : EntityReferenceDto = apiInstance.createEntityReference(body)
+    val result : EntityReferenceDto = apiInstance.createEntityReference(entityReferenceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntityrefApi#createEntityReference")
@@ -37,7 +38,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**EntityReferenceDto**](EntityReferenceDto.md)|  |
+ **entityReferenceDto** | [**EntityReferenceDto**](EntityReferenceDto.md)|  |
 
 ### Return type
 
@@ -45,7 +46,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -61,8 +65,8 @@ Find latest reference for a prefix
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntityrefApi()
 val prefix : kotlin.String = prefix_example // kotlin.String | 
@@ -90,7 +94,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

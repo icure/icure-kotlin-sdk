@@ -10,22 +10,23 @@ Method | HTTP request | Description
 [**getPlaces**](PlaceApi.md#getPlaces) | **GET** /rest/v1/place | Gets all places
 [**modifyPlace**](PlaceApi.md#modifyPlace) | **PUT** /rest/v1/place | Modifies an place
 
+
 <a name="createPlace"></a>
 # **createPlace**
-> PlaceDto createPlace(body)
+> PlaceDto createPlace(placeDto)
 
 Creates a place
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val body : PlaceDto =  // PlaceDto | 
+val placeDto : PlaceDto =  // PlaceDto | 
 try {
-    val result : PlaceDto = apiInstance.createPlace(body)
+    val result : PlaceDto = apiInstance.createPlace(placeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PlaceApi#createPlace")
@@ -40,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PlaceDto**](PlaceDto.md)|  |
+ **placeDto** | [**PlaceDto**](PlaceDto.md)|  |
 
 ### Return type
 
@@ -48,7 +49,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -57,20 +61,20 @@ Name | Type | Description  | Notes
 
 <a name="deletePlace"></a>
 # **deletePlace**
-> kotlin.Array&lt;DocIdentifier&gt; deletePlace(placeIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deletePlace(placeIds)
 
 Deletes an place
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
 val placeIds : kotlin.String = placeIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deletePlace(placeIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePlace(placeIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PlaceApi#deletePlace")
@@ -89,11 +93,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,8 +116,8 @@ Gets an place
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
 val placeId : kotlin.String = placeId_example // kotlin.String | 
@@ -138,7 +145,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -147,19 +157,19 @@ Name | Type | Description  | Notes
 
 <a name="getPlaces"></a>
 # **getPlaces**
-> kotlin.Array&lt;PlaceDto&gt; getPlaces()
+> kotlin.collections.List&lt;PlaceDto&gt; getPlaces()
 
 Gets all places
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
 try {
-    val result : kotlin.Array<PlaceDto> = apiInstance.getPlaces()
+    val result : kotlin.collections.List<PlaceDto> = apiInstance.getPlaces()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PlaceApi#getPlaces")
@@ -175,11 +185,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;PlaceDto&gt;**](PlaceDto.md)
+[**kotlin.collections.List&lt;PlaceDto&gt;**](PlaceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -188,20 +201,20 @@ This endpoint does not need any parameter.
 
 <a name="modifyPlace"></a>
 # **modifyPlace**
-> PlaceDto modifyPlace(body)
+> PlaceDto modifyPlace(placeDto)
 
 Modifies an place
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val body : PlaceDto =  // PlaceDto | 
+val placeDto : PlaceDto =  // PlaceDto | 
 try {
-    val result : PlaceDto = apiInstance.modifyPlace(body)
+    val result : PlaceDto = apiInstance.modifyPlace(placeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PlaceApi#modifyPlace")
@@ -216,7 +229,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PlaceDto**](PlaceDto.md)|  |
+ **placeDto** | [**PlaceDto**](PlaceDto.md)|  |
 
 ### Return type
 
@@ -224,7 +237,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

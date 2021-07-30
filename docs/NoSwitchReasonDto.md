@@ -1,7 +1,11 @@
+
 # NoSwitchReasonDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | [**kotlin.String**](.md) |  |  [optional]
+**code** | **kotlin.String** |  |  [optional]
 **description** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
+
+
+

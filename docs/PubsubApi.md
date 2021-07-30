@@ -9,9 +9,10 @@ Method | HTTP request | Description
 [**recoverAuth**](PubsubApi.md#recoverAuth) | **GET** /rest/v1/pubsub/auth/recover/{bucket} | Recover auth data from secret bucket
 [**sub**](PubsubApi.md#sub) | **GET** /rest/v1/pubsub/sub/{key} | subscribe to data
 
+
 <a name="offerAuth"></a>
 # **offerAuth**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.Boolean&gt; offerAuth(body, bucket)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.Boolean&gt; offerAuth(bucket, requestBody)
 
 Offer auth data on secret bucket
 
@@ -20,14 +21,14 @@ Offer auth data on previously agreed on secret bucket, data should be encrypted
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
 val bucket : kotlin.String = bucket_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.offerAuth(body, bucket)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.offerAuth(bucket, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#offerAuth")
@@ -42,8 +43,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
  **bucket** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
@@ -51,7 +52,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -60,7 +64,7 @@ Name | Type | Description  | Notes
 
 <a name="pub"></a>
 # **pub**
-> kotlin.collections.Map&lt;kotlin.String, kotlin.Boolean&gt; pub(body, key)
+> kotlin.collections.Map&lt;kotlin.String, kotlin.Boolean&gt; pub(key, requestBody)
 
 publish data
 
@@ -69,14 +73,14 @@ Publish value with key
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
 val key : kotlin.String = key_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.pub(body, key)
+    val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.pub(key, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#pub")
@@ -91,8 +95,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
  **key** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
@@ -100,7 +104,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,7 +116,7 @@ Name | Type | Description  | Notes
 
 <a name="recoverAuth"></a>
 # **recoverAuth**
-> kotlin.Array&lt;kotlin.Byte&gt; recoverAuth(bucket)
+> java.io.File recoverAuth(bucket)
 
 Recover auth data from secret bucket
 
@@ -118,13 +125,13 @@ Recover auth data from bucket, data should be encrypted
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
 val bucket : kotlin.String = bucket_example // kotlin.String | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.recoverAuth(bucket)
+    val result : java.io.File = apiInstance.recoverAuth(bucket)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#recoverAuth")
@@ -143,11 +150,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -156,7 +166,7 @@ Name | Type | Description  | Notes
 
 <a name="sub"></a>
 # **sub**
-> kotlin.Array&lt;kotlin.Byte&gt; sub(key)
+> java.io.File sub(key)
 
 subscribe to data
 
@@ -165,13 +175,13 @@ Try to get published data
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
 val key : kotlin.String = key_example // kotlin.String | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.sub(key)
+    val result : java.io.File = apiInstance.sub(key)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling PubsubApi#sub")
@@ -190,11 +200,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

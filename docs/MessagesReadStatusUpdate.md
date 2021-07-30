@@ -1,9 +1,13 @@
+
 # MessagesReadStatusUpdate
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ids** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  |  [optional]
-**time** | [**kotlin.Long**](.md) |  |  [optional]
-**status** | [**kotlin.Boolean**](.md) |  |  [optional]
-**userId** | [**kotlin.String**](.md) |  |  [optional]
+**ids** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
+**time** | **kotlin.Long** |  |  [optional]
+**status** | **kotlin.Boolean** |  |  [optional]
+**userId** | **kotlin.String** |  |  [optional]
+
+
+

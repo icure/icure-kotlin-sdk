@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createForm**](FormApi.md#createForm) | **POST** /rest/v1/form | Create a form with the current user
 [**createFormTemplate**](FormApi.md#createFormTemplate) | **POST** /rest/v1/form/template | Create a form template with the current user
+[**createForms**](FormApi.md#createForms) | **POST** /rest/v1/form/batch | Create a batch of forms
 [**deleteFormTemplate**](FormApi.md#deleteFormTemplate) | **DELETE** /rest/v1/form/template/{formTemplateId} | Delete a form template
 [**deleteForms**](FormApi.md#deleteForms) | **DELETE** /rest/v1/form/{formIds} | Delete forms.
 [**findFormTemplates**](FormApi.md#findFormTemplates) | **GET** /rest/v1/form/template | Gets all form templates for current user
@@ -14,19 +15,24 @@ Method | HTTP request | Description
 [**findFormsDelegationsStubsByHCPartyPatientForeignKeys**](FormApi.md#findFormsDelegationsStubsByHCPartyPatientForeignKeys) | **GET** /rest/v1/form/byHcPartySecretForeignKeys/delegations | List form stubs found By Healthcare Party and secret foreign keys.
 [**getChildrenForms**](FormApi.md#getChildrenForms) | **GET** /rest/v1/form/childrenOf/{formId}/{hcPartyId} | Get a list of forms by ids
 [**getForm**](FormApi.md#getForm) | **GET** /rest/v1/form/{formId} | Gets a form
+[**getFormByLogicalUuid**](FormApi.md#getFormByLogicalUuid) | **GET** /rest/v1/form/logicalUuid/{logicalUuid} | Gets the most recent form with the given logicalUuid
+[**getFormByUniqueId**](FormApi.md#getFormByUniqueId) | **GET** /rest/v1/form/uniqueId/{uniqueId} | Gets the most recent form with the given uniqueId
 [**getFormTemplate**](FormApi.md#getFormTemplate) | **GET** /rest/v1/form/template/{formTemplateId} | Gets a form template by guid
 [**getFormTemplatesByGuid**](FormApi.md#getFormTemplatesByGuid) | **GET** /rest/v1/form/template/{specialityCode}/guid/{formTemplateGuid} | Gets a form template
 [**getForms**](FormApi.md#getForms) | **POST** /rest/v1/form/byIds | Get a list of forms by ids
+[**getFormsByLogicalUuid**](FormApi.md#getFormsByLogicalUuid) | **GET** /rest/v1/form/all/logicalUuid/{logicalUuid} | Gets all forms with given logicalUuid
+[**getFormsByUniqueId**](FormApi.md#getFormsByUniqueId) | **GET** /rest/v1/form/all/uniqueId/{uniqueId} | Gets all forms by uniqueId
 [**modifyForm**](FormApi.md#modifyForm) | **PUT** /rest/v1/form | Modify a form
 [**modifyForms**](FormApi.md#modifyForms) | **PUT** /rest/v1/form/batch | Modify a batch of forms
 [**newFormDelegations**](FormApi.md#newFormDelegations) | **POST** /rest/v1/form/delegate/{formId} | Delegates a form to a healthcare party
 [**setFormsDelegations**](FormApi.md#setFormsDelegations) | **POST** /rest/v1/form/delegations | Update delegations in form.
-[**setTemplateAttachmentMulti**](FormApi.md#setTemplateAttachmentMulti) | **PUT** /rest/v1/form/template/{formTemplateId}/attachment/multipart | Update a form template&#x27;s layout
+[**setTemplateAttachmentMulti**](FormApi.md#setTemplateAttachmentMulti) | **PUT** /rest/v1/form/template/{formTemplateId}/attachment/multipart | Update a form template&#39;s layout
 [**updateFormTemplate**](FormApi.md#updateFormTemplate) | **PUT** /rest/v1/form/template/{formTemplateId} | Modify a form template with the current user
+
 
 <a name="createForm"></a>
 # **createForm**
-> FormDto createForm(body)
+> FormDto createForm(formDto)
 
 Create a form with the current user
 
@@ -35,13 +41,13 @@ Returns an instance of created form.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto | 
 try {
-    val result : FormDto = apiInstance.createForm(body)
+    val result : FormDto = apiInstance.createForm(formDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#createForm")
@@ -56,7 +62,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FormDto**](FormDto.md)|  |
+ **formDto** | [**FormDto**](FormDto.md)|  |
 
 ### Return type
 
@@ -64,7 +70,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -73,7 +82,7 @@ Name | Type | Description  | Notes
 
 <a name="createFormTemplate"></a>
 # **createFormTemplate**
-> FormTemplateDto createFormTemplate(body)
+> FormTemplateDto createFormTemplate(formTemplateDto)
 
 Create a form template with the current user
 
@@ -82,13 +91,13 @@ Returns an instance of created form template.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : FormTemplateDto =  // FormTemplateDto | 
+val formTemplateDto : FormTemplateDto =  // FormTemplateDto | 
 try {
-    val result : FormTemplateDto = apiInstance.createFormTemplate(body)
+    val result : FormTemplateDto = apiInstance.createFormTemplate(formTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#createFormTemplate")
@@ -103,7 +112,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FormTemplateDto**](FormTemplateDto.md)|  |
+ **formTemplateDto** | [**FormTemplateDto**](FormTemplateDto.md)|  |
 
 ### Return type
 
@@ -111,7 +120,60 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createForms"></a>
+# **createForms**
+> kotlin.collections.List&lt;FormDto&gt; createForms(formDto)
+
+Create a batch of forms
+
+Returns the created forms.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = FormApi()
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
+try {
+    val result : kotlin.collections.List<FormDto> = apiInstance.createForms(formDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#createForms")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#createForms")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formDto** | [**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -127,8 +189,8 @@ Delete a form template
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
@@ -156,7 +218,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -165,22 +230,22 @@ Name | Type | Description  | Notes
 
 <a name="deleteForms"></a>
 # **deleteForms**
-> kotlin.Array&lt;DocIdentifier&gt; deleteForms(formIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteForms(formIds)
 
 Delete forms.
 
-Response is a set containing the ID&#x27;s of deleted forms.
+Response is a set containing the ID&#39;s of deleted forms.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formIds : kotlin.String = formIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteForms(formIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteForms(formIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#deleteForms")
@@ -199,11 +264,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -212,20 +280,20 @@ Name | Type | Description  | Notes
 
 <a name="findFormTemplates"></a>
 # **findFormTemplates**
-> kotlin.Array&lt;FormTemplateDto&gt; findFormTemplates(loadLayout)
+> kotlin.collections.List&lt;FormTemplateDto&gt; findFormTemplates(loadLayout)
 
 Gets all form templates for current user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<FormTemplateDto> = apiInstance.findFormTemplates(loadLayout)
+    val result : kotlin.collections.List<FormTemplateDto> = apiInstance.findFormTemplates(loadLayout)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#findFormTemplates")
@@ -244,11 +312,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+[**kotlin.collections.List&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -257,21 +328,21 @@ Name | Type | Description  | Notes
 
 <a name="findFormTemplatesBySpeciality"></a>
 # **findFormTemplatesBySpeciality**
-> kotlin.Array&lt;FormTemplateDto&gt; findFormTemplatesBySpeciality(specialityCode, loadLayout)
+> kotlin.collections.List&lt;FormTemplateDto&gt; findFormTemplatesBySpeciality(specialityCode, loadLayout)
 
 Gets all form templates
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
 val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<FormTemplateDto> = apiInstance.findFormTemplatesBySpeciality(specialityCode, loadLayout)
+    val result : kotlin.collections.List<FormTemplateDto> = apiInstance.findFormTemplatesBySpeciality(specialityCode, loadLayout)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#findFormTemplatesBySpeciality")
@@ -291,11 +362,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+[**kotlin.collections.List&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -304,7 +378,7 @@ Name | Type | Description  | Notes
 
 <a name="findFormsByHCPartyPatientForeignKeys"></a>
 # **findFormsByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;FormDto&gt; findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
+> kotlin.collections.List&lt;FormDto&gt; findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
 
 List forms found By Healthcare Party and secret foreign keys.
 
@@ -313,8 +387,8 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
@@ -323,7 +397,7 @@ val healthElementId : kotlin.String = healthElementId_example // kotlin.String |
 val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String | 
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<FormDto> = apiInstance.findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
+    val result : kotlin.collections.List<FormDto> = apiInstance.findFormsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#findFormsByHCPartyPatientForeignKeys")
@@ -346,11 +420,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -359,7 +436,7 @@ Name | Type | Description  | Notes
 
 <a name="findFormsDelegationsStubsByHCPartyPatientForeignKeys"></a>
 # **findFormsDelegationsStubsByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;IcureStubDto&gt; findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;IcureStubDto&gt; findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 List form stubs found By Healthcare Party and secret foreign keys.
 
@@ -368,14 +445,14 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<IcureStubDto> = apiInstance.findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.findFormsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#findFormsDelegationsStubsByHCPartyPatientForeignKeys")
@@ -395,11 +472,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -408,7 +488,7 @@ Name | Type | Description  | Notes
 
 <a name="getChildrenForms"></a>
 # **getChildrenForms**
-> kotlin.Array&lt;FormDto&gt; getChildrenForms(formId, hcPartyId)
+> kotlin.collections.List&lt;FormDto&gt; getChildrenForms(formId, hcPartyId)
 
 Get a list of forms by ids
 
@@ -417,14 +497,14 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formId : kotlin.String = formId_example // kotlin.String | 
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<FormDto> = apiInstance.getChildrenForms(formId, hcPartyId)
+    val result : kotlin.collections.List<FormDto> = apiInstance.getChildrenForms(formId, hcPartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#getChildrenForms")
@@ -444,11 +524,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -464,8 +547,8 @@ Gets a form
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formId : kotlin.String = formId_example // kotlin.String | 
@@ -493,7 +576,106 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getFormByLogicalUuid"></a>
+# **getFormByLogicalUuid**
+> FormDto getFormByLogicalUuid(logicalUuid)
+
+Gets the most recent form with the given logicalUuid
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = FormApi()
+val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String | 
+try {
+    val result : FormDto = apiInstance.getFormByLogicalUuid(logicalUuid)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormByLogicalUuid")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormByLogicalUuid")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **logicalUuid** | **kotlin.String**|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getFormByUniqueId"></a>
+# **getFormByUniqueId**
+> FormDto getFormByUniqueId(uniqueId)
+
+Gets the most recent form with the given uniqueId
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = FormApi()
+val uniqueId : kotlin.String = uniqueId_example // kotlin.String | 
+try {
+    val result : FormDto = apiInstance.getFormByUniqueId(uniqueId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormByUniqueId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormByUniqueId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uniqueId** | **kotlin.String**|  |
+
+### Return type
+
+[**FormDto**](FormDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -509,8 +691,8 @@ Gets a form template by guid
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
@@ -538,7 +720,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -547,21 +732,21 @@ Name | Type | Description  | Notes
 
 <a name="getFormTemplatesByGuid"></a>
 # **getFormTemplatesByGuid**
-> kotlin.Array&lt;FormTemplateDto&gt; getFormTemplatesByGuid(formTemplateGuid, specialityCode)
+> kotlin.collections.List&lt;FormTemplateDto&gt; getFormTemplatesByGuid(formTemplateGuid, specialityCode)
 
 Gets a form template
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formTemplateGuid : kotlin.String = formTemplateGuid_example // kotlin.String | 
 val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
 try {
-    val result : kotlin.Array<FormTemplateDto> = apiInstance.getFormTemplatesByGuid(formTemplateGuid, specialityCode)
+    val result : kotlin.collections.List<FormTemplateDto> = apiInstance.getFormTemplatesByGuid(formTemplateGuid, specialityCode)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#getFormTemplatesByGuid")
@@ -581,11 +766,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
+[**kotlin.collections.List&lt;FormTemplateDto&gt;**](FormTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -594,7 +782,7 @@ Name | Type | Description  | Notes
 
 <a name="getForms"></a>
 # **getForms**
-> kotlin.Array&lt;FormDto&gt; getForms(body)
+> kotlin.collections.List&lt;FormDto&gt; getForms(listOfIdsDto)
 
 Get a list of forms by ids
 
@@ -603,13 +791,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<FormDto> = apiInstance.getForms(body)
+    val result : kotlin.collections.List<FormDto> = apiInstance.getForms(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#getForms")
@@ -624,24 +812,123 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
  - **Accept**: */*
 
+<a name="getFormsByLogicalUuid"></a>
+# **getFormsByLogicalUuid**
+> kotlin.collections.List&lt;FormDto&gt; getFormsByLogicalUuid(logicalUuid)
+
+Gets all forms with given logicalUuid
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = FormApi()
+val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<FormDto> = apiInstance.getFormsByLogicalUuid(logicalUuid)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormsByLogicalUuid")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormsByLogicalUuid")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **logicalUuid** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getFormsByUniqueId"></a>
+# **getFormsByUniqueId**
+> kotlin.collections.List&lt;FormDto&gt; getFormsByUniqueId(uniqueId)
+
+Gets all forms by uniqueId
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = FormApi()
+val uniqueId : kotlin.String = uniqueId_example // kotlin.String | 
+try {
+    val result : kotlin.collections.List<FormDto> = apiInstance.getFormsByUniqueId(uniqueId)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling FormApi#getFormsByUniqueId")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling FormApi#getFormsByUniqueId")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uniqueId** | **kotlin.String**|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="modifyForm"></a>
 # **modifyForm**
-> FormDto modifyForm(body)
+> FormDto modifyForm(formDto)
 
 Modify a form
 
@@ -650,13 +937,13 @@ Returns the modified form.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto | 
 try {
-    val result : FormDto = apiInstance.modifyForm(body)
+    val result : FormDto = apiInstance.modifyForm(formDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#modifyForm")
@@ -671,7 +958,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FormDto**](FormDto.md)|  |
+ **formDto** | [**FormDto**](FormDto.md)|  |
 
 ### Return type
 
@@ -679,7 +966,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -688,7 +978,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyForms"></a>
 # **modifyForms**
-> kotlin.Array&lt;FormDto&gt; modifyForms(body)
+> kotlin.collections.List&lt;FormDto&gt; modifyForms(formDto)
 
 Modify a batch of forms
 
@@ -697,13 +987,13 @@ Returns the modified forms.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : kotlin.Array<FormDto> =  // kotlin.Array<FormDto> | 
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
 try {
-    val result : kotlin.Array<FormDto> = apiInstance.modifyForms(body)
+    val result : kotlin.collections.List<FormDto> = apiInstance.modifyForms(formDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#modifyForms")
@@ -718,15 +1008,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;FormDto&gt;**](FormDto.md)|  |
+ **formDto** | [**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;FormDto&gt;**](FormDto.md)
+[**kotlin.collections.List&lt;FormDto&gt;**](FormDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -735,7 +1028,7 @@ Name | Type | Description  | Notes
 
 <a name="newFormDelegations"></a>
 # **newFormDelegations**
-> FormDto newFormDelegations(body, formId)
+> FormDto newFormDelegations(formId, delegationDto)
 
 Delegates a form to a healthcare party
 
@@ -744,14 +1037,14 @@ It delegates a form to a healthcare party. Returns the form with the new delegat
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : kotlin.Array<DelegationDto> =  // kotlin.Array<DelegationDto> | 
 val formId : kotlin.String = formId_example // kotlin.String | 
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
 try {
-    val result : FormDto = apiInstance.newFormDelegations(body, formId)
+    val result : FormDto = apiInstance.newFormDelegations(formId, delegationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#newFormDelegations")
@@ -766,8 +1059,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;DelegationDto&gt;**](DelegationDto.md)|  |
  **formId** | **kotlin.String**|  |
+ **delegationDto** | [**kotlin.collections.List&lt;DelegationDto&gt;**](DelegationDto.md)|  |
 
 ### Return type
 
@@ -775,7 +1068,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -784,7 +1080,7 @@ Name | Type | Description  | Notes
 
 <a name="setFormsDelegations"></a>
 # **setFormsDelegations**
-> kotlin.Array&lt;IcureStubDto&gt; setFormsDelegations(body)
+> kotlin.collections.List&lt;IcureStubDto&gt; setFormsDelegations(icureStubDto)
 
 Update delegations in form.
 
@@ -793,13 +1089,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : kotlin.Array<IcureStubDto> =  // kotlin.Array<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
 try {
-    val result : kotlin.Array<IcureStubDto> = apiInstance.setFormsDelegations(body)
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.setFormsDelegations(icureStubDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#setFormsDelegations")
@@ -814,15 +1110,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
+ **icureStubDto** | [**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -833,13 +1132,13 @@ Name | Type | Description  | Notes
 # **setTemplateAttachmentMulti**
 > kotlin.String setTemplateAttachmentMulti(formTemplateId)
 
-Update a form template&#x27;s layout
+Update a form template&#39;s layout
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
@@ -867,7 +1166,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -876,7 +1178,7 @@ Name | Type | Description  | Notes
 
 <a name="updateFormTemplate"></a>
 # **updateFormTemplate**
-> FormTemplateDto updateFormTemplate(body, formTemplateId)
+> FormTemplateDto updateFormTemplate(formTemplateId, formTemplateDto)
 
 Modify a form template with the current user
 
@@ -885,14 +1187,14 @@ Returns an instance of created form template.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val body : FormTemplateDto =  // FormTemplateDto | 
 val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+val formTemplateDto : FormTemplateDto =  // FormTemplateDto | 
 try {
-    val result : FormTemplateDto = apiInstance.updateFormTemplate(body, formTemplateId)
+    val result : FormTemplateDto = apiInstance.updateFormTemplate(formTemplateId, formTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling FormApi#updateFormTemplate")
@@ -907,8 +1209,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FormTemplateDto**](FormTemplateDto.md)|  |
  **formTemplateId** | **kotlin.String**|  |
+ **formTemplateDto** | [**FormTemplateDto**](FormTemplateDto.md)|  |
 
 ### Return type
 
@@ -916,7 +1218,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

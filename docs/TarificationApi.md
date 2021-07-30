@@ -13,9 +13,10 @@ Method | HTTP request | Description
 [**getTarifications**](TarificationApi.md#getTarifications) | **POST** /rest/v1/tarification/byIds | Get a list of tarifications by ids
 [**modifyTarification**](TarificationApi.md#modifyTarification) | **PUT** /rest/v1/tarification | Modify a tarification
 
+
 <a name="createTarification"></a>
 # **createTarification**
-> TarificationDto createTarification(body)
+> TarificationDto createTarification(tarificationDto)
 
 Create a Tarification
 
@@ -24,13 +25,13 @@ Type, Tarification and Version are required.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val body : TarificationDto =  // TarificationDto | 
+val tarificationDto : TarificationDto =  // TarificationDto | 
 try {
-    val result : TarificationDto = apiInstance.createTarification(body)
+    val result : TarificationDto = apiInstance.createTarification(tarificationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#createTarification")
@@ -45,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**TarificationDto**](TarificationDto.md)|  |
+ **tarificationDto** | [**TarificationDto**](TarificationDto.md)|  |
 
 ### Return type
 
@@ -53,7 +54,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -71,8 +75,8 @@ Returns a list of tarifications matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
 val region : kotlin.String = region_example // kotlin.String | 
@@ -110,7 +114,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -128,8 +135,8 @@ Returns a list of tarifications matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
 val region : kotlin.String = region_example // kotlin.String | 
@@ -167,7 +174,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -176,7 +186,7 @@ Name | Type | Description  | Notes
 
 <a name="findTarifications"></a>
 # **findTarifications**
-> kotlin.Array&lt;TarificationDto&gt; findTarifications(region, type, tarification, version)
+> kotlin.collections.List&lt;TarificationDto&gt; findTarifications(region, type, tarification, version)
 
 Finding tarifications by tarification, type and version
 
@@ -185,8 +195,8 @@ Returns a list of tarifications matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
 val region : kotlin.String = region_example // kotlin.String | Tarification region
@@ -194,7 +204,7 @@ val type : kotlin.String = type_example // kotlin.String | Tarification type
 val tarification : kotlin.String = tarification_example // kotlin.String | Tarification tarification
 val version : kotlin.String = version_example // kotlin.String | Tarification version
 try {
-    val result : kotlin.Array<TarificationDto> = apiInstance.findTarifications(region, type, tarification, version)
+    val result : kotlin.collections.List<TarificationDto> = apiInstance.findTarifications(region, type, tarification, version)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#findTarifications")
@@ -216,11 +226,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;TarificationDto&gt;**](TarificationDto.md)
+[**kotlin.collections.List&lt;TarificationDto&gt;**](TarificationDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -238,8 +251,8 @@ Get a tarification based on ID or (tarification,type,version) as query strings. 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
 val tarificationId : kotlin.String = tarificationId_example // kotlin.String | Tarification id
@@ -267,7 +280,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -285,8 +301,8 @@ Get a tarification based on ID or (tarification,type,version) as query strings. 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
 val type : kotlin.String = type_example // kotlin.String | Tarification type
@@ -318,7 +334,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -327,7 +346,7 @@ Name | Type | Description  | Notes
 
 <a name="getTarifications"></a>
 # **getTarifications**
-> kotlin.Array&lt;TarificationDto&gt; getTarifications(body)
+> kotlin.collections.List&lt;TarificationDto&gt; getTarifications(listOfIdsDto)
 
 Get a list of tarifications by ids
 
@@ -336,13 +355,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<TarificationDto> = apiInstance.getTarifications(body)
+    val result : kotlin.collections.List<TarificationDto> = apiInstance.getTarifications(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#getTarifications")
@@ -357,15 +376,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;TarificationDto&gt;**](TarificationDto.md)
+[**kotlin.collections.List&lt;TarificationDto&gt;**](TarificationDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -374,7 +396,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyTarification"></a>
 # **modifyTarification**
-> TarificationDto modifyTarification(body)
+> TarificationDto modifyTarification(tarificationDto)
 
 Modify a tarification
 
@@ -383,13 +405,13 @@ Modification of (type, tarification, version) is not allowed.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val body : TarificationDto =  // TarificationDto | 
+val tarificationDto : TarificationDto =  // TarificationDto | 
 try {
-    val result : TarificationDto = apiInstance.modifyTarification(body)
+    val result : TarificationDto = apiInstance.modifyTarification(tarificationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TarificationApi#modifyTarification")
@@ -404,7 +426,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**TarificationDto**](TarificationDto.md)|  |
+ **tarificationDto** | [**TarificationDto**](TarificationDto.md)|  |
 
 ### Return type
 
@@ -412,7 +434,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

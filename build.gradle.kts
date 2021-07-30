@@ -10,14 +10,14 @@ val mavenReleasesRepository: String by project
 
 buildscript {
     repositories {
-      mavenCentral()
-    maven {
-        credentials {
-            username = extra["repoUsername"].toString()
-            password = extra["repoPassword"].toString()
+        mavenCentral()
+        maven {
+            credentials {
+                username = extra["repoUsername"].toString()
+                password = extra["repoPassword"].toString()
+            }
+            url = uri(extra["mavenRepository"].toString())
         }
-        url = uri(extra["mavenRepository"].toString())
-    }
     }
     dependencies {
         classpath("com.taktik.gradle:gradle-plugin-git-version:1.0.13")
@@ -58,7 +58,7 @@ tasks.withType<PublishToMavenRepository> {
     }
 }
 
-tasks.build{
+tasks.build {
     dependsOn("openApiGenerate")
     mustRunAfter("apply-custom-fixes")
 }
@@ -73,7 +73,7 @@ tasks.openApiGenerate {
 
 
     generatorName.set("kotlin")
-    inputSpec.set("${buildDir}/icure-openapi-spec.json")
+    inputSpec.set("${rootDir}/icure-openapi-spec.json")
     outputDir.set("$rootDir")
     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
     finalizedBy("delete-generated-buildgradle", "apply-custom-fixes")
@@ -82,12 +82,13 @@ tasks.openApiGenerate {
 
 tasks.register("download-openapi-spec") {
     doLast {
-        val destFile = File("${buildDir}/icure-openapi-spec.json")
+        val destFile = File("${rootDir}/icure-openapi-spec.json")
         val url = "https://kraken.icure.dev/v3/api-docs"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
 }
 
+// clean some files after the openApiGenerate task
 tasks.create<Delete>("delete-generated-buildgradle") {
     delete(File("$rootDir/build.gradle"))
     delete(File("$rootDir/settings.gradle"))
@@ -95,6 +96,7 @@ tasks.create<Delete>("delete-generated-buildgradle") {
 
 tasks.register("apply-custom-fixes") {
     doLast {
+        // org.openapitools.client.baseUrl => io.icure.kraken.client.baseUrl in all api files
         ant.withGroovyBuilder {
             "replaceregexp"(
                 "match" to "org.openapitools.client.baseUrl",
@@ -105,6 +107,8 @@ tasks.register("apply-custom-fixes") {
                 "fileset"("dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/apis"), "includes" to "*.kt")
             }
         }
+
+        // contract is a kotlin keyword => escape it with ``
         ant.withGroovyBuilder {
             "replaceregexp"("match" to "contract\\(", "replace" to "`contract`(", "flags" to "g", "byline" to "true") {
                 "fileset"(
@@ -113,10 +117,42 @@ tasks.register("apply-custom-fixes") {
                 )
             }
         }
+
+        // okhttp3.Credentials not imported => manually add
         ant.withGroovyBuilder {
             "replaceregexp"(
                 "match" to "package io.icure.kraken.client.infrastructure",
                 "replace" to "package io.icure.kraken.client.infrastructure \n\n\nimport okhttp3.Credentials\n ",
+                "flags" to "g",
+                "byline" to "true"
+            ) {
+                "fileset"(
+                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/infrastructure"),
+                    "includes" to "ApiClient.kt"
+                )
+            }
+        }
+
+        // add an authheader to the aApClient
+        ant.withGroovyBuilder {
+            "replaceregexp"(
+                "match" to "var password: String\\? = null",
+                "replace" to "var password: String? = null \n \t\tvar authHeader: String? = null",
+                "flags" to "g",
+                "byline" to "true"
+            ) {
+                "fileset"(
+                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/infrastructure"),
+                    "includes" to "ApiClient.kt"
+                )
+            }
+        }
+
+        // check if auth header is set and add it to the request if so
+        ant.withGroovyBuilder {
+            "replaceregexp"(
+                "match" to "updateAuthParams\\(requestConfig\\)",
+                "replace" to "authHeader?.let { requestConfig.headers[Authorization] = it } \n \t\tupdateAuthParams(requestConfig)",
                 "flags" to "g",
                 "byline" to "true"
             ) {

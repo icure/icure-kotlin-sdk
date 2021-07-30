@@ -1,9 +1,13 @@
+
 # LetterValueDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**letter** | [**kotlin.String**](.md) |  |  [optional]
-**index** | [**kotlin.String**](.md) |  |  [optional]
-**coefficient** | [**kotlin.Double**](.md) |  |  [optional]
-**value** | [**kotlin.Double**](.md) |  |  [optional]
+**letter** | **kotlin.String** |  |  [optional]
+**index** | **kotlin.String** |  |  [optional]
+**coefficient** | **kotlin.Double** |  |  [optional]
+**value** | **kotlin.Double** |  |  [optional]
+
+
+

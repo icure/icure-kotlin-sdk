@@ -1,42 +1,46 @@
+
 # CalendarItemDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**rev** | [**kotlin.String**](.md) |  |  [optional]
-**created** | [**kotlin.Long**](.md) |  |  [optional]
-**modified** | [**kotlin.Long**](.md) |  |  [optional]
-**author** | [**kotlin.String**](.md) |  |  [optional]
-**responsible** | [**kotlin.String**](.md) |  |  [optional]
-**medicalLocationId** | [**kotlin.String**](.md) |  |  [optional]
-**tags** | [**kotlin.Array&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
-**codes** | [**kotlin.Array&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
-**endOfLife** | [**kotlin.Long**](.md) |  |  [optional]
-**deletionDate** | [**kotlin.Long**](.md) |  |  [optional]
-**title** | [**kotlin.String**](.md) |  |  [optional]
-**calendarItemTypeId** | [**kotlin.String**](.md) |  |  [optional]
-**masterCalendarItemId** | [**kotlin.String**](.md) |  |  [optional]
-**patientId** | [**kotlin.String**](.md) |  |  [optional]
-**important** | [**kotlin.Boolean**](.md) |  |  [optional]
-**homeVisit** | [**kotlin.Boolean**](.md) |  |  [optional]
-**phoneNumber** | [**kotlin.String**](.md) |  |  [optional]
-**placeId** | [**kotlin.String**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. | 
+**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes | 
+**title** | **kotlin.String** |  | 
+**meetingTags** | [**kotlin.collections.Set&lt;CalendarItemTagDto&gt;**](CalendarItemTagDto.md) |  | 
+**secretForeignKeys** | **kotlin.collections.Set&lt;kotlin.String&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. | 
+**cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -&gt; Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. | 
+**delegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well | 
+**encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation | 
+**rev** | **kotlin.String** |  |  [optional]
+**created** | **kotlin.Long** | The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
+**modified** | **kotlin.Long** | The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
+**author** | **kotlin.String** | The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
+**responsible** | **kotlin.String** | The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
+**medicalLocationId** | **kotlin.String** | The id of the medical location where this entity was created. |  [optional]
+**endOfLife** | **kotlin.Long** | Soft delete (unix epoch in ms) timestamp of the object. |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**calendarItemTypeId** | **kotlin.String** |  |  [optional]
+**masterCalendarItemId** | **kotlin.String** |  |  [optional]
+**patientId** | **kotlin.String** |  |  [optional]
+**important** | **kotlin.Boolean** |  |  [optional]
+**homeVisit** | **kotlin.Boolean** |  |  [optional]
+**phoneNumber** | **kotlin.String** |  |  [optional]
+**placeId** | **kotlin.String** |  |  [optional]
 **address** | [**AddressDto**](AddressDto.md) |  |  [optional]
-**addressText** | [**kotlin.String**](.md) |  |  [optional]
-**startTime** | [**kotlin.Long**](.md) |  |  [optional]
-**endTime** | [**kotlin.Long**](.md) |  |  [optional]
-**confirmationTime** | [**kotlin.Long**](.md) |  |  [optional]
-**confirmationId** | [**kotlin.String**](.md) |  |  [optional]
-**duration** | [**kotlin.Long**](.md) |  |  [optional]
-**allDay** | [**kotlin.Boolean**](.md) |  |  [optional]
-**details** | [**kotlin.String**](.md) |  |  [optional]
-**wasMigrated** | [**kotlin.Boolean**](.md) |  |  [optional]
-**agendaId** | [**kotlin.String**](.md) |  |  [optional]
-**meetingTags** | [**kotlin.Array&lt;CalendarItemTagDto&gt;**](CalendarItemTagDto.md) |  | 
+**addressText** | **kotlin.String** |  |  [optional]
+**startTime** | **kotlin.Long** |  |  [optional]
+**endTime** | **kotlin.Long** |  |  [optional]
+**confirmationTime** | **kotlin.Long** |  |  [optional]
+**confirmationId** | **kotlin.String** |  |  [optional]
+**duration** | **kotlin.Long** |  |  [optional]
+**allDay** | **kotlin.Boolean** |  |  [optional]
+**details** | **kotlin.String** |  |  [optional]
+**wasMigrated** | **kotlin.Boolean** |  |  [optional]
+**agendaId** | **kotlin.String** |  |  [optional]
 **flowItem** | [**FlowItemDto**](FlowItemDto.md) |  |  [optional]
-**secretForeignKeys** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**cryptedForeignKeys** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;DelegationDto&gt;&gt;**](.md) |  | 
-**delegations** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;DelegationDto&gt;&gt;**](.md) |  | 
-**encryptionKeys** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;DelegationDto&gt;&gt;**](.md) |  | 
-**encryptedSelf** | [**kotlin.String**](.md) |  |  [optional]
+**encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
+
+
+

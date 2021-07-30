@@ -1,24 +1,29 @@
+
 # EmailOrSmsMessageDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attachments** | [**kotlin.Array&lt;MimeAttachmentDto&gt;**](MimeAttachmentDto.md) |  | 
-**destination** | [**kotlin.String**](.md) |  |  [optional]
-**destinationIsNotPatient** | [**kotlin.Boolean**](.md) |  | 
-**destinationName** | [**kotlin.String**](.md) |  |  [optional]
-**sendCopyToSender** | [**kotlin.Boolean**](.md) |  | 
-**senderName** | [**kotlin.String**](.md) |  |  [optional]
-**replyToEmail** | [**kotlin.String**](.md) |  |  [optional]
-**content** | [**kotlin.String**](.md) |  |  [optional]
-**messageId** | [**kotlin.String**](.md) |  |  [optional]
-**patientId** | [**kotlin.String**](.md) |  |  [optional]
-**senderId** | [**kotlin.String**](.md) |  |  [optional]
-**subject** | [**kotlin.String**](.md) |  |  [optional]
+**attachments** | [**kotlin.collections.List&lt;MimeAttachmentDto&gt;**](MimeAttachmentDto.md) |  | 
+**destinationIsNotPatient** | **kotlin.Boolean** |  | 
+**sendCopyToSender** | **kotlin.Boolean** |  | 
+**destination** | **kotlin.String** |  |  [optional]
+**destinationName** | **kotlin.String** |  |  [optional]
+**senderName** | **kotlin.String** |  |  [optional]
+**replyToEmail** | **kotlin.String** |  |  [optional]
+**content** | **kotlin.String** |  |  [optional]
+**messageId** | **kotlin.String** |  |  [optional]
+**patientId** | **kotlin.String** |  |  [optional]
+**senderId** | **kotlin.String** |  |  [optional]
+**subject** | **kotlin.String** |  |  [optional]
 **type** | [**inline**](#TypeEnum) |  |  [optional]
+
 
 <a name="TypeEnum"></a>
 ## Enum: type
 Name | Value
 ---- | -----
 type | EMAIL, SMS
+
+
+

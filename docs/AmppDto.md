@@ -1,49 +1,56 @@
+
 # AmppDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**from** | [**kotlin.Long**](.md) |  |  [optional]
-**to** | [**kotlin.Long**](.md) |  |  [optional]
-**ctiExtended** | [**kotlin.String**](.md) |  |  [optional]
-**orphan** | [**kotlin.Boolean**](.md) |  | 
+**orphan** | **kotlin.Boolean** |  | 
+**atcs** | [**kotlin.collections.List&lt;AtcDto&gt;**](AtcDto.md) |  | 
+**dmpps** | [**kotlin.collections.List&lt;DmppDto&gt;**](DmppDto.md) |  | 
+**from** | **kotlin.Long** |  |  [optional]
+**to** | **kotlin.Long** |  |  [optional]
+**index** | **kotlin.Double** |  |  [optional]
+**ctiExtended** | **kotlin.String** |  |  [optional]
 **leafletLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **spcLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **rmaPatientLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **rmaProfessionalLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-**parallelCircuit** | [**kotlin.Int**](.md) |  |  [optional]
-**parallelDistributor** | [**kotlin.String**](.md) |  |  [optional]
-**packMultiplier** | [**kotlin.Int**](.md) |  |  [optional]
+**parallelCircuit** | **kotlin.Int** |  |  [optional]
+**parallelDistributor** | **kotlin.String** |  |  [optional]
+**packMultiplier** | **kotlin.Int** |  |  [optional]
 **packAmount** | [**QuantityDto**](QuantityDto.md) |  |  [optional]
-**packDisplayValue** | [**kotlin.String**](.md) |  |  [optional]
+**packDisplayValue** | **kotlin.String** |  |  [optional]
 **status** | [**inline**](#StatusEnum) |  |  [optional]
-**atcs** | [**kotlin.Array&lt;AtcDto&gt;**](AtcDto.md) |  | 
 **crmLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-**deliveryModusCode** | [**kotlin.String**](.md) |  |  [optional]
+**deliveryModusCode** | **kotlin.String** |  |  [optional]
 **deliveryModus** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **deliveryModusSpecification** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
+**dhpcLink** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **distributorCompany** | [**CompanyDto**](CompanyDto.md) |  |  [optional]
-**singleUse** | [**kotlin.Boolean**](.md) |  |  [optional]
-**speciallyRegulated** | [**kotlin.Int**](.md) |  |  [optional]
+**singleUse** | **kotlin.Boolean** |  |  [optional]
+**speciallyRegulated** | **kotlin.Int** |  |  [optional]
 **abbreviatedName** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **prescriptionName** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **note** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **posologyNote** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-**noGenericPrescriptionReasons** | [**kotlin.Array&lt;SamTextDto&gt;**](SamTextDto.md) |  |  [optional]
-**exFactoryPrice** | [**kotlin.Double**](.md) |  |  [optional]
-**reimbursementCode** | [**kotlin.Int**](.md) |  |  [optional]
+**noGenericPrescriptionReasons** | [**kotlin.collections.List&lt;SamTextDto&gt;**](SamTextDto.md) |  |  [optional]
+**exFactoryPrice** | **kotlin.Double** |  |  [optional]
+**reimbursementCode** | **kotlin.Int** |  |  [optional]
 **definedDailyDose** | [**QuantityDto**](QuantityDto.md) |  |  [optional]
-**officialExFactoryPrice** | [**kotlin.Double**](.md) |  |  [optional]
-**realExFactoryPrice** | [**kotlin.Double**](.md) |  |  [optional]
-**pricingInformationDecisionDate** | [**kotlin.Long**](.md) |  |  [optional]
-**components** | [**kotlin.Array&lt;AmppComponentDto&gt;**](AmppComponentDto.md) |  |  [optional]
-**commercializations** | [**kotlin.Array&lt;CommercializationDto&gt;**](CommercializationDto.md) |  |  [optional]
-**supplyProblems** | [**kotlin.Array&lt;SupplyProblemDto&gt;**](SupplyProblemDto.md) |  |  [optional]
-**dmpps** | [**kotlin.Array&lt;DmppDto&gt;**](DmppDto.md) |  | 
-**vaccineIndicationCodes** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  |  [optional]
+**officialExFactoryPrice** | **kotlin.Double** |  |  [optional]
+**realExFactoryPrice** | **kotlin.Double** |  |  [optional]
+**pricingInformationDecisionDate** | **kotlin.Long** |  |  [optional]
+**components** | [**kotlin.collections.List&lt;AmppComponentDto&gt;**](AmppComponentDto.md) |  |  [optional]
+**commercializations** | [**kotlin.collections.List&lt;CommercializationDto&gt;**](CommercializationDto.md) |  |  [optional]
+**supplyProblems** | [**kotlin.collections.List&lt;SupplyProblemDto&gt;**](SupplyProblemDto.md) |  |  [optional]
+**vaccineIndicationCodes** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
+
 
 <a name="StatusEnum"></a>
 ## Enum: status
 Name | Value
 ---- | -----
 status | AUTHORIZED, SUSPENDED, REVOKED
+
+
+

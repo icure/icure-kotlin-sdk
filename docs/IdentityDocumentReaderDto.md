@@ -1,11 +1,15 @@
+
 # IdentityDocumentReaderDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**justificatifDocumentNumber** | [**kotlin.String**](.md) |  |  [optional]
-**supportSerialNumber** | [**kotlin.String**](.md) |  |  [optional]
-**timeReadingEIdDocument** | [**kotlin.Long**](.md) |  |  [optional]
-**eidDocumentSupportType** | [**kotlin.Int**](.md) |  | 
-**reasonManualEncoding** | [**kotlin.Int**](.md) |  | 
-**reasonUsingVignette** | [**kotlin.Int**](.md) |  | 
+**eidDocumentSupportType** | **kotlin.Int** |  | 
+**reasonManualEncoding** | **kotlin.Int** |  | 
+**reasonUsingVignette** | **kotlin.Int** |  | 
+**justificatifDocumentNumber** | **kotlin.String** |  |  [optional]
+**supportSerialNumber** | **kotlin.String** |  |  [optional]
+**timeReadingEIdDocument** | **kotlin.Long** |  |  [optional]
+
+
+

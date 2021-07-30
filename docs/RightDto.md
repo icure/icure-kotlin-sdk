@@ -1,9 +1,13 @@
+
 # RightDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**userId** | [**kotlin.String**](.md) |  |  [optional]
-**read** | [**kotlin.Boolean**](.md) |  | 
-**write** | [**kotlin.Boolean**](.md) |  | 
-**administration** | [**kotlin.Boolean**](.md) |  | 
+**read** | **kotlin.Boolean** |  | 
+**write** | **kotlin.Boolean** |  | 
+**administration** | **kotlin.Boolean** |  | 
+**userId** | **kotlin.String** |  |  [optional]
+
+
+

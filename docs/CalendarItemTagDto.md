@@ -1,9 +1,13 @@
+
 # CalendarItemTagDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | [**kotlin.String**](.md) |  |  [optional]
-**date** | [**kotlin.Long**](.md) |  |  [optional]
-**userId** | [**kotlin.String**](.md) |  |  [optional]
-**userName** | [**kotlin.String**](.md) |  |  [optional]
+**code** | **kotlin.String** |  |  [optional]
+**date** | **kotlin.Long** |  |  [optional]
+**userId** | **kotlin.String** |  |  [optional]
+**userName** | **kotlin.String** |  |  [optional]
+
+
+

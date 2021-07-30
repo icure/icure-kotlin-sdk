@@ -12,22 +12,23 @@ Method | HTTP request | Description
 [**listInsurancesByName**](InsuranceApi.md#listInsurancesByName) | **GET** /rest/v1/insurance/byName/{insuranceName} | Gets an insurance
 [**modifyInsurance**](InsuranceApi.md#modifyInsurance) | **PUT** /rest/v1/insurance | Modifies an insurance
 
+
 <a name="createInsurance"></a>
 # **createInsurance**
-> InsuranceDto createInsurance(body)
+> InsuranceDto createInsurance(insuranceDto)
 
 Creates an insurance
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val body : InsuranceDto =  // InsuranceDto | 
+val insuranceDto : InsuranceDto =  // InsuranceDto | 
 try {
-    val result : InsuranceDto = apiInstance.createInsurance(body)
+    val result : InsuranceDto = apiInstance.createInsurance(insuranceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InsuranceApi#createInsurance")
@@ -42,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**InsuranceDto**](InsuranceDto.md)|  |
+ **insuranceDto** | [**InsuranceDto**](InsuranceDto.md)|  |
 
 ### Return type
 
@@ -50,7 +51,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -66,8 +70,8 @@ Deletes an insurance
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
 val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
@@ -95,7 +99,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -111,8 +118,8 @@ Gets an insurance
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
 val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
@@ -140,7 +147,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -149,20 +159,20 @@ Name | Type | Description  | Notes
 
 <a name="getInsurances"></a>
 # **getInsurances**
-> kotlin.Array&lt;InsuranceDto&gt; getInsurances(body)
+> kotlin.collections.List&lt;InsuranceDto&gt; getInsurances(listOfIdsDto)
 
 Gets insurances by id
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<InsuranceDto> = apiInstance.getInsurances(body)
+    val result : kotlin.collections.List<InsuranceDto> = apiInstance.getInsurances(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InsuranceApi#getInsurances")
@@ -177,15 +187,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;InsuranceDto&gt;**](InsuranceDto.md)
+[**kotlin.collections.List&lt;InsuranceDto&gt;**](InsuranceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -194,20 +207,20 @@ Name | Type | Description  | Notes
 
 <a name="listInsurancesByCode"></a>
 # **listInsurancesByCode**
-> kotlin.Array&lt;InsuranceDto&gt; listInsurancesByCode(insuranceCode)
+> kotlin.collections.List&lt;InsuranceDto&gt; listInsurancesByCode(insuranceCode)
 
 Gets an insurance
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
 val insuranceCode : kotlin.String = insuranceCode_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InsuranceDto> = apiInstance.listInsurancesByCode(insuranceCode)
+    val result : kotlin.collections.List<InsuranceDto> = apiInstance.listInsurancesByCode(insuranceCode)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InsuranceApi#listInsurancesByCode")
@@ -226,11 +239,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InsuranceDto&gt;**](InsuranceDto.md)
+[**kotlin.collections.List&lt;InsuranceDto&gt;**](InsuranceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -239,20 +255,20 @@ Name | Type | Description  | Notes
 
 <a name="listInsurancesByName"></a>
 # **listInsurancesByName**
-> kotlin.Array&lt;InsuranceDto&gt; listInsurancesByName(insuranceName)
+> kotlin.collections.List&lt;InsuranceDto&gt; listInsurancesByName(insuranceName)
 
 Gets an insurance
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
 val insuranceName : kotlin.String = insuranceName_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InsuranceDto> = apiInstance.listInsurancesByName(insuranceName)
+    val result : kotlin.collections.List<InsuranceDto> = apiInstance.listInsurancesByName(insuranceName)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InsuranceApi#listInsurancesByName")
@@ -271,11 +287,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InsuranceDto&gt;**](InsuranceDto.md)
+[**kotlin.collections.List&lt;InsuranceDto&gt;**](InsuranceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -284,20 +303,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyInsurance"></a>
 # **modifyInsurance**
-> InsuranceDto modifyInsurance(body)
+> InsuranceDto modifyInsurance(insuranceDto)
 
 Modifies an insurance
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val body : InsuranceDto =  // InsuranceDto | 
+val insuranceDto : InsuranceDto =  // InsuranceDto | 
 try {
-    val result : InsuranceDto = apiInstance.modifyInsurance(body)
+    val result : InsuranceDto = apiInstance.modifyInsurance(insuranceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InsuranceApi#modifyInsurance")
@@ -312,7 +331,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**InsuranceDto**](InsuranceDto.md)|  |
+ **insuranceDto** | [**InsuranceDto**](InsuranceDto.md)|  |
 
 ### Return type
 
@@ -320,7 +339,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -1,18 +1,22 @@
+
 # MedexInfoDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**beginDate** | [**kotlin.Long**](.md) |  | 
-**endDate** | [**kotlin.Long**](.md) |  | 
+**beginDate** | **kotlin.Long** |  | 
+**endDate** | **kotlin.Long** |  | 
+**patientLanguage** | **kotlin.String** |  | 
+**incapacityType** | **kotlin.String** |  | 
+**incapacityReason** | **kotlin.String** |  | 
+**outOfHomeAllowed** | **kotlin.Boolean** |  | 
 **author** | [**HealthcarePartyDto**](HealthcarePartyDto.md) |  |  [optional]
 **patient** | [**PatientDto**](PatientDto.md) |  |  [optional]
-**patientLanguage** | [**kotlin.String**](.md) |  | 
-**incapacityType** | [**kotlin.String**](.md) |  | 
-**incapacityReason** | [**kotlin.String**](.md) |  | 
-**outOfHomeAllowed** | [**kotlin.Boolean**](.md) |  | 
-**certificateDate** | [**kotlin.Long**](.md) |  |  [optional]
-**contentDate** | [**kotlin.Long**](.md) |  |  [optional]
-**diagnosisICPC** | [**kotlin.String**](.md) |  |  [optional]
-**diagnosisICD** | [**kotlin.String**](.md) |  |  [optional]
-**diagnosisDescr** | [**kotlin.String**](.md) |  |  [optional]
+**certificateDate** | **kotlin.Long** |  |  [optional]
+**contentDate** | **kotlin.Long** |  |  [optional]
+**diagnosisICPC** | **kotlin.String** |  |  [optional]
+**diagnosisICD** | **kotlin.String** |  |  [optional]
+**diagnosisDescr** | **kotlin.String** |  |  [optional]
+
+
+

@@ -6,25 +6,26 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createBatchAndMessage**](BeefactApi.md#createBatchAndMessage) | **POST** /rest/v1/be_efact/{insuranceId}/{newMessageId}/{numericalRef} | create batch and message
 
+
 <a name="createBatchAndMessage"></a>
 # **createBatchAndMessage**
-> MessageWithBatch createBatchAndMessage(body, insuranceId, newMessageId, numericalRef)
+> MessageWithBatch createBatchAndMessage(insuranceId, newMessageId, numericalRef, mapOfIdsDto)
 
 create batch and message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeefactApi()
-val body : MapOfIdsDto =  // MapOfIdsDto | 
 val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
 val newMessageId : kotlin.String = newMessageId_example // kotlin.String | 
 val numericalRef : kotlin.Long = 789 // kotlin.Long | 
+val mapOfIdsDto : MapOfIdsDto =  // MapOfIdsDto | 
 try {
-    val result : MessageWithBatch = apiInstance.createBatchAndMessage(body, insuranceId, newMessageId, numericalRef)
+    val result : MessageWithBatch = apiInstance.createBatchAndMessage(insuranceId, newMessageId, numericalRef, mapOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeefactApi#createBatchAndMessage")
@@ -39,10 +40,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MapOfIdsDto**](MapOfIdsDto.md)|  |
  **insuranceId** | **kotlin.String**|  |
  **newMessageId** | **kotlin.String**|  |
  **numericalRef** | **kotlin.Long**|  |
+ **mapOfIdsDto** | [**MapOfIdsDto**](MapOfIdsDto.md)|  |
 
 ### Return type
 
@@ -50,7 +51,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

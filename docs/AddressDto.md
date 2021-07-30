@@ -1,22 +1,28 @@
+
 # AddressDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**addressType** | [**inline**](#AddressTypeEnum) |  |  [optional]
-**descr** | [**kotlin.String**](.md) |  |  [optional]
-**street** | [**kotlin.String**](.md) |  |  [optional]
-**houseNumber** | [**kotlin.String**](.md) |  |  [optional]
-**postboxNumber** | [**kotlin.String**](.md) |  |  [optional]
-**postalCode** | [**kotlin.String**](.md) |  |  [optional]
-**city** | [**kotlin.String**](.md) |  |  [optional]
-**country** | [**kotlin.String**](.md) |  |  [optional]
-**note** | [**kotlin.String**](.md) |  |  [optional]
-**telecoms** | [**kotlin.Array&lt;TelecomDto&gt;**](TelecomDto.md) |  | 
-**encryptedSelf** | [**kotlin.String**](.md) |  |  [optional]
+**telecoms** | [**kotlin.collections.List&lt;TelecomDto&gt;**](TelecomDto.md) | List of other contact details available through telecom services, ex: email, phone number, fax, etc. | 
+**addressType** | [**inline**](#AddressTypeEnum) | The type of place the address represents, ex: home, office, hospital, clinic, etc.  |  [optional]
+**descr** | **kotlin.String** | Descriptive notes about the address |  [optional]
+**street** | **kotlin.String** | Street name |  [optional]
+**houseNumber** | **kotlin.String** | Building / house number |  [optional]
+**postboxNumber** | **kotlin.String** | Post / PO box number |  [optional]
+**postalCode** | **kotlin.String** | Postal/PIN/ZIP/Area code |  [optional]
+**city** | **kotlin.String** | Name of city in the address |  [optional]
+**state** | **kotlin.String** | Name of state in the Address |  [optional]
+**country** | **kotlin.String** | Name / code of country in the address |  [optional]
+**note** | **kotlin.String** | Additional notes |  [optional]
+**encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
+
 
 <a name="AddressTypeEnum"></a>
 ## Enum: addressType
 Name | Value
 ---- | -----
-addressType | home, work, vacation, hospital, clinic, hq, other
+addressType | home, work, vacation, hospital, clinic, hq, other, temporary, postal, diplomatic, reference
+
+
+

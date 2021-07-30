@@ -1,9 +1,13 @@
+
 # SchoolingInfoDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**startDate** | [**kotlin.Long**](.md) |  |  [optional]
-**endDate** | [**kotlin.Long**](.md) |  |  [optional]
-**school** | [**kotlin.String**](.md) |  |  [optional]
+**startDate** | **kotlin.Long** |  |  [optional]
+**endDate** | **kotlin.Long** |  |  [optional]
+**school** | **kotlin.String** |  |  [optional]
 **typeOfEducation** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
+
+
+

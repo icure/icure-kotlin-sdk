@@ -1,6 +1,10 @@
+
 # AbstractFilterDtoPatient
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**desc** | [**kotlin.String**](.md) |  |  [optional]
+**desc** | **kotlin.String** |  |  [optional]
+
+
+

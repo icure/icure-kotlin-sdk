@@ -10,22 +10,23 @@ Method | HTTP request | Description
 [**getArticles**](ArticleApi.md#getArticles) | **GET** /rest/v1/article | Gets all articles
 [**modifyArticle**](ArticleApi.md#modifyArticle) | **PUT** /rest/v1/article | Modifies an article
 
+
 <a name="createArticle"></a>
 # **createArticle**
-> ArticleDto createArticle(body)
+> ArticleDto createArticle(articleDto)
 
 Creates a article
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val body : ArticleDto =  // ArticleDto | 
+val articleDto : ArticleDto =  // ArticleDto | 
 try {
-    val result : ArticleDto = apiInstance.createArticle(body)
+    val result : ArticleDto = apiInstance.createArticle(articleDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ArticleApi#createArticle")
@@ -40,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ArticleDto**](ArticleDto.md)|  |
+ **articleDto** | [**ArticleDto**](ArticleDto.md)|  |
 
 ### Return type
 
@@ -48,7 +49,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -57,20 +61,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteArticle"></a>
 # **deleteArticle**
-> kotlin.Array&lt;DocIdentifier&gt; deleteArticle(articleIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteArticle(articleIds)
 
 Deletes an article
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
 val articleIds : kotlin.String = articleIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteArticle(articleIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteArticle(articleIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ArticleApi#deleteArticle")
@@ -89,11 +93,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,8 +116,8 @@ Gets an article
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
 val articleId : kotlin.String = articleId_example // kotlin.String | 
@@ -138,7 +145,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -147,19 +157,19 @@ Name | Type | Description  | Notes
 
 <a name="getArticles"></a>
 # **getArticles**
-> kotlin.Array&lt;ArticleDto&gt; getArticles()
+> kotlin.collections.List&lt;ArticleDto&gt; getArticles()
 
 Gets all articles
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
 try {
-    val result : kotlin.Array<ArticleDto> = apiInstance.getArticles()
+    val result : kotlin.collections.List<ArticleDto> = apiInstance.getArticles()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ArticleApi#getArticles")
@@ -175,11 +185,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;ArticleDto&gt;**](ArticleDto.md)
+[**kotlin.collections.List&lt;ArticleDto&gt;**](ArticleDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -188,20 +201,20 @@ This endpoint does not need any parameter.
 
 <a name="modifyArticle"></a>
 # **modifyArticle**
-> ArticleDto modifyArticle(body)
+> ArticleDto modifyArticle(articleDto)
 
 Modifies an article
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val body : ArticleDto =  // ArticleDto | 
+val articleDto : ArticleDto =  // ArticleDto | 
 try {
-    val result : ArticleDto = apiInstance.modifyArticle(body)
+    val result : ArticleDto = apiInstance.modifyArticle(articleDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ArticleApi#modifyArticle")
@@ -216,7 +229,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ArticleDto**](ArticleDto.md)|  |
+ **articleDto** | [**ArticleDto**](ArticleDto.md)|  |
 
 ### Return type
 
@@ -224,7 +237,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

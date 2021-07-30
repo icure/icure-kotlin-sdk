@@ -12,22 +12,23 @@ Method | HTTP request | Description
 [**getReadableAgendasForUser**](AgendaApi.md#getReadableAgendasForUser) | **GET** /rest/v1/agenda/readableForUser | Gets readable agendas for user
 [**modifyAgenda**](AgendaApi.md#modifyAgenda) | **PUT** /rest/v1/agenda | Modifies an agenda
 
+
 <a name="createAgenda"></a>
 # **createAgenda**
-> AgendaDto createAgenda(body)
+> AgendaDto createAgenda(agendaDto)
 
 Creates a agenda
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val body : AgendaDto =  // AgendaDto | 
+val agendaDto : AgendaDto =  // AgendaDto | 
 try {
-    val result : AgendaDto = apiInstance.createAgenda(body)
+    val result : AgendaDto = apiInstance.createAgenda(agendaDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AgendaApi#createAgenda")
@@ -42,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**AgendaDto**](AgendaDto.md)|  |
+ **agendaDto** | [**AgendaDto**](AgendaDto.md)|  |
 
 ### Return type
 
@@ -50,7 +51,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -59,20 +63,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteAgenda"></a>
 # **deleteAgenda**
-> kotlin.Array&lt;DocIdentifier&gt; deleteAgenda(agendaIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteAgenda(agendaIds)
 
 Deletes an agenda
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
 val agendaIds : kotlin.String = agendaIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteAgenda(agendaIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAgenda(agendaIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AgendaApi#deleteAgenda")
@@ -91,11 +95,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -111,8 +118,8 @@ Gets an agenda
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
 val agendaId : kotlin.String = agendaId_example // kotlin.String | 
@@ -140,7 +147,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -149,19 +159,19 @@ Name | Type | Description  | Notes
 
 <a name="getAgendas"></a>
 # **getAgendas**
-> kotlin.Array&lt;AgendaDto&gt; getAgendas()
+> kotlin.collections.List&lt;AgendaDto&gt; getAgendas()
 
 Gets all agendas
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
 try {
-    val result : kotlin.Array<AgendaDto> = apiInstance.getAgendas()
+    val result : kotlin.collections.List<AgendaDto> = apiInstance.getAgendas()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AgendaApi#getAgendas")
@@ -177,11 +187,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;AgendaDto&gt;**](AgendaDto.md)
+[**kotlin.collections.List&lt;AgendaDto&gt;**](AgendaDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -197,8 +210,8 @@ Gets all agendas for user
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
@@ -226,7 +239,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -235,20 +251,20 @@ Name | Type | Description  | Notes
 
 <a name="getReadableAgendasForUser"></a>
 # **getReadableAgendasForUser**
-> kotlin.Array&lt;AgendaDto&gt; getReadableAgendasForUser(userId)
+> kotlin.collections.List&lt;AgendaDto&gt; getReadableAgendasForUser(userId)
 
 Gets readable agendas for user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<AgendaDto> = apiInstance.getReadableAgendasForUser(userId)
+    val result : kotlin.collections.List<AgendaDto> = apiInstance.getReadableAgendasForUser(userId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AgendaApi#getReadableAgendasForUser")
@@ -267,11 +283,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;AgendaDto&gt;**](AgendaDto.md)
+[**kotlin.collections.List&lt;AgendaDto&gt;**](AgendaDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -280,20 +299,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyAgenda"></a>
 # **modifyAgenda**
-> AgendaDto modifyAgenda(body)
+> AgendaDto modifyAgenda(agendaDto)
 
 Modifies an agenda
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val body : AgendaDto =  // AgendaDto | 
+val agendaDto : AgendaDto =  // AgendaDto | 
 try {
-    val result : AgendaDto = apiInstance.modifyAgenda(body)
+    val result : AgendaDto = apiInstance.modifyAgenda(agendaDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AgendaApi#modifyAgenda")
@@ -308,7 +327,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**AgendaDto**](AgendaDto.md)|  |
+ **agendaDto** | [**AgendaDto**](AgendaDto.md)|  |
 
 ### Return type
 
@@ -316,7 +335,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**generateLabresultExport**](BekmehrApi.md#generateLabresultExport) | **POST** /rest/v1/be_kmehr/labresult/{patientId}/export/{id} | Get Kmehr labresult
 [**generateMedicationSchemeExport**](BekmehrApi.md#generateMedicationSchemeExport) | **POST** /rest/v1/be_kmehr/medicationscheme/{patientId}/export | Get Medicationscheme export
 [**generateNoteExport**](BekmehrApi.md#generateNoteExport) | **POST** /rest/v1/be_kmehr/note/{patientId}/export/{id} | Get Kmehr note
+[**generatePatientInfoExport**](BekmehrApi.md#generatePatientInfoExport) | **POST** /rest/v1/be_kmehr/patientinfo/{patientId}/export | Get KMEHR Patient Info export
 [**generatePrescriptionExport**](BekmehrApi.md#generatePrescriptionExport) | **POST** /rest/v1/be_kmehr/prescription/{patientId}/export/{id} | Get Kmehr prescription
 [**generateReportExport**](BekmehrApi.md#generateReportExport) | **POST** /rest/v1/be_kmehr/report/{patientId}/export/{id} | Get Kmehr report
 [**generateRequestExport**](BekmehrApi.md#generateRequestExport) | **POST** /rest/v1/be_kmehr/request/{patientId}/export/{id} | Get Kmehr request
@@ -30,26 +31,27 @@ Method | HTTP request | Description
 [**validateSumehr**](BekmehrApi.md#validateSumehr) | **POST** /rest/v1/be_kmehr/sumehr/{patientId}/validate | Validate sumehr
 [**validateSumehrV2**](BekmehrApi.md#validateSumehrV2) | **POST** /rest/v1/be_kmehr/sumehrv2/{patientId}/validate | Validate sumehr
 
+
 <a name="checkIfSMFPatientsExists"></a>
 # **checkIfSMFPatientsExists**
-> kotlin.Array&lt;CheckSMFPatientResult&gt; checkIfSMFPatientsExists(body, documentId, documentKey, patientId, language)
+> kotlin.collections.List&lt;CheckSMFPatientResult&gt; checkIfSMFPatientsExists(documentId, documentKey, patientId, language, requestBody)
 
 Check whether patients in SMF already exists in DB
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> | 
 val documentId : kotlin.String = documentId_example // kotlin.String | 
 val documentKey : kotlin.String = documentKey_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
 try {
-    val result : kotlin.Array<CheckSMFPatientResult> = apiInstance.checkIfSMFPatientsExists(body, documentId, documentKey, patientId, language)
+    val result : kotlin.collections.List<CheckSMFPatientResult> = apiInstance.checkIfSMFPatientsExists(documentId, documentKey, patientId, language, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#checkIfSMFPatientsExists")
@@ -64,19 +66,22 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;ImportMapping&gt;&gt;**](kotlin.collections.Map.md)|  |
  **documentId** | **kotlin.String**|  |
  **documentKey** | **kotlin.String**|  | [optional]
  **patientId** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
+ **requestBody** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;ImportMapping&gt;&gt;**](kotlin.collections.List.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;CheckSMFPatientResult&gt;**](CheckSMFPatientResult.md)
+[**kotlin.collections.List&lt;CheckSMFPatientResult&gt;**](CheckSMFPatientResult.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -85,18 +90,19 @@ Name | Type | Description  | Notes
 
 <a name="generateContactreportExport"></a>
 # **generateContactreportExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateContactreportExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr contactreport
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -104,10 +110,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateContactreportExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateContactreportExport")
@@ -122,7 +127,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -130,16 +136,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -148,22 +156,22 @@ Name | Type | Description  | Notes
 
 <a name="generateDiaryNote"></a>
 # **generateDiaryNote**
-> kotlin.Array&lt;kotlin.Byte&gt; generateDiaryNote(body, language, patientId)
+> java.io.File generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
 
 Generate diarynote
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val diaryNoteExportInfoDto : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateDiaryNote(body, language, patientId)
+    val result : java.io.File = apiInstance.generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateDiaryNote")
@@ -178,17 +186,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DiaryNoteExportInfoDto**](DiaryNoteExportInfoDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **diaryNoteExportInfoDto** | [**DiaryNoteExportInfoDto**](DiaryNoteExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -197,18 +208,19 @@ Name | Type | Description  | Notes
 
 <a name="generateLabresultExport"></a>
 # **generateLabresultExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateLabresultExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr labresult
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -216,10 +228,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateLabresultExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateLabresultExport")
@@ -234,7 +245,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -242,16 +254,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -260,24 +274,24 @@ Name | Type | Description  | Notes
 
 <a name="generateMedicationSchemeExport"></a>
 # **generateMedicationSchemeExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateMedicationSchemeExport(body, language, recipientSafe, version, patientId)
+> java.io.File generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
 
 Get Medicationscheme export
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String | 
 val version : kotlin.Int = 56 // kotlin.Int | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
+val medicationSchemeExportInfoDto : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateMedicationSchemeExport(body, language, recipientSafe, version, patientId)
+    val result : java.io.File = apiInstance.generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateMedicationSchemeExport")
@@ -292,19 +306,22 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MedicationSchemeExportInfoDto**](MedicationSchemeExportInfoDto.md)|  |
+ **patientId** | **kotlin.String**|  |
  **language** | **kotlin.String**|  |
  **recipientSafe** | **kotlin.String**|  |
  **version** | **kotlin.Int**|  |
- **patientId** | **kotlin.String**|  |
+ **medicationSchemeExportInfoDto** | [**MedicationSchemeExportInfoDto**](MedicationSchemeExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -313,18 +330,19 @@ Name | Type | Description  | Notes
 
 <a name="generateNoteExport"></a>
 # **generateNoteExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateNoteExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr note
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -332,10 +350,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateNoteExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateNoteExport")
@@ -350,7 +367,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -358,36 +376,89 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
  - **Content-Type**: application/octet-stream
  - **Accept**: application/octet-stream
 
+<a name="generatePatientInfoExport"></a>
+# **generatePatientInfoExport**
+> java.io.File generatePatientInfoExport(patientId, language)
+
+Get KMEHR Patient Info export
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = BekmehrApi()
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+try {
+    val result : java.io.File = apiInstance.generatePatientInfoExport(patientId, language)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling BekmehrApi#generatePatientInfoExport")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling BekmehrApi#generatePatientInfoExport")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  | [optional]
+
+### Return type
+
+[**java.io.File**](java.io.File.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/octet-stream
+
 <a name="generatePrescriptionExport"></a>
 # **generatePrescriptionExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generatePrescriptionExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr prescription
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -395,10 +466,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generatePrescriptionExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generatePrescriptionExport")
@@ -413,7 +483,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -421,16 +492,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -439,18 +512,19 @@ Name | Type | Description  | Notes
 
 <a name="generateReportExport"></a>
 # **generateReportExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateReportExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr report
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -458,10 +532,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateReportExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateReportExport")
@@ -476,7 +549,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -484,16 +558,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -502,18 +578,19 @@ Name | Type | Description  | Notes
 
 <a name="generateRequestExport"></a>
 # **generateRequestExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateRequestExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr request
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -521,10 +598,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateRequestExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateRequestExport")
@@ -539,7 +615,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -547,16 +624,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -565,18 +644,19 @@ Name | Type | Description  | Notes
 
 <a name="generateResultExport"></a>
 # **generateResultExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateResultExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+> java.io.File generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
 
 Get Kmehr result
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
+val patientId : kotlin.String = patientId_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val language : kotlin.String = language_example // kotlin.String | 
 val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
@@ -584,10 +664,9 @@ val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
 val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
 val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
 val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateResultExport(body, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, patientId, id)
+    val result : java.io.File = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateResultExport")
@@ -602,7 +681,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
+ **patientId** | **kotlin.String**|  |
+ **id** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **language** | **kotlin.String**|  |
  **recipientNihii** | **kotlin.String**|  |
@@ -610,16 +690,18 @@ Name | Type | Description  | Notes
  **recipientFirstName** | **kotlin.String**|  |
  **recipientLastName** | **kotlin.String**|  |
  **mimeType** | **kotlin.String**|  |
- **patientId** | **kotlin.String**|  |
- **id** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -628,22 +710,22 @@ Name | Type | Description  | Notes
 
 <a name="generateSmfExport"></a>
 # **generateSmfExport**
-> kotlin.Array&lt;kotlin.Byte&gt; generateSmfExport(body, language, patientId)
+> java.io.File generateSmfExport(patientId, language, softwareMedicalFileExportDto)
 
 Get SMF (Software Medical File) export
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val softwareMedicalFileExportDto : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateSmfExport(body, language, patientId)
+    val result : java.io.File = apiInstance.generateSmfExport(patientId, language, softwareMedicalFileExportDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSmfExport")
@@ -658,17 +740,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SoftwareMedicalFileExportDto**](SoftwareMedicalFileExportDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **softwareMedicalFileExportDto** | [**SoftwareMedicalFileExportDto**](SoftwareMedicalFileExportDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -677,22 +762,22 @@ Name | Type | Description  | Notes
 
 <a name="generateSumehr"></a>
 # **generateSumehr**
-> kotlin.Array&lt;kotlin.Byte&gt; generateSumehr(body, language, patientId)
+> java.io.File generateSumehr(patientId, language, sumehrExportInfoDto)
 
 Generate sumehr
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateSumehr(body, language, patientId)
+    val result : java.io.File = apiInstance.generateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSumehr")
@@ -707,17 +792,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -726,22 +814,22 @@ Name | Type | Description  | Notes
 
 <a name="generateSumehrV2"></a>
 # **generateSumehrV2**
-> kotlin.Array&lt;kotlin.Byte&gt; generateSumehrV2(body, language, patientId)
+> java.io.File generateSumehrV2(patientId, language, sumehrExportInfoDto)
 
 Generate sumehr
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.generateSumehrV2(body, language, patientId)
+    val result : java.io.File = apiInstance.generateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#generateSumehrV2")
@@ -756,17 +844,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -775,21 +866,21 @@ Name | Type | Description  | Notes
 
 <a name="getSumehrContent"></a>
 # **getSumehrContent**
-> SumehrContentDto getSumehrContent(body, patientId)
+> SumehrContentDto getSumehrContent(patientId, sumehrExportInfoDto)
 
 Get sumehr elements
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : SumehrContentDto = apiInstance.getSumehrContent(body, patientId)
+    val result : SumehrContentDto = apiInstance.getSumehrContent(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#getSumehrContent")
@@ -804,8 +895,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -813,7 +904,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -822,21 +916,21 @@ Name | Type | Description  | Notes
 
 <a name="getSumehrMd5"></a>
 # **getSumehrMd5**
-> ContentDto getSumehrMd5(body, patientId)
+> ContentDto getSumehrMd5(patientId, sumehrExportInfoDto)
 
 Check sumehr signature
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : ContentDto = apiInstance.getSumehrMd5(body, patientId)
+    val result : ContentDto = apiInstance.getSumehrMd5(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#getSumehrMd5")
@@ -851,8 +945,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -860,7 +954,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -869,21 +966,21 @@ Name | Type | Description  | Notes
 
 <a name="getSumehrV2Content"></a>
 # **getSumehrV2Content**
-> SumehrContentDto getSumehrV2Content(body, patientId)
+> SumehrContentDto getSumehrV2Content(patientId, sumehrExportInfoDto)
 
 Get sumehr elements
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : SumehrContentDto = apiInstance.getSumehrV2Content(body, patientId)
+    val result : SumehrContentDto = apiInstance.getSumehrV2Content(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#getSumehrV2Content")
@@ -898,8 +995,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -907,7 +1004,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -916,21 +1016,21 @@ Name | Type | Description  | Notes
 
 <a name="getSumehrV2Md5"></a>
 # **getSumehrV2Md5**
-> ContentDto getSumehrV2Md5(body, patientId)
+> ContentDto getSumehrV2Md5(patientId, sumehrExportInfoDto)
 
 Check sumehr signature
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : ContentDto = apiInstance.getSumehrV2Md5(body, patientId)
+    val result : ContentDto = apiInstance.getSumehrV2Md5(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#getSumehrV2Md5")
@@ -945,8 +1045,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -954,7 +1054,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -963,25 +1066,25 @@ Name | Type | Description  | Notes
 
 <a name="importMedicationScheme"></a>
 # **importMedicationScheme**
-> kotlin.Array&lt;ImportResultDto&gt; importMedicationScheme(body, documentId, documentKey, dryRun, patientId, language)
+> kotlin.collections.List&lt;ImportResultDto&gt; importMedicationScheme(documentId, documentKey, dryRun, patientId, language, requestBody)
 
 Import MedicationScheme into patient(s) using existing document
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> | 
 val documentId : kotlin.String = documentId_example // kotlin.String | 
 val documentKey : kotlin.String = documentKey_example // kotlin.String | 
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
 try {
-    val result : kotlin.Array<ImportResultDto> = apiInstance.importMedicationScheme(body, documentId, documentKey, dryRun, patientId, language)
+    val result : kotlin.collections.List<ImportResultDto> = apiInstance.importMedicationScheme(documentId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#importMedicationScheme")
@@ -996,20 +1099,23 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;ImportMapping&gt;&gt;**](kotlin.collections.Map.md)|  |
  **documentId** | **kotlin.String**|  |
  **documentKey** | **kotlin.String**|  | [optional]
  **dryRun** | **kotlin.Boolean**| Dry run: do not save in database | [optional]
  **patientId** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
+ **requestBody** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;ImportMapping&gt;&gt;**](kotlin.collections.List.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;ImportResultDto&gt;**](ImportResultDto.md)
+[**kotlin.collections.List&lt;ImportResultDto&gt;**](ImportResultDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1018,24 +1124,25 @@ Name | Type | Description  | Notes
 
 <a name="importSmf"></a>
 # **importSmf**
-> kotlin.Array&lt;ImportResultDto&gt; importSmf(body, documentId, documentKey, patientId, language)
+> kotlin.collections.List&lt;ImportResultDto&gt; importSmf(documentId, documentKey, patientId, language, dryRun, requestBody)
 
 Import SMF into patient(s) using existing document
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> | 
 val documentId : kotlin.String = documentId_example // kotlin.String | 
 val documentKey : kotlin.String = documentKey_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
+val dryRun : kotlin.Boolean = true // kotlin.Boolean | 
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
 try {
-    val result : kotlin.Array<ImportResultDto> = apiInstance.importSmf(body, documentId, documentKey, patientId, language)
+    val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSmf(documentId, documentKey, patientId, language, dryRun, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#importSmf")
@@ -1050,19 +1157,23 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;ImportMapping&gt;&gt;**](kotlin.collections.Map.md)|  |
  **documentId** | **kotlin.String**|  |
  **documentKey** | **kotlin.String**|  | [optional]
  **patientId** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
+ **dryRun** | **kotlin.Boolean**|  | [optional]
+ **requestBody** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;ImportMapping&gt;&gt;**](kotlin.collections.List.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;ImportResultDto&gt;**](ImportResultDto.md)
+[**kotlin.collections.List&lt;ImportResultDto&gt;**](ImportResultDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1071,25 +1182,25 @@ Name | Type | Description  | Notes
 
 <a name="importSumehr"></a>
 # **importSumehr**
-> kotlin.Array&lt;ImportResultDto&gt; importSumehr(body, documentId, documentKey, dryRun, patientId, language)
+> kotlin.collections.List&lt;ImportResultDto&gt; importSumehr(documentId, documentKey, dryRun, patientId, language, requestBody)
 
 Import sumehr into patient(s) using existing document
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> | 
 val documentId : kotlin.String = documentId_example // kotlin.String | 
 val documentKey : kotlin.String = documentKey_example // kotlin.String | 
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
 try {
-    val result : kotlin.Array<ImportResultDto> = apiInstance.importSumehr(body, documentId, documentKey, dryRun, patientId, language)
+    val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSumehr(documentId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#importSumehr")
@@ -1104,20 +1215,23 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;ImportMapping&gt;&gt;**](kotlin.collections.Map.md)|  |
  **documentId** | **kotlin.String**|  |
  **documentKey** | **kotlin.String**|  | [optional]
  **dryRun** | **kotlin.Boolean**| Dry run: do not save in database | [optional]
  **patientId** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
+ **requestBody** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;ImportMapping&gt;&gt;**](kotlin.collections.List.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;ImportResultDto&gt;**](ImportResultDto.md)
+[**kotlin.collections.List&lt;ImportResultDto&gt;**](ImportResultDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1126,26 +1240,26 @@ Name | Type | Description  | Notes
 
 <a name="importSumehrByItemId"></a>
 # **importSumehrByItemId**
-> kotlin.Array&lt;ImportResultDto&gt; importSumehrByItemId(body, itemId, documentId, documentKey, dryRun, patientId, language)
+> kotlin.collections.List&lt;ImportResultDto&gt; importSumehrByItemId(documentId, itemId, documentKey, dryRun, patientId, language, requestBody)
 
 Import sumehr into patient(s) using existing document
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.Array<ImportMapping>> | 
-val itemId : kotlin.String = itemId_example // kotlin.String | 
 val documentId : kotlin.String = documentId_example // kotlin.String | 
+val itemId : kotlin.String = itemId_example // kotlin.String | 
 val documentKey : kotlin.String = documentKey_example // kotlin.String | 
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val language : kotlin.String = language_example // kotlin.String | 
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
 try {
-    val result : kotlin.Array<ImportResultDto> = apiInstance.importSumehrByItemId(body, itemId, documentId, documentKey, dryRun, patientId, language)
+    val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSumehrByItemId(documentId, itemId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#importSumehrByItemId")
@@ -1160,21 +1274,24 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Array&lt;ImportMapping&gt;&gt;**](kotlin.collections.Map.md)|  |
- **itemId** | **kotlin.String**|  |
  **documentId** | **kotlin.String**|  |
+ **itemId** | **kotlin.String**|  |
  **documentKey** | **kotlin.String**|  | [optional]
  **dryRun** | **kotlin.Boolean**| Dry run: do not save in database | [optional]
  **patientId** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
+ **requestBody** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.collections.List&lt;ImportMapping&gt;&gt;**](kotlin.collections.List.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;ImportResultDto&gt;**](ImportResultDto.md)
+[**kotlin.collections.List&lt;ImportResultDto&gt;**](ImportResultDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1183,21 +1300,21 @@ Name | Type | Description  | Notes
 
 <a name="isSumehrV2Valid"></a>
 # **isSumehrV2Valid**
-> SumehrValidityDto isSumehrV2Valid(body, patientId)
+> SumehrValidityDto isSumehrV2Valid(patientId, sumehrExportInfoDto)
 
 Get sumehr validity
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : SumehrValidityDto = apiInstance.isSumehrV2Valid(body, patientId)
+    val result : SumehrValidityDto = apiInstance.isSumehrV2Valid(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#isSumehrV2Valid")
@@ -1212,8 +1329,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -1221,7 +1338,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1230,21 +1350,21 @@ Name | Type | Description  | Notes
 
 <a name="isSumehrValid"></a>
 # **isSumehrValid**
-> SumehrValidityDto isSumehrValid(body, patientId)
+> SumehrValidityDto isSumehrValid(patientId, sumehrExportInfoDto)
 
 Get sumehr validity
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : SumehrValidityDto = apiInstance.isSumehrValid(body, patientId)
+    val result : SumehrValidityDto = apiInstance.isSumehrValid(patientId, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#isSumehrValid")
@@ -1259,8 +1379,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
  **patientId** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
@@ -1268,7 +1388,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1277,22 +1400,22 @@ Name | Type | Description  | Notes
 
 <a name="validateSumehr"></a>
 # **validateSumehr**
-> kotlin.Array&lt;kotlin.Byte&gt; validateSumehr(body, language, patientId)
+> java.io.File validateSumehr(patientId, language, sumehrExportInfoDto)
 
 Validate sumehr
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.validateSumehr(body, language, patientId)
+    val result : java.io.File = apiInstance.validateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#validateSumehr")
@@ -1307,17 +1430,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1326,22 +1452,22 @@ Name | Type | Description  | Notes
 
 <a name="validateSumehrV2"></a>
 # **validateSumehrV2**
-> kotlin.Array&lt;kotlin.Byte&gt; validateSumehrV2(body, language, patientId)
+> java.io.File validateSumehrV2(patientId, language, sumehrExportInfoDto)
 
 Validate sumehr
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val body : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val language : kotlin.String = language_example // kotlin.String | 
 val patientId : kotlin.String = patientId_example // kotlin.String | 
+val language : kotlin.String = language_example // kotlin.String | 
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.validateSumehrV2(body, language, patientId)
+    val result : java.io.File = apiInstance.validateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BekmehrApi#validateSumehrV2")
@@ -1356,17 +1482,20 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
- **language** | **kotlin.String**|  |
  **patientId** | **kotlin.String**|  |
+ **language** | **kotlin.String**|  |
+ **sumehrExportInfoDto** | [**SumehrExportInfoDto**](SumehrExportInfoDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

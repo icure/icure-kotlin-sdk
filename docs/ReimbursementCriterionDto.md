@@ -1,8 +1,12 @@
+
 # ReimbursementCriterionDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**category** | [**kotlin.String**](.md) |  |  [optional]
-**code** | [**kotlin.String**](.md) |  |  [optional]
+**category** | **kotlin.String** |  |  [optional]
+**code** | **kotlin.String** |  |  [optional]
 **description** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
+
+
+

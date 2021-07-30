@@ -1,10 +1,14 @@
+
 # ImportMapping
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**lifecycle** | [**kotlin.String**](.md) |  |  [optional]
-**content** | [**kotlin.String**](.md) |  |  [optional]
-**type** | [**kotlin.String**](.md) |  |  [optional]
-**cdItem** | [**kotlin.String**](.md) |  |  [optional]
-**label** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**](.md) |  | 
+**label** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
+**tags** | [**kotlin.collections.Set&lt;CodeStub&gt;**](CodeStub.md) |  | 
+**lifecycle** | **kotlin.String** |  |  [optional]
+**content** | **kotlin.String** |  |  [optional]
+**cdLocal** | **kotlin.String** |  |  [optional]
+
+
+

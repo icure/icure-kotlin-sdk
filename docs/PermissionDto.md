@@ -1,8 +1,11 @@
+
 # PermissionDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**grant** | [**kotlin.Int**](.md) |  | 
-**revoke** | [**kotlin.Int**](.md) |  | 
-**criteria** | [**kotlin.Array&lt;PermissionCriterionDto&gt;**](PermissionCriterionDto.md) |  |  [optional]
+**grants** | [**kotlin.collections.Set&lt;PermissionItemDto&gt;**](PermissionItemDto.md) | Granted permissions. | 
+**revokes** | [**kotlin.collections.Set&lt;PermissionItemDto&gt;**](PermissionItemDto.md) | Revoked permissions. | 
+
+
+

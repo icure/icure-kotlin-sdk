@@ -13,9 +13,10 @@ Method | HTTP request | Description
 [**modifyClassificationTemplate**](ClassificationTemplateApi.md#modifyClassificationTemplate) | **PUT** /rest/v1/classificationTemplate | Modify a classification Template
 [**newClassificationTemplateDelegations**](ClassificationTemplateApi.md#newClassificationTemplateDelegations) | **POST** /rest/v1/classificationTemplate/{classificationTemplateId}/delegate | Delegates a classification Template to a healthcare party
 
+
 <a name="createClassificationTemplate"></a>
 # **createClassificationTemplate**
-> ClassificationTemplateDto createClassificationTemplate(body)
+> ClassificationTemplateDto createClassificationTemplate(classificationTemplateDto)
 
 Create a classification Template with the current user
 
@@ -24,13 +25,13 @@ Returns an instance of created classification Template.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val body : ClassificationTemplateDto =  // ClassificationTemplateDto | 
+val classificationTemplateDto : ClassificationTemplateDto =  // ClassificationTemplateDto | 
 try {
-    val result : ClassificationTemplateDto = apiInstance.createClassificationTemplate(body)
+    val result : ClassificationTemplateDto = apiInstance.createClassificationTemplate(classificationTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#createClassificationTemplate")
@@ -45,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ClassificationTemplateDto**](ClassificationTemplateDto.md)|  |
+ **classificationTemplateDto** | [**ClassificationTemplateDto**](ClassificationTemplateDto.md)|  |
 
 ### Return type
 
@@ -53,7 +54,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -62,22 +66,22 @@ Name | Type | Description  | Notes
 
 <a name="deleteClassificationTemplates"></a>
 # **deleteClassificationTemplates**
-> kotlin.Array&lt;DocIdentifier&gt; deleteClassificationTemplates(classificationTemplateIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteClassificationTemplates(classificationTemplateIds)
 
 Delete classification Templates.
 
-Response is a set containing the ID&#x27;s of deleted classification Templates.
+Response is a set containing the ID&#39;s of deleted classification Templates.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
 val classificationTemplateIds : kotlin.String = classificationTemplateIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteClassificationTemplates(classificationTemplateIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassificationTemplates(classificationTemplateIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#deleteClassificationTemplates")
@@ -96,11 +100,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,7 +116,7 @@ Name | Type | Description  | Notes
 
 <a name="findClassificationTemplatesByHCPartyPatientForeignKeys"></a>
 # **findClassificationTemplatesByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;ClassificationTemplateDto&gt; findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;ClassificationTemplateDto&gt; findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 List classification Templates found By Healthcare Party and secret foreign keyelementIds.
 
@@ -118,14 +125,14 @@ Keys hast to delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<ClassificationTemplateDto> = apiInstance.findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<ClassificationTemplateDto> = apiInstance.findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#findClassificationTemplatesByHCPartyPatientForeignKeys")
@@ -145,11 +152,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
+[**kotlin.collections.List&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -165,8 +175,8 @@ Get a classification Template
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
 val classificationTemplateId : kotlin.String = classificationTemplateId_example // kotlin.String | 
@@ -194,7 +204,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -203,7 +216,7 @@ Name | Type | Description  | Notes
 
 <a name="getClassificationTemplateByIds"></a>
 # **getClassificationTemplateByIds**
-> kotlin.Array&lt;ClassificationTemplateDto&gt; getClassificationTemplateByIds(ids)
+> kotlin.collections.List&lt;ClassificationTemplateDto&gt; getClassificationTemplateByIds(ids)
 
 Get a list of classifications Templates
 
@@ -212,13 +225,13 @@ Ids are seperated by a coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
 val ids : kotlin.String = ids_example // kotlin.String | 
 try {
-    val result : kotlin.Array<ClassificationTemplateDto> = apiInstance.getClassificationTemplateByIds(ids)
+    val result : kotlin.collections.List<ClassificationTemplateDto> = apiInstance.getClassificationTemplateByIds(ids)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#getClassificationTemplateByIds")
@@ -237,11 +250,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
+[**kotlin.collections.List&lt;ClassificationTemplateDto&gt;**](ClassificationTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -259,8 +275,8 @@ Returns a list of classification templates.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | A label
@@ -282,9 +298,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **startKey** | **kotlin.String**| A label |
- **startDocumentId** | **kotlin.String**| An classification template document ID |
- **limit** | **kotlin.Int**| Number of rows |
+ **startKey** | **kotlin.String**| A label | [optional]
+ **startDocumentId** | **kotlin.String**| An classification template document ID | [optional]
+ **limit** | **kotlin.Int**| Number of rows | [optional]
 
 ### Return type
 
@@ -292,7 +308,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -301,7 +320,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyClassificationTemplate"></a>
 # **modifyClassificationTemplate**
-> ClassificationTemplateDto modifyClassificationTemplate(body)
+> ClassificationTemplateDto modifyClassificationTemplate(classificationTemplateDto)
 
 Modify a classification Template
 
@@ -310,13 +329,13 @@ Returns the modified classification Template.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val body : ClassificationTemplateDto =  // ClassificationTemplateDto | 
+val classificationTemplateDto : ClassificationTemplateDto =  // ClassificationTemplateDto | 
 try {
-    val result : ClassificationTemplateDto = apiInstance.modifyClassificationTemplate(body)
+    val result : ClassificationTemplateDto = apiInstance.modifyClassificationTemplate(classificationTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#modifyClassificationTemplate")
@@ -331,7 +350,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ClassificationTemplateDto**](ClassificationTemplateDto.md)|  |
+ **classificationTemplateDto** | [**ClassificationTemplateDto**](ClassificationTemplateDto.md)|  |
 
 ### Return type
 
@@ -339,7 +358,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -348,7 +370,7 @@ Name | Type | Description  | Notes
 
 <a name="newClassificationTemplateDelegations"></a>
 # **newClassificationTemplateDelegations**
-> ClassificationTemplateDto newClassificationTemplateDelegations(body, classificationTemplateId)
+> ClassificationTemplateDto newClassificationTemplateDelegations(classificationTemplateId, delegationDto)
 
 Delegates a classification Template to a healthcare party
 
@@ -357,14 +379,14 @@ It delegates a classification Template to a healthcare party (By current healthc
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationTemplateApi()
-val body : kotlin.Array<DelegationDto> =  // kotlin.Array<DelegationDto> | 
 val classificationTemplateId : kotlin.String = classificationTemplateId_example // kotlin.String | 
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
 try {
-    val result : ClassificationTemplateDto = apiInstance.newClassificationTemplateDelegations(body, classificationTemplateId)
+    val result : ClassificationTemplateDto = apiInstance.newClassificationTemplateDelegations(classificationTemplateId, delegationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling ClassificationTemplateApi#newClassificationTemplateDelegations")
@@ -379,8 +401,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;DelegationDto&gt;**](DelegationDto.md)|  |
  **classificationTemplateId** | **kotlin.String**|  |
+ **delegationDto** | [**kotlin.collections.List&lt;DelegationDto&gt;**](DelegationDto.md)|  |
 
 ### Return type
 
@@ -388,7 +410,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

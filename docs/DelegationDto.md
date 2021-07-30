@@ -1,9 +1,13 @@
+
 # DelegationDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**owner** | [**kotlin.String**](.md) |  |  [optional]
-**delegatedTo** | [**kotlin.String**](.md) |  |  [optional]
-**key** | [**kotlin.String**](.md) |  |  [optional]
-**tags** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
+**tags** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**owner** | **kotlin.String** |  |  [optional]
+**delegatedTo** | **kotlin.String** |  |  [optional]
+**key** | **kotlin.String** |  |  [optional]
+
+
+

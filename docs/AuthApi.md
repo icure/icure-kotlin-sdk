@@ -9,9 +9,10 @@ Method | HTTP request | Description
 [**logoutPost**](AuthApi.md#logoutPost) | **POST** /rest/v1/auth/logout | logout
 [**token**](AuthApi.md#token) | **GET** /rest/v1/auth/token/{method}/{path} | token
 
+
 <a name="login"></a>
 # **login**
-> AuthenticationResponse login(body)
+> AuthenticationResponse login(webSession)
 
 login
 
@@ -20,13 +21,13 @@ Login using username and password
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
-val body : WebSession =  // WebSession | 
+val webSession : WebSession =  // WebSession | 
 try {
-    val result : AuthenticationResponse = apiInstance.login(body)
+    val result : AuthenticationResponse = apiInstance.login(webSession)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AuthApi#login")
@@ -41,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**WebSession**](WebSession.md)|  | [optional]
+ **webSession** | [**WebSession**](WebSession.md)|  | [optional]
 
 ### Return type
 
@@ -49,7 +50,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -67,8 +71,8 @@ Logout
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
 try {
@@ -92,7 +96,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -110,8 +117,8 @@ Logout
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
 try {
@@ -135,7 +142,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -153,8 +163,8 @@ Get token for subsequent operation
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
 val method : kotlin.String = method_example // kotlin.String | 
@@ -184,7 +194,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

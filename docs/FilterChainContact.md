@@ -1,7 +1,11 @@
+
 # FilterChainContact
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**filter** | [**AbstractFilterDtoContact**](AbstractFilterDtoContact.md) |  |  [optional]
-**predicate** | [**Predicate**](Predicate.md) |  |  [optional]
+**filter** | [**AbstractFilterDtoContact**](AbstractFilterDtoContact.md) |  | 
+**predicate** | [**kotlin.Any**](.md) |  |  [optional]
+
+
+

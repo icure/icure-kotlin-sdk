@@ -11,9 +11,10 @@ Method | HTTP request | Description
 [**getKeywordsByUser**](KeywordApi.md#getKeywordsByUser) | **GET** /rest/v1/keyword/byUser/{userId} | Get keywords by user
 [**modifyKeyword**](KeywordApi.md#modifyKeyword) | **PUT** /rest/v1/keyword | Modify a keyword
 
+
 <a name="createKeyword"></a>
 # **createKeyword**
-> KeywordDto createKeyword(body)
+> KeywordDto createKeyword(keywordDto)
 
 Create a keyword with the current user
 
@@ -22,13 +23,13 @@ Returns an instance of created keyword.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val body : KeywordDto =  // KeywordDto | 
+val keywordDto : KeywordDto =  // KeywordDto | 
 try {
-    val result : KeywordDto = apiInstance.createKeyword(body)
+    val result : KeywordDto = apiInstance.createKeyword(keywordDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#createKeyword")
@@ -43,7 +44,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**KeywordDto**](KeywordDto.md)|  |
+ **keywordDto** | [**KeywordDto**](KeywordDto.md)|  |
 
 ### Return type
 
@@ -51,7 +52,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -60,22 +64,22 @@ Name | Type | Description  | Notes
 
 <a name="deleteKeywords"></a>
 # **deleteKeywords**
-> kotlin.Array&lt;DocIdentifier&gt; deleteKeywords(keywordIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteKeywords(keywordIds)
 
 Delete keywords.
 
-Response is a set containing the ID&#x27;s of deleted keywords.
+Response is a set containing the ID&#39;s of deleted keywords.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
 val keywordIds : kotlin.String = keywordIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteKeywords(keywordIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteKeywords(keywordIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#deleteKeywords")
@@ -94,11 +98,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -114,8 +121,8 @@ Get a keyword
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
 val keywordId : kotlin.String = keywordId_example // kotlin.String | 
@@ -143,7 +150,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -152,19 +162,19 @@ Name | Type | Description  | Notes
 
 <a name="getKeywords"></a>
 # **getKeywords**
-> kotlin.Array&lt;KeywordDto&gt; getKeywords()
+> kotlin.collections.List&lt;KeywordDto&gt; getKeywords()
 
 Gets all keywords
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
 try {
-    val result : kotlin.Array<KeywordDto> = apiInstance.getKeywords()
+    val result : kotlin.collections.List<KeywordDto> = apiInstance.getKeywords()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#getKeywords")
@@ -180,11 +190,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;KeywordDto&gt;**](KeywordDto.md)
+[**kotlin.collections.List&lt;KeywordDto&gt;**](KeywordDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -193,20 +206,20 @@ This endpoint does not need any parameter.
 
 <a name="getKeywordsByUser"></a>
 # **getKeywordsByUser**
-> kotlin.Array&lt;KeywordDto&gt; getKeywordsByUser(userId)
+> kotlin.collections.List&lt;KeywordDto&gt; getKeywordsByUser(userId)
 
 Get keywords by user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<KeywordDto> = apiInstance.getKeywordsByUser(userId)
+    val result : kotlin.collections.List<KeywordDto> = apiInstance.getKeywordsByUser(userId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#getKeywordsByUser")
@@ -225,11 +238,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;KeywordDto&gt;**](KeywordDto.md)
+[**kotlin.collections.List&lt;KeywordDto&gt;**](KeywordDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -238,7 +254,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyKeyword"></a>
 # **modifyKeyword**
-> KeywordDto modifyKeyword(body)
+> KeywordDto modifyKeyword(keywordDto)
 
 Modify a keyword
 
@@ -247,13 +263,13 @@ Returns the modified keyword.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val body : KeywordDto =  // KeywordDto | 
+val keywordDto : KeywordDto =  // KeywordDto | 
 try {
-    val result : KeywordDto = apiInstance.modifyKeyword(body)
+    val result : KeywordDto = apiInstance.modifyKeyword(keywordDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling KeywordApi#modifyKeyword")
@@ -268,7 +284,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**KeywordDto**](KeywordDto.md)|  |
+ **keywordDto** | [**KeywordDto**](KeywordDto.md)|  |
 
 ### Return type
 
@@ -276,7 +292,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

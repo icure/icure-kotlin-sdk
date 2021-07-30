@@ -1,27 +1,31 @@
+
 # ParagraphAgreementDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**timestamp** | [**kotlin.Long**](.md) |  |  [optional]
-**paragraph** | [**kotlin.String**](.md) |  |  [optional]
-**accepted** | [**kotlin.Boolean**](.md) |  |  [optional]
-**inTreatment** | [**kotlin.Boolean**](.md) |  |  [optional]
-**canceled** | [**kotlin.Boolean**](.md) |  |  [optional]
-**careProviderReference** | [**kotlin.String**](.md) |  |  [optional]
-**decisionReference** | [**kotlin.String**](.md) |  |  [optional]
-**start** | [**kotlin.Long**](.md) |  |  [optional]
-**end** | [**kotlin.Long**](.md) |  |  [optional]
-**cancelationDate** | [**kotlin.Long**](.md) |  |  [optional]
-**quantityValue** | [**kotlin.Double**](.md) |  |  [optional]
-**quantityUnit** | [**kotlin.String**](.md) |  |  [optional]
-**ioRequestReference** | [**kotlin.String**](.md) |  |  [optional]
-**responseType** | [**kotlin.String**](.md) |  |  [optional]
-**refusalJustification** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**](.md) |  |  [optional]
-**verses** | [**kotlin.Array&lt;kotlin.Long&gt;**](.md) |  |  [optional]
-**coverageType** | [**kotlin.String**](.md) |  |  [optional]
-**unitNumber** | [**kotlin.Double**](.md) |  |  [optional]
-**strength** | [**kotlin.Double**](.md) |  |  [optional]
-**strengthUnit** | [**kotlin.String**](.md) |  |  [optional]
-**agreementAppendices** | [**kotlin.Array&lt;AgreementAppendixDto&gt;**](AgreementAppendixDto.md) |  |  [optional]
-**documentId** | [**kotlin.String**](.md) |  |  [optional]
+**timestamp** | **kotlin.Long** |  |  [optional]
+**paragraph** | **kotlin.String** |  |  [optional]
+**accepted** | **kotlin.Boolean** |  |  [optional]
+**inTreatment** | **kotlin.Boolean** |  |  [optional]
+**canceled** | **kotlin.Boolean** |  |  [optional]
+**careProviderReference** | **kotlin.String** |  |  [optional]
+**decisionReference** | **kotlin.String** |  |  [optional]
+**start** | **kotlin.Long** |  |  [optional]
+**end** | **kotlin.Long** |  |  [optional]
+**cancelationDate** | **kotlin.Long** |  |  [optional]
+**quantityValue** | **kotlin.Double** |  |  [optional]
+**quantityUnit** | **kotlin.String** |  |  [optional]
+**ioRequestReference** | **kotlin.String** |  |  [optional]
+**responseType** | **kotlin.String** |  |  [optional]
+**refusalJustification** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
+**verses** | **kotlin.collections.Set&lt;kotlin.Long&gt;** |  |  [optional]
+**coverageType** | **kotlin.String** |  |  [optional]
+**unitNumber** | **kotlin.Double** |  |  [optional]
+**strength** | **kotlin.Double** |  |  [optional]
+**strengthUnit** | **kotlin.String** |  |  [optional]
+**agreementAppendices** | [**kotlin.collections.List&lt;AgreementAppendixDto&gt;**](AgreementAppendixDto.md) |  |  [optional]
+**documentId** | **kotlin.String** |  |  [optional]
+
+
+

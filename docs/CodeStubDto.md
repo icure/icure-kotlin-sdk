@@ -1,10 +1,15 @@
+
 # CodeStubDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  |  [optional]
-**type** | [**kotlin.String**](.md) |  |  [optional]
-**code** | [**kotlin.String**](.md) |  |  [optional]
-**version** | [**kotlin.String**](.md) |  |  [optional]
-**label** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**](.md) |  | 
+**id** | **kotlin.String** |  |  [optional]
+**context** | **kotlin.String** |  |  [optional]
+**type** | **kotlin.String** |  |  [optional]
+**code** | **kotlin.String** |  |  [optional]
+**version** | **kotlin.String** |  |  [optional]
+**label** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
+
+
+

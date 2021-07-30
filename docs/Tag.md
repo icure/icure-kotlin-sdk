@@ -1,7 +1,11 @@
+
 # Tag
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**kotlin.String**](.md) |  |  [optional]
-**tag** | [**kotlin.String**](.md) |  |  [optional]
+**type** | **kotlin.String** |  |  [optional]
+**tag** | **kotlin.String** |  |  [optional]
+
+
+

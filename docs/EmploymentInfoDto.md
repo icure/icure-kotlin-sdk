@@ -1,9 +1,13 @@
+
 # EmploymentInfoDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**startDate** | [**kotlin.Long**](.md) |  |  [optional]
-**endDate** | [**kotlin.Long**](.md) |  |  [optional]
+**startDate** | **kotlin.Long** |  |  [optional]
+**endDate** | **kotlin.Long** |  |  [optional]
 **professionType** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
 **employer** | [**EmployerDto**](EmployerDto.md) |  |  [optional]
+
+
+

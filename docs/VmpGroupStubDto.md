@@ -1,9 +1,13 @@
+
 # VmpGroupStubDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**code** | [**kotlin.String**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**code** | **kotlin.String** |  |  [optional]
 **name** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-**productId** | [**kotlin.String**](.md) |  |  [optional]
+**productId** | **kotlin.String** |  |  [optional]
+
+
+

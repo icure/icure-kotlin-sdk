@@ -1,7 +1,11 @@
+
 # MessageReadStatusDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**time** | [**kotlin.Long**](.md) |  |  [optional]
-**read** | [**kotlin.Boolean**](.md) |  | 
+**read** | **kotlin.Boolean** |  | 
+**time** | **kotlin.Long** |  |  [optional]
+
+
+

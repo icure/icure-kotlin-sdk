@@ -1,13 +1,17 @@
+
 # FinancialInstitutionInformationDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | [**kotlin.String**](.md) |  |  [optional]
-**key** | [**kotlin.String**](.md) |  |  [optional]
-**bankAccount** | [**kotlin.String**](.md) |  |  [optional]
-**bic** | [**kotlin.String**](.md) |  |  [optional]
-**proxyBankAccount** | [**kotlin.String**](.md) |  |  [optional]
-**proxyBic** | [**kotlin.String**](.md) |  |  [optional]
-**preferredFiiForPartners** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**encryptedSelf** | [**kotlin.String**](.md) |  |  [optional]
+**preferredFiiForPartners** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
+**name** | **kotlin.String** |  |  [optional]
+**key** | **kotlin.String** |  |  [optional]
+**bankAccount** | **kotlin.String** |  |  [optional]
+**bic** | **kotlin.String** |  |  [optional]
+**proxyBankAccount** | **kotlin.String** |  |  [optional]
+**proxyBic** | **kotlin.String** |  |  [optional]
+**encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
+
+
+

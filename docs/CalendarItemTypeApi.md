@@ -11,22 +11,23 @@ Method | HTTP request | Description
 [**getCalendarItemTypesIncludeDeleted**](CalendarItemTypeApi.md#getCalendarItemTypesIncludeDeleted) | **GET** /rest/v1/calendarItemType/includeDeleted | Gets all calendarItemTypes include deleted
 [**modifyCalendarItemType**](CalendarItemTypeApi.md#modifyCalendarItemType) | **PUT** /rest/v1/calendarItemType | Modifies an calendarItemType
 
+
 <a name="createCalendarItemType"></a>
 # **createCalendarItemType**
-> CalendarItemTypeDto createCalendarItemType(body)
+> CalendarItemTypeDto createCalendarItemType(calendarItemTypeDto)
 
 Creates a calendarItemType
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val body : CalendarItemTypeDto =  // CalendarItemTypeDto | 
+val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto | 
 try {
-    val result : CalendarItemTypeDto = apiInstance.createCalendarItemType(body)
+    val result : CalendarItemTypeDto = apiInstance.createCalendarItemType(calendarItemTypeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemTypeApi#createCalendarItemType")
@@ -41,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CalendarItemTypeDto**](CalendarItemTypeDto.md)|  |
+ **calendarItemTypeDto** | [**CalendarItemTypeDto**](CalendarItemTypeDto.md)|  |
 
 ### Return type
 
@@ -49,7 +50,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -58,20 +62,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteCalendarItemType"></a>
 # **deleteCalendarItemType**
-> kotlin.Array&lt;DocIdentifier&gt; deleteCalendarItemType(calendarItemTypeIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItemType(calendarItemTypeIds)
 
 Deletes an calendarItemType
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
 val calendarItemTypeIds : kotlin.String = calendarItemTypeIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteCalendarItemType(calendarItemTypeIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItemType(calendarItemTypeIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemTypeApi#deleteCalendarItemType")
@@ -90,11 +94,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -110,8 +117,8 @@ Gets an calendarItemType
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
 val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String | 
@@ -139,7 +146,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -148,19 +158,19 @@ Name | Type | Description  | Notes
 
 <a name="getCalendarItemTypes"></a>
 # **getCalendarItemTypes**
-> kotlin.Array&lt;CalendarItemTypeDto&gt; getCalendarItemTypes()
+> kotlin.collections.List&lt;CalendarItemTypeDto&gt; getCalendarItemTypes()
 
 Gets all calendarItemTypes
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
 try {
-    val result : kotlin.Array<CalendarItemTypeDto> = apiInstance.getCalendarItemTypes()
+    val result : kotlin.collections.List<CalendarItemTypeDto> = apiInstance.getCalendarItemTypes()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemTypeApi#getCalendarItemTypes")
@@ -176,11 +186,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemTypeDto&gt;**](CalendarItemTypeDto.md)
+[**kotlin.collections.List&lt;CalendarItemTypeDto&gt;**](CalendarItemTypeDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -189,19 +202,19 @@ This endpoint does not need any parameter.
 
 <a name="getCalendarItemTypesIncludeDeleted"></a>
 # **getCalendarItemTypesIncludeDeleted**
-> kotlin.Array&lt;CalendarItemTypeDto&gt; getCalendarItemTypesIncludeDeleted()
+> kotlin.collections.List&lt;CalendarItemTypeDto&gt; getCalendarItemTypesIncludeDeleted()
 
 Gets all calendarItemTypes include deleted
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
 try {
-    val result : kotlin.Array<CalendarItemTypeDto> = apiInstance.getCalendarItemTypesIncludeDeleted()
+    val result : kotlin.collections.List<CalendarItemTypeDto> = apiInstance.getCalendarItemTypesIncludeDeleted()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemTypeApi#getCalendarItemTypesIncludeDeleted")
@@ -217,11 +230,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemTypeDto&gt;**](CalendarItemTypeDto.md)
+[**kotlin.collections.List&lt;CalendarItemTypeDto&gt;**](CalendarItemTypeDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -230,20 +246,20 @@ This endpoint does not need any parameter.
 
 <a name="modifyCalendarItemType"></a>
 # **modifyCalendarItemType**
-> CalendarItemTypeDto modifyCalendarItemType(body)
+> CalendarItemTypeDto modifyCalendarItemType(calendarItemTypeDto)
 
 Modifies an calendarItemType
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val body : CalendarItemTypeDto =  // CalendarItemTypeDto | 
+val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto | 
 try {
-    val result : CalendarItemTypeDto = apiInstance.modifyCalendarItemType(body)
+    val result : CalendarItemTypeDto = apiInstance.modifyCalendarItemType(calendarItemTypeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemTypeApi#modifyCalendarItemType")
@@ -258,7 +274,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CalendarItemTypeDto**](CalendarItemTypeDto.md)|  |
+ **calendarItemTypeDto** | [**CalendarItemTypeDto**](CalendarItemTypeDto.md)|  |
 
 ### Return type
 
@@ -266,7 +282,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

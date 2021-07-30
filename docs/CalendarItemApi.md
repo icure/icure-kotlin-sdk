@@ -15,22 +15,23 @@ Method | HTTP request | Description
 [**modifyCalendarItem**](CalendarItemApi.md#modifyCalendarItem) | **PUT** /rest/v1/calendarItem | Modifies an calendarItem
 [**setCalendarItemsDelegations**](CalendarItemApi.md#setCalendarItemsDelegations) | **POST** /rest/v1/calendarItem/delegations | Update delegations in calendarItems
 
+
 <a name="createCalendarItem"></a>
 # **createCalendarItem**
-> CalendarItemDto createCalendarItem(body)
+> CalendarItemDto createCalendarItem(calendarItemDto)
 
 Creates a calendarItem
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val body : CalendarItemDto =  // CalendarItemDto | 
+val calendarItemDto : CalendarItemDto =  // CalendarItemDto | 
 try {
-    val result : CalendarItemDto = apiInstance.createCalendarItem(body)
+    val result : CalendarItemDto = apiInstance.createCalendarItem(calendarItemDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#createCalendarItem")
@@ -45,7 +46,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CalendarItemDto**](CalendarItemDto.md)|  |
+ **calendarItemDto** | [**CalendarItemDto**](CalendarItemDto.md)|  |
 
 ### Return type
 
@@ -53,7 +54,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -62,20 +66,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteCalendarItem"></a>
 # **deleteCalendarItem**
-> kotlin.Array&lt;DocIdentifier&gt; deleteCalendarItem(calendarItemIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteCalendarItem(calendarItemIds)
 
 Deletes an calendarItem
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 val calendarItemIds : kotlin.String = calendarItemIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteCalendarItem(calendarItemIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItem(calendarItemIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#deleteCalendarItem")
@@ -94,11 +98,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -107,21 +114,21 @@ Name | Type | Description  | Notes
 
 <a name="findCalendarItemsByHCPartyPatientForeignKeys"></a>
 # **findCalendarItemsByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;CalendarItemDto&gt; findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;CalendarItemDto&gt; findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 Find CalendarItems by hcparty and patient
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#findCalendarItemsByHCPartyPatientForeignKeys")
@@ -141,11 +148,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -161,8 +171,8 @@ Gets an calendarItem
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 val calendarItemId : kotlin.String = calendarItemId_example // kotlin.String | 
@@ -190,7 +200,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -199,19 +212,19 @@ Name | Type | Description  | Notes
 
 <a name="getCalendarItems"></a>
 # **getCalendarItems**
-> kotlin.Array&lt;CalendarItemDto&gt; getCalendarItems()
+> kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarItems()
 
 Gets all calendarItems
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.getCalendarItems()
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarItems()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#getCalendarItems")
@@ -227,11 +240,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -240,22 +256,22 @@ This endpoint does not need any parameter.
 
 <a name="getCalendarItemsByPeriodAndHcPartyId"></a>
 # **getCalendarItemsByPeriodAndHcPartyId**
-> kotlin.Array&lt;CalendarItemDto&gt; getCalendarItemsByPeriodAndHcPartyId(startDate, endDate, hcPartyId)
+> kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarItemsByPeriodAndHcPartyId(startDate, endDate, hcPartyId)
 
 Get CalendarItems by Period and HcPartyId
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 val startDate : kotlin.Long = 789 // kotlin.Long | 
 val endDate : kotlin.Long = 789 // kotlin.Long | 
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.getCalendarItemsByPeriodAndHcPartyId(startDate, endDate, hcPartyId)
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarItemsByPeriodAndHcPartyId(startDate, endDate, hcPartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#getCalendarItemsByPeriodAndHcPartyId")
@@ -276,11 +292,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -289,20 +308,20 @@ Name | Type | Description  | Notes
 
 <a name="getCalendarItemsWithIds"></a>
 # **getCalendarItemsWithIds**
-> kotlin.Array&lt;CalendarItemDto&gt; getCalendarItemsWithIds(body)
+> kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarItemsWithIds(listOfIdsDto)
 
 Get calendarItems by id
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.getCalendarItemsWithIds(body)
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarItemsWithIds(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#getCalendarItemsWithIds")
@@ -317,15 +336,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -334,22 +356,22 @@ Name | Type | Description  | Notes
 
 <a name="getCalendarsByPeriodAndAgendaId"></a>
 # **getCalendarsByPeriodAndAgendaId**
-> kotlin.Array&lt;CalendarItemDto&gt; getCalendarsByPeriodAndAgendaId(startDate, endDate, agendaId)
+> kotlin.collections.List&lt;CalendarItemDto&gt; getCalendarsByPeriodAndAgendaId(startDate, endDate, agendaId)
 
 Get CalendarItems by Period and AgendaId
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
 val startDate : kotlin.Long = 789 // kotlin.Long | 
 val endDate : kotlin.Long = 789 // kotlin.Long | 
 val agendaId : kotlin.String = agendaId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.getCalendarsByPeriodAndAgendaId(startDate, endDate, agendaId)
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarsByPeriodAndAgendaId(startDate, endDate, agendaId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#getCalendarsByPeriodAndAgendaId")
@@ -370,11 +392,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -383,20 +408,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyCalendarItem"></a>
 # **modifyCalendarItem**
-> CalendarItemDto modifyCalendarItem(body)
+> CalendarItemDto modifyCalendarItem(calendarItemDto)
 
 Modifies an calendarItem
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val body : CalendarItemDto =  // CalendarItemDto | 
+val calendarItemDto : CalendarItemDto =  // CalendarItemDto | 
 try {
-    val result : CalendarItemDto = apiInstance.modifyCalendarItem(body)
+    val result : CalendarItemDto = apiInstance.modifyCalendarItem(calendarItemDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#modifyCalendarItem")
@@ -411,7 +436,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CalendarItemDto**](CalendarItemDto.md)|  |
+ **calendarItemDto** | [**CalendarItemDto**](CalendarItemDto.md)|  |
 
 ### Return type
 
@@ -419,7 +444,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -428,20 +456,20 @@ Name | Type | Description  | Notes
 
 <a name="setCalendarItemsDelegations"></a>
 # **setCalendarItemsDelegations**
-> kotlin.Array&lt;CalendarItemDto&gt; setCalendarItemsDelegations(body)
+> kotlin.collections.List&lt;CalendarItemDto&gt; setCalendarItemsDelegations(icureStubDto)
 
 Update delegations in calendarItems
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val body : kotlin.Array<IcureStubDto> =  // kotlin.Array<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
 try {
-    val result : kotlin.Array<CalendarItemDto> = apiInstance.setCalendarItemsDelegations(body)
+    val result : kotlin.collections.List<CalendarItemDto> = apiInstance.setCalendarItemsDelegations(icureStubDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CalendarItemApi#setCalendarItemsDelegations")
@@ -456,15 +484,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)|  | [optional]
+ **icureStubDto** | [**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
+[**kotlin.collections.List&lt;CalendarItemDto&gt;**](CalendarItemDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -1,18 +1,23 @@
+
 # AmppComponentDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**from** | [**kotlin.Long**](.md) |  |  [optional]
-**to** | [**kotlin.Long**](.md) |  |  [optional]
+**from** | **kotlin.Long** |  |  [optional]
+**to** | **kotlin.Long** |  |  [optional]
 **contentType** | [**inline**](#ContentTypeEnum) |  |  [optional]
-**contentMultiplier** | [**kotlin.Int**](.md) |  |  [optional]
-**packSpecification** | [**kotlin.String**](.md) |  |  [optional]
+**contentMultiplier** | **kotlin.Int** |  |  [optional]
+**packSpecification** | **kotlin.String** |  |  [optional]
 **deviceType** | [**DeviceTypeDto**](DeviceTypeDto.md) |  |  [optional]
 **packagingType** | [**PackagingTypeDto**](PackagingTypeDto.md) |  |  [optional]
+
 
 <a name="ContentTypeEnum"></a>
 ## Enum: contentType
 Name | Value
 ---- | -----
 contentType | ACTIVE_COMPONENT, SOLVENT, DEVICE, EXCIPIENT
+
+
+

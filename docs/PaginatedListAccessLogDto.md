@@ -1,9 +1,13 @@
+
 # PaginatedListAccessLogDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**pageSize** | [**kotlin.Int**](.md) |  | 
-**totalSize** | [**kotlin.Int**](.md) |  | 
-**rows** | [**kotlin.Array&lt;AccessLogDto&gt;**](AccessLogDto.md) |  | 
+**pageSize** | **kotlin.Int** |  | 
+**totalSize** | **kotlin.Int** |  | 
+**rows** | [**kotlin.collections.List&lt;AccessLogDto&gt;**](AccessLogDto.md) |  | 
 **nextKeyPair** | [**PaginatedDocumentKeyIdPairObject**](PaginatedDocumentKeyIdPairObject.md) |  |  [optional]
+
+
+

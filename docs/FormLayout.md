@@ -1,14 +1,18 @@
+
 # FormLayout
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | [**kotlin.String**](.md) |  |  [optional]
-**width** | [**kotlin.Double**](.md) |  |  [optional]
-**height** | [**kotlin.Double**](.md) |  |  [optional]
-**descr** | [**kotlin.String**](.md) |  |  [optional]
+**name** | **kotlin.String** |  |  [optional]
+**width** | **kotlin.Double** |  |  [optional]
+**height** | **kotlin.Double** |  |  [optional]
+**descr** | **kotlin.String** |  |  [optional]
 **tag** | [**Tag**](Tag.md) |  |  [optional]
-**guid** | [**kotlin.String**](.md) |  |  [optional]
-**group** | [**kotlin.String**](.md) |  |  [optional]
-**sections** | [**kotlin.Array&lt;FormSection&gt;**](FormSection.md) |  |  [optional]
-**importedServiceXPaths** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  |  [optional]
+**guid** | **kotlin.String** |  |  [optional]
+**group** | **kotlin.String** |  |  [optional]
+**sections** | [**kotlin.collections.List&lt;FormSection&gt;**](FormSection.md) |  |  [optional]
+**importedServiceXPaths** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
+
+
+

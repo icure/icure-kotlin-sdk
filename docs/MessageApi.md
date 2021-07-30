@@ -18,27 +18,29 @@ Method | HTTP request | Description
 [**getChildrenMessagesOfList**](MessageApi.md#getChildrenMessagesOfList) | **POST** /rest/v1/message/children/batch | Get children messages of provided message
 [**getMessage**](MessageApi.md#getMessage) | **GET** /rest/v1/message/{messageId} | Gets a message
 [**listMessagesByInvoiceIds**](MessageApi.md#listMessagesByInvoiceIds) | **POST** /rest/v1/message/byInvoiceId | Get children messages of provided message
+[**listMessagesByTransportGuids**](MessageApi.md#listMessagesByTransportGuids) | **POST** /rest/v1/message/byTransportGuid/list | Get all messages for current HC Party and provided transportGuids
 [**modifyMessage**](MessageApi.md#modifyMessage) | **PUT** /rest/v1/message | Updates a message
 [**newMessageDelegations**](MessageApi.md#newMessageDelegations) | **PUT** /rest/v1/message/{messageId}/delegate | Adds a delegation to a message
 [**setMessagesReadStatus**](MessageApi.md#setMessagesReadStatus) | **PUT** /rest/v1/message/readstatus | Set read status for given list of messages
 [**setMessagesStatusBits**](MessageApi.md#setMessagesStatusBits) | **PUT** /rest/v1/message/status/{status} | Set status bits for given list of messages
 
+
 <a name="createMessage"></a>
 # **createMessage**
-> MessageDto createMessage(body)
+> MessageDto createMessage(messageDto)
 
 Creates a message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto | 
 try {
-    val result : MessageDto = apiInstance.createMessage(body)
+    val result : MessageDto = apiInstance.createMessage(messageDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#createMessage")
@@ -53,7 +55,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MessageDto**](MessageDto.md)|  |
+ **messageDto** | [**MessageDto**](MessageDto.md)|  |
 
 ### Return type
 
@@ -61,7 +63,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -77,8 +82,8 @@ Deletes a message delegation
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val messageId : kotlin.String = messageId_example // kotlin.String | 
@@ -108,7 +113,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -117,20 +125,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteMessages"></a>
 # **deleteMessages**
-> kotlin.Array&lt;DocIdentifier&gt; deleteMessages(messageIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteMessages(messageIds)
 
 Deletes multiple messages
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val messageIds : kotlin.String = messageIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteMessages(messageIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessages(messageIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#deleteMessages")
@@ -149,11 +157,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -162,20 +173,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteMessagesBatch"></a>
 # **deleteMessagesBatch**
-> kotlin.Array&lt;DocIdentifier&gt; deleteMessagesBatch(body)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteMessagesBatch(listOfIdsDto)
 
 Deletes multiple messages
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteMessagesBatch(body)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessagesBatch(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#deleteMessagesBatch")
@@ -190,15 +201,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -214,8 +228,8 @@ Get all messages (paginated) for current HC Party
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | 
@@ -247,7 +261,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -263,8 +280,8 @@ Get all messages (paginated) for current HC Party and provided from address
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val fromAddress : kotlin.String = fromAddress_example // kotlin.String | 
@@ -300,7 +317,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -309,7 +329,7 @@ Name | Type | Description  | Notes
 
 <a name="findMessagesByHCPartyPatientForeignKeys"></a>
 # **findMessagesByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;MessageDto&gt; findMessagesByHCPartyPatientForeignKeys(secretFKeys)
+> kotlin.collections.List&lt;MessageDto&gt; findMessagesByHCPartyPatientForeignKeys(secretFKeys)
 
 List messages found By Healthcare Party and secret foreign keys.
 
@@ -318,13 +338,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.findMessagesByHCPartyPatientForeignKeys(secretFKeys)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.findMessagesByHCPartyPatientForeignKeys(secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#findMessagesByHCPartyPatientForeignKeys")
@@ -343,11 +363,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -363,8 +386,8 @@ Get all messages (paginated) for current HC Party and provided to address
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val toAddress : kotlin.String = toAddress_example // kotlin.String | 
@@ -402,7 +425,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -418,8 +444,8 @@ Get all messages (paginated) for current HC Party and provided transportGuid
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val transportGuid : kotlin.String = transportGuid_example // kotlin.String | 
@@ -457,7 +483,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -473,8 +502,8 @@ Get all messages starting by a prefix between two date
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val from : kotlin.Long = 789 // kotlin.Long | 
@@ -514,7 +543,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -523,20 +555,20 @@ Name | Type | Description  | Notes
 
 <a name="getChildrenMessages"></a>
 # **getChildrenMessages**
-> kotlin.Array&lt;MessageDto&gt; getChildrenMessages(messageId)
+> kotlin.collections.List&lt;MessageDto&gt; getChildrenMessages(messageId)
 
 Get children messages of provided message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val messageId : kotlin.String = messageId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.getChildrenMessages(messageId)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.getChildrenMessages(messageId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#getChildrenMessages")
@@ -555,11 +587,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -568,20 +603,20 @@ Name | Type | Description  | Notes
 
 <a name="getChildrenMessagesOfList"></a>
 # **getChildrenMessagesOfList**
-> kotlin.Array&lt;MessageDto&gt; getChildrenMessagesOfList(body)
+> kotlin.collections.List&lt;MessageDto&gt; getChildrenMessagesOfList(listOfIdsDto)
 
 Get children messages of provided message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.getChildrenMessagesOfList(body)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.getChildrenMessagesOfList(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#getChildrenMessagesOfList")
@@ -596,15 +631,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -620,8 +658,8 @@ Gets a message
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
 val messageId : kotlin.String = messageId_example // kotlin.String | 
@@ -649,7 +687,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -658,20 +699,20 @@ Name | Type | Description  | Notes
 
 <a name="listMessagesByInvoiceIds"></a>
 # **listMessagesByInvoiceIds**
-> kotlin.Array&lt;MessageDto&gt; listMessagesByInvoiceIds(body)
+> kotlin.collections.List&lt;MessageDto&gt; listMessagesByInvoiceIds(listOfIdsDto)
 
 Get children messages of provided message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.listMessagesByInvoiceIds(body)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByInvoiceIds(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#listMessagesByInvoiceIds")
@@ -686,15 +727,68 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="listMessagesByTransportGuids"></a>
+# **listMessagesByTransportGuids**
+> kotlin.collections.List&lt;MessageDto&gt; listMessagesByTransportGuids(hcpId, listOfIdsDto)
+
+Get all messages for current HC Party and provided transportGuids
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = MessageApi()
+val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+try {
+    val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByTransportGuids(hcpId, listOfIdsDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling MessageApi#listMessagesByTransportGuids")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling MessageApi#listMessagesByTransportGuids")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **hcpId** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -703,20 +797,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyMessage"></a>
 # **modifyMessage**
-> MessageDto modifyMessage(body)
+> MessageDto modifyMessage(messageDto)
 
 Updates a message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto | 
 try {
-    val result : MessageDto = apiInstance.modifyMessage(body)
+    val result : MessageDto = apiInstance.modifyMessage(messageDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#modifyMessage")
@@ -731,7 +825,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MessageDto**](MessageDto.md)|  |
+ **messageDto** | [**MessageDto**](MessageDto.md)|  |
 
 ### Return type
 
@@ -739,7 +833,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -748,21 +845,21 @@ Name | Type | Description  | Notes
 
 <a name="newMessageDelegations"></a>
 # **newMessageDelegations**
-> IcureStubDto newMessageDelegations(body, messageId)
+> IcureStubDto newMessageDelegations(messageId, delegationDto)
 
 Adds a delegation to a message
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : kotlin.Array<DelegationDto> =  // kotlin.Array<DelegationDto> | 
 val messageId : kotlin.String = messageId_example // kotlin.String | 
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
 try {
-    val result : IcureStubDto = apiInstance.newMessageDelegations(body, messageId)
+    val result : IcureStubDto = apiInstance.newMessageDelegations(messageId, delegationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#newMessageDelegations")
@@ -777,8 +874,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;DelegationDto&gt;**](DelegationDto.md)|  |
  **messageId** | **kotlin.String**|  |
+ **delegationDto** | [**kotlin.collections.List&lt;DelegationDto&gt;**](DelegationDto.md)|  |
 
 ### Return type
 
@@ -786,7 +883,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -795,20 +895,20 @@ Name | Type | Description  | Notes
 
 <a name="setMessagesReadStatus"></a>
 # **setMessagesReadStatus**
-> kotlin.Array&lt;MessageDto&gt; setMessagesReadStatus(body)
+> kotlin.collections.List&lt;MessageDto&gt; setMessagesReadStatus(messagesReadStatusUpdate)
 
 Set read status for given list of messages
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : MessagesReadStatusUpdate =  // MessagesReadStatusUpdate | 
+val messagesReadStatusUpdate : MessagesReadStatusUpdate =  // MessagesReadStatusUpdate | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.setMessagesReadStatus(body)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.setMessagesReadStatus(messagesReadStatusUpdate)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#setMessagesReadStatus")
@@ -823,15 +923,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MessagesReadStatusUpdate**](MessagesReadStatusUpdate.md)|  |
+ **messagesReadStatusUpdate** | [**MessagesReadStatusUpdate**](MessagesReadStatusUpdate.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -840,21 +943,21 @@ Name | Type | Description  | Notes
 
 <a name="setMessagesStatusBits"></a>
 # **setMessagesStatusBits**
-> kotlin.Array&lt;MessageDto&gt; setMessagesStatusBits(body, status)
+> kotlin.collections.List&lt;MessageDto&gt; setMessagesStatusBits(status, listOfIdsDto)
 
 Set status bits for given list of messages
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
 val status : kotlin.Int = 56 // kotlin.Int | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<MessageDto> = apiInstance.setMessagesStatusBits(body, status)
+    val result : kotlin.collections.List<MessageDto> = apiInstance.setMessagesStatusBits(status, listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MessageApi#setMessagesStatusBits")
@@ -869,16 +972,19 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
  **status** | **kotlin.Int**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;MessageDto&gt;**](MessageDto.md)
+[**kotlin.collections.List&lt;MessageDto&gt;**](MessageDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

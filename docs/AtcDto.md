@@ -1,7 +1,11 @@
+
 # AtcDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | [**kotlin.String**](.md) |  |  [optional]
-**description** | [**kotlin.String**](.md) |  |  [optional]
+**code** | **kotlin.String** |  |  [optional]
+**description** | **kotlin.String** |  |  [optional]
+
+
+

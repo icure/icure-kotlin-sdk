@@ -12,22 +12,23 @@ Method | HTTP request | Description
 [**listAccessLogs**](AccesslogApi.md#listAccessLogs) | **GET** /rest/v1/accesslog | Lists access logs
 [**modifyAccessLog**](AccesslogApi.md#modifyAccessLog) | **PUT** /rest/v1/accesslog | Modifies an access log
 
+
 <a name="createAccessLog"></a>
 # **createAccessLog**
-> AccessLogDto createAccessLog(body)
+> AccessLogDto createAccessLog(accessLogDto)
 
 Creates an access log
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
-val body : AccessLogDto =  // AccessLogDto | 
+val accessLogDto : AccessLogDto =  // AccessLogDto | 
 try {
-    val result : AccessLogDto = apiInstance.createAccessLog(body)
+    val result : AccessLogDto = apiInstance.createAccessLog(accessLogDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AccesslogApi#createAccessLog")
@@ -42,7 +43,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**AccessLogDto**](AccessLogDto.md)|  |
+ **accessLogDto** | [**AccessLogDto**](AccessLogDto.md)|  |
 
 ### Return type
 
@@ -50,7 +51,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -59,20 +63,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteAccessLog"></a>
 # **deleteAccessLog**
-> kotlin.Array&lt;DocIdentifier&gt; deleteAccessLog(accessLogIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteAccessLog(accessLogIds)
 
 Deletes an access log
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
 val accessLogIds : kotlin.String = accessLogIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteAccessLog(accessLogIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAccessLog(accessLogIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AccesslogApi#deleteAccessLog")
@@ -91,11 +95,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -104,21 +111,21 @@ Name | Type | Description  | Notes
 
 <a name="findAccessLogsByHCPartyPatientForeignKeys"></a>
 # **findAccessLogsByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;AccessLogDto&gt; findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;AccessLogDto&gt; findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 List access logs found By Healthcare Party and secret foreign keyelementIds.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<AccessLogDto> = apiInstance.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<AccessLogDto> = apiInstance.findAccessLogsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AccesslogApi#findAccessLogsByHCPartyPatientForeignKeys")
@@ -138,11 +145,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;AccessLogDto&gt;**](AccessLogDto.md)
+[**kotlin.collections.List&lt;AccessLogDto&gt;**](AccessLogDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -158,8 +168,8 @@ Get Paginated List of Access logs
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
 val userId : kotlin.String = userId_example // kotlin.String | A User ID
@@ -199,7 +209,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -215,8 +228,8 @@ Gets an access log
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
 val accessLogId : kotlin.String = accessLogId_example // kotlin.String | 
@@ -244,7 +257,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -260,8 +276,8 @@ Lists access logs
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
 val fromEpoch : kotlin.Long = 789 // kotlin.Long | 
@@ -299,7 +315,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -308,20 +327,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyAccessLog"></a>
 # **modifyAccessLog**
-> AccessLogDto modifyAccessLog(body)
+> AccessLogDto modifyAccessLog(accessLogDto)
 
 Modifies an access log
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = AccesslogApi()
-val body : AccessLogDto =  // AccessLogDto | 
+val accessLogDto : AccessLogDto =  // AccessLogDto | 
 try {
-    val result : AccessLogDto = apiInstance.modifyAccessLog(body)
+    val result : AccessLogDto = apiInstance.modifyAccessLog(accessLogDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AccesslogApi#modifyAccessLog")
@@ -336,7 +355,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**AccessLogDto**](AccessLogDto.md)|  |
+ **accessLogDto** | [**AccessLogDto**](AccessLogDto.md)|  |
 
 ### Return type
 
@@ -344,7 +363,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

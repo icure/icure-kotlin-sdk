@@ -11,22 +11,23 @@ Method | HTTP request | Description
 [**getTimeTablesByPeriodAndAgendaId**](TimeTableApi.md#getTimeTablesByPeriodAndAgendaId) | **POST** /rest/v1/timeTable/byPeriodAndAgendaId | Get TimeTables by Period and AgendaId
 [**modifyTimeTable**](TimeTableApi.md#modifyTimeTable) | **PUT** /rest/v1/timeTable | Modifies an timeTable
 
+
 <a name="createTimeTable"></a>
 # **createTimeTable**
-> TimeTableDto createTimeTable(body)
+> TimeTableDto createTimeTable(timeTableDto)
 
 Creates a timeTable
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val body : TimeTableDto =  // TimeTableDto | 
+val timeTableDto : TimeTableDto =  // TimeTableDto | 
 try {
-    val result : TimeTableDto = apiInstance.createTimeTable(body)
+    val result : TimeTableDto = apiInstance.createTimeTable(timeTableDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#createTimeTable")
@@ -41,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**TimeTableDto**](TimeTableDto.md)|  |
+ **timeTableDto** | [**TimeTableDto**](TimeTableDto.md)|  |
 
 ### Return type
 
@@ -49,7 +50,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -58,20 +62,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteTimeTable"></a>
 # **deleteTimeTable**
-> kotlin.Array&lt;DocIdentifier&gt; deleteTimeTable(timeTableIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteTimeTable(timeTableIds)
 
 Deletes an timeTable
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
 val timeTableIds : kotlin.String = timeTableIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteTimeTable(timeTableIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteTimeTable(timeTableIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#deleteTimeTable")
@@ -90,11 +94,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -110,8 +117,8 @@ Gets a timeTable
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
 val timeTableId : kotlin.String = timeTableId_example // kotlin.String | 
@@ -139,7 +146,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -148,20 +158,20 @@ Name | Type | Description  | Notes
 
 <a name="getTimeTablesByAgendaId"></a>
 # **getTimeTablesByAgendaId**
-> kotlin.Array&lt;TimeTableDto&gt; getTimeTablesByAgendaId(agendaId)
+> kotlin.collections.List&lt;TimeTableDto&gt; getTimeTablesByAgendaId(agendaId)
 
 Get TimeTables by AgendaId
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
 val agendaId : kotlin.String = agendaId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<TimeTableDto> = apiInstance.getTimeTablesByAgendaId(agendaId)
+    val result : kotlin.collections.List<TimeTableDto> = apiInstance.getTimeTablesByAgendaId(agendaId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#getTimeTablesByAgendaId")
@@ -180,11 +190,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;TimeTableDto&gt;**](TimeTableDto.md)
+[**kotlin.collections.List&lt;TimeTableDto&gt;**](TimeTableDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -193,22 +206,22 @@ Name | Type | Description  | Notes
 
 <a name="getTimeTablesByPeriodAndAgendaId"></a>
 # **getTimeTablesByPeriodAndAgendaId**
-> kotlin.Array&lt;TimeTableDto&gt; getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)
+> kotlin.collections.List&lt;TimeTableDto&gt; getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)
 
 Get TimeTables by Period and AgendaId
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
 val startDate : kotlin.Long = 789 // kotlin.Long | 
 val endDate : kotlin.Long = 789 // kotlin.Long | 
 val agendaId : kotlin.String = agendaId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<TimeTableDto> = apiInstance.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)
+    val result : kotlin.collections.List<TimeTableDto> = apiInstance.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#getTimeTablesByPeriodAndAgendaId")
@@ -229,11 +242,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;TimeTableDto&gt;**](TimeTableDto.md)
+[**kotlin.collections.List&lt;TimeTableDto&gt;**](TimeTableDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -242,20 +258,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyTimeTable"></a>
 # **modifyTimeTable**
-> TimeTableDto modifyTimeTable(body)
+> TimeTableDto modifyTimeTable(timeTableDto)
 
 Modifies an timeTable
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val body : TimeTableDto =  // TimeTableDto | 
+val timeTableDto : TimeTableDto =  // TimeTableDto | 
 try {
-    val result : TimeTableDto = apiInstance.modifyTimeTable(body)
+    val result : TimeTableDto = apiInstance.modifyTimeTable(timeTableDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TimeTableApi#modifyTimeTable")
@@ -270,7 +286,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**TimeTableDto**](TimeTableDto.md)|  |
+ **timeTableDto** | [**TimeTableDto**](TimeTableDto.md)|  |
 
 ### Return type
 
@@ -278,7 +294,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

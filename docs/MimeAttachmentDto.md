@@ -1,8 +1,12 @@
+
 # MimeAttachmentDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**&#x60;data&#x60;** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md) |  |  [optional]
-**fileName** | [**kotlin.String**](.md) |  |  [optional]
-**mimeType** | [**kotlin.String**](.md) |  |  [optional]
+**data** | **kotlin.collections.List&lt;kotlin.ByteArray&gt;** |  |  [optional]
+**fileName** | **kotlin.String** |  |  [optional]
+**mimeType** | **kotlin.String** |  |  [optional]
+
+
+

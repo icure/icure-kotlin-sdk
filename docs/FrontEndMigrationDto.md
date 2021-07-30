@@ -1,23 +1,29 @@
+
 # FrontEndMigrationDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**rev** | [**kotlin.String**](.md) |  |  [optional]
-**deletionDate** | [**kotlin.Long**](.md) |  |  [optional]
-**name** | [**kotlin.String**](.md) |  |  [optional]
-**startDate** | [**kotlin.Long**](.md) |  |  [optional]
-**endDate** | [**kotlin.Long**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**properties** | [**kotlin.collections.Set&lt;PropertyStubDto&gt;**](PropertyStubDto.md) | Extra properties for the fem. Those properties are typed (see class Property) | 
+**rev** | **kotlin.String** |  |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**name** | **kotlin.String** |  |  [optional]
+**startDate** | **kotlin.Long** |  |  [optional]
+**endDate** | **kotlin.Long** |  |  [optional]
 **status** | [**inline**](#StatusEnum) |  |  [optional]
-**logs** | [**kotlin.String**](.md) |  |  [optional]
-**userId** | [**kotlin.String**](.md) |  |  [optional]
-**startKey** | [**kotlin.String**](.md) |  |  [optional]
-**startKeyDocId** | [**kotlin.String**](.md) |  |  [optional]
-**processCount** | [**kotlin.Long**](.md) |  |  [optional]
+**logs** | **kotlin.String** |  |  [optional]
+**userId** | **kotlin.String** |  |  [optional]
+**startKey** | **kotlin.String** |  |  [optional]
+**startKeyDocId** | **kotlin.String** |  |  [optional]
+**processCount** | **kotlin.Long** |  |  [optional]
+
 
 <a name="StatusEnum"></a>
 ## Enum: status
 Name | Value
 ---- | -----
-status | STARTED, ERROR, SUCCESS
+status | STARTED, PAUSED, ERROR, SUCCESS
+
+
+

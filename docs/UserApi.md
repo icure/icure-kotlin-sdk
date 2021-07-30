@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**modifyUser**](UserApi.md#modifyUser) | **PUT** /rest/v1/user | Modify a user.
 [**modifyUserInGroup**](UserApi.md#modifyUserInGroup) | **PUT** /rest/v1/user/inGroup/{groupId} | Modify a user.
 
+
 <a name="assignHealthcareParty"></a>
 # **assignHealthcareParty**
 > UserDto assignHealthcareParty(healthcarePartyId)
@@ -35,8 +36,8 @@ UserDto gets returned.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
@@ -64,7 +65,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -80,8 +84,8 @@ Name | Type | Description  | Notes
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val password : kotlin.String = password_example // kotlin.String | 
@@ -109,7 +113,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -118,22 +125,22 @@ Name | Type | Description  | Notes
 
 <a name="createUser"></a>
 # **createUser**
-> UserDto createUser(body)
+> UserDto createUser(userDto)
 
 Create a user
 
-Create a user. HealthcareParty ID should be set. Email has to be set and the Login has to be null. On server-side, Email will be used for Login.
+Create a user. HealthcareParty ID should be set. Email or Login have to be set. If login hasn&#39;t been set, Email will be used for Login instead.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : UserDto =  // UserDto | 
+val userDto : UserDto =  // UserDto | 
 try {
-    val result : UserDto = apiInstance.createUser(body)
+    val result : UserDto = apiInstance.createUser(userDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#createUser")
@@ -148,7 +155,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**UserDto**](UserDto.md)|  |
+ **userDto** | [**UserDto**](UserDto.md)|  |
 
 ### Return type
 
@@ -156,7 +163,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -165,7 +175,7 @@ Name | Type | Description  | Notes
 
 <a name="createUserInGroup"></a>
 # **createUserInGroup**
-> UserDto createUserInGroup(body, groupId)
+> UserDto createUserInGroup(groupId, userDto)
 
 Create a user
 
@@ -174,14 +184,14 @@ Create a user. HealthcareParty ID should be set. Email has to be set and the Log
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : UserDto =  // UserDto | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
+val userDto : UserDto =  // UserDto | 
 try {
-    val result : UserDto = apiInstance.createUserInGroup(body, groupId)
+    val result : UserDto = apiInstance.createUserInGroup(groupId, userDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#createUserInGroup")
@@ -196,8 +206,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**UserDto**](UserDto.md)|  |
  **groupId** | **kotlin.String**|  |
+ **userDto** | [**UserDto**](UserDto.md)|  |
 
 ### Return type
 
@@ -205,7 +215,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -223,8 +236,8 @@ Delete a User based on his/her ID. The return value is an array containing the I
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
@@ -252,7 +265,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -261,7 +277,7 @@ Name | Type | Description  | Notes
 
 <a name="deleteUserInGroup"></a>
 # **deleteUserInGroup**
-> Unit deleteUserInGroup(groupId, userId)
+> kotlin.Any deleteUserInGroup(groupId, userId)
 
 Delete a User based on his/her ID.
 
@@ -270,14 +286,14 @@ Delete a User based on his/her ID. The return value is an array containing the I
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 val userId : kotlin.String = userId_example // kotlin.String | 
 try {
-    val result : Unit = apiInstance.deleteUserInGroup(groupId, userId)
+    val result : kotlin.Any = apiInstance.deleteUserInGroup(groupId, userId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#deleteUserInGroup")
@@ -297,11 +313,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.Any**](kotlin.Any.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -317,8 +336,8 @@ Name | Type | Description  | Notes
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val password : kotlin.String = password_example // kotlin.String | 
@@ -346,7 +365,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -355,20 +377,20 @@ Name | Type | Description  | Notes
 
 <a name="findByHcpartyId"></a>
 # **findByHcpartyId**
-> kotlin.Array&lt;kotlin.String&gt; findByHcpartyId(id)
+> kotlin.collections.List&lt;kotlin.String&gt; findByHcpartyId(id)
 
 Get the list of users by healthcare party id
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : kotlin.Array<kotlin.String> = apiInstance.findByHcpartyId(id)
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.findByHcpartyId(id)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#findByHcpartyId")
@@ -387,11 +409,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.Array&lt;kotlin.String&gt;**
+**kotlin.collections.List&lt;kotlin.String&gt;**
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -400,21 +425,21 @@ Name | Type | Description  | Notes
 
 <a name="forgottenPassword"></a>
 # **forgottenPassword**
-> kotlin.Boolean forgottenPassword(body, email)
+> kotlin.Boolean forgottenPassword(email, emailTemplateDto)
 
 Send a forgotten email message to an user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : EmailTemplateDto =  // EmailTemplateDto | 
 val email : kotlin.String = email_example // kotlin.String | the email of the user 
+val emailTemplateDto : EmailTemplateDto =  // EmailTemplateDto | 
 try {
-    val result : kotlin.Boolean = apiInstance.forgottenPassword(body, email)
+    val result : kotlin.Boolean = apiInstance.forgottenPassword(email, emailTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#forgottenPassword")
@@ -429,8 +454,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**EmailTemplateDto**](EmailTemplateDto.md)|  |
  **email** | **kotlin.String**| the email of the user  |
+ **emailTemplateDto** | [**EmailTemplateDto**](EmailTemplateDto.md)|  |
 
 ### Return type
 
@@ -438,7 +463,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -456,8 +484,8 @@ Get current user.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 try {
@@ -481,7 +509,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -499,8 +530,8 @@ Get current user.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 try {
@@ -524,7 +555,10 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -533,7 +567,7 @@ This endpoint does not need any parameter.
 
 <a name="getMatchingUsers"></a>
 # **getMatchingUsers**
-> kotlin.Array&lt;UserGroupDto&gt; getMatchingUsers()
+> kotlin.collections.List&lt;UserGroupDto&gt; getMatchingUsers()
 
 Get presently logged-in user.
 
@@ -542,12 +576,12 @@ Get current user.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 try {
-    val result : kotlin.Array<UserGroupDto> = apiInstance.getMatchingUsers()
+    val result : kotlin.collections.List<UserGroupDto> = apiInstance.getMatchingUsers()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#getMatchingUsers")
@@ -563,11 +597,14 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Array&lt;UserGroupDto&gt;**](UserGroupDto.md)
+[**kotlin.collections.List&lt;UserGroupDto&gt;**](UserGroupDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -585,8 +622,8 @@ General information about the user
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
@@ -614,7 +651,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -632,8 +672,8 @@ General information about the user
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val email : kotlin.String = email_example // kotlin.String | 
@@ -661,7 +701,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -679,8 +722,8 @@ Returns a list of users.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val startKey : kotlin.String = startKey_example // kotlin.String | An user email
@@ -712,7 +755,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -730,8 +776,8 @@ Returns a list of users.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | 
@@ -765,7 +811,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -774,7 +823,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyProperties"></a>
 # **modifyProperties**
-> UserDto modifyProperties(body, userId)
+> UserDto modifyProperties(userId, propertyStubDto)
 
 Modify a User property
 
@@ -783,14 +832,14 @@ Modify a User properties based on his/her ID. The return value is the modified u
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : kotlin.Array<PropertyStubDto> =  // kotlin.Array<PropertyStubDto> | 
 val userId : kotlin.String = userId_example // kotlin.String | 
+val propertyStubDto : kotlin.collections.List<PropertyStubDto> =  // kotlin.collections.List<PropertyStubDto> | 
 try {
-    val result : UserDto = apiInstance.modifyProperties(body, userId)
+    val result : UserDto = apiInstance.modifyProperties(userId, propertyStubDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#modifyProperties")
@@ -805,8 +854,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;PropertyStubDto&gt;**](PropertyStubDto.md)|  |
  **userId** | **kotlin.String**|  |
+ **propertyStubDto** | [**kotlin.collections.List&lt;PropertyStubDto&gt;**](PropertyStubDto.md)|  | [optional]
 
 ### Return type
 
@@ -814,7 +863,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -823,22 +875,22 @@ Name | Type | Description  | Notes
 
 <a name="modifyUser"></a>
 # **modifyUser**
-> UserDto modifyUser(body)
+> UserDto modifyUser(userDto)
 
 Modify a user.
 
-No particular return value. It&#x27;s just a message.
+No particular return value. It&#39;s just a message.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : UserDto =  // UserDto | 
+val userDto : UserDto =  // UserDto | 
 try {
-    val result : UserDto = apiInstance.modifyUser(body)
+    val result : UserDto = apiInstance.modifyUser(userDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#modifyUser")
@@ -853,7 +905,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**UserDto**](UserDto.md)|  |
+ **userDto** | [**UserDto**](UserDto.md)|  |
 
 ### Return type
 
@@ -861,7 +913,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -870,23 +925,23 @@ Name | Type | Description  | Notes
 
 <a name="modifyUserInGroup"></a>
 # **modifyUserInGroup**
-> UserDto modifyUserInGroup(body, groupId)
+> UserDto modifyUserInGroup(groupId, userDto)
 
 Modify a user.
 
-No particular return value. It&#x27;s just a message.
+No particular return value. It&#39;s just a message.
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val body : UserDto =  // UserDto | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
+val userDto : UserDto =  // UserDto | 
 try {
-    val result : UserDto = apiInstance.modifyUserInGroup(body, groupId)
+    val result : UserDto = apiInstance.modifyUserInGroup(groupId, userDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling UserApi#modifyUserInGroup")
@@ -901,8 +956,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**UserDto**](UserDto.md)|  |
  **groupId** | **kotlin.String**|  |
+ **userDto** | [**UserDto**](UserDto.md)|  |
 
 ### Return type
 
@@ -910,7 +965,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

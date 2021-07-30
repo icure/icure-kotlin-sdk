@@ -1,12 +1,16 @@
+
 # WebSession
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  |  [optional]
-**attributes** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;**](.md) |  |  [optional]
-**started** | [**kotlin.Boolean**](.md) |  |  [optional]
-**expired** | [**kotlin.Boolean**](.md) |  |  [optional]
-**creationTime** | [**kotlin.Long**](.md) |  |  [optional]
-**lastAccessTime** | [**kotlin.Long**](.md) |  |  [optional]
+**id** | **kotlin.String** |  |  [optional]
+**attributes** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;**](kotlin.Any.md) |  |  [optional]
+**started** | **kotlin.Boolean** |  |  [optional]
+**expired** | **kotlin.Boolean** |  |  [optional]
+**creationTime** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) |  |  [optional]
+**lastAccessTime** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) |  |  [optional]
 **maxIdleTime** | [**WebSessionMaxIdleTime**](WebSessionMaxIdleTime.md) |  |  [optional]
+
+
+

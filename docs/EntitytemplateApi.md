@@ -7,14 +7,17 @@ Method | HTTP request | Description
 [**createEntityTemplate**](EntitytemplateApi.md#createEntityTemplate) | **POST** /rest/v1/entitytemplate | Create a EntityTemplate
 [**deleteEntityTemplate**](EntitytemplateApi.md#deleteEntityTemplate) | **DELETE** /rest/v1/entitytemplate/{entityTemplateIds} | Delete entity templates
 [**findAllEntityTemplates**](EntitytemplateApi.md#findAllEntityTemplates) | **GET** /rest/v1/entitytemplate/findAll/{type} | Finding entityTemplates by entityTemplate, type and version with pagination.
+[**findAllEntityTemplatesByKeyword**](EntitytemplateApi.md#findAllEntityTemplatesByKeyword) | **GET** /rest/v1/entitytemplate/findAll/{type}/keyword/{keyword} | Finding entityTemplates by entityTemplate, type and version with pagination.
 [**findEntityTemplates**](EntitytemplateApi.md#findEntityTemplates) | **GET** /rest/v1/entitytemplate/find/{userId}/{type} | Finding entityTemplates by userId, entityTemplate, type and version with pagination.
+[**findEntityTemplatesByKeyword**](EntitytemplateApi.md#findEntityTemplatesByKeyword) | **GET** /rest/v1/entitytemplate/find/{userId}/{type}/keyword/{keyword} | Finding entityTemplates by userId, type and keyword.
 [**getEntityTemplate**](EntitytemplateApi.md#getEntityTemplate) | **GET** /rest/v1/entitytemplate/{entityTemplateId} | Get a entityTemplate
 [**getEntityTemplates**](EntitytemplateApi.md#getEntityTemplates) | **GET** /rest/v1/entitytemplate/byIds/{entityTemplateIds} | Get a list of entityTemplates by ids
 [**modifyEntityTemplate**](EntitytemplateApi.md#modifyEntityTemplate) | **PUT** /rest/v1/entitytemplate | Modify a entityTemplate
 
+
 <a name="createEntityTemplate"></a>
 # **createEntityTemplate**
-> EntityTemplateDto createEntityTemplate(body)
+> EntityTemplateDto createEntityTemplate(entityTemplateDto)
 
 Create a EntityTemplate
 
@@ -23,13 +26,13 @@ Type, EntityTemplate and Version are required.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
-val body : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
 try {
-    val result : EntityTemplateDto = apiInstance.createEntityTemplate(body)
+    val result : EntityTemplateDto = apiInstance.createEntityTemplate(entityTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#createEntityTemplate")
@@ -44,7 +47,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
+ **entityTemplateDto** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
 
 ### Return type
 
@@ -52,7 +55,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -61,20 +67,20 @@ Name | Type | Description  | Notes
 
 <a name="deleteEntityTemplate"></a>
 # **deleteEntityTemplate**
-> kotlin.Array&lt;DocIdentifier&gt; deleteEntityTemplate(entityTemplateIds)
+> kotlin.collections.List&lt;DocIdentifier&gt; deleteEntityTemplate(entityTemplateIds)
 
 Delete entity templates
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
 val entityTemplateIds : kotlin.String = entityTemplateIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<DocIdentifier> = apiInstance.deleteEntityTemplate(entityTemplateIds)
+    val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteEntityTemplate(entityTemplateIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#deleteEntityTemplate")
@@ -93,11 +99,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;DocIdentifier&gt;**](DocIdentifier.md)
+[**kotlin.collections.List&lt;DocIdentifier&gt;**](DocIdentifier.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -106,7 +115,7 @@ Name | Type | Description  | Notes
 
 <a name="findAllEntityTemplates"></a>
 # **findAllEntityTemplates**
-> kotlin.Array&lt;EntityTemplateDto&gt; findAllEntityTemplates(type, searchString, includeEntities)
+> kotlin.collections.List&lt;EntityTemplate&gt; findAllEntityTemplates(type, searchString, includeEntities)
 
 Finding entityTemplates by entityTemplate, type and version with pagination.
 
@@ -115,15 +124,15 @@ Returns a list of entityTemplates matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
 val type : kotlin.String = type_example // kotlin.String | 
 val searchString : kotlin.String = searchString_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<EntityTemplateDto> = apiInstance.findAllEntityTemplates(type, searchString, includeEntities)
+    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findAllEntityTemplates(type, searchString, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findAllEntityTemplates")
@@ -144,11 +153,68 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
+[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findAllEntityTemplatesByKeyword"></a>
+# **findAllEntityTemplatesByKeyword**
+> kotlin.collections.List&lt;EntityTemplate&gt; findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
+
+Finding entityTemplates by entityTemplate, type and version with pagination.
+
+Returns a list of entityTemplates matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = EntitytemplateApi()
+val type : kotlin.String = type_example // kotlin.String | 
+val keyword : kotlin.String = keyword_example // kotlin.String | 
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling EntitytemplateApi#findAllEntityTemplatesByKeyword")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling EntitytemplateApi#findAllEntityTemplatesByKeyword")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **type** | **kotlin.String**|  |
+ **keyword** | **kotlin.String**|  |
+ **includeEntities** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -157,7 +223,7 @@ Name | Type | Description  | Notes
 
 <a name="findEntityTemplates"></a>
 # **findEntityTemplates**
-> kotlin.Array&lt;EntityTemplateDto&gt; findEntityTemplates(userId, type, searchString, includeEntities)
+> kotlin.collections.List&lt;EntityTemplate&gt; findEntityTemplates(userId, type, searchString, includeEntities)
 
 Finding entityTemplates by userId, entityTemplate, type and version with pagination.
 
@@ -166,8 +232,8 @@ Returns a list of entityTemplates matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
 val userId : kotlin.String = userId_example // kotlin.String | 
@@ -175,7 +241,7 @@ val type : kotlin.String = type_example // kotlin.String |
 val searchString : kotlin.String = searchString_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<EntityTemplateDto> = apiInstance.findEntityTemplates(userId, type, searchString, includeEntities)
+    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findEntityTemplates(userId, type, searchString, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findEntityTemplates")
@@ -197,11 +263,70 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
+[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="findEntityTemplatesByKeyword"></a>
+# **findEntityTemplatesByKeyword**
+> kotlin.collections.List&lt;EntityTemplate&gt; findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
+
+Finding entityTemplates by userId, type and keyword.
+
+Returns a list of entityTemplates matched with given input.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = EntitytemplateApi()
+val userId : kotlin.String = userId_example // kotlin.String | 
+val type : kotlin.String = type_example // kotlin.String | 
+val keyword : kotlin.String = keyword_example // kotlin.String | 
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+try {
+    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling EntitytemplateApi#findEntityTemplatesByKeyword")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling EntitytemplateApi#findEntityTemplatesByKeyword")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **kotlin.String**|  |
+ **type** | **kotlin.String**|  |
+ **keyword** | **kotlin.String**|  |
+ **includeEntities** | **kotlin.Boolean**|  | [optional]
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -219,8 +344,8 @@ Get a entityTemplate based on ID or (entityTemplate,type,version) as query strin
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
 val entityTemplateId : kotlin.String = entityTemplateId_example // kotlin.String | EntityTemplate id
@@ -248,7 +373,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -257,7 +385,7 @@ Name | Type | Description  | Notes
 
 <a name="getEntityTemplates"></a>
 # **getEntityTemplates**
-> kotlin.Array&lt;EntityTemplateDto&gt; getEntityTemplates(entityTemplateIds)
+> kotlin.collections.List&lt;EntityTemplateDto&gt; getEntityTemplates(entityTemplateIds)
 
 Get a list of entityTemplates by ids
 
@@ -266,13 +394,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
 val entityTemplateIds : kotlin.String = entityTemplateIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<EntityTemplateDto> = apiInstance.getEntityTemplates(entityTemplateIds)
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.getEntityTemplates(entityTemplateIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#getEntityTemplates")
@@ -291,11 +419,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -304,7 +435,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyEntityTemplate"></a>
 # **modifyEntityTemplate**
-> EntityTemplateDto modifyEntityTemplate(body)
+> EntityTemplateDto modifyEntityTemplate(entityTemplateDto)
 
 Modify a entityTemplate
 
@@ -313,13 +444,13 @@ Modification of (type, entityTemplate, version) is not allowed.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = EntitytemplateApi()
-val body : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
 try {
-    val result : EntityTemplateDto = apiInstance.modifyEntityTemplate(body)
+    val result : EntityTemplateDto = apiInstance.modifyEntityTemplate(entityTemplateDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#modifyEntityTemplate")
@@ -334,7 +465,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
+ **entityTemplateDto** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
 
 ### Return type
 
@@ -342,7 +473,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**appendCodes**](InvoiceApi.md#appendCodes) | **POST** /rest/v1/invoice/byauthor/{userId}/append/{type}/{sentMediumType} | Gets all invoices for author at date
 [**createInvoice**](InvoiceApi.md#createInvoice) | **POST** /rest/v1/invoice | Creates an invoice
+[**createInvoices**](InvoiceApi.md#createInvoices) | **POST** /rest/v1/invoice/batch | Create a batch of invoices
 [**deleteInvoice**](InvoiceApi.md#deleteInvoice) | **DELETE** /rest/v1/invoice/{invoiceId} | Deletes an invoice
 [**filterInvoicesBy**](InvoiceApi.md#filterInvoicesBy) | **POST** /rest/v1/invoice/filter | Filter invoices for the current user (HcParty)
 [**findByAuthor**](InvoiceApi.md#findByAuthor) | **GET** /rest/v1/invoice/byauthor/{hcPartyId} | Gets all invoices for author at date
@@ -28,35 +29,37 @@ Method | HTTP request | Description
 [**listToPatientsUnsent**](InvoiceApi.md#listToPatientsUnsent) | **GET** /rest/v1/invoice/toPatients/unsent | Gets all invoices for author at date
 [**mergeTo**](InvoiceApi.md#mergeTo) | **POST** /rest/v1/invoice/mergeTo/{invoiceId} | Gets all invoices for author at date
 [**modifyInvoice**](InvoiceApi.md#modifyInvoice) | **PUT** /rest/v1/invoice | Modifies an invoice
+[**modifyInvoices**](InvoiceApi.md#modifyInvoices) | **PUT** /rest/v1/invoice/batch | Modify a batch of invoices
 [**newInvoiceDelegations**](InvoiceApi.md#newInvoiceDelegations) | **PUT** /rest/v1/invoice/{invoiceId}/delegate | Adds a delegation to a invoice
 [**reassignInvoice**](InvoiceApi.md#reassignInvoice) | **POST** /rest/v1/invoice/reassign | Modifies an invoice
 [**removeCodes**](InvoiceApi.md#removeCodes) | **POST** /rest/v1/invoice/byauthor/{userId}/service/{serviceId} | Gets all invoices for author at date
 [**setInvoicesDelegations**](InvoiceApi.md#setInvoicesDelegations) | **POST** /rest/v1/invoice/delegations | Update delegations in healthElements.
 [**validate**](InvoiceApi.md#validate) | **POST** /rest/v1/invoice/validate/{invoiceId} | Gets all invoices for author at date
 
+
 <a name="appendCodes"></a>
 # **appendCodes**
-> kotlin.Array&lt;InvoiceDto&gt; appendCodes(body, secretFKeys, userId, type, sentMediumType, insuranceId, invoiceId, gracePeriod)
+> kotlin.collections.List&lt;InvoiceDto&gt; appendCodes(userId, type, sentMediumType, secretFKeys, invoicingCodeDto, insuranceId, invoiceId, gracePeriod)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : kotlin.Array<InvoicingCodeDto> =  // kotlin.Array<InvoicingCodeDto> | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 val userId : kotlin.String = userId_example // kotlin.String | 
 val type : kotlin.String = type_example // kotlin.String | 
 val sentMediumType : kotlin.String = sentMediumType_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val invoicingCodeDto : kotlin.collections.List<InvoicingCodeDto> =  // kotlin.collections.List<InvoicingCodeDto> | 
 val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
 val gracePeriod : kotlin.Int = 56 // kotlin.Int | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.appendCodes(body, secretFKeys, userId, type, sentMediumType, insuranceId, invoiceId, gracePeriod)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.appendCodes(userId, type, sentMediumType, secretFKeys, invoicingCodeDto, insuranceId, invoiceId, gracePeriod)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#appendCodes")
@@ -71,22 +74,25 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;InvoicingCodeDto&gt;**](InvoicingCodeDto.md)|  |
- **secretFKeys** | **kotlin.String**|  |
  **userId** | **kotlin.String**|  |
  **type** | **kotlin.String**|  |
  **sentMediumType** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+ **invoicingCodeDto** | [**kotlin.collections.List&lt;InvoicingCodeDto&gt;**](InvoicingCodeDto.md)|  |
  **insuranceId** | **kotlin.String**|  | [optional]
  **invoiceId** | **kotlin.String**|  | [optional]
  **gracePeriod** | **kotlin.Int**|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -95,20 +101,20 @@ Name | Type | Description  | Notes
 
 <a name="createInvoice"></a>
 # **createInvoice**
-> InvoiceDto createInvoice(body)
+> InvoiceDto createInvoice(invoiceDto)
 
 Creates an invoice
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto | 
 try {
-    val result : InvoiceDto = apiInstance.createInvoice(body)
+    val result : InvoiceDto = apiInstance.createInvoice(invoiceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#createInvoice")
@@ -123,7 +129,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**InvoiceDto**](InvoiceDto.md)|  |
+ **invoiceDto** | [**InvoiceDto**](InvoiceDto.md)|  |
 
 ### Return type
 
@@ -131,7 +137,60 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createInvoices"></a>
+# **createInvoices**
+> kotlin.collections.List&lt;InvoiceDto&gt; createInvoices(invoiceDto)
+
+Create a batch of invoices
+
+Returns the created invoices.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = InvoiceApi()
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+try {
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.createInvoices(invoiceDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling InvoiceApi#createInvoices")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling InvoiceApi#createInvoices")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **invoiceDto** | [**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -147,8 +206,8 @@ Deletes an invoice
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
@@ -176,7 +235,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -185,7 +247,7 @@ Name | Type | Description  | Notes
 
 <a name="filterInvoicesBy"></a>
 # **filterInvoicesBy**
-> kotlin.Array&lt;InvoiceDto&gt; filterInvoicesBy(body)
+> kotlin.collections.List&lt;InvoiceDto&gt; filterInvoicesBy(filterChainInvoice)
 
 Filter invoices for the current user (HcParty)
 
@@ -194,13 +256,13 @@ Returns a list of invoices along with next start keys and Document ID. If the ne
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : FilterChainInvoice =  // FilterChainInvoice | 
+val filterChainInvoice : FilterChainInvoice =  // FilterChainInvoice | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.filterInvoicesBy(body)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.filterInvoicesBy(filterChainInvoice)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#filterInvoicesBy")
@@ -215,15 +277,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FilterChainInvoice**](FilterChainInvoice.md)|  |
+ **filterChainInvoice** | [**FilterChainInvoice**](FilterChainInvoice.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -239,8 +304,8 @@ Gets all invoices for author at date
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
@@ -268,7 +333,7 @@ Name | Type | Description  | Notes
  **hcPartyId** | **kotlin.String**|  |
  **fromDate** | **kotlin.Long**|  | [optional]
  **toDate** | **kotlin.Long**|  | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#x27;s startKey | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
  **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 
@@ -278,7 +343,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -287,7 +355,7 @@ Name | Type | Description  | Notes
 
 <a name="findInvoicesByHCPartyPatientForeignKeys"></a>
 # **findInvoicesByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;InvoiceDto&gt; findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;InvoiceDto&gt; findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 List invoices found By Healthcare Party and secret foreign patient keys.
 
@@ -296,14 +364,14 @@ Keys have to delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.findInvoicesByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#findInvoicesByHCPartyPatientForeignKeys")
@@ -323,11 +391,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -336,7 +407,7 @@ Name | Type | Description  | Notes
 
 <a name="findInvoicesDelegationsStubsByHCPartyPatientForeignKeys"></a>
 # **findInvoicesDelegationsStubsByHCPartyPatientForeignKeys**
-> kotlin.Array&lt;IcureStubDto&gt; findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+> kotlin.collections.List&lt;IcureStubDto&gt; findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
 
 List helement stubs found By Healthcare Party and secret foreign keys.
 
@@ -345,14 +416,14 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 try {
-    val result : kotlin.Array<IcureStubDto> = apiInstance.findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.findInvoicesDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#findInvoicesDelegationsStubsByHCPartyPatientForeignKeys")
@@ -372,11 +443,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -392,8 +466,8 @@ Gets an invoice
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
@@ -421,7 +495,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -430,20 +507,20 @@ Name | Type | Description  | Notes
 
 <a name="getInvoices"></a>
 # **getInvoices**
-> kotlin.Array&lt;InvoiceDto&gt; getInvoices(body)
+> kotlin.collections.List&lt;InvoiceDto&gt; getInvoices(listOfIdsDto)
 
 Gets an invoice
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.getInvoices(body)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.getInvoices(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#getInvoices")
@@ -458,15 +535,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -475,20 +555,20 @@ Name | Type | Description  | Notes
 
 <a name="getTarificationsCodesOccurences"></a>
 # **getTarificationsCodesOccurences**
-> kotlin.Array&lt;LabelledOccurenceDto&gt; getTarificationsCodesOccurences(minOccurences)
+> kotlin.collections.List&lt;LabelledOccurenceDto&gt; getTarificationsCodesOccurences(minOccurences)
 
 Get the list of all used tarifications frequencies in invoices
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val minOccurences : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<LabelledOccurenceDto> = apiInstance.getTarificationsCodesOccurences(minOccurences)
+    val result : kotlin.collections.List<LabelledOccurenceDto> = apiInstance.getTarificationsCodesOccurences(minOccurences)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#getTarificationsCodesOccurences")
@@ -507,11 +587,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;LabelledOccurenceDto&gt;**](LabelledOccurenceDto.md)
+[**kotlin.collections.List&lt;LabelledOccurenceDto&gt;**](LabelledOccurenceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -520,23 +603,23 @@ Name | Type | Description  | Notes
 
 <a name="listAllHcpsByStatus"></a>
 # **listAllHcpsByStatus**
-> kotlin.Array&lt;InvoiceDto&gt; listAllHcpsByStatus(body, status, from, to)
+> kotlin.collections.List&lt;InvoiceDto&gt; listAllHcpsByStatus(status, listOfIdsDto, from, to)
 
 Gets all invoices per status
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
 val status : kotlin.String = status_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listAllHcpsByStatus(body, status, from, to)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listAllHcpsByStatus(status, listOfIdsDto, from, to)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listAllHcpsByStatus")
@@ -551,18 +634,21 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
  **status** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
  **from** | **kotlin.Long**|  | [optional]
  **to** | **kotlin.Long**|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -571,20 +657,20 @@ Name | Type | Description  | Notes
 
 <a name="listByContactIds"></a>
 # **listByContactIds**
-> kotlin.Array&lt;InvoiceDto&gt; listByContactIds(body)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByContactIds(listOfIdsDto)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByContactIds(body)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByContactIds(listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByContactIds")
@@ -599,15 +685,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -616,7 +705,7 @@ Name | Type | Description  | Notes
 
 <a name="listByHcPartyGroupId"></a>
 # **listByHcPartyGroupId**
-> kotlin.Array&lt;InvoiceDto&gt; listByHcPartyGroupId(hcPartyId, groupId)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByHcPartyGroupId(hcPartyId, groupId)
 
 List invoices by groupId
 
@@ -625,14 +714,14 @@ Keys have to delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 val groupId : kotlin.String = groupId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByHcPartyGroupId(hcPartyId, groupId)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcPartyGroupId(hcPartyId, groupId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByHcPartyGroupId")
@@ -652,11 +741,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -665,7 +757,7 @@ Name | Type | Description  | Notes
 
 <a name="listByHcPartySentMediumTypeInvoiceTypeSentDate"></a>
 # **listByHcPartySentMediumTypeInvoiceTypeSentDate**
-> kotlin.Array&lt;InvoiceDto&gt; listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
 
 List invoices by type, sent or unsent
 
@@ -674,8 +766,8 @@ Keys have to delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
@@ -685,7 +777,7 @@ val sent : kotlin.Boolean = true // kotlin.Boolean |
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByHcPartySentMediumTypeInvoiceTypeSentDate")
@@ -709,11 +801,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -722,15 +817,15 @@ Name | Type | Description  | Notes
 
 <a name="listByHcpartySendingModeStatusDate"></a>
 # **listByHcpartySendingModeStatusDate**
-> kotlin.Array&lt;InvoiceDto&gt; listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
 
 Get all invoices by author, by sending mode, by status and by date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
@@ -739,7 +834,7 @@ val status : kotlin.String = status_example // kotlin.String |
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByHcpartySendingModeStatusDate")
@@ -762,11 +857,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -775,20 +873,20 @@ Name | Type | Description  | Notes
 
 <a name="listByIds"></a>
 # **listByIds**
-> kotlin.Array&lt;InvoiceDto&gt; listByIds(invoiceIds)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByIds(invoiceIds)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val invoiceIds : kotlin.String = invoiceIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByIds(invoiceIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByIds(invoiceIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByIds")
@@ -807,11 +905,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -820,20 +921,20 @@ Name | Type | Description  | Notes
 
 <a name="listByRecipientsIds"></a>
 # **listByRecipientsIds**
-> kotlin.Array&lt;InvoiceDto&gt; listByRecipientsIds(recipientIds)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByRecipientsIds(recipientIds)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val recipientIds : kotlin.String = recipientIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByRecipientsIds(recipientIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByRecipientsIds(recipientIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByRecipientsIds")
@@ -852,11 +953,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -865,20 +969,20 @@ Name | Type | Description  | Notes
 
 <a name="listByServiceIds"></a>
 # **listByServiceIds**
-> kotlin.Array&lt;InvoiceDto&gt; listByServiceIds(serviceIds)
+> kotlin.collections.List&lt;InvoiceDto&gt; listByServiceIds(serviceIds)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val serviceIds : kotlin.String = serviceIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listByServiceIds(serviceIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listByServiceIds(serviceIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listByServiceIds")
@@ -897,11 +1001,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -910,20 +1017,20 @@ Name | Type | Description  | Notes
 
 <a name="listToInsurances"></a>
 # **listToInsurances**
-> kotlin.Array&lt;InvoiceDto&gt; listToInsurances(userIds)
+> kotlin.collections.List&lt;InvoiceDto&gt; listToInsurances(userIds)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val userIds : kotlin.String = userIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listToInsurances(userIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToInsurances(userIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listToInsurances")
@@ -942,11 +1049,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -955,20 +1065,20 @@ Name | Type | Description  | Notes
 
 <a name="listToInsurancesUnsent"></a>
 # **listToInsurancesUnsent**
-> kotlin.Array&lt;InvoiceDto&gt; listToInsurancesUnsent(userIds)
+> kotlin.collections.List&lt;InvoiceDto&gt; listToInsurancesUnsent(userIds)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val userIds : kotlin.String = userIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listToInsurancesUnsent(userIds)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToInsurancesUnsent(userIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listToInsurancesUnsent")
@@ -987,11 +1097,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1000,20 +1113,20 @@ Name | Type | Description  | Notes
 
 <a name="listToPatients"></a>
 # **listToPatients**
-> kotlin.Array&lt;InvoiceDto&gt; listToPatients(hcPartyId)
+> kotlin.collections.List&lt;InvoiceDto&gt; listToPatients(hcPartyId)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listToPatients(hcPartyId)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToPatients(hcPartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listToPatients")
@@ -1032,11 +1145,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1045,20 +1161,20 @@ Name | Type | Description  | Notes
 
 <a name="listToPatientsUnsent"></a>
 # **listToPatientsUnsent**
-> kotlin.Array&lt;InvoiceDto&gt; listToPatientsUnsent(hcPartyId)
+> kotlin.collections.List&lt;InvoiceDto&gt; listToPatientsUnsent(hcPartyId)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.listToPatientsUnsent(hcPartyId)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToPatientsUnsent(hcPartyId)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#listToPatientsUnsent")
@@ -1077,11 +1193,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1090,21 +1209,21 @@ Name | Type | Description  | Notes
 
 <a name="mergeTo"></a>
 # **mergeTo**
-> InvoiceDto mergeTo(body, invoiceId)
+> InvoiceDto mergeTo(invoiceId, listOfIdsDto)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : ListOfIdsDto =  // ListOfIdsDto | 
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
 try {
-    val result : InvoiceDto = apiInstance.mergeTo(body, invoiceId)
+    val result : InvoiceDto = apiInstance.mergeTo(invoiceId, listOfIdsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#mergeTo")
@@ -1119,8 +1238,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
  **invoiceId** | **kotlin.String**|  |
+ **listOfIdsDto** | [**ListOfIdsDto**](ListOfIdsDto.md)|  |
 
 ### Return type
 
@@ -1128,7 +1247,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1137,20 +1259,20 @@ Name | Type | Description  | Notes
 
 <a name="modifyInvoice"></a>
 # **modifyInvoice**
-> InvoiceDto modifyInvoice(body)
+> InvoiceDto modifyInvoice(invoiceDto)
 
 Modifies an invoice
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto | 
 try {
-    val result : InvoiceDto = apiInstance.modifyInvoice(body)
+    val result : InvoiceDto = apiInstance.modifyInvoice(invoiceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#modifyInvoice")
@@ -1165,7 +1287,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**InvoiceDto**](InvoiceDto.md)|  |
+ **invoiceDto** | [**InvoiceDto**](InvoiceDto.md)|  |
 
 ### Return type
 
@@ -1173,7 +1295,60 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyInvoices"></a>
+# **modifyInvoices**
+> kotlin.collections.List&lt;InvoiceDto&gt; modifyInvoices(invoiceDto)
+
+Modify a batch of invoices
+
+Returns the modified invoices.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = InvoiceApi()
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+try {
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.modifyInvoices(invoiceDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling InvoiceApi#modifyInvoices")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling InvoiceApi#modifyInvoices")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **invoiceDto** | [**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1182,21 +1357,21 @@ Name | Type | Description  | Notes
 
 <a name="newInvoiceDelegations"></a>
 # **newInvoiceDelegations**
-> InvoiceDto newInvoiceDelegations(body, invoiceId)
+> InvoiceDto newInvoiceDelegations(invoiceId, delegationDto)
 
 Adds a delegation to a invoice
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : kotlin.Array<DelegationDto> =  // kotlin.Array<DelegationDto> | 
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
 try {
-    val result : InvoiceDto = apiInstance.newInvoiceDelegations(body, invoiceId)
+    val result : InvoiceDto = apiInstance.newInvoiceDelegations(invoiceId, delegationDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#newInvoiceDelegations")
@@ -1211,8 +1386,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;DelegationDto&gt;**](DelegationDto.md)|  |
  **invoiceId** | **kotlin.String**|  |
+ **delegationDto** | [**kotlin.collections.List&lt;DelegationDto&gt;**](DelegationDto.md)|  |
 
 ### Return type
 
@@ -1220,7 +1395,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1229,20 +1407,20 @@ Name | Type | Description  | Notes
 
 <a name="reassignInvoice"></a>
 # **reassignInvoice**
-> InvoiceDto reassignInvoice(body)
+> InvoiceDto reassignInvoice(invoiceDto)
 
 Modifies an invoice
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto | 
 try {
-    val result : InvoiceDto = apiInstance.reassignInvoice(body)
+    val result : InvoiceDto = apiInstance.reassignInvoice(invoiceDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#reassignInvoice")
@@ -1257,7 +1435,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**InvoiceDto**](InvoiceDto.md)|  |
+ **invoiceDto** | [**InvoiceDto**](InvoiceDto.md)|  |
 
 ### Return type
 
@@ -1265,7 +1443,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1274,23 +1455,23 @@ Name | Type | Description  | Notes
 
 <a name="removeCodes"></a>
 # **removeCodes**
-> kotlin.Array&lt;InvoiceDto&gt; removeCodes(body, secretFKeys, userId, serviceId)
+> kotlin.collections.List&lt;InvoiceDto&gt; removeCodes(userId, serviceId, secretFKeys, requestBody)
 
 Gets all invoices for author at date
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : kotlin.Array<kotlin.String> =  // kotlin.Array<kotlin.String> | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
 val userId : kotlin.String = userId_example // kotlin.String | 
 val serviceId : kotlin.String = serviceId_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
 try {
-    val result : kotlin.Array<InvoiceDto> = apiInstance.removeCodes(body, secretFKeys, userId, serviceId)
+    val result : kotlin.collections.List<InvoiceDto> = apiInstance.removeCodes(userId, serviceId, secretFKeys, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#removeCodes")
@@ -1305,18 +1486,21 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;kotlin.String&gt;**](kotlin.String.md)|  |
- **secretFKeys** | **kotlin.String**|  |
  **userId** | **kotlin.String**|  |
  **serviceId** | **kotlin.String**|  |
+ **secretFKeys** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.String&gt;**](kotlin.String.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;InvoiceDto&gt;**](InvoiceDto.md)
+[**kotlin.collections.List&lt;InvoiceDto&gt;**](InvoiceDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1325,7 +1509,7 @@ Name | Type | Description  | Notes
 
 <a name="setInvoicesDelegations"></a>
 # **setInvoicesDelegations**
-> kotlin.Array&lt;IcureStubDto&gt; setInvoicesDelegations(body)
+> kotlin.collections.List&lt;IcureStubDto&gt; setInvoicesDelegations(icureStubDto)
 
 Update delegations in healthElements.
 
@@ -1334,13 +1518,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val body : kotlin.Array<IcureStubDto> =  // kotlin.Array<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
 try {
-    val result : kotlin.Array<IcureStubDto> = apiInstance.setInvoicesDelegations(body)
+    val result : kotlin.collections.List<IcureStubDto> = apiInstance.setInvoicesDelegations(icureStubDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling InvoiceApi#setInvoicesDelegations")
@@ -1355,15 +1539,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
+ **icureStubDto** | [**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;IcureStubDto&gt;**](IcureStubDto.md)
+[**kotlin.collections.List&lt;IcureStubDto&gt;**](IcureStubDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -1379,8 +1566,8 @@ Gets all invoices for author at date
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
 val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
@@ -1412,7 +1599,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

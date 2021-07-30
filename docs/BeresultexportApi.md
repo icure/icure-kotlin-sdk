@@ -8,27 +8,28 @@ Method | HTTP request | Description
 [**exportKmehrReport**](BeresultexportApi.md#exportKmehrReport) | **POST** /rest/v1/be_result_export/kmehrreport/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
 [**exportMedidoc**](BeresultexportApi.md#exportMedidoc) | **POST** /rest/v1/be_result_export/medidoc/{fromHcpId}/{toHcpId}/{patId}/{date}/{ref} | Export data
 
+
 <a name="exportHealthOne"></a>
 # **exportHealthOne**
-> kotlin.Array&lt;kotlin.Byte&gt; exportHealthOne(body, fromHcpId, toHcpId, patId, date, ref)
+> java.io.File exportHealthOne(fromHcpId, toHcpId, patId, date, ref, requestBody)
 
 Export data
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
 val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
 val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.exportHealthOne(body, fromHcpId, toHcpId, patId, date, ref)
+    val result : java.io.File = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportHealthOne")
@@ -43,20 +44,23 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
  **fromHcpId** | **kotlin.String**|  |
  **toHcpId** | **kotlin.String**|  |
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -65,26 +69,26 @@ Name | Type | Description  | Notes
 
 <a name="exportKmehrReport"></a>
 # **exportKmehrReport**
-> kotlin.Array&lt;kotlin.Byte&gt; exportKmehrReport(body, fromHcpId, toHcpId, patId, date, ref, mimeType)
+> java.io.File exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, requestBody, mimeType)
 
 Export data
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
 val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
 val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 val mimeType : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.exportKmehrReport(body, fromHcpId, toHcpId, patId, date, ref, mimeType)
+    val result : java.io.File = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, requestBody, mimeType)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportKmehrReport")
@@ -99,21 +103,24 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
  **fromHcpId** | **kotlin.String**|  |
  **toHcpId** | **kotlin.String**|  |
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
  **mimeType** | **kotlin.Boolean**|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -122,25 +129,25 @@ Name | Type | Description  | Notes
 
 <a name="exportMedidoc"></a>
 # **exportMedidoc**
-> kotlin.Array&lt;kotlin.Byte&gt; exportMedidoc(body, fromHcpId, toHcpId, patId, date, ref)
+> java.io.File exportMedidoc(fromHcpId, toHcpId, patId, date, ref, requestBody)
 
 Export data
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val body : kotlin.Array<ByteArray> =  // kotlin.Array<ByteArray> | 
 val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
 val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
 val patId : kotlin.String = patId_example // kotlin.String | 
 val date : kotlin.Long = 789 // kotlin.Long | 
 val ref : kotlin.String = ref_example // kotlin.String | 
+val requestBody : kotlin.collections.List<kotlin.ByteArray> =  // kotlin.collections.List<kotlin.ByteArray> | 
 try {
-    val result : kotlin.Array<kotlin.Byte> = apiInstance.exportMedidoc(body, fromHcpId, toHcpId, patId, date, ref)
+    val result : java.io.File = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, requestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BeresultexportApi#exportMedidoc")
@@ -155,20 +162,23 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;ByteArray&gt;**](ByteArray.md)|  |
  **fromHcpId** | **kotlin.String**|  |
  **toHcpId** | **kotlin.String**|  |
  **patId** | **kotlin.String**|  |
  **date** | **kotlin.Long**|  |
  **ref** | **kotlin.String**|  |
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.ByteArray&gt;**](kotlin.ByteArray.md)|  |
 
 ### Return type
 
-[**kotlin.Array&lt;kotlin.Byte&gt;**](kotlin.Array&lt;kotlin.Byte&gt;.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -13,22 +13,23 @@ Method | HTTP request | Description
 [**sendMessage**](BemikronoApi.md#sendMessage) | **POST** /rest/v1/be_mikrono/sendMessage | Send message using mikrono from logged user
 [**setUserCredentials**](BemikronoApi.md#setUserCredentials) | **PUT** /rest/v1/be_mikrono/user/{userId}/credentials | Set credentials for provided user
 
+
 <a name="appointmentsByDate"></a>
 # **appointmentsByDate**
-> kotlin.Array&lt;AppointmentDto&gt; appointmentsByDate(calendarDate)
+> kotlin.collections.List&lt;AppointmentDto&gt; appointmentsByDate(calendarDate)
 
 Get appointments for patient
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
 val calendarDate : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<AppointmentDto> = apiInstance.appointmentsByDate(calendarDate)
+    val result : kotlin.collections.List<AppointmentDto> = apiInstance.appointmentsByDate(calendarDate)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#appointmentsByDate")
@@ -47,11 +48,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;AppointmentDto&gt;**](AppointmentDto.md)
+[**kotlin.collections.List&lt;AppointmentDto&gt;**](AppointmentDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -60,22 +64,22 @@ Name | Type | Description  | Notes
 
 <a name="appointmentsByPatient"></a>
 # **appointmentsByPatient**
-> kotlin.Array&lt;AppointmentDto&gt; appointmentsByPatient(patientId, from, to)
+> kotlin.collections.List&lt;AppointmentDto&gt; appointmentsByPatient(patientId, from, to)
 
 Get appointments for patient
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
 val patientId : kotlin.String = patientId_example // kotlin.String | 
 val from : kotlin.Long = 789 // kotlin.Long | 
 val to : kotlin.Long = 789 // kotlin.Long | 
 try {
-    val result : kotlin.Array<AppointmentDto> = apiInstance.appointmentsByPatient(patientId, from, to)
+    val result : kotlin.collections.List<AppointmentDto> = apiInstance.appointmentsByPatient(patientId, from, to)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#appointmentsByPatient")
@@ -96,11 +100,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;AppointmentDto&gt;**](AppointmentDto.md)
+[**kotlin.collections.List&lt;AppointmentDto&gt;**](AppointmentDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -109,20 +116,20 @@ Name | Type | Description  | Notes
 
 <a name="createAppointmentTypes"></a>
 # **createAppointmentTypes**
-> kotlin.Array&lt;MikronoAppointmentTypeRestDto&gt; createAppointmentTypes(body)
+> kotlin.collections.List&lt;MikronoAppointmentTypeRestDto&gt; createAppointmentTypes(mikronoAppointmentTypeRestDto)
 
 
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val body : kotlin.Array<MikronoAppointmentTypeRestDto> =  // kotlin.Array<MikronoAppointmentTypeRestDto> | 
+val mikronoAppointmentTypeRestDto : kotlin.collections.List<MikronoAppointmentTypeRestDto> =  // kotlin.collections.List<MikronoAppointmentTypeRestDto> | 
 try {
-    val result : kotlin.Array<MikronoAppointmentTypeRestDto> = apiInstance.createAppointmentTypes(body)
+    val result : kotlin.collections.List<MikronoAppointmentTypeRestDto> = apiInstance.createAppointmentTypes(mikronoAppointmentTypeRestDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#createAppointmentTypes")
@@ -137,15 +144,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;MikronoAppointmentTypeRestDto&gt;**](MikronoAppointmentTypeRestDto.md)|  | [optional]
+ **mikronoAppointmentTypeRestDto** | [**kotlin.collections.List&lt;MikronoAppointmentTypeRestDto&gt;**](MikronoAppointmentTypeRestDto.md)|  | [optional]
 
 ### Return type
 
-[**kotlin.Array&lt;MikronoAppointmentTypeRestDto&gt;**](MikronoAppointmentTypeRestDto.md)
+[**kotlin.collections.List&lt;MikronoAppointmentTypeRestDto&gt;**](MikronoAppointmentTypeRestDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -154,20 +164,20 @@ Name | Type | Description  | Notes
 
 <a name="createAppointments"></a>
 # **createAppointments**
-> kotlin.Array&lt;kotlin.String&gt; createAppointments(body)
+> kotlin.collections.List&lt;kotlin.String&gt; createAppointments(appointmentImportDto)
 
 Create appointments for owner
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val body : kotlin.Array<AppointmentImportDto> =  // kotlin.Array<AppointmentImportDto> | 
+val appointmentImportDto : kotlin.collections.List<AppointmentImportDto> =  // kotlin.collections.List<AppointmentImportDto> | 
 try {
-    val result : kotlin.Array<kotlin.String> = apiInstance.createAppointments(body)
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.createAppointments(appointmentImportDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#createAppointments")
@@ -182,15 +192,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**kotlin.Array&lt;AppointmentImportDto&gt;**](AppointmentImportDto.md)|  |
+ **appointmentImportDto** | [**kotlin.collections.List&lt;AppointmentImportDto&gt;**](AppointmentImportDto.md)|  |
 
 ### Return type
 
-**kotlin.Array&lt;kotlin.String&gt;**
+**kotlin.collections.List&lt;kotlin.String&gt;**
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -206,8 +219,8 @@ Notify of an appointment change
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
 val appointmentId : kotlin.String = appointmentId_example // kotlin.String | 
@@ -236,7 +249,10 @@ null (empty response body)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -245,21 +261,21 @@ null (empty response body)
 
 <a name="register"></a>
 # **register**
-> UserDto register(body, userId)
+> UserDto register(userId, mikronoCredentialsDto)
 
 Set credentials for provided user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val body : MikronoCredentialsDto =  // MikronoCredentialsDto | 
 val userId : kotlin.String = userId_example // kotlin.String | 
+val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto | 
 try {
-    val result : UserDto = apiInstance.register(body, userId)
+    val result : UserDto = apiInstance.register(userId, mikronoCredentialsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#register")
@@ -274,8 +290,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MikronoCredentialsDto**](MikronoCredentialsDto.md)|  |
  **userId** | **kotlin.String**|  |
+ **mikronoCredentialsDto** | [**MikronoCredentialsDto**](MikronoCredentialsDto.md)|  |
 
 ### Return type
 
@@ -283,7 +299,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -292,20 +311,20 @@ Name | Type | Description  | Notes
 
 <a name="sendMessage"></a>
 # **sendMessage**
-> Unit sendMessage(body)
+> kotlin.Any sendMessage(emailOrSmsMessageDto)
 
 Send message using mikrono from logged user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val body : EmailOrSmsMessageDto =  // EmailOrSmsMessageDto | 
+val emailOrSmsMessageDto : EmailOrSmsMessageDto =  // EmailOrSmsMessageDto | 
 try {
-    val result : Unit = apiInstance.sendMessage(body)
+    val result : kotlin.Any = apiInstance.sendMessage(emailOrSmsMessageDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#sendMessage")
@@ -320,15 +339,18 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**EmailOrSmsMessageDto**](EmailOrSmsMessageDto.md)|  |
+ **emailOrSmsMessageDto** | [**EmailOrSmsMessageDto**](EmailOrSmsMessageDto.md)|  |
 
 ### Return type
 
-[**Unit**](Unit.md)
+[**kotlin.Any**](kotlin.Any.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -337,21 +359,21 @@ Name | Type | Description  | Notes
 
 <a name="setUserCredentials"></a>
 # **setUserCredentials**
-> UserDto setUserCredentials(body, userId)
+> UserDto setUserCredentials(userId, mikronoCredentialsDto)
 
 Set credentials for provided user
 
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val body : MikronoCredentialsDto =  // MikronoCredentialsDto | 
 val userId : kotlin.String = userId_example // kotlin.String | 
+val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto | 
 try {
-    val result : UserDto = apiInstance.setUserCredentials(body, userId)
+    val result : UserDto = apiInstance.setUserCredentials(userId, mikronoCredentialsDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling BemikronoApi#setUserCredentials")
@@ -366,8 +388,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**MikronoCredentialsDto**](MikronoCredentialsDto.md)|  |
  **userId** | **kotlin.String**|  |
+ **mikronoCredentialsDto** | [**MikronoCredentialsDto**](MikronoCredentialsDto.md)|  | [optional]
 
 ### Return type
 
@@ -375,7 +397,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

@@ -17,9 +17,10 @@ Method | HTTP request | Description
 [**getCodes**](CodeApi.md#getCodes) | **GET** /rest/v1/code/byIds/{codeIds} | Get a list of codes by ids
 [**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v1/code | Modify a code
 
+
 <a name="createCode"></a>
 # **createCode**
-> CodeDto createCode(body)
+> CodeDto createCode(codeDto)
 
 Create a Code
 
@@ -28,13 +29,13 @@ Type, Code and Version are required.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val body : CodeDto =  // CodeDto | 
+val codeDto : CodeDto =  // CodeDto | 
 try {
-    val result : CodeDto = apiInstance.createCode(body)
+    val result : CodeDto = apiInstance.createCode(codeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#createCode")
@@ -49,7 +50,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CodeDto**](CodeDto.md)|  |
+ **codeDto** | [**CodeDto**](CodeDto.md)|  |
 
 ### Return type
 
@@ -57,7 +58,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -66,7 +70,7 @@ Name | Type | Description  | Notes
 
 <a name="filterCodesBy"></a>
 # **filterCodesBy**
-> PaginatedListCodeDto filterCodesBy(body, startKey, startDocumentId, limit, skip, sort, desc)
+> PaginatedListCodeDto filterCodesBy(startKey, startDocumentId, limit, skip, sort, desc, filterChainCode)
 
 Filter codes 
 
@@ -75,19 +79,19 @@ Returns a list of codes along with next start keys and Document ID. If the nextS
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val body : FilterChainCode =  // FilterChainCode | 
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 val skip : kotlin.Int = 56 // kotlin.Int | Skip rows
 val sort : kotlin.String = sort_example // kotlin.String | Sort key
 val desc : kotlin.Boolean = true // kotlin.Boolean | Descending
+val filterChainCode : FilterChainCode =  // FilterChainCode | 
 try {
-    val result : PaginatedListCodeDto = apiInstance.filterCodesBy(body, startKey, startDocumentId, limit, skip, sort, desc)
+    val result : PaginatedListCodeDto = apiInstance.filterCodesBy(startKey, startDocumentId, limit, skip, sort, desc, filterChainCode)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#filterCodesBy")
@@ -102,13 +106,13 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**FilterChainCode**](FilterChainCode.md)|  |
  **startKey** | **kotlin.String**| The start key for pagination, depends on the filters used | [optional]
  **startDocumentId** | **kotlin.String**| A patient document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
  **skip** | **kotlin.Int**| Skip rows | [optional]
  **sort** | **kotlin.String**| Sort key | [optional]
  **desc** | **kotlin.Boolean**| Descending | [optional]
+ **filterChainCode** | [**FilterChainCode**](FilterChainCode.md)|  | [optional]
 
 ### Return type
 
@@ -116,7 +120,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -125,7 +132,7 @@ Name | Type | Description  | Notes
 
 <a name="findCodeTypes"></a>
 # **findCodeTypes**
-> kotlin.Array&lt;kotlin.String&gt; findCodeTypes(region, type)
+> kotlin.collections.List&lt;kotlin.String&gt; findCodeTypes(region, type)
 
 Finding code types.
 
@@ -134,14 +141,14 @@ Returns a list of code types matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val region : kotlin.String = region_example // kotlin.String | Code region
 val type : kotlin.String = type_example // kotlin.String | Code type
 try {
-    val result : kotlin.Array<kotlin.String> = apiInstance.findCodeTypes(region, type)
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.findCodeTypes(region, type)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#findCodeTypes")
@@ -161,11 +168,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.Array&lt;kotlin.String&gt;**
+**kotlin.collections.List&lt;kotlin.String&gt;**
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -174,7 +184,7 @@ Name | Type | Description  | Notes
 
 <a name="findCodes"></a>
 # **findCodes**
-> kotlin.Array&lt;CodeDto&gt; findCodes(region, type, code, version)
+> kotlin.collections.List&lt;CodeDto&gt; findCodes(region, type, code, version)
 
 Finding codes by code, type and version
 
@@ -183,8 +193,8 @@ Returns a list of codes matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val region : kotlin.String = region_example // kotlin.String | Code region
@@ -192,7 +202,7 @@ val type : kotlin.String = type_example // kotlin.String | Code type
 val code : kotlin.String = code_example // kotlin.String | Code code
 val version : kotlin.String = version_example // kotlin.String | Code version
 try {
-    val result : kotlin.Array<CodeDto> = apiInstance.findCodes(region, type, code, version)
+    val result : kotlin.collections.List<CodeDto> = apiInstance.findCodes(region, type, code, version)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#findCodes")
@@ -214,11 +224,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;CodeDto&gt;**](CodeDto.md)
+[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -236,8 +249,8 @@ Returns a list of codes matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val region : kotlin.String = region_example // kotlin.String | 
@@ -277,7 +290,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -295,8 +311,8 @@ Returns a list of codes matched with given input. If several types are provided,
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val region : kotlin.String = region_example // kotlin.String | 
@@ -326,7 +342,7 @@ Name | Type | Description  | Notes
  **types** | **kotlin.String**|  | [optional]
  **language** | **kotlin.String**|  | [optional]
  **label** | **kotlin.String**|  | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#x27;s startKey | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
  **startDocumentId** | **kotlin.String**| A code document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 
@@ -336,7 +352,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -354,8 +373,8 @@ Returns a list of codes matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val linkType : kotlin.String = linkType_example // kotlin.String | 
@@ -381,7 +400,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **linkType** | **kotlin.String**|  |
  **linkedId** | **kotlin.String**|  | [optional]
- **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#x27;s startKey | [optional]
+ **startKey** | **kotlin.String**| The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key&#39;s startKey | [optional]
  **startDocumentId** | **kotlin.String**| A code document ID | [optional]
  **limit** | **kotlin.Int**| Number of rows | [optional]
 
@@ -391,7 +410,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -400,7 +422,7 @@ Name | Type | Description  | Notes
 
 <a name="findTagTypes"></a>
 # **findTagTypes**
-> kotlin.Array&lt;kotlin.String&gt; findTagTypes(region, type)
+> kotlin.collections.List&lt;kotlin.String&gt; findTagTypes(region, type)
 
 Finding tag types.
 
@@ -409,14 +431,14 @@ Returns a list of tag types matched with given input.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val region : kotlin.String = region_example // kotlin.String | Code region
 val type : kotlin.String = type_example // kotlin.String | Code type
 try {
-    val result : kotlin.Array<kotlin.String> = apiInstance.findTagTypes(region, type)
+    val result : kotlin.collections.List<kotlin.String> = apiInstance.findTagTypes(region, type)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#findTagTypes")
@@ -436,11 +458,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**kotlin.Array&lt;kotlin.String&gt;**
+**kotlin.collections.List&lt;kotlin.String&gt;**
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -458,8 +483,8 @@ Get a code based on ID or (code,type,version) as query strings. (code,type,versi
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val codeId : kotlin.String = codeId_example // kotlin.String | Code id
@@ -487,7 +512,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -505,8 +533,8 @@ Get a code based on ID or (code,type,version) as query strings. (code,type,versi
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val type : kotlin.String = type_example // kotlin.String | Code type
@@ -538,7 +566,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -547,7 +578,7 @@ Name | Type | Description  | Notes
 
 <a name="getCodes"></a>
 # **getCodes**
-> kotlin.Array&lt;CodeDto&gt; getCodes(codeIds)
+> kotlin.collections.List&lt;CodeDto&gt; getCodes(codeIds)
 
 Get a list of codes by ids
 
@@ -556,13 +587,13 @@ Keys must be delimited by coma
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
 val codeIds : kotlin.String = codeIds_example // kotlin.String | 
 try {
-    val result : kotlin.Array<CodeDto> = apiInstance.getCodes(codeIds)
+    val result : kotlin.collections.List<CodeDto> = apiInstance.getCodes(codeIds)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#getCodes")
@@ -581,11 +612,14 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.Array&lt;CodeDto&gt;**](CodeDto.md)
+[**kotlin.collections.List&lt;CodeDto&gt;**](CodeDto.md)
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 
@@ -594,7 +628,7 @@ Name | Type | Description  | Notes
 
 <a name="modifyCode"></a>
 # **modifyCode**
-> CodeDto modifyCode(body)
+> CodeDto modifyCode(codeDto)
 
 Modify a code
 
@@ -603,13 +637,13 @@ Modification of (type, code, version) is not allowed.
 ### Example
 ```kotlin
 // Import classes:
-//import io.swagger.client.infrastructure.*
-//import io.swagger.client.models.*;
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val body : CodeDto =  // CodeDto | 
+val codeDto : CodeDto =  // CodeDto | 
 try {
-    val result : CodeDto = apiInstance.modifyCode(body)
+    val result : CodeDto = apiInstance.modifyCode(codeDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling CodeApi#modifyCode")
@@ -624,7 +658,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CodeDto**](CodeDto.md)|  |
+ **codeDto** | [**CodeDto**](CodeDto.md)|  |
 
 ### Return type
 
@@ -632,7 +666,10 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[basicScheme](../README.md#basicScheme)
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
 
 ### HTTP request headers
 

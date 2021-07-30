@@ -1,9 +1,13 @@
+
 # SumehrContentDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**services** | [**kotlin.Array&lt;ServiceDto&gt;**](ServiceDto.md) |  |  [optional]
-**healthElements** | [**kotlin.Array&lt;HealthElementDto&gt;**](HealthElementDto.md) |  |  [optional]
-**partnerships** | [**kotlin.Array&lt;PartnershipDto&gt;**](PartnershipDto.md) |  |  [optional]
-**patientHealthcareParties** | [**kotlin.Array&lt;PatientHealthCarePartyDto&gt;**](PatientHealthCarePartyDto.md) |  |  [optional]
+**services** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) |  |  [optional]
+**healthElements** | [**kotlin.collections.List&lt;HealthElementDto&gt;**](HealthElementDto.md) |  |  [optional]
+**partnerships** | [**kotlin.collections.List&lt;PartnershipDto&gt;**](PartnershipDto.md) |  |  [optional]
+**patientHealthcareParties** | [**kotlin.collections.List&lt;PatientHealthCarePartyDto&gt;**](PatientHealthCarePartyDto.md) |  |  [optional]
+
+
+

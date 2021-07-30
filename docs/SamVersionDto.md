@@ -1,10 +1,14 @@
+
 # SamVersionDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**rev** | [**kotlin.String**](.md) |  |  [optional]
-**deletionDate** | [**kotlin.Long**](.md) |  |  [optional]
-**version** | [**kotlin.String**](.md) |  |  [optional]
-**date** | [**kotlin.Int**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**rev** | **kotlin.String** |  |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**version** | **kotlin.String** |  |  [optional]
+**date** | **kotlin.Int** |  |  [optional]
+
+
+

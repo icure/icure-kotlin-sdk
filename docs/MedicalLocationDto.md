@@ -1,20 +1,24 @@
+
 # MedicalLocationDto
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | [**kotlin.String**](.md) |  | 
-**rev** | [**kotlin.String**](.md) |  |  [optional]
-**deletionDate** | [**kotlin.Long**](.md) |  |  [optional]
-**name** | [**kotlin.String**](.md) |  |  [optional]
-**description** | [**kotlin.String**](.md) |  |  [optional]
-**responsible** | [**kotlin.String**](.md) |  |  [optional]
-**guardPost** | [**kotlin.Boolean**](.md) |  |  [optional]
-**cbe** | [**kotlin.String**](.md) |  |  [optional]
-**bic** | [**kotlin.String**](.md) |  |  [optional]
-**bankAccount** | [**kotlin.String**](.md) |  |  [optional]
-**nihii** | [**kotlin.String**](.md) |  |  [optional]
-**ssin** | [**kotlin.String**](.md) |  |  [optional]
+**id** | **kotlin.String** |  | 
+**agendaIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
+**options** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
+**rev** | **kotlin.String** |  |  [optional]
+**deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
+**name** | **kotlin.String** |  |  [optional]
+**description** | **kotlin.String** |  |  [optional]
+**responsible** | **kotlin.String** |  |  [optional]
+**guardPost** | **kotlin.Boolean** |  |  [optional]
+**cbe** | **kotlin.String** |  |  [optional]
+**bic** | **kotlin.String** |  |  [optional]
+**bankAccount** | **kotlin.String** |  |  [optional]
+**nihii** | **kotlin.String** |  |  [optional]
+**ssin** | **kotlin.String** |  |  [optional]
 **address** | [**AddressDto**](AddressDto.md) |  |  [optional]
-**agendaIds** | [**kotlin.Array&lt;kotlin.String&gt;**](.md) |  | 
-**options** | [**kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;**](.md) |  | 
+
+
+

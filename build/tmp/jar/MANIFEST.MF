@@ -1,4 +1,2 @@
 Manifest-Version: 1.0
-Version: 8d70c5f763-dirty
-Implementation-Version: 8d70c5f763-dirty
 

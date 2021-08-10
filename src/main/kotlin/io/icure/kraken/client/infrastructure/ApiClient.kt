@@ -79,10 +79,13 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
 
         var request = when (requestConfig.method) {
             RequestMethod.DELETE -> httpClient.uri(uri).method(HttpMethod.DELETE, timeoutDuration)
+                .body(objectMapper.writeValueAsString(requestConfig.body))
             RequestMethod.GET -> httpClient.uri(uri).method(HttpMethod.GET, timeoutDuration)
             RequestMethod.HEAD -> httpClient.uri(uri).method(HttpMethod.HEAD, timeoutDuration)
             RequestMethod.PATCH -> httpClient.uri(uri).method(HttpMethod.PATCH, timeoutDuration)
+                .body(objectMapper.writeValueAsString(requestConfig.body))
             RequestMethod.PUT -> httpClient.uri(uri).method(HttpMethod.PUT, timeoutDuration)
+                .body(objectMapper.writeValueAsString(requestConfig.body))
             RequestMethod.POST -> httpClient.uri(uri).method(HttpMethod.POST, timeoutDuration)
                 .body(objectMapper.writeValueAsString(requestConfig.body))
             RequestMethod.OPTIONS -> httpClient.uri(uri).method(HttpMethod.OPTIONS, timeoutDuration)

@@ -24,10 +24,10 @@ import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
 import javax.inject.Named
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
 @Named
-class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
+@ExperimentalStdlibApi
+@ExperimentalCoroutinesApi
+class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {

@@ -26,10 +26,10 @@ import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
 import javax.inject.Named
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
 @Named
-class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
+@ExperimentalStdlibApi
+@ExperimentalCoroutinesApi
+class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {

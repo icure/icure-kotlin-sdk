@@ -25,7 +25,7 @@ import java.util.Date
 
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-open class ApiClient(val baseUrl: String, val httpClient: WebClient) {
+open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHeader: String? = null) {
     companion object {
         protected const val ContentType = "Content-Type"
         protected const val Accept = "Accept"
@@ -40,7 +40,6 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient) {
         var username: String? = null
         var password: String? = null
         var accessToken: String? = null
- 		var authHeader: String? = null
         var timeoutDuration: Duration? = null
 
         val objectMapper = ObjectMapper().registerModule(KotlinModule()).apply {
@@ -99,15 +98,5 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient) {
 
         return request.retrieve().toFlow().toObject(T::class.java, objectMapper, true)
 
-    }
-
-    protected inline fun <reified T: Any> parseDateToQueryString(value : T): String {
-        /*
-        .replace("\"", "") converts the json object string to an actual string for the query parameter.
-        The moshi or gson adapter allows a more generic solution instead of trying to use a native
-        formatter. It also easily allows to provide a simple way to define a custom date format pattern
-        inside a gson/moshi adapter.
-        */
-        return objectMapper.writeValueAsString(value).replace("\"", "")
     }
 }

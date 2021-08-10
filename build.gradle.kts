@@ -104,3 +104,25 @@ tasks.register("apply-custom-fixes") {
         }
     }
 }
+
+val repoUsername: String by project
+val repoPassword: String by project
+val mavenReleasesRepository: String by project
+publishing {
+    publications {
+        create<MavenPublication>(rootProject.name) {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "Taktik"
+            url = uri(mavenReleasesRepository)
+            credentials {
+                username = repoUsername
+                password = repoPassword
+            }
+        }
+    }
+}

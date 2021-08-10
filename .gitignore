@@ -24,3 +24,4 @@ target
 # openapi generator
 .openapi-generator/
 ./api/
+icure-openapi-spec.json

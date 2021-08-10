@@ -1,5 +1,6 @@
 val kotlinVersion = "1.4.21"
 val kotlinCoroutinesVersion = "1.4.2"
+val jacksonVersion = "2.12.4"
 
 plugins {
     kotlin("jvm") version "1.4.21"
@@ -37,9 +38,10 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = "2.11.3")
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.11.3")
-    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = "2.11.3")
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
+    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
+    implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
 

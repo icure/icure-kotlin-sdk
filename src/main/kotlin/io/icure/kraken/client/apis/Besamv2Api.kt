@@ -11,6 +11,8 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.AmpDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.NmpDto
@@ -24,19 +26,20 @@ import io.icure.kraken.client.models.SubstanceDto
 import io.icure.kraken.client.models.VmpDto
 import io.icure.kraken.client.models.VmpGroupDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class Besamv2Api(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -55,26 +58,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto> {
+    suspend fun findAmpsByDmppCode(dmppCode: kotlin.String) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = findAmpsByDmppCodeRequestConfig(dmppCode = dmppCode)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<AmpDto>>(
+        return request<Unit, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -111,26 +100,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByAtc(atcCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByAtcRequestConfig(atcCode = atcCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -181,26 +156,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -251,26 +212,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -322,26 +269,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -399,26 +332,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -469,26 +388,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto {
+    suspend fun findPaginatedAmpsByVmpId(vmpId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListAmpDto?  {
         val localVariableConfig = findPaginatedAmpsByVmpIdRequestConfig(vmpId = vmpId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListAmpDto>(
+        return request<Unit, PaginatedListAmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListAmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -540,26 +445,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto {
+    suspend fun findPaginatedNmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListNmpDto?  {
         val localVariableConfig = findPaginatedNmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListNmpDto>(
+        return request<Unit, PaginatedListNmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListNmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -618,26 +509,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto {
+    suspend fun findPaginatedVmpGroupsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
         val localVariableConfig = findPaginatedVmpGroupsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpGroupDto>(
+        return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpGroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -695,26 +572,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto {
+    suspend fun findPaginatedVmpGroupsByVmpGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpGroupDto?  {
         val localVariableConfig = findPaginatedVmpGroupsByVmpGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpGroupDto>(
+        return request<Unit, PaginatedListVmpGroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpGroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -765,26 +628,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto {
+    suspend fun findPaginatedVmpsByGroupCode(vmpgCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
         val localVariableConfig = findPaginatedVmpsByGroupCodeRequestConfig(vmpgCode = vmpgCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpDto>(
+        return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -835,26 +684,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto {
+    suspend fun findPaginatedVmpsByGroupId(vmpgId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
         val localVariableConfig = findPaginatedVmpsByGroupIdRequestConfig(vmpgId = vmpgId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpDto>(
+        return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -906,26 +741,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto {
+    suspend fun findPaginatedVmpsByLabel(language: kotlin.String?, label: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
         val localVariableConfig = findPaginatedVmpsByLabelRequestConfig(language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpDto>(
+        return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -983,26 +804,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto {
+    suspend fun findPaginatedVmpsByVmpCode(vmpCode: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListVmpDto?  {
         val localVariableConfig = findPaginatedVmpsByVmpCodeRequestConfig(vmpCode = vmpCode, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListVmpDto>(
+        return request<Unit, PaginatedListVmpDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListVmpDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1049,26 +856,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getSamVersion() : SamVersionDto {
+    suspend fun getSamVersion() : SamVersionDto?  {
         val localVariableConfig = getSamVersionRequestConfig()
 
-        val localVarResponse = request<Unit, SamVersionDto>(
+        return request<Unit, SamVersionDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as SamVersionDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1101,26 +894,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto> {
+    suspend fun listAmpsByDmppCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = listAmpsByDmppCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1154,26 +933,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto> {
+    suspend fun listAmpsByGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = listAmpsByGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1207,26 +972,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto> {
+    suspend fun listAmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = listAmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1260,26 +1011,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto> {
+    suspend fun listAmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = listAmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1313,26 +1050,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto> {
+    suspend fun listAmpsByVmpIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<AmpDto>?  {
         val localVariableConfig = listAmpsByVmpIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<AmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1366,26 +1089,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto> {
+    suspend fun listNmpsByCnks(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<NmpDto>?  {
         val localVariableConfig = listNmpsByCnksRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<NmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<NmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<NmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1418,26 +1127,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto> {
+    suspend fun listPharmaceuticalForms() : kotlin.collections.List<PharmaceuticalFormDto>?  {
         val localVariableConfig = listPharmaceuticalFormsRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<PharmaceuticalFormDto>>(
+        return request<Unit, kotlin.collections.List<PharmaceuticalFormDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<PharmaceuticalFormDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1469,26 +1164,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listSubstances() : kotlin.collections.List<SubstanceDto> {
+    suspend fun listSubstances() : kotlin.collections.List<SubstanceDto>?  {
         val localVariableConfig = listSubstancesRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<SubstanceDto>>(
+        return request<Unit, kotlin.collections.List<SubstanceDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<SubstanceDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1521,26 +1202,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto> {
+    suspend fun listVmpGroupsByVmpGroupCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpGroupDto>?  {
         val localVariableConfig = listVmpGroupsByVmpGroupCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<VmpGroupDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<VmpGroupDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<VmpGroupDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1574,26 +1241,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto> {
+    suspend fun listVmpsByGroupIds(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
         val localVariableConfig = listVmpsByGroupIdsRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<VmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1627,26 +1280,12 @@ class Besamv2Api(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto> {
+    suspend fun listVmpsByVmpCodes(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<VmpDto>?  {
         val localVariableConfig = listVmpsByVmpCodesRequestConfig(listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<VmpDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<VmpDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

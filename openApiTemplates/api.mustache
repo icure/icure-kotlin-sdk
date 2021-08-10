@@ -1,0 +1,110 @@
+{{>licenseInfo}}
+package {{apiPackage}}
+
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{^doNotUseRxAndCoroutines}}
+{{#useCoroutines}}
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+{{/useCoroutines}}
+{{/doNotUseRxAndCoroutines}}
+
+import {{packageName}}.infrastructure.ApiClient
+import {{packageName}}.infrastructure.ClientException
+import {{packageName}}.infrastructure.ServerException
+import {{packageName}}.infrastructure.MultiValueMap
+import {{packageName}}.infrastructure.RequestConfig
+import {{packageName}}.infrastructure.RequestMethod
+import javax.inject.Named
+
+{{#operations}}
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+{{#nonPublicApi}}internal {{/nonPublicApi}}class {{classname}}(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
+    companion object {
+        @JvmStatic
+        val defaultBasePath: String by lazy {
+            System.getProperties().getProperty("io.icure.kraken.client.baseUrl", "{{{basePath}}}")
+        }
+    }
+
+    {{#operation}}
+    /**
+    * {{summary}}
+    * {{notes}}
+    {{#allParams}}* @param {{{paramName}}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+    {{/allParams}}* @return {{#returnType}}{{{returnType}}}{{#nullableReturnType}} or null{{/nullableReturnType}}{{/returnType}}{{^returnType}}void{{/returnType}}
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */{{#returnType}}
+    @Suppress("UNCHECKED_CAST"){{/returnType}}
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    {{#isDeprecated}}
+    @Deprecated(message = "This operation is deprecated.")
+    {{/isDeprecated}}
+    {{^doNotUseRxAndCoroutines}}{{#useCoroutines}}suspend {{/useCoroutines}}{{/doNotUseRxAndCoroutines}}fun {{operationId}}({{#allParams}}{{{paramName}}}: {{{dataType}}}{{^required}}?{{/required}}{{^-last}}, {{/-last}}{{/allParams}}) : {{#returnType}}{{{returnType}}}?{{#nullableReturnType}}{{/nullableReturnType}}{{/returnType}}{{^returnType}}Unit?{{/returnType}}{{^doNotUseRxAndCoroutines}}{{#useCoroutines}} {{/useCoroutines}}{{/doNotUseRxAndCoroutines}} {
+        {{#isDeprecated}}
+        @Suppress("DEPRECATION")
+        {{/isDeprecated}}
+        val localVariableConfig = {{operationId}}RequestConfig({{#allParams}}{{{paramName}}} = {{{paramName}}}{{^-last}}, {{/-last}}{{/allParams}})
+
+        return request<{{#hasBodyParam}}{{#bodyParams}}{{{dataType}}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}Unit{{/hasFormParams}}{{#hasFormParams}}Map<String, Any?>{{/hasFormParams}}{{/hasBodyParam}}, {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Unit{{/returnType}}>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation {{operationId}}
+    *
+    {{#allParams}}* @param {{{paramName}}} {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+    {{/allParams}}* @return RequestConfig
+    */
+    {{#isDeprecated}}
+    @Deprecated(message = "This operation is deprecated.")
+    {{/isDeprecated}}
+    fun {{operationId}}RequestConfig({{#allParams}}{{{paramName}}}: {{{dataType}}}{{^required}}?{{/required}}{{^-last}}, {{/-last}}{{/allParams}}) : RequestConfig<{{#hasBodyParam}}{{#bodyParams}}{{{dataType}}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}Unit{{/hasFormParams}}{{#hasFormParams}}Map<String, Any?>{{/hasFormParams}}{{/hasBodyParam}}> {
+        val localVariableBody = {{#hasBodyParam}}{{#bodyParams}}{{{paramName}}}{{/bodyParams}}{{/hasBodyParam}}{{^hasBodyParam}}{{^hasFormParams}}null{{/hasFormParams}}{{#hasFormParams}}mapOf({{#formParams}}"{{{baseName}}}" to {{{paramName}}}{{^-last}}, {{/-last}}{{/formParams}}){{/hasFormParams}}{{/hasBodyParam}}
+        val localVariableQuery: MultiValueMap = {{^hasQueryParams}}mutableMapOf()
+{{/hasQueryParams}}{{#hasQueryParams}}mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                {{#queryParams}}
+                {{^required}}
+                if ({{{paramName}}} != null) {
+                    put("{{baseName}}", {{#isContainer}}toMultiValue({{{paramName}}}.toList(), "{{collectionFormat}}"){{/isContainer}}{{^isContainer}}listOf({{#isDateTime}}parseDateToQueryString({{{paramName}}}){{/isDateTime}}{{#isDate}}parseDateToQueryString({{{paramName}}}){{/isDate}}{{^isDateTime}}{{^isDate}}{{{paramName}}}.toString(){{/isDate}}{{/isDateTime}}){{/isContainer}})
+                }
+                {{/required}}
+                {{#required}}
+                {{#isNullable}}
+                if ({{{paramName}}} != null) {
+                    put("{{baseName}}", {{#isContainer}}toMultiValue({{{paramName}}}.toList(), "{{collectionFormat}}"){{/isContainer}}{{^isContainer}}listOf({{#isDateTime}}parseDateToQueryString({{{paramName}}}){{/isDateTime}}{{#isDate}}parseDateToQueryString({{{paramName}}}){{/isDate}}{{^isDateTime}}{{^isDate}}{{{paramName}}}.toString(){{/isDate}}{{/isDateTime}}){{/isContainer}})
+                }
+                {{/isNullable}}
+                {{^isNullable}}
+                put("{{baseName}}", {{#isContainer}}toMultiValue({{{paramName}}}.toList(), "{{collectionFormat}}"){{/isContainer}}{{^isContainer}}listOf({{#isDateTime}}parseDateToQueryString({{{paramName}}}){{/isDateTime}}{{#isDate}}parseDateToQueryString({{{paramName}}}){{/isDate}}{{^isDateTime}}{{^isDate}}{{{paramName}}}.toString(){{/isDate}}{{/isDateTime}}){{/isContainer}})
+                {{/isNullable}}
+                {{/required}}
+                {{/queryParams}}
+            }
+            {{/hasQueryParams}}
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf({{#hasFormParams}}"Content-Type" to {{^consumes}}"multipart/form-data"{{/consumes}}{{#consumes.0}}"{{{mediaType}}}"{{/consumes.0}}{{/hasFormParams}})
+        {{#headerParams}}
+        {{{paramName}}}{{^required}}?{{/required}}.apply { localVariableHeaders["{{baseName}}"] = {{#isContainer}}this.joinToString(separator = collectionDelimiter("{{collectionFormat}}")){{/isContainer}}{{^isContainer}}this.toString(){{/isContainer}} }
+        {{/headerParams}}
+
+        return RequestConfig(
+            method = RequestMethod.{{httpMethod}},
+            path = "{{path}}"{{#pathParams}}.replace("{"+"{{baseName}}"+"}", "${{{paramName}}}"){{/pathParams}},
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    {{/operation}}
+}
+{{/operations}}

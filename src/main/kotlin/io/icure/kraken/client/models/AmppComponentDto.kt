@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.DeviceTypeDto
 import io.icure.kraken.client.models.PackagingTypeDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param contentType 
@@ -27,32 +31,43 @@ import com.squareup.moshi.Json
  * @param packagingType 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AmppComponentDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "contentType")
+
+    @field:JsonProperty("contentType")
     val contentType: AmppComponentDto.ContentType? = null,
-    @Json(name = "contentMultiplier")
+
+    @field:JsonProperty("contentMultiplier")
     val contentMultiplier: kotlin.Int? = null,
-    @Json(name = "packSpecification")
+
+    @field:JsonProperty("packSpecification")
     val packSpecification: kotlin.String? = null,
-    @Json(name = "deviceType")
+
+    @field:JsonProperty("deviceType")
     val deviceType: DeviceTypeDto? = null,
-    @Json(name = "packagingType")
+
+    @field:JsonProperty("packagingType")
     val packagingType: PackagingTypeDto? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: aCTIVECOMPONENT,sOLVENT,dEVICE,eXCIPIENT
      */
     enum class ContentType(val value: kotlin.String) {
-        @Json(name = "ACTIVE_COMPONENT") aCTIVECOMPONENT("ACTIVE_COMPONENT"),
-        @Json(name = "SOLVENT") sOLVENT("SOLVENT"),
-        @Json(name = "DEVICE") dEVICE("DEVICE"),
-        @Json(name = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
+        @JsonProperty(value = "ACTIVE_COMPONENT") aCTIVECOMPONENT("ACTIVE_COMPONENT"),
+        @JsonProperty(value = "SOLVENT") sOLVENT("SOLVENT"),
+        @JsonProperty(value = "DEVICE") dEVICE("DEVICE"),
+        @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
     }
 }
 

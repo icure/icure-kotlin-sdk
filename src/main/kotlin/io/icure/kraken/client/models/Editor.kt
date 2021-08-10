@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param left 
  * @param top 
  * @param width 
@@ -27,36 +31,49 @@ import com.squareup.moshi.Json
  * @param key 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Editor (
-    @Json(name = "left")
+
+    @field:JsonProperty("left")
     val left: kotlin.Double? = null,
-    @Json(name = "top")
+
+    @field:JsonProperty("top")
     val top: kotlin.Double? = null,
-    @Json(name = "width")
+
+    @field:JsonProperty("width")
     val width: kotlin.Double? = null,
-    @Json(name = "height")
+
+    @field:JsonProperty("height")
     val height: kotlin.Double? = null,
-    @Json(name = "multiline")
+
+    @field:JsonProperty("multiline")
     val multiline: kotlin.Boolean? = null,
-    @Json(name = "labelPosition")
+
+    @field:JsonProperty("labelPosition")
     val labelPosition: Editor.LabelPosition? = null,
-    @Json(name = "readOnly")
+
+    @field:JsonProperty("readOnly")
     val readOnly: kotlin.Boolean? = null,
-    @Json(name = "defaultValue")
+
+    @field:JsonProperty("defaultValue")
     val defaultValue: kotlin.Any? = null,
-    @Json(name = "key")
+
+    @field:JsonProperty("key")
     val key: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: up,down,left,right
      */
     enum class LabelPosition(val value: kotlin.String) {
-        @Json(name = "Up") up("Up"),
-        @Json(name = "Down") down("Down"),
-        @Json(name = "Left") left("Left"),
-        @Json(name = "Right") right("Right");
+        @JsonProperty(value = "Up") up("Up"),
+        @JsonProperty(value = "Down") down("Down"),
+        @JsonProperty(value = "Left") left("Left"),
+        @JsonProperty(value = "Right") right("Right");
     }
 }
 

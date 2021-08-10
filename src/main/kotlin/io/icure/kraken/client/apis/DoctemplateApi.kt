@@ -11,23 +11,26 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentTemplateDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -46,26 +49,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto {
+    suspend fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
         val localVariableConfig = createDocumentTemplateRequestConfig(documentTemplateDto = documentTemplateDto)
 
-        val localVarResponse = request<DocumentTemplateDto, DocumentTemplateDto>(
+        return request<DocumentTemplateDto, DocumentTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -99,26 +88,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteDocumentTemplate(documentTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteDocumentTemplate(documentTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteDocumentTemplateRequestConfig(documentTemplateIds = documentTemplateIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -151,26 +126,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto> {
+    suspend fun findAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findAllDocumentTemplatesRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -202,26 +163,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto> {
+    suspend fun findDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -254,26 +201,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto> {
+    suspend fun findDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode = documentTypeCode)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -307,26 +240,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto> {
+    suspend fun findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode = documentTypeCode)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -360,26 +279,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto> {
+    suspend fun findDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesBySpecialityRequestConfig(specialityCode = specialityCode)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
+        return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -414,26 +319,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File {
+    suspend fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File?  {
         val localVariableConfig = getAttachmentTextRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
-        val localVarResponse = request<Unit, java.io.File>(
+        return request<Unit, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -468,26 +359,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto {
+    suspend fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto?  {
         val localVariableConfig = getDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId)
 
-        val localVarResponse = request<Unit, DocumentTemplateDto>(
+        return request<Unit, DocumentTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -522,26 +399,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File {
+    suspend fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File?  {
         val localVariableConfig = getDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
-        val localVarResponse = request<Unit, java.io.File>(
+        return request<Unit, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -577,26 +440,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : DocumentTemplateDto {
+    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : DocumentTemplateDto?  {
         val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, DocumentTemplateDto>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, DocumentTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -632,26 +481,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto {
+    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto?  {
         val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, byteArrayDto = byteArrayDto)
 
-        val localVarResponse = request<ByteArrayDto, DocumentTemplateDto>(
+        return request<ByteArrayDto, DocumentTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -687,26 +522,12 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(base
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun updateDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto {
+    suspend fun updateDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
         val localVariableConfig = updateDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId, documentTemplateDto = documentTemplateDto)
 
-        val localVarResponse = request<DocumentTemplateDto, DocumentTemplateDto>(
+        return request<DocumentTemplateDto, DocumentTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

@@ -13,24 +13,35 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.FormColumn
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param icon 
  * @param title 
  * @param columns 
  * @param formColumns 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormSection (
-    @Json(name = "icon")
+
+    @field:JsonProperty("icon")
     val icon: kotlin.String? = null,
-    @Json(name = "title")
+
+    @field:JsonProperty("title")
     val title: kotlin.String? = null,
-    @Json(name = "columns")
+
+    @field:JsonProperty("columns")
     val columns: kotlin.Int? = null,
-    @Json(name = "formColumns")
+
+    @field:JsonProperty("formColumns")
     val formColumns: kotlin.collections.List<FormColumn>? = null
+
 )
 

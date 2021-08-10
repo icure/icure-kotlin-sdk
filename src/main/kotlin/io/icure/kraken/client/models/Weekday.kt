@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param weekday 
  * @param weekNumber 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Weekday (
-    @Json(name = "weekday")
+
+    @field:JsonProperty("weekday")
     val weekday: CodeStubDto? = null,
-    @Json(name = "weekNumber")
+
+    @field:JsonProperty("weekNumber")
     val weekNumber: kotlin.Int? = null
+
 )
 

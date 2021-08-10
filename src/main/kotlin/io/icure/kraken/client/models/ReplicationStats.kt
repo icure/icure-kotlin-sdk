@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param revisionsChecked 
  * @param missingRevisionsFound 
  * @param docsRead 
@@ -25,20 +29,30 @@ import com.squareup.moshi.Json
  * @param checkpointedSourceSeq 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReplicationStats (
-    @Json(name = "revisions_checked")
+
+    @field:JsonProperty("revisions_checked")
     val revisionsChecked: kotlin.Int? = null,
-    @Json(name = "missing_revisions_found")
+
+    @field:JsonProperty("missing_revisions_found")
     val missingRevisionsFound: kotlin.Int? = null,
-    @Json(name = "docs_read")
+
+    @field:JsonProperty("docs_read")
     val docsRead: kotlin.Int? = null,
-    @Json(name = "docs_written")
+
+    @field:JsonProperty("docs_written")
     val docsWritten: kotlin.Int? = null,
-    @Json(name = "changes_pending")
+
+    @field:JsonProperty("changes_pending")
     val changesPending: kotlin.Int? = null,
-    @Json(name = "doc_write_failures")
+
+    @field:JsonProperty("doc_write_failures")
     val docWriteFailures: kotlin.Int? = null,
-    @Json(name = "checkpointed_source_seq")
+
+    @field:JsonProperty("checkpointed_source_seq")
     val checkpointedSourceSeq: kotlin.String? = null
+
 )
 

@@ -11,22 +11,25 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FrontEndMigrationDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -45,26 +48,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto {
+    suspend fun createFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto?  {
         val localVariableConfig = createFrontEndMigrationRequestConfig(frontEndMigrationDto = frontEndMigrationDto)
 
-        val localVarResponse = request<FrontEndMigrationDto, FrontEndMigrationDto>(
+        return request<FrontEndMigrationDto, FrontEndMigrationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FrontEndMigrationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -98,26 +87,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteFrontEndMigration(frontEndMigrationId: kotlin.String) : DocIdentifier {
+    suspend fun deleteFrontEndMigration(frontEndMigrationId: kotlin.String) : DocIdentifier?  {
         val localVariableConfig = deleteFrontEndMigrationRequestConfig(frontEndMigrationId = frontEndMigrationId)
 
-        val localVarResponse = request<Unit, DocIdentifier>(
+        return request<Unit, DocIdentifier>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocIdentifier
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -151,26 +126,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigration(frontEndMigrationId: kotlin.String) : FrontEndMigrationDto {
+    suspend fun getFrontEndMigration(frontEndMigrationId: kotlin.String) : FrontEndMigrationDto?  {
         val localVariableConfig = getFrontEndMigrationRequestConfig(frontEndMigrationId = frontEndMigrationId)
 
-        val localVarResponse = request<Unit, FrontEndMigrationDto>(
+        return request<Unit, FrontEndMigrationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FrontEndMigrationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -204,26 +165,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigrationByName(frontEndMigrationName: kotlin.String) : kotlin.collections.List<FrontEndMigrationDto> {
+    suspend fun getFrontEndMigrationByName(frontEndMigrationName: kotlin.String) : kotlin.collections.List<FrontEndMigrationDto>?  {
         val localVariableConfig = getFrontEndMigrationByNameRequestConfig(frontEndMigrationName = frontEndMigrationName)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
+        return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<FrontEndMigrationDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -256,26 +203,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigrations() : kotlin.collections.List<FrontEndMigrationDto> {
+    suspend fun getFrontEndMigrations() : kotlin.collections.List<FrontEndMigrationDto>?  {
         val localVariableConfig = getFrontEndMigrationsRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
+        return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<FrontEndMigrationDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -308,26 +241,12 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath) : ApiClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto {
+    suspend fun modifyFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto?  {
         val localVariableConfig = modifyFrontEndMigrationRequestConfig(frontEndMigrationDto = frontEndMigrationDto)
 
-        val localVarResponse = request<FrontEndMigrationDto, FrontEndMigrationDto>(
+        return request<FrontEndMigrationDto, FrontEndMigrationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FrontEndMigrationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

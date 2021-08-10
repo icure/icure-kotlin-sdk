@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param authorisationNr 
@@ -35,40 +39,60 @@ import com.squareup.moshi.Json
  * @param website 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CompanyDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "authorisationNr")
+
+    @field:JsonProperty("authorisationNr")
     val authorisationNr: kotlin.String? = null,
-    @Json(name = "vatNr")
+
+    @field:JsonProperty("vatNr")
     val vatNr: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
-    @Json(name = "europeanNr")
+
+    @field:JsonProperty("europeanNr")
     val europeanNr: kotlin.String? = null,
-    @Json(name = "denomination")
+
+    @field:JsonProperty("denomination")
     val denomination: kotlin.String? = null,
-    @Json(name = "legalForm")
+
+    @field:JsonProperty("legalForm")
     val legalForm: kotlin.String? = null,
-    @Json(name = "building")
+
+    @field:JsonProperty("building")
     val building: kotlin.String? = null,
-    @Json(name = "streetName")
+
+    @field:JsonProperty("streetName")
     val streetName: kotlin.String? = null,
-    @Json(name = "streetNum")
+
+    @field:JsonProperty("streetNum")
     val streetNum: kotlin.String? = null,
-    @Json(name = "postbox")
+
+    @field:JsonProperty("postbox")
     val postbox: kotlin.String? = null,
-    @Json(name = "postcode")
+
+    @field:JsonProperty("postcode")
     val postcode: kotlin.String? = null,
-    @Json(name = "city")
+
+    @field:JsonProperty("city")
     val city: kotlin.String? = null,
-    @Json(name = "countryCode")
+
+    @field:JsonProperty("countryCode")
     val countryCode: kotlin.String? = null,
-    @Json(name = "phone")
+
+    @field:JsonProperty("phone")
     val phone: kotlin.String? = null,
-    @Json(name = "language")
+
+    @field:JsonProperty("language")
     val language: kotlin.String? = null,
-    @Json(name = "website")
+
+    @field:JsonProperty("website")
     val website: kotlin.String? = null
+
 )
 

@@ -14,18 +14,27 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param standardRoutes 
  * @param name 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RouteOfAdministrationDto (
-    @Json(name = "standardRoutes")
+
+    @field:JsonProperty("standardRoutes")
     val standardRoutes: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null
+
 )
 

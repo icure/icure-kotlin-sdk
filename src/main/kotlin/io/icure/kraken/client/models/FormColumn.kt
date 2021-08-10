@@ -13,21 +13,31 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.FormLayoutData
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param formDataList 
  * @param columns 
  * @param shouldDisplay 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormColumn (
-    @Json(name = "formDataList")
+
+    @field:JsonProperty("formDataList")
     val formDataList: kotlin.collections.List<FormLayoutData>? = null,
-    @Json(name = "columns")
+
+    @field:JsonProperty("columns")
     val columns: kotlin.String? = null,
-    @Json(name = "shouldDisplay")
+
+    @field:JsonProperty("shouldDisplay")
     val shouldDisplay: kotlin.Boolean? = null
+
 )
 

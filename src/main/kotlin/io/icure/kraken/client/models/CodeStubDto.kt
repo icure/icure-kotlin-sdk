@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param context 
  * @param type 
@@ -24,18 +28,27 @@ import com.squareup.moshi.Json
  * @param label 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CodeStubDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "context")
+
+    @field:JsonProperty("context")
     val context: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "version")
+
+    @field:JsonProperty("version")
     val version: kotlin.String? = null,
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+
 )
 

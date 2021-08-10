@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param planninfForAnyDoctor 
  * @param planningForDelegate 
  * @param planningForPatientDoctor 
@@ -26,22 +30,33 @@ import com.squareup.moshi.Json
  * @param descr 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormPlanning (
-    @Json(name = "planninfForAnyDoctor")
+
+    @field:JsonProperty("planninfForAnyDoctor")
     val planninfForAnyDoctor: kotlin.Boolean? = null,
-    @Json(name = "planningForDelegate")
+
+    @field:JsonProperty("planningForDelegate")
     val planningForDelegate: kotlin.Boolean? = null,
-    @Json(name = "planningForPatientDoctor")
+
+    @field:JsonProperty("planningForPatientDoctor")
     val planningForPatientDoctor: kotlin.Boolean? = null,
-    @Json(name = "planningForMe")
+
+    @field:JsonProperty("planningForMe")
     val planningForMe: kotlin.Boolean? = null,
-    @Json(name = "codedDelayInDays")
+
+    @field:JsonProperty("codedDelayInDays")
     val codedDelayInDays: kotlin.Int? = null,
-    @Json(name = "repetitions")
+
+    @field:JsonProperty("repetitions")
     val repetitions: kotlin.Int? = null,
-    @Json(name = "repetitionsUnit")
+
+    @field:JsonProperty("repetitionsUnit")
     val repetitionsUnit: kotlin.Int? = null,
-    @Json(name = "descr")
+
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null
+
 )
 

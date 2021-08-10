@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param firstName 
  * @param lastName 
  * @param ssin 
@@ -24,18 +28,27 @@ import com.squareup.moshi.Json
  * @param existingPatientId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CheckSMFPatientResult (
-    @Json(name = "firstName")
+
+    @field:JsonProperty("firstName")
     val firstName: kotlin.String,
-    @Json(name = "lastName")
+
+    @field:JsonProperty("lastName")
     val lastName: kotlin.String,
-    @Json(name = "ssin")
+
+    @field:JsonProperty("ssin")
     val ssin: kotlin.String,
-    @Json(name = "exists")
+
+    @field:JsonProperty("exists")
     val exists: kotlin.Boolean,
-    @Json(name = "dateOfBirth")
+
+    @field:JsonProperty("dateOfBirth")
     val dateOfBirth: kotlin.Int? = null,
-    @Json(name = "existingPatientId")
+
+    @field:JsonProperty("existingPatientId")
     val existingPatientId: kotlin.String? = null
+
 )
 

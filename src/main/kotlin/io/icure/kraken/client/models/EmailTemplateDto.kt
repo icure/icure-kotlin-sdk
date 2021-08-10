@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param subject 
  * @param body 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EmailTemplateDto (
-    @Json(name = "subject")
+
+    @field:JsonProperty("subject")
     val subject: kotlin.String? = null,
-    @Json(name = "body")
+
+    @field:JsonProperty("body")
     val body: kotlin.String? = null
+
 )
 

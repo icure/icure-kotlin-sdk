@@ -20,10 +20,14 @@ import io.icure.kraken.client.models.RenewalDto
 import io.icure.kraken.client.models.SubstanceproductDto
 import io.icure.kraken.client.models.SuspensionDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * The details of prescribed or suggested medication
+ *
  * @param compoundPrescription 
  * @param substanceProduct 
  * @param medicinalProduct 
@@ -66,86 +70,129 @@ import com.squareup.moshi.Json
  * @param status 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MedicationDto (
-    @Json(name = "compoundPrescription")
+
+    @field:JsonProperty("compoundPrescription")
     val compoundPrescription: kotlin.String? = null,
-    @Json(name = "substanceProduct")
+
+    @field:JsonProperty("substanceProduct")
     val substanceProduct: SubstanceproductDto? = null,
-    @Json(name = "medicinalProduct")
+
+    @field:JsonProperty("medicinalProduct")
     val medicinalProduct: MedicinalproductDto? = null,
-    @Json(name = "numberOfPackages")
+
+    @field:JsonProperty("numberOfPackages")
     val numberOfPackages: kotlin.Int? = null,
-    @Json(name = "batch")
+
+    @field:JsonProperty("batch")
     val batch: kotlin.String? = null,
-    @Json(name = "instructionForPatient")
+
+    @field:JsonProperty("instructionForPatient")
     val instructionForPatient: kotlin.String? = null,
-    @Json(name = "commentForDelivery")
+
+    @field:JsonProperty("commentForDelivery")
     val commentForDelivery: kotlin.String? = null,
-    @Json(name = "drugRoute")
+
+    @field:JsonProperty("drugRoute")
     val drugRoute: kotlin.String? = null,
-    @Json(name = "temporality")
+
+    @field:JsonProperty("temporality")
     val temporality: kotlin.String? = null,
-    @Json(name = "frequency")
+
+    @field:JsonProperty("frequency")
     val frequency: CodeStubDto? = null,
-    @Json(name = "reimbursementReason")
+
+    @field:JsonProperty("reimbursementReason")
     val reimbursementReason: CodeStubDto? = null,
-    @Json(name = "substitutionAllowed")
+
+    @field:JsonProperty("substitutionAllowed")
     val substitutionAllowed: kotlin.Boolean? = null,
-    @Json(name = "beginMoment")
+
+    @field:JsonProperty("beginMoment")
     val beginMoment: kotlin.Long? = null,
-    @Json(name = "endMoment")
+
+    @field:JsonProperty("endMoment")
     val endMoment: kotlin.Long? = null,
-    @Json(name = "deliveryMoment")
+
+    @field:JsonProperty("deliveryMoment")
     val deliveryMoment: kotlin.Long? = null,
-    @Json(name = "endExecutionMoment")
+
+    @field:JsonProperty("endExecutionMoment")
     val endExecutionMoment: kotlin.Long? = null,
-    @Json(name = "duration")
+
+    @field:JsonProperty("duration")
     val duration: DurationDto? = null,
-    @Json(name = "renewal")
+
+    @field:JsonProperty("renewal")
     val renewal: RenewalDto? = null,
-    @Json(name = "knownUsage")
+
+    @field:JsonProperty("knownUsage")
     val knownUsage: kotlin.Boolean? = null,
-    @Json(name = "regimen")
+
+    @field:JsonProperty("regimen")
     val regimen: kotlin.collections.List<RegimenItemDto>? = null,
-    @Json(name = "posology")
+
+    @field:JsonProperty("posology")
     val posology: kotlin.String? = null,
-    @Json(name = "agreements")
+
+    @field:JsonProperty("agreements")
     val agreements: kotlin.collections.Map<kotlin.String, ParagraphAgreementDto>? = null,
-    @Json(name = "medicationSchemeIdOnSafe")
+
+    @field:JsonProperty("medicationSchemeIdOnSafe")
     val medicationSchemeIdOnSafe: kotlin.String? = null,
-    @Json(name = "medicationSchemeSafeVersion")
+
+    @field:JsonProperty("medicationSchemeSafeVersion")
     val medicationSchemeSafeVersion: kotlin.Int? = null,
-    @Json(name = "medicationSchemeTimeStampOnSafe")
+
+    @field:JsonProperty("medicationSchemeTimeStampOnSafe")
     val medicationSchemeTimeStampOnSafe: kotlin.Long? = null,
-    @Json(name = "medicationSchemeDocumentId")
+
+    @field:JsonProperty("medicationSchemeDocumentId")
     val medicationSchemeDocumentId: kotlin.String? = null,
-    @Json(name = "safeIdName")
+
+    @field:JsonProperty("safeIdName")
     val safeIdName: kotlin.String? = null,
-    @Json(name = "idOnSafes")
+
+    @field:JsonProperty("idOnSafes")
     val idOnSafes: kotlin.String? = null,
-    @Json(name = "timestampOnSafe")
+
+    @field:JsonProperty("timestampOnSafe")
     val timestampOnSafe: kotlin.Long? = null,
-    @Json(name = "changeValidated")
+
+    @field:JsonProperty("changeValidated")
     val changeValidated: kotlin.Boolean? = null,
-    @Json(name = "newSafeMedication")
+
+    @field:JsonProperty("newSafeMedication")
     val newSafeMedication: kotlin.Boolean? = null,
-    @Json(name = "medicationUse")
+
+    @field:JsonProperty("medicationUse")
     val medicationUse: kotlin.String? = null,
-    @Json(name = "beginCondition")
+
+    @field:JsonProperty("beginCondition")
     val beginCondition: kotlin.String? = null,
-    @Json(name = "endCondition")
+
+    @field:JsonProperty("endCondition")
     val endCondition: kotlin.String? = null,
-    @Json(name = "origin")
+
+    @field:JsonProperty("origin")
     val origin: kotlin.String? = null,
-    @Json(name = "medicationChanged")
+
+    @field:JsonProperty("medicationChanged")
     val medicationChanged: kotlin.Boolean? = null,
-    @Json(name = "posologyChanged")
+
+    @field:JsonProperty("posologyChanged")
     val posologyChanged: kotlin.Boolean? = null,
-    @Json(name = "suspension")
+
+    @field:JsonProperty("suspension")
     val suspension: kotlin.collections.List<SuspensionDto>? = null,
-    @Json(name = "prescriptionRID")
+
+    @field:JsonProperty("prescriptionRID")
     val prescriptionRID: kotlin.String? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.Int? = null
+
 )
 

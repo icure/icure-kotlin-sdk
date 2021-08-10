@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.QuantityDto
 import io.icure.kraken.client.models.SubstanceStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param rank 
@@ -29,34 +33,47 @@ import com.squareup.moshi.Json
  * @param substance 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class IngredientDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "rank")
+
+    @field:JsonProperty("rank")
     val rank: kotlin.Int? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: IngredientDto.Type? = null,
-    @Json(name = "knownEffect")
+
+    @field:JsonProperty("knownEffect")
     val knownEffect: kotlin.Boolean? = null,
-    @Json(name = "strengthDescription")
+
+    @field:JsonProperty("strengthDescription")
     val strengthDescription: kotlin.String? = null,
-    @Json(name = "strength")
+
+    @field:JsonProperty("strength")
     val strength: QuantityDto? = null,
-    @Json(name = "additionalInformation")
+
+    @field:JsonProperty("additionalInformation")
     val additionalInformation: kotlin.String? = null,
-    @Json(name = "substance")
+
+    @field:JsonProperty("substance")
     val substance: SubstanceStubDto? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: aCTIVESUBSTANCE,eXCIPIENT
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "ACTIVE_SUBSTANCE") aCTIVESUBSTANCE("ACTIVE_SUBSTANCE"),
-        @Json(name = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
+        @JsonProperty(value = "ACTIVE_SUBSTANCE") aCTIVESUBSTANCE("ACTIVE_SUBSTANCE"),
+        @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
     }
 }
 

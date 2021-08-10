@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param readHour 
  * @param deviceType 
  * @param readDate 
@@ -23,16 +27,24 @@ import com.squareup.moshi.Json
  * @param readvalue 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EIDItem (
-    @Json(name = "readHour")
+
+    @field:JsonProperty("readHour")
     val readHour: kotlin.Int,
-    @Json(name = "deviceType")
+
+    @field:JsonProperty("deviceType")
     val deviceType: kotlin.String? = null,
-    @Json(name = "readDate")
+
+    @field:JsonProperty("readDate")
     val readDate: kotlin.Long? = null,
-    @Json(name = "readType")
+
+    @field:JsonProperty("readType")
     val readType: kotlin.String? = null,
-    @Json(name = "readvalue")
+
+    @field:JsonProperty("readvalue")
     val readvalue: kotlin.String? = null
+
 )
 

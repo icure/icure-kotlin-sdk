@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.AbstractFilterDtoHealthElement
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param filter 
  * @param predicate 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FilterChainHealthElement (
-    @Json(name = "filter")
+
+    @field:JsonProperty("filter")
     val filter: AbstractFilterDtoHealthElement,
-    @Json(name = "predicate")
+
+    @field:JsonProperty("predicate")
     val predicate: kotlin.Any? = null
+
 )
 

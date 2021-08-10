@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param quantity 
  * @param label 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PricingDto (
-    @Json(name = "quantity")
+
+    @field:JsonProperty("quantity")
     val quantity: java.math.BigDecimal? = null,
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: SamTextDto? = null
+
 )
 

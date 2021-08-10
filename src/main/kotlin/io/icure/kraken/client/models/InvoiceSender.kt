@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param isSpecialist 
  * @param nihii 
  * @param bic 
@@ -28,26 +32,39 @@ import com.squareup.moshi.Json
  * @param conventionCode 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class InvoiceSender (
-    @Json(name = "isSpecialist")
+
+    @field:JsonProperty("isSpecialist")
     val isSpecialist: kotlin.Boolean,
-    @Json(name = "nihii")
+
+    @field:JsonProperty("nihii")
     val nihii: kotlin.Long? = null,
-    @Json(name = "bic")
+
+    @field:JsonProperty("bic")
     val bic: kotlin.String? = null,
-    @Json(name = "iban")
+
+    @field:JsonProperty("iban")
     val iban: kotlin.String? = null,
-    @Json(name = "bce")
+
+    @field:JsonProperty("bce")
     val bce: kotlin.Long? = null,
-    @Json(name = "ssin")
+
+    @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,
-    @Json(name = "lastName")
+
+    @field:JsonProperty("lastName")
     val lastName: kotlin.String? = null,
-    @Json(name = "firstName")
+
+    @field:JsonProperty("firstName")
     val firstName: kotlin.String? = null,
-    @Json(name = "phoneNumber")
+
+    @field:JsonProperty("phoneNumber")
     val phoneNumber: kotlin.Long? = null,
-    @Json(name = "conventionCode")
+
+    @field:JsonProperty("conventionCode")
     val conventionCode: kotlin.Int? = null
+
 )
 

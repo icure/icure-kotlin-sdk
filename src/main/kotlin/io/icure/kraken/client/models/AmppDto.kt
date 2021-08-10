@@ -20,10 +20,14 @@ import io.icure.kraken.client.models.QuantityDto
 import io.icure.kraken.client.models.SamTextDto
 import io.icure.kraken.client.models.SupplyProblemDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param orphan 
  * @param atcs 
  * @param dmpps 
@@ -66,97 +70,141 @@ import com.squareup.moshi.Json
  * @param vaccineIndicationCodes 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AmppDto (
-    @Json(name = "orphan")
+
+    @field:JsonProperty("orphan")
     val orphan: kotlin.Boolean,
-    @Json(name = "atcs")
+
+    @field:JsonProperty("atcs")
     val atcs: kotlin.collections.List<AtcDto>,
-    @Json(name = "dmpps")
+
+    @field:JsonProperty("dmpps")
     val dmpps: kotlin.collections.List<DmppDto>,
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "index")
+
+    @field:JsonProperty("index")
     val index: kotlin.Double? = null,
-    @Json(name = "ctiExtended")
+
+    @field:JsonProperty("ctiExtended")
     val ctiExtended: kotlin.String? = null,
-    @Json(name = "leafletLink")
+
+    @field:JsonProperty("leafletLink")
     val leafletLink: SamTextDto? = null,
-    @Json(name = "spcLink")
+
+    @field:JsonProperty("spcLink")
     val spcLink: SamTextDto? = null,
-    @Json(name = "rmaPatientLink")
+
+    @field:JsonProperty("rmaPatientLink")
     val rmaPatientLink: SamTextDto? = null,
-    @Json(name = "rmaProfessionalLink")
+
+    @field:JsonProperty("rmaProfessionalLink")
     val rmaProfessionalLink: SamTextDto? = null,
-    @Json(name = "parallelCircuit")
+
+    @field:JsonProperty("parallelCircuit")
     val parallelCircuit: kotlin.Int? = null,
-    @Json(name = "parallelDistributor")
+
+    @field:JsonProperty("parallelDistributor")
     val parallelDistributor: kotlin.String? = null,
-    @Json(name = "packMultiplier")
+
+    @field:JsonProperty("packMultiplier")
     val packMultiplier: kotlin.Int? = null,
-    @Json(name = "packAmount")
+
+    @field:JsonProperty("packAmount")
     val packAmount: QuantityDto? = null,
-    @Json(name = "packDisplayValue")
+
+    @field:JsonProperty("packDisplayValue")
     val packDisplayValue: kotlin.String? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: AmppDto.Status? = null,
-    @Json(name = "crmLink")
+
+    @field:JsonProperty("crmLink")
     val crmLink: SamTextDto? = null,
-    @Json(name = "deliveryModusCode")
+
+    @field:JsonProperty("deliveryModusCode")
     val deliveryModusCode: kotlin.String? = null,
-    @Json(name = "deliveryModus")
+
+    @field:JsonProperty("deliveryModus")
     val deliveryModus: SamTextDto? = null,
-    @Json(name = "deliveryModusSpecification")
+
+    @field:JsonProperty("deliveryModusSpecification")
     val deliveryModusSpecification: SamTextDto? = null,
-    @Json(name = "dhpcLink")
+
+    @field:JsonProperty("dhpcLink")
     val dhpcLink: SamTextDto? = null,
-    @Json(name = "distributorCompany")
+
+    @field:JsonProperty("distributorCompany")
     val distributorCompany: CompanyDto? = null,
-    @Json(name = "singleUse")
+
+    @field:JsonProperty("singleUse")
     val singleUse: kotlin.Boolean? = null,
-    @Json(name = "speciallyRegulated")
+
+    @field:JsonProperty("speciallyRegulated")
     val speciallyRegulated: kotlin.Int? = null,
-    @Json(name = "abbreviatedName")
+
+    @field:JsonProperty("abbreviatedName")
     val abbreviatedName: SamTextDto? = null,
-    @Json(name = "prescriptionName")
+
+    @field:JsonProperty("prescriptionName")
     val prescriptionName: SamTextDto? = null,
-    @Json(name = "note")
+
+    @field:JsonProperty("note")
     val note: SamTextDto? = null,
-    @Json(name = "posologyNote")
+
+    @field:JsonProperty("posologyNote")
     val posologyNote: SamTextDto? = null,
-    @Json(name = "noGenericPrescriptionReasons")
+
+    @field:JsonProperty("noGenericPrescriptionReasons")
     val noGenericPrescriptionReasons: kotlin.collections.List<SamTextDto>? = null,
-    @Json(name = "exFactoryPrice")
+
+    @field:JsonProperty("exFactoryPrice")
     val exFactoryPrice: kotlin.Double? = null,
-    @Json(name = "reimbursementCode")
+
+    @field:JsonProperty("reimbursementCode")
     val reimbursementCode: kotlin.Int? = null,
-    @Json(name = "definedDailyDose")
+
+    @field:JsonProperty("definedDailyDose")
     val definedDailyDose: QuantityDto? = null,
-    @Json(name = "officialExFactoryPrice")
+
+    @field:JsonProperty("officialExFactoryPrice")
     val officialExFactoryPrice: kotlin.Double? = null,
-    @Json(name = "realExFactoryPrice")
+
+    @field:JsonProperty("realExFactoryPrice")
     val realExFactoryPrice: kotlin.Double? = null,
-    @Json(name = "pricingInformationDecisionDate")
+
+    @field:JsonProperty("pricingInformationDecisionDate")
     val pricingInformationDecisionDate: kotlin.Long? = null,
-    @Json(name = "components")
+
+    @field:JsonProperty("components")
     val components: kotlin.collections.List<AmppComponentDto>? = null,
-    @Json(name = "commercializations")
+
+    @field:JsonProperty("commercializations")
     val commercializations: kotlin.collections.List<CommercializationDto>? = null,
-    @Json(name = "supplyProblems")
+
+    @field:JsonProperty("supplyProblems")
     val supplyProblems: kotlin.collections.List<SupplyProblemDto>? = null,
-    @Json(name = "vaccineIndicationCodes")
+
+    @field:JsonProperty("vaccineIndicationCodes")
     val vaccineIndicationCodes: kotlin.collections.List<kotlin.String>? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: aUTHORIZED,sUSPENDED,rEVOKED
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
-        @Json(name = "SUSPENDED") sUSPENDED("SUSPENDED"),
-        @Json(name = "REVOKED") rEVOKED("REVOKED");
+        @JsonProperty(value = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
+        @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
+        @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
     }
 }
 

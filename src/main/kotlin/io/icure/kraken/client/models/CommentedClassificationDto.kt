@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param title 
  * @param url 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CommentedClassificationDto (
-    @Json(name = "title")
+
+    @field:JsonProperty("title")
     val title: SamTextDto? = null,
-    @Json(name = "url")
+
+    @field:JsonProperty("url")
     val url: SamTextDto? = null
+
 )
 

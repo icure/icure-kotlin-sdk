@@ -1,12 +1,9 @@
-plugins {
-    kotlin("jvm") version "1.5.10"
-    id("org.openapi.generator") version "5.2.0"
-    `maven-publish`
-}
+val kotlinVersion = "1.4.21"
+val kotlinCoroutinesVersion = "1.4.2"
 
-val repoUsername: String by project
-val repoPassword: String by project
-val mavenReleasesRepository: String by project
+plugins {
+    kotlin("jvm") version "1.4.21"
+}
 
 buildscript {
     repositories {
@@ -22,37 +19,48 @@ buildscript {
     dependencies {
         classpath("com.taktik.gradle:gradle-plugin-git-version:1.0.13")
     }
+    plugins {
+        `maven-publish`
+        id("org.openapi.generator") version "5.2.0"
+    }
 }
 
 apply(plugin = "git-version")
+apply(plugin = "maven-publish")
 val gitVersion: String? by project
+
 group = "io.icure"
 version = gitVersion ?: "0.0.1-SNAPSHOT"
-
-apply(plugin = "maven-publish")
 
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://maven.taktik.be/content/repositories/snapshots")
+        url = uri("https://maven.taktik.be/content/groups/public")
     }
 }
 
 dependencies {
-    implementation("com.squareup.moshi", "moshi-kotlin", "1.12.0")
-    implementation("com.squareup.moshi", "moshi-adapters", "1.12.0")
-    implementation("com.squareup.okhttp3", "okhttp", "4.9.1")
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
+    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.11.3")
+    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = "2.11.3")
+    implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")
+    implementation(group = "javax.inject", name = "javax.inject", version = "1")
 
     testImplementation("io.kotlintest", "kotlintest", "2.0.7")
     testImplementation("junit", "junit", "4.12")
 }
 
 java {
-    withJavadocJar()
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     withSourcesJar()
 }
 
-tasks.withType<PublishToMavenRepository> {
+tasks.publish {
+    dependsOn("build")
+    mustRunAfter("build")
     doFirst {
         println("Artifact >>> ${project.group}:${project.name}:${project.version} <<< published to Maven repository")
     }
@@ -68,17 +76,18 @@ tasks.openApiGenerate {
     modelPackage.set("io.icure.kraken.client.models")
     packageName.set("io.icure.kraken.client")
     groupId.set("io.icure")
-    id.set("kraken-kotlin-client")
+    id.set(rootProject.name)
     version.set("0.0.1-SNAPSHOT")
-
-
+    additionalProperties.put("useCoroutines", true)
+    additionalProperties.put("serializationLibrary", "jackson")
     generatorName.set("kotlin")
+    templateDir.set("$rootDir/openApiTemplates")
     inputSpec.set("${rootDir}/icure-openapi-spec.json")
     outputDir.set("$rootDir")
     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
-    finalizedBy("delete-generated-buildgradle", "apply-custom-fixes")
-}
 
+    finalizedBy( "apply-custom-fixes") // "contract" is not in reserved words list
+}
 
 tasks.register("download-openapi-spec") {
     doLast {
@@ -88,26 +97,8 @@ tasks.register("download-openapi-spec") {
     }
 }
 
-// clean some files after the openApiGenerate task
-tasks.create<Delete>("delete-generated-buildgradle") {
-    delete(File("$rootDir/build.gradle"))
-    delete(File("$rootDir/settings.gradle"))
-}
-
 tasks.register("apply-custom-fixes") {
     doLast {
-        // org.openapitools.client.baseUrl => io.icure.kraken.client.baseUrl in all api files
-        ant.withGroovyBuilder {
-            "replaceregexp"(
-                "match" to "org.openapitools.client.baseUrl",
-                "replace" to "io.icure.kraken.client.baseUrl",
-                "flags" to "g",
-                "byline" to "true"
-            ) {
-                "fileset"("dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/apis"), "includes" to "*.kt")
-            }
-        }
-
         // contract is a kotlin keyword => escape it with ``
         ant.withGroovyBuilder {
             "replaceregexp"("match" to "contract\\(", "replace" to "`contract`(", "flags" to "g", "byline" to "true") {
@@ -117,57 +108,15 @@ tasks.register("apply-custom-fixes") {
                 )
             }
         }
-
-        // okhttp3.Credentials not imported => manually add
-        ant.withGroovyBuilder {
-            "replaceregexp"(
-                "match" to "package io.icure.kraken.client.infrastructure",
-                "replace" to "package io.icure.kraken.client.infrastructure \n\n\nimport okhttp3.Credentials\n ",
-                "flags" to "g",
-                "byline" to "true"
-            ) {
-                "fileset"(
-                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/infrastructure"),
-                    "includes" to "ApiClient.kt"
-                )
-            }
-        }
-
-        // add an authheader to the aApClient
-        ant.withGroovyBuilder {
-            "replaceregexp"(
-                "match" to "var password: String\\? = null",
-                "replace" to "var password: String? = null \n \t\tvar authHeader: String? = null",
-                "flags" to "g",
-                "byline" to "true"
-            ) {
-                "fileset"(
-                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/infrastructure"),
-                    "includes" to "ApiClient.kt"
-                )
-            }
-        }
-
-        // check if auth header is set and add it to the request if so
-        ant.withGroovyBuilder {
-            "replaceregexp"(
-                "match" to "updateAuthParams\\(requestConfig\\)",
-                "replace" to "authHeader?.let { requestConfig.headers[Authorization] = it } \n \t\tupdateAuthParams(requestConfig)",
-                "flags" to "g",
-                "byline" to "true"
-            ) {
-                "fileset"(
-                    "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/infrastructure"),
-                    "includes" to "ApiClient.kt"
-                )
-            }
-        }
     }
 }
 
+val repoUsername: String by project
+val repoPassword: String by project
+val mavenReleasesRepository: String by project
 publishing {
     publications {
-        create<MavenPublication>("kraken-kotlin-client") {
+        create<MavenPublication>(rootProject.name) {
             from(components["java"])
         }
     }

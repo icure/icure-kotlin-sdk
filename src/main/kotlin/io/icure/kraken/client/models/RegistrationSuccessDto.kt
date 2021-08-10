@@ -12,21 +12,31 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param groupId 
  * @param userId 
  * @param token 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RegistrationSuccessDto (
-    @Json(name = "groupId")
+
+    @field:JsonProperty("groupId")
     val groupId: kotlin.String,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String,
-    @Json(name = "token")
+
+    @field:JsonProperty("token")
     val token: kotlin.String
+
 )
 

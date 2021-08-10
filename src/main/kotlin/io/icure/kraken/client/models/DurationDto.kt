@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param value 
  * @param unit 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DurationDto (
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: kotlin.Double? = null,
-    @Json(name = "unit")
+
+    @field:JsonProperty("unit")
     val unit: CodeStubDto? = null
+
 )
 

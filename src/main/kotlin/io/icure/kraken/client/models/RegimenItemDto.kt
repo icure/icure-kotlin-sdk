@@ -15,10 +15,14 @@ import io.icure.kraken.client.models.AdministrationQuantity
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.Weekday
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param date 
  * @param dayNumber 
  * @param weekday 
@@ -27,18 +31,27 @@ import com.squareup.moshi.Json
  * @param administratedQuantity 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RegimenItemDto (
-    @Json(name = "date")
+
+    @field:JsonProperty("date")
     val date: kotlin.Long? = null,
-    @Json(name = "dayNumber")
+
+    @field:JsonProperty("dayNumber")
     val dayNumber: kotlin.Int? = null,
-    @Json(name = "weekday")
+
+    @field:JsonProperty("weekday")
     val weekday: Weekday? = null,
-    @Json(name = "dayPeriod")
+
+    @field:JsonProperty("dayPeriod")
     val dayPeriod: CodeStubDto? = null,
-    @Json(name = "timeOfDay")
+
+    @field:JsonProperty("timeOfDay")
     val timeOfDay: kotlin.Long? = null,
-    @Json(name = "administratedQuantity")
+
+    @field:JsonProperty("administratedQuantity")
     val administratedQuantity: AdministrationQuantity? = null
+
 )
 

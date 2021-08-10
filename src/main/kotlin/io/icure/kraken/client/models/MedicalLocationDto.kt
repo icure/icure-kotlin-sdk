@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.AddressDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param agendaIds 
  * @param options 
@@ -34,37 +38,55 @@ import com.squareup.moshi.Json
  * @param address 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MedicalLocationDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "agendaIds")
+
+    @field:JsonProperty("agendaIds")
     val agendaIds: kotlin.collections.List<kotlin.String>,
-    @Json(name = "options")
+
+    @field:JsonProperty("options")
     val options: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "description")
+
+    @field:JsonProperty("description")
     val description: kotlin.String? = null,
-    @Json(name = "responsible")
+
+    @field:JsonProperty("responsible")
     val responsible: kotlin.String? = null,
-    @Json(name = "guardPost")
+
+    @field:JsonProperty("guardPost")
     val guardPost: kotlin.Boolean? = null,
-    @Json(name = "cbe")
+
+    @field:JsonProperty("cbe")
     val cbe: kotlin.String? = null,
-    @Json(name = "bic")
+
+    @field:JsonProperty("bic")
     val bic: kotlin.String? = null,
-    @Json(name = "bankAccount")
+
+    @field:JsonProperty("bankAccount")
     val bankAccount: kotlin.String? = null,
-    @Json(name = "nihii")
+
+    @field:JsonProperty("nihii")
     val nihii: kotlin.String? = null,
-    @Json(name = "ssin")
+
+    @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,
-    @Json(name = "address")
+
+    @field:JsonProperty("address")
     val address: AddressDto? = null
+
 )
 

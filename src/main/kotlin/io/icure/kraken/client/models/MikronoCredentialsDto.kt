@@ -12,21 +12,31 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param user 
  * @param password 
  * @param serverUrl 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MikronoCredentialsDto (
-    @Json(name = "user")
+
+    @field:JsonProperty("user")
     val user: kotlin.String? = null,
-    @Json(name = "password")
+
+    @field:JsonProperty("password")
     val password: kotlin.String? = null,
-    @Json(name = "serverUrl")
+
+    @field:JsonProperty("serverUrl")
     val serverUrl: kotlin.String? = null
+
 )
 

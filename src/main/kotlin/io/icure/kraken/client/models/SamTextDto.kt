@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param fr 
  * @param nl 
  * @param de 
  * @param en 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SamTextDto (
-    @Json(name = "fr")
+
+    @field:JsonProperty("fr")
     val fr: kotlin.String? = null,
-    @Json(name = "nl")
+
+    @field:JsonProperty("nl")
     val nl: kotlin.String? = null,
-    @Json(name = "de")
+
+    @field:JsonProperty("de")
     val de: kotlin.String? = null,
-    @Json(name = "en")
+
+    @field:JsonProperty("en")
     val en: kotlin.String? = null
+
 )
 

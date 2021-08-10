@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param startOfValidity 
  * @param endOfValidity 
  * @param predicate 
@@ -28,27 +32,40 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ValorisationDto (
-    @Json(name = "startOfValidity")
+
+    @field:JsonProperty("startOfValidity")
     val startOfValidity: kotlin.Long? = null,
-    @Json(name = "endOfValidity")
+
+    @field:JsonProperty("endOfValidity")
     val endOfValidity: kotlin.Long? = null,
-    @Json(name = "predicate")
+
+    @field:JsonProperty("predicate")
     val predicate: kotlin.String? = null,
-    @Json(name = "totalAmount")
+
+    @field:JsonProperty("totalAmount")
     val totalAmount: kotlin.Double? = null,
-    @Json(name = "reimbursement")
+
+    @field:JsonProperty("reimbursement")
     val reimbursement: kotlin.Double? = null,
-    @Json(name = "patientIntervention")
+
+    @field:JsonProperty("patientIntervention")
     val patientIntervention: kotlin.Double? = null,
-    @Json(name = "doctorSupplement")
+
+    @field:JsonProperty("doctorSupplement")
     val doctorSupplement: kotlin.Double? = null,
-    @Json(name = "vat")
+
+    @field:JsonProperty("vat")
     val vat: kotlin.Double? = null,
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 )
 

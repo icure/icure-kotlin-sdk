@@ -17,10 +17,14 @@ import io.icure.kraken.client.models.FinancialInstitutionInformationDto
 import io.icure.kraken.client.models.FlatRateTarificationDto
 import io.icure.kraken.client.models.HealthcarePartyHistoryStatusDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * This entity is a root level object. It represents a healthcare party. It is serialized in JSON and saved in the underlying icure-healthcareParty CouchDB database.
+ *
  * @param id the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id.
  * @param addresses The list of addresses (with address type).
  * @param languages The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html).
@@ -65,146 +69,193 @@ import com.squareup.moshi.Json
  * @param publicKey The public key of this hcp
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class HealthcarePartyDto (
+
     /* the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id. */
-    @Json(name = "id")
+    @field:JsonProperty("id")
     val id: kotlin.String,
+
     /* The list of addresses (with address type). */
-    @Json(name = "addresses")
+    @field:JsonProperty("addresses")
     val addresses: kotlin.collections.List<AddressDto>,
+
     /* The list of languages spoken by the patient ordered by fluency (alpha-2 code http://www.loc.gov/standards/iso639-2/ascii_8bits.html). */
-    @Json(name = "languages")
+    @field:JsonProperty("languages")
     val languages: kotlin.collections.List<kotlin.String>,
+
     /* The healthcare party's status: 'trainee' or 'withconvention' or 'accredited' */
-    @Json(name = "statuses")
+    @field:JsonProperty("statuses")
     val statuses: kotlin.collections.List<HealthcarePartyDto.Statuses>,
+
     /* The healthcare party's status history */
-    @Json(name = "statusHistory")
+    @field:JsonProperty("statusHistory")
     val statusHistory: kotlin.collections.List<HealthcarePartyHistoryStatusDto>,
+
     /* Medical specialty of the healthcare party codified using FHIR or Kmehr codificaiton scheme */
-    @Json(name = "specialityCodes")
+    @field:JsonProperty("specialityCodes")
     val specialityCodes: kotlin.collections.List<CodeStubDto>,
+
     /* The type of format for contacting the healthcare party, ex: mobile, phone, email, etc. */
-    @Json(name = "sendFormats")
+    @field:JsonProperty("sendFormats")
     val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String>,
+
     /* List of financial information (Bank, bank account). */
-    @Json(name = "financialInstitutionInformation")
+    @field:JsonProperty("financialInstitutionInformation")
     val financialInstitutionInformation: kotlin.collections.List<FinancialInstitutionInformationDto>,
-    @Json(name = "flatRateTarifications")
+
+    @field:JsonProperty("flatRateTarifications")
     val flatRateTarifications: kotlin.collections.List<FlatRateTarificationDto>,
-    @Json(name = "importedData")
+
+    @field:JsonProperty("importedData")
     val importedData: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "options")
+
+    @field:JsonProperty("options")
     val options: kotlin.collections.Map<kotlin.String, kotlin.String>,
+
     /* For each couple of HcParties (delegator and delegate), this map contains the exchange AES key. The delegator is always this hcp, the key of the map is the id of the delegate. The AES exchange key is encrypted using RSA twice : once using this hcp public key (index 0 in the Array) and once using the other hcp public key (index 1 in the Array). For a pair of HcParties. Each HcParty always has one AES exchange key for himself. */
-    @Json(name = "hcPartyKeys")
+    @field:JsonProperty("hcPartyKeys")
     val hcPartyKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>,
+
     /* The privateKeyShamirPartitions are used to share this hcp's private RSA key with a series of other hcParties using Shamir's algorithm. The key of the map is the hcp Id with whom this partition has been shared. The value is \"threshold⎮partition in hex\" encrypted using the the partition's holder's public RSA key */
-    @Json(name = "privateKeyShamirPartitions")
+    @field:JsonProperty("privateKeyShamirPartitions")
     val privateKeyShamirPartitions: kotlin.collections.Map<kotlin.String, kotlin.String>,
+
     /* the revision of the healthcare party in the database, used for conflict management / optimistic locking. */
-    @Json(name = "rev")
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
+
     /* The full name of the healthcare party, used mainly when the healthcare party is an organization */
-    @Json(name = "name")
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
+
     /* the lastname (surname) of the healthcare party. This is the official lastname that should be used for official administrative purposes. */
-    @Json(name = "lastName")
+    @field:JsonProperty("lastName")
     val lastName: kotlin.String? = null,
+
     /* the firstname (name) of the healthcare party. */
-    @Json(name = "firstName")
+    @field:JsonProperty("firstName")
     val firstName: kotlin.String? = null,
+
     /* the gender of the healthcare party: male, female, indeterminate, changed, changedToMale, changedToFemale, unknown */
-    @Json(name = "gender")
+    @field:JsonProperty("gender")
     val gender: HealthcarePartyDto.Gender? = null,
+
     /* Mr., Ms., Pr., Dr. ... */
-    @Json(name = "civility")
+    @field:JsonProperty("civility")
     val civility: kotlin.String? = null,
+
     /* The name of the company this healthcare party is member of */
-    @Json(name = "companyName")
+    @field:JsonProperty("companyName")
     val companyName: kotlin.String? = null,
+
     /* Medical specialty of the healthcare party */
-    @Json(name = "speciality")
+    @field:JsonProperty("speciality")
     val speciality: kotlin.String? = null,
+
     /* Bank Account identifier of the healhtcare party, IBAN, deprecated, use financial institutions instead */
-    @Json(name = "bankAccount")
+    @field:JsonProperty("bankAccount")
     val bankAccount: kotlin.String? = null,
+
     /* Bank Identifier Code, the SWIFT Address assigned to the bank, use financial institutions instead */
-    @Json(name = "bic")
+    @field:JsonProperty("bic")
     val bic: kotlin.String? = null,
-    @Json(name = "proxyBankAccount")
+
+    @field:JsonProperty("proxyBankAccount")
     val proxyBankAccount: kotlin.String? = null,
-    @Json(name = "proxyBic")
+
+    @field:JsonProperty("proxyBic")
     val proxyBic: kotlin.String? = null,
+
     /* All details included in the invoice header */
-    @Json(name = "invoiceHeader")
+    @field:JsonProperty("invoiceHeader")
     val invoiceHeader: kotlin.String? = null,
+
     /* Identifier number for institution type if the healthcare party is an enterprise */
-    @Json(name = "cbe")
+    @field:JsonProperty("cbe")
     val cbe: kotlin.String? = null,
+
     /* Identifier number for the institution if the healthcare party is an organization */
-    @Json(name = "ehp")
+    @field:JsonProperty("ehp")
     val ehp: kotlin.String? = null,
+
     /* The id of the user that usually handles this healthcare party. */
-    @Json(name = "userId")
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
+
     /* Id of parent of the user representing the healthcare party. */
-    @Json(name = "parentId")
+    @field:JsonProperty("parentId")
     val parentId: kotlin.String? = null,
-    @Json(name = "convention")
+
+    @field:JsonProperty("convention")
     val convention: kotlin.Int? = null,
+
     /* National Institute for Health and Invalidity Insurance number assigned to healthcare parties (institution or person). */
-    @Json(name = "nihii")
+    @field:JsonProperty("nihii")
     val nihii: kotlin.String? = null,
-    @Json(name = "nihiiSpecCode")
+
+    @field:JsonProperty("nihiiSpecCode")
     val nihiiSpecCode: kotlin.String? = null,
+
     /* Social security inscription number. */
-    @Json(name = "ssin")
+    @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,
+
     /* A picture usually saved in JPEG format. */
-    @Json(name = "picture")
+    @field:JsonProperty("picture")
     val picture: kotlin.collections.List<kotlin.ByteArray>? = null,
+
     /* Text notes. */
-    @Json(name = "notes")
+    @field:JsonProperty("notes")
     val notes: kotlin.String? = null,
+
     /* The invoicing scheme this healthcare party adheres to : 'service fee' or 'flat rate' */
-    @Json(name = "billingType")
+    @field:JsonProperty("billingType")
     val billingType: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "contactPerson")
+
+    @field:JsonProperty("contactPerson")
     val contactPerson: kotlin.String? = null,
-    @Json(name = "contactPersonHcpId")
+
+    @field:JsonProperty("contactPersonHcpId")
     val contactPersonHcpId: kotlin.String? = null,
+
     /* The public key of this hcp */
-    @Json(name = "publicKey")
+    @field:JsonProperty("publicKey")
     val publicKey: kotlin.String? = null
+
 ) {
 
     /**
      * The healthcare party's status: 'trainee' or 'withconvention' or 'accredited'
+     *
      * Values: trainee,withconvention,accreditated
      */
     enum class Statuses(val value: kotlin.String) {
-        @Json(name = "trainee") trainee("trainee"),
-        @Json(name = "withconvention") withconvention("withconvention"),
-        @Json(name = "accreditated") accreditated("accreditated");
+        @JsonProperty(value = "trainee") trainee("trainee"),
+        @JsonProperty(value = "withconvention") withconvention("withconvention"),
+        @JsonProperty(value = "accreditated") accreditated("accreditated");
     }
     /**
      * the gender of the healthcare party: male, female, indeterminate, changed, changedToMale, changedToFemale, unknown
+     *
      * Values: m,f,i,c,y,x,u
      */
     enum class Gender(val value: kotlin.String) {
-        @Json(name = "M") m("M"),
-        @Json(name = "F") f("F"),
-        @Json(name = "I") i("I"),
-        @Json(name = "C") c("C"),
-        @Json(name = "Y") y("Y"),
-        @Json(name = "X") x("X"),
-        @Json(name = "U") u("U");
+        @JsonProperty(value = "M") m("M"),
+        @JsonProperty(value = "F") f("F"),
+        @JsonProperty(value = "I") i("I"),
+        @JsonProperty(value = "C") c("C"),
+        @JsonProperty(value = "Y") y("Y"),
+        @JsonProperty(value = "X") x("X"),
+        @JsonProperty(value = "U") u("U");
     }
 }
 

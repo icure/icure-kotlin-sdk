@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.PropertyStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * This entity represents a group
+ *
  * @param id The id of the group. We encourage using either a v4 UUID or a HL7 Id.
  * @param superAdmin Whether the group has a super admin permission, originally set to no access.
  * @param properties Extra properties for the user. Those properties are typed (see class Property)
@@ -28,32 +32,44 @@ import com.squareup.moshi.Json
  * @param superGroup 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class GroupDto (
+
     /* The id of the group. We encourage using either a v4 UUID or a HL7 Id. */
-    @Json(name = "id")
+    @field:JsonProperty("id")
     val id: kotlin.String,
+
     /* Whether the group has a super admin permission, originally set to no access. */
-    @Json(name = "superAdmin")
+    @field:JsonProperty("superAdmin")
     val superAdmin: kotlin.Boolean,
+
     /* Extra properties for the user. Those properties are typed (see class Property) */
-    @Json(name = "properties")
+    @field:JsonProperty("properties")
     val properties: kotlin.collections.List<PropertyStubDto>,
+
     /* The revision of the group in the database, used for conflict management / optimistic locking. */
-    @Json(name = "rev")
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
+
     /* Username for the group */
-    @Json(name = "name")
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
+
     /* Password for the group access */
-    @Json(name = "password")
+    @field:JsonProperty("password")
     val password: kotlin.String? = null,
+
     /* List of servers accessible to the group */
-    @Json(name = "servers")
+    @field:JsonProperty("servers")
     val servers: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "superGroup")
+
+    @field:JsonProperty("superGroup")
     val superGroup: kotlin.String? = null
+
 )
 

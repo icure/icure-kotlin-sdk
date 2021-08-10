@@ -14,24 +14,35 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param pageSize 
  * @param totalSize 
  * @param rows 
  * @param nextKeyPair 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PaginatedListHealthElementDto (
-    @Json(name = "pageSize")
+
+    @field:JsonProperty("pageSize")
     val pageSize: kotlin.Int,
-    @Json(name = "totalSize")
+
+    @field:JsonProperty("totalSize")
     val totalSize: kotlin.Int,
-    @Json(name = "rows")
+
+    @field:JsonProperty("rows")
     val rows: kotlin.collections.List<HealthElementDto>,
-    @Json(name = "nextKeyPair")
+
+    @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
+
 )
 

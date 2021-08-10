@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.ServiceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param codes 
  * @param services 
  * @param ssin 
@@ -33,32 +37,48 @@ import com.squareup.moshi.Json
  * @param engine 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ResultInfoDto (
-    @Json(name = "codes")
+
+    @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "services")
+
+    @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto>,
-    @Json(name = "ssin")
+
+    @field:JsonProperty("ssin")
     val ssin: kotlin.String? = null,
-    @Json(name = "lastName")
+
+    @field:JsonProperty("lastName")
     val lastName: kotlin.String? = null,
-    @Json(name = "firstName")
+
+    @field:JsonProperty("firstName")
     val firstName: kotlin.String? = null,
-    @Json(name = "dateOfBirth")
+
+    @field:JsonProperty("dateOfBirth")
     val dateOfBirth: kotlin.Long? = null,
-    @Json(name = "sex")
+
+    @field:JsonProperty("sex")
     val sex: kotlin.String? = null,
-    @Json(name = "documentId")
+
+    @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null,
-    @Json(name = "protocol")
+
+    @field:JsonProperty("protocol")
     val protocol: kotlin.String? = null,
-    @Json(name = "complete")
+
+    @field:JsonProperty("complete")
     val complete: kotlin.Boolean? = null,
-    @Json(name = "demandDate")
+
+    @field:JsonProperty("demandDate")
     val demandDate: kotlin.Long? = null,
-    @Json(name = "labo")
+
+    @field:JsonProperty("labo")
     val labo: kotlin.String? = null,
-    @Json(name = "engine")
+
+    @field:JsonProperty("engine")
     val engine: kotlin.String? = null
+
 )
 

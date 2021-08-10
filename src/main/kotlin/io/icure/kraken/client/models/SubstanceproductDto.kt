@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param intendedcds 
  * @param deliveredcds 
  * @param intendedname 
@@ -24,16 +28,24 @@ import com.squareup.moshi.Json
  * @param productId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SubstanceproductDto (
-    @Json(name = "intendedcds")
+
+    @field:JsonProperty("intendedcds")
     val intendedcds: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "deliveredcds")
+
+    @field:JsonProperty("deliveredcds")
     val deliveredcds: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "intendedname")
+
+    @field:JsonProperty("intendedname")
     val intendedname: kotlin.String? = null,
-    @Json(name = "deliveredname")
+
+    @field:JsonProperty("deliveredname")
     val deliveredname: kotlin.String? = null,
-    @Json(name = "productId")
+
+    @field:JsonProperty("productId")
     val productId: kotlin.String? = null
+
 )
 

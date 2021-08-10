@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.PropertyStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param properties Extra properties for the fem. Those properties are typed (see class Property)
  * @param rev 
@@ -32,46 +36,63 @@ import com.squareup.moshi.Json
  * @param processCount 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FrontEndMigrationDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
+
     /* Extra properties for the fem. Those properties are typed (see class Property) */
-    @Json(name = "properties")
+    @field:JsonProperty("properties")
     val properties: kotlin.collections.List<PropertyStubDto>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "startDate")
+
+    @field:JsonProperty("startDate")
     val startDate: kotlin.Long? = null,
-    @Json(name = "endDate")
+
+    @field:JsonProperty("endDate")
     val endDate: kotlin.Long? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: FrontEndMigrationDto.Status? = null,
-    @Json(name = "logs")
+
+    @field:JsonProperty("logs")
     val logs: kotlin.String? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
-    @Json(name = "startKey")
+
+    @field:JsonProperty("startKey")
     val startKey: kotlin.String? = null,
-    @Json(name = "startKeyDocId")
+
+    @field:JsonProperty("startKeyDocId")
     val startKeyDocId: kotlin.String? = null,
-    @Json(name = "processCount")
+
+    @field:JsonProperty("processCount")
     val processCount: kotlin.Long? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: sTARTED,pAUSED,eRROR,sUCCESS
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "STARTED") sTARTED("STARTED"),
-        @Json(name = "PAUSED") pAUSED("PAUSED"),
-        @Json(name = "ERROR") eRROR("ERROR"),
-        @Json(name = "SUCCESS") sUCCESS("SUCCESS");
+        @JsonProperty(value = "STARTED") sTARTED("STARTED"),
+        @JsonProperty(value = "PAUSED") pAUSED("PAUSED"),
+        @JsonProperty(value = "ERROR") eRROR("ERROR"),
+        @JsonProperty(value = "SUCCESS") sUCCESS("SUCCESS");
     }
 }
 

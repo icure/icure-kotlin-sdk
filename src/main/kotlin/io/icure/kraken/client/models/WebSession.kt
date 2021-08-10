@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.WebSessionMaxIdleTime
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param attributes 
  * @param started 
@@ -26,20 +30,30 @@ import com.squareup.moshi.Json
  * @param maxIdleTime 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class WebSession (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "attributes")
+
+    @field:JsonProperty("attributes")
     val attributes: kotlin.collections.Map<kotlin.String, kotlin.Any>? = null,
-    @Json(name = "started")
+
+    @field:JsonProperty("started")
     val started: kotlin.Boolean? = null,
-    @Json(name = "expired")
+
+    @field:JsonProperty("expired")
     val expired: kotlin.Boolean? = null,
-    @Json(name = "creationTime")
+
+    @field:JsonProperty("creationTime")
     val creationTime: java.time.OffsetDateTime? = null,
-    @Json(name = "lastAccessTime")
+
+    @field:JsonProperty("lastAccessTime")
     val lastAccessTime: java.time.OffsetDateTime? = null,
-    @Json(name = "maxIdleTime")
+
+    @field:JsonProperty("maxIdleTime")
     val maxIdleTime: WebSessionMaxIdleTime? = null
+
 )
 

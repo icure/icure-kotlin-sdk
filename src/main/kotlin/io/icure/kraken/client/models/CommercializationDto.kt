@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param reason 
@@ -25,18 +29,27 @@ import com.squareup.moshi.Json
  * @param additionalInformation 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CommercializationDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "reason")
+
+    @field:JsonProperty("reason")
     val reason: SamTextDto? = null,
-    @Json(name = "endOfComercialization")
+
+    @field:JsonProperty("endOfComercialization")
     val endOfComercialization: SamTextDto? = null,
-    @Json(name = "impact")
+
+    @field:JsonProperty("impact")
     val impact: SamTextDto? = null,
-    @Json(name = "additionalInformation")
+
+    @field:JsonProperty("additionalInformation")
     val additionalInformation: SamTextDto? = null
+
 )
 

@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param filterKey 
  * @param filterValue 
  * @param entityClass 
@@ -23,16 +27,24 @@ import com.squareup.moshi.Json
  * @param fieldDisplay 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Suggest (
-    @Json(name = "filterKey")
+
+    @field:JsonProperty("filterKey")
     val filterKey: kotlin.String? = null,
-    @Json(name = "filterValue")
+
+    @field:JsonProperty("filterValue")
     val filterValue: kotlin.String? = null,
-    @Json(name = "entityClass")
+
+    @field:JsonProperty("entityClass")
     val entityClass: kotlin.String? = null,
-    @Json(name = "fieldValue")
+
+    @field:JsonProperty("fieldValue")
     val fieldValue: kotlin.String? = null,
-    @Json(name = "fieldDisplay")
+
+    @field:JsonProperty("fieldDisplay")
     val fieldDisplay: kotlin.String? = null
+
 )
 

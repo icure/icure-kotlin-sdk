@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param zoneId 
  * @param patientId 
  * @param userId 
@@ -31,32 +35,48 @@ import com.squareup.moshi.Json
  * @param endTime 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AppointmentDto (
-    @Json(name = "zoneId")
+
+    @field:JsonProperty("zoneId")
     val zoneId: kotlin.String? = null,
-    @Json(name = "patientId")
+
+    @field:JsonProperty("patientId")
     val patientId: kotlin.String? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
-    @Json(name = "prescriptorComment")
+
+    @field:JsonProperty("prescriptorComment")
     val prescriptorComment: kotlin.String? = null,
-    @Json(name = "patientComment")
+
+    @field:JsonProperty("patientComment")
     val patientComment: kotlin.String? = null,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "location")
+
+    @field:JsonProperty("location")
     val location: kotlin.String? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.String? = null,
-    @Json(name = "paid")
+
+    @field:JsonProperty("paid")
     val paid: kotlin.Boolean? = null,
-    @Json(name = "amount")
+
+    @field:JsonProperty("amount")
     val amount: kotlin.Double? = null,
-    @Json(name = "startTime")
+
+    @field:JsonProperty("startTime")
     val startTime: kotlin.Long? = null,
-    @Json(name = "endTime")
+
+    @field:JsonProperty("endTime")
     val endTime: kotlin.Long? = null
+
 )
 

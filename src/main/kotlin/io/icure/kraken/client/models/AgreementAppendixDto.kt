@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param docSeq 
  * @param verseSeq 
  * @param documentId 
  * @param path 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AgreementAppendixDto (
-    @Json(name = "docSeq")
+
+    @field:JsonProperty("docSeq")
     val docSeq: kotlin.Int? = null,
-    @Json(name = "verseSeq")
+
+    @field:JsonProperty("verseSeq")
     val verseSeq: kotlin.Int? = null,
-    @Json(name = "documentId")
+
+    @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null,
-    @Json(name = "path")
+
+    @field:JsonProperty("path")
     val path: kotlin.String? = null
+
 )
 

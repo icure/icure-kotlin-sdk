@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param duration 
  * @param docIds 
@@ -29,29 +33,43 @@ import com.squareup.moshi.Json
  * @param mikronoId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CalendarItemTypeDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "duration")
+
+    @field:JsonProperty("duration")
     val duration: kotlin.Int,
-    @Json(name = "docIds")
+
+    @field:JsonProperty("docIds")
     val docIds: kotlin.collections.List<kotlin.String>,
-    @Json(name = "otherInfos")
+
+    @field:JsonProperty("otherInfos")
     val otherInfos: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "subjectByLanguage")
+
+    @field:JsonProperty("subjectByLanguage")
     val subjectByLanguage: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "color")
+
+    @field:JsonProperty("color")
     val color: kotlin.String? = null,
-    @Json(name = "externalRef")
+
+    @field:JsonProperty("externalRef")
     val externalRef: kotlin.String? = null,
-    @Json(name = "mikronoId")
+
+    @field:JsonProperty("mikronoId")
     val mikronoId: kotlin.String? = null
+
 )
 

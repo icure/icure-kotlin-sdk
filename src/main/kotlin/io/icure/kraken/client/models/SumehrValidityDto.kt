@@ -12,26 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param sumehrValid 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SumehrValidityDto (
-    @Json(name = "sumehrValid")
+
+    @field:JsonProperty("sumehrValid")
     val sumehrValid: SumehrValidityDto.SumehrValid
+
 ) {
 
     /**
      * 
+     *
      * Values: absent,uptodate,outdated
      */
     enum class SumehrValid(val value: kotlin.String) {
-        @Json(name = "absent") absent("absent"),
-        @Json(name = "uptodate") uptodate("uptodate"),
-        @Json(name = "outdated") outdated("outdated");
+        @JsonProperty(value = "absent") absent("absent"),
+        @JsonProperty(value = "uptodate") uptodate("uptodate"),
+        @JsonProperty(value = "outdated") outdated("outdated");
     }
 }
 

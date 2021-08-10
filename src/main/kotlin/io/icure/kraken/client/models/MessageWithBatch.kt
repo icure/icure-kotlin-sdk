@@ -14,18 +14,27 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.InvoicesBatch
 import io.icure.kraken.client.models.MessageDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param invoicesBatch 
  * @param message 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MessageWithBatch (
-    @Json(name = "invoicesBatch")
+
+    @field:JsonProperty("invoicesBatch")
     val invoicesBatch: InvoicesBatch? = null,
-    @Json(name = "message")
+
+    @field:JsonProperty("message")
     val message: MessageDto? = null
+
 )
 

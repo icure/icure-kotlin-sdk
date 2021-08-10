@@ -15,10 +15,14 @@ import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ServiceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param secretForeignKeys 
  * @param excludedIds 
  * @param comment 
@@ -30,24 +34,36 @@ import com.squareup.moshi.Json
  * @param healthElements 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SumehrExportInfoDto (
-    @Json(name = "secretForeignKeys")
+
+    @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.List<kotlin.String>,
-    @Json(name = "excludedIds")
+
+    @field:JsonProperty("excludedIds")
     val excludedIds: kotlin.collections.List<kotlin.String>,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String,
-    @Json(name = "recipient")
+
+    @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,
-    @Json(name = "softwareName")
+
+    @field:JsonProperty("softwareName")
     val softwareName: kotlin.String? = null,
-    @Json(name = "softwareVersion")
+
+    @field:JsonProperty("softwareVersion")
     val softwareVersion: kotlin.String? = null,
-    @Json(name = "includeIrrelevantInformation")
+
+    @field:JsonProperty("includeIrrelevantInformation")
     val includeIrrelevantInformation: kotlin.Boolean? = null,
-    @Json(name = "services")
+
+    @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto>? = null,
-    @Json(name = "healthElements")
+
+    @field:JsonProperty("healthElements")
     val healthElements: kotlin.collections.List<HealthElementDto>? = null
+
 )
 

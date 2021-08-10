@@ -15,10 +15,14 @@ import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DocumentGroupDto
 import io.icure.kraken.client.models.FormLayout
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param reports 
  * @param tags 
@@ -40,45 +44,67 @@ import com.squareup.moshi.Json
  * @param layoutAttachmentId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormTemplateDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "reports")
+
+    @field:JsonProperty("reports")
     val reports: kotlin.collections.List<kotlin.String>,
-    @Json(name = "tags")
+
+    @field:JsonProperty("tags")
     val tags: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "layout")
+
+    @field:JsonProperty("layout")
     val layout: FormLayout? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "guid")
+
+    @field:JsonProperty("guid")
     val guid: kotlin.String? = null,
-    @Json(name = "group")
+
+    @field:JsonProperty("group")
     val group: DocumentGroupDto? = null,
-    @Json(name = "descr")
+
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null,
-    @Json(name = "disabled")
+
+    @field:JsonProperty("disabled")
     val disabled: kotlin.String? = null,
-    @Json(name = "specialty")
+
+    @field:JsonProperty("specialty")
     val specialty: CodeStubDto? = null,
-    @Json(name = "author")
+
+    @field:JsonProperty("author")
     val author: kotlin.String? = null,
-    @Json(name = "formInstancePreferredLocation")
+
+    @field:JsonProperty("formInstancePreferredLocation")
     val formInstancePreferredLocation: kotlin.String? = null,
-    @Json(name = "keyboardShortcut")
+
+    @field:JsonProperty("keyboardShortcut")
     val keyboardShortcut: kotlin.String? = null,
-    @Json(name = "shortReport")
+
+    @field:JsonProperty("shortReport")
     val shortReport: kotlin.String? = null,
-    @Json(name = "mediumReport")
+
+    @field:JsonProperty("mediumReport")
     val mediumReport: kotlin.String? = null,
-    @Json(name = "longReport")
+
+    @field:JsonProperty("longReport")
     val longReport: kotlin.String? = null,
-    @Json(name = "layoutAttachmentId")
+
+    @field:JsonProperty("layoutAttachmentId")
     val layoutAttachmentId: kotlin.String? = null
+
 )
 

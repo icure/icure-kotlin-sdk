@@ -11,24 +11,27 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ClassificationTemplateDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.PaginatedListClassificationTemplateDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -47,26 +50,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto {
+    suspend fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
         val localVariableConfig = createClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
-        val localVarResponse = request<ClassificationTemplateDto, ClassificationTemplateDto>(
+        return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -100,26 +89,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteClassificationTemplatesRequestConfig(classificationTemplateIds = classificationTemplateIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -154,26 +129,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto> {
+    suspend fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
         val localVariableConfig = findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
+        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ClassificationTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -212,26 +173,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto {
+    suspend fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto?  {
         val localVariableConfig = getClassificationTemplateRequestConfig(classificationTemplateId = classificationTemplateId)
 
-        val localVarResponse = request<Unit, ClassificationTemplateDto>(
+        return request<Unit, ClassificationTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -265,26 +212,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto> {
+    suspend fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
         val localVariableConfig = getClassificationTemplateByIdsRequestConfig(ids = ids)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
+        return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ClassificationTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -320,26 +253,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto {
+    suspend fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto?  {
         val localVariableConfig = listClassificationTemplatesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListClassificationTemplateDto>(
+        return request<Unit, PaginatedListClassificationTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListClassificationTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -386,26 +305,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto {
+    suspend fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
         val localVariableConfig = modifyClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
-        val localVarResponse = request<ClassificationTemplateDto, ClassificationTemplateDto>(
+        return request<ClassificationTemplateDto, ClassificationTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -440,26 +345,12 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath) : Api
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto {
+    suspend fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto?  {
         val localVariableConfig = newClassificationTemplateDelegationsRequestConfig(classificationTemplateId = classificationTemplateId, delegationDto = delegationDto)
 
-        val localVarResponse = request<kotlin.collections.List<DelegationDto>, ClassificationTemplateDto>(
+        return request<kotlin.collections.List<DelegationDto>, ClassificationTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

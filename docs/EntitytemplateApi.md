@@ -5,6 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createEntityTemplate**](EntitytemplateApi.md#createEntityTemplate) | **POST** /rest/v1/entitytemplate | Create a EntityTemplate
+[**createEntityTemplates**](EntitytemplateApi.md#createEntityTemplates) | **POST** /rest/v1/entitytemplate/batch | Create a batch of entityTemplates
 [**deleteEntityTemplate**](EntitytemplateApi.md#deleteEntityTemplate) | **DELETE** /rest/v1/entitytemplate/{entityTemplateIds} | Delete entity templates
 [**findAllEntityTemplates**](EntitytemplateApi.md#findAllEntityTemplates) | **GET** /rest/v1/entitytemplate/findAll/{type} | Finding entityTemplates by entityTemplate, type and version with pagination.
 [**findAllEntityTemplatesByKeyword**](EntitytemplateApi.md#findAllEntityTemplatesByKeyword) | **GET** /rest/v1/entitytemplate/findAll/{type}/keyword/{keyword} | Finding entityTemplates by entityTemplate, type and version with pagination.
@@ -13,6 +14,7 @@ Method | HTTP request | Description
 [**getEntityTemplate**](EntitytemplateApi.md#getEntityTemplate) | **GET** /rest/v1/entitytemplate/{entityTemplateId} | Get a entityTemplate
 [**getEntityTemplates**](EntitytemplateApi.md#getEntityTemplates) | **GET** /rest/v1/entitytemplate/byIds/{entityTemplateIds} | Get a list of entityTemplates by ids
 [**modifyEntityTemplate**](EntitytemplateApi.md#modifyEntityTemplate) | **PUT** /rest/v1/entitytemplate | Modify a entityTemplate
+[**modifyEntityTemplates**](EntitytemplateApi.md#modifyEntityTemplates) | **PUT** /rest/v1/entitytemplate/batch | Modify a batch of entityTemplates
 
 
 <a name="createEntityTemplate"></a>
@@ -52,6 +54,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**EntityTemplateDto**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createEntityTemplates"></a>
+# **createEntityTemplates**
+> kotlin.collections.List&lt;EntityTemplateDto&gt; createEntityTemplates(entityTemplateDto)
+
+Create a batch of entityTemplates
+
+Returns the modified entityTemplates.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = EntitytemplateApi()
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+try {
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.createEntityTemplates(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling EntitytemplateApi#createEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling EntitytemplateApi#createEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -115,7 +167,7 @@ Configure basicScheme:
 
 <a name="findAllEntityTemplates"></a>
 # **findAllEntityTemplates**
-> kotlin.collections.List&lt;EntityTemplate&gt; findAllEntityTemplates(type, searchString, includeEntities)
+> kotlin.collections.List&lt;EntityTemplateDto&gt; findAllEntityTemplates(type, searchString, includeEntities)
 
 Finding entityTemplates by entityTemplate, type and version with pagination.
 
@@ -132,7 +184,7 @@ val type : kotlin.String = type_example // kotlin.String |
 val searchString : kotlin.String = searchString_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findAllEntityTemplates(type, searchString, includeEntities)
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.findAllEntityTemplates(type, searchString, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findAllEntityTemplates")
@@ -153,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -169,7 +221,7 @@ Configure basicScheme:
 
 <a name="findAllEntityTemplatesByKeyword"></a>
 # **findAllEntityTemplatesByKeyword**
-> kotlin.collections.List&lt;EntityTemplate&gt; findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
+> kotlin.collections.List&lt;EntityTemplateDto&gt; findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
 
 Finding entityTemplates by entityTemplate, type and version with pagination.
 
@@ -186,7 +238,7 @@ val type : kotlin.String = type_example // kotlin.String |
 val keyword : kotlin.String = keyword_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findAllEntityTemplatesByKeyword")
@@ -207,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -223,7 +275,7 @@ Configure basicScheme:
 
 <a name="findEntityTemplates"></a>
 # **findEntityTemplates**
-> kotlin.collections.List&lt;EntityTemplate&gt; findEntityTemplates(userId, type, searchString, includeEntities)
+> kotlin.collections.List&lt;EntityTemplateDto&gt; findEntityTemplates(userId, type, searchString, includeEntities)
 
 Finding entityTemplates by userId, entityTemplate, type and version with pagination.
 
@@ -241,7 +293,7 @@ val type : kotlin.String = type_example // kotlin.String |
 val searchString : kotlin.String = searchString_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findEntityTemplates(userId, type, searchString, includeEntities)
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.findEntityTemplates(userId, type, searchString, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findEntityTemplates")
@@ -263,7 +315,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -279,7 +331,7 @@ Configure basicScheme:
 
 <a name="findEntityTemplatesByKeyword"></a>
 # **findEntityTemplatesByKeyword**
-> kotlin.collections.List&lt;EntityTemplate&gt; findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
+> kotlin.collections.List&lt;EntityTemplateDto&gt; findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
 
 Finding entityTemplates by userId, type and keyword.
 
@@ -297,7 +349,7 @@ val type : kotlin.String = type_example // kotlin.String |
 val keyword : kotlin.String = keyword_example // kotlin.String | 
 val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
 try {
-    val result : kotlin.collections.List<EntityTemplate> = apiInstance.findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.findEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling EntitytemplateApi#findEntityTemplatesByKeyword")
@@ -319,7 +371,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**kotlin.collections.List&lt;EntityTemplate&gt;**](EntityTemplate.md)
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -470,6 +522,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**EntityTemplateDto**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyEntityTemplates"></a>
+# **modifyEntityTemplates**
+> kotlin.collections.List&lt;EntityTemplateDto&gt; modifyEntityTemplates(entityTemplateDto)
+
+Modify a batch of entityTemplates
+
+Returns the modified entityTemplates.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = EntitytemplateApi()
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+try {
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.modifyEntityTemplates(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling EntitytemplateApi#modifyEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling EntitytemplateApi#modifyEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 

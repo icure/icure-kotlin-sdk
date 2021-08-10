@@ -12,35 +12,47 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * The healthcare party's status history
+ *
  * @param status 
  * @param specialisationCode 
  * @param startDate 
  * @param active 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class HealthcarePartyHistoryStatusDto (
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: HealthcarePartyHistoryStatusDto.Status,
-    @Json(name = "specialisationCode")
+
+    @field:JsonProperty("specialisationCode")
     val specialisationCode: kotlin.String,
-    @Json(name = "startDate")
+
+    @field:JsonProperty("startDate")
     val startDate: kotlin.Long,
-    @Json(name = "active")
+
+    @field:JsonProperty("active")
     val active: kotlin.Boolean
+
 ) {
 
     /**
      * 
+     *
      * Values: trainee,withconvention,accreditated
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "trainee") trainee("trainee"),
-        @Json(name = "withconvention") withconvention("withconvention"),
-        @Json(name = "accreditated") accreditated("accreditated");
+        @JsonProperty(value = "trainee") trainee("trainee"),
+        @JsonProperty(value = "withconvention") withconvention("withconvention"),
+        @JsonProperty(value = "accreditated") accreditated("accreditated");
     }
 }
 

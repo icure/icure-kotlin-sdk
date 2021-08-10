@@ -172,7 +172,7 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**modifyCode**](docs/CodeApi.md#modifycode) | **PUT** /rest/v1/code | Modify a code
 *ContactApi* | [**closeForHCPartyPatientForeignKeys**](docs/ContactApi.md#closeforhcpartypatientforeignkeys) | **PUT** /rest/v1/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 *ContactApi* | [**createContact**](docs/ContactApi.md#createcontact) | **POST** /rest/v1/contact | Create a contact with the current user
-*ContactApi* | [**createContacts**](docs/ContactApi.md#createcontacts) | **POST** /rest/v1/contact/batch | Modify a batch of contacts
+*ContactApi* | [**createContacts**](docs/ContactApi.md#createcontacts) | **POST** /rest/v1/contact/batch | Create a batch of contacts
 *ContactApi* | [**deleteContacts**](docs/ContactApi.md#deletecontacts) | **DELETE** /rest/v1/contact/{contactIds} | Delete contacts.
 *ContactApi* | [**filterContactsBy**](docs/ContactApi.md#filtercontactsby) | **POST** /rest/v1/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
 *ContactApi* | [**filterServicesBy**](docs/ContactApi.md#filterservicesby) | **POST** /rest/v1/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
@@ -229,6 +229,7 @@ Class | Method | HTTP request | Description
 *EntityrefApi* | [**createEntityReference**](docs/EntityrefApi.md#createentityreference) | **POST** /rest/v1/entityref | Create an entity reference
 *EntityrefApi* | [**getLatest**](docs/EntityrefApi.md#getlatest) | **GET** /rest/v1/entityref/latest/{prefix} | Find latest reference for a prefix 
 *EntitytemplateApi* | [**createEntityTemplate**](docs/EntitytemplateApi.md#createentitytemplate) | **POST** /rest/v1/entitytemplate | Create a EntityTemplate
+*EntitytemplateApi* | [**createEntityTemplates**](docs/EntitytemplateApi.md#createentitytemplates) | **POST** /rest/v1/entitytemplate/batch | Create a batch of entityTemplates
 *EntitytemplateApi* | [**deleteEntityTemplate**](docs/EntitytemplateApi.md#deleteentitytemplate) | **DELETE** /rest/v1/entitytemplate/{entityTemplateIds} | Delete entity templates
 *EntitytemplateApi* | [**findAllEntityTemplates**](docs/EntitytemplateApi.md#findallentitytemplates) | **GET** /rest/v1/entitytemplate/findAll/{type} | Finding entityTemplates by entityTemplate, type and version with pagination.
 *EntitytemplateApi* | [**findAllEntityTemplatesByKeyword**](docs/EntitytemplateApi.md#findallentitytemplatesbykeyword) | **GET** /rest/v1/entitytemplate/findAll/{type}/keyword/{keyword} | Finding entityTemplates by entityTemplate, type and version with pagination.
@@ -237,6 +238,7 @@ Class | Method | HTTP request | Description
 *EntitytemplateApi* | [**getEntityTemplate**](docs/EntitytemplateApi.md#getentitytemplate) | **GET** /rest/v1/entitytemplate/{entityTemplateId} | Get a entityTemplate
 *EntitytemplateApi* | [**getEntityTemplates**](docs/EntitytemplateApi.md#getentitytemplates) | **GET** /rest/v1/entitytemplate/byIds/{entityTemplateIds} | Get a list of entityTemplates by ids
 *EntitytemplateApi* | [**modifyEntityTemplate**](docs/EntitytemplateApi.md#modifyentitytemplate) | **PUT** /rest/v1/entitytemplate | Modify a entityTemplate
+*EntitytemplateApi* | [**modifyEntityTemplates**](docs/EntitytemplateApi.md#modifyentitytemplates) | **PUT** /rest/v1/entitytemplate/batch | Modify a batch of entityTemplates
 *FormApi* | [**createForm**](docs/FormApi.md#createform) | **POST** /rest/v1/form | Create a form with the current user
 *FormApi* | [**createFormTemplate**](docs/FormApi.md#createformtemplate) | **POST** /rest/v1/form/template | Create a form template with the current user
 *FormApi* | [**createForms**](docs/FormApi.md#createforms) | **POST** /rest/v1/form/batch | Create a batch of forms
@@ -456,6 +458,8 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**createTmpDatabase**](docs/TmpApi.md#createtmpdatabase) | **POST** /rest/v1/tmp | Create tmp database for current user
 *TmpApi* | [**createTmpDocument**](docs/TmpApi.md#createtmpdocument) | **POST** /rest/v1/tmp/document | Create a document with the current user
 *TmpApi* | [**createTmpDocuments**](docs/TmpApi.md#createtmpdocuments) | **POST** /rest/v1/tmp/document/batch | Create a document with the current user
+*TmpApi* | [**createTmpEntityTemplate**](docs/TmpApi.md#createtmpentitytemplate) | **POST** /rest/v1/tmp/entityTemplate | Create a entityTemplate with the current user
+*TmpApi* | [**createTmpEntityTemplates**](docs/TmpApi.md#createtmpentitytemplates) | **POST** /rest/v1/tmp/entityTemplate/batch | Create a entityTemplate with the current user
 *TmpApi* | [**createTmpForm**](docs/TmpApi.md#createtmpform) | **POST** /rest/v1/tmp/form | Create a form with the current user
 *TmpApi* | [**createTmpForms**](docs/TmpApi.md#createtmpforms) | **POST** /rest/v1/tmp/form/batch | Create a form with the current user
 *TmpApi* | [**createTmpHealthElement**](docs/TmpApi.md#createtmphealthelement) | **POST** /rest/v1/tmp/healthElement | Create a healthElement with the current user
@@ -474,6 +478,8 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**getTmpContacts**](docs/TmpApi.md#gettmpcontacts) | **POST** /rest/v1/tmp/contact/get | Get contacts by ids with the current user
 *TmpApi* | [**getTmpDocument**](docs/TmpApi.md#gettmpdocument) | **GET** /rest/v1/tmp/document/byId/{id} | Get a document by id
 *TmpApi* | [**getTmpDocuments**](docs/TmpApi.md#gettmpdocuments) | **POST** /rest/v1/tmp/document/get | Get documents by ids with the current user
+*TmpApi* | [**getTmpEntityTemplate**](docs/TmpApi.md#gettmpentitytemplate) | **GET** /rest/v1/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
+*TmpApi* | [**getTmpEntityTemplates**](docs/TmpApi.md#gettmpentitytemplates) | **POST** /rest/v1/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
 *TmpApi* | [**getTmpForm**](docs/TmpApi.md#gettmpform) | **GET** /rest/v1/tmp/form/byId/{id} | Get a form by id
 *TmpApi* | [**getTmpForms**](docs/TmpApi.md#gettmpforms) | **POST** /rest/v1/tmp/form/get | Get forms by ids with the current user
 *TmpApi* | [**getTmpHealthElement**](docs/TmpApi.md#gettmphealthelement) | **GET** /rest/v1/tmp/healthElement/byId/{id} | Get a healthElement by id
@@ -487,6 +493,7 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**listTmpClassifications**](docs/TmpApi.md#listtmpclassifications) | **GET** /rest/v1/tmp/classification/list | List classifications with the current user
 *TmpApi* | [**listTmpContacts**](docs/TmpApi.md#listtmpcontacts) | **GET** /rest/v1/tmp/contact/list | List contacts with the current user
 *TmpApi* | [**listTmpDocuments**](docs/TmpApi.md#listtmpdocuments) | **GET** /rest/v1/tmp/document/list | List documents with the current user
+*TmpApi* | [**listTmpEntityTemplates**](docs/TmpApi.md#listtmpentitytemplates) | **GET** /rest/v1/tmp/entityTemplate/list | List entityTemplates with the current user
 *TmpApi* | [**listTmpForms**](docs/TmpApi.md#listtmpforms) | **GET** /rest/v1/tmp/form/list | List forms with the current user
 *TmpApi* | [**listTmpHealthElements**](docs/TmpApi.md#listtmphealthelements) | **GET** /rest/v1/tmp/healthElement/list | List healthElements with the current user
 *TmpApi* | [**listTmpInvoices**](docs/TmpApi.md#listtmpinvoices) | **GET** /rest/v1/tmp/invoice/list | List invoices with the current user
@@ -498,6 +505,8 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**modifyTmpContacts**](docs/TmpApi.md#modifytmpcontacts) | **PUT** /rest/v1/tmp/contact/batch | Modify a batch of healthcare elements
 *TmpApi* | [**modifyTmpDocument**](docs/TmpApi.md#modifytmpdocument) | **PUT** /rest/v1/tmp/document | Modify a document
 *TmpApi* | [**modifyTmpDocuments**](docs/TmpApi.md#modifytmpdocuments) | **PUT** /rest/v1/tmp/document/batch | Modify a batch of healthcare elements
+*TmpApi* | [**modifyTmpEntityTemplate**](docs/TmpApi.md#modifytmpentitytemplate) | **PUT** /rest/v1/tmp/entityTemplate | Modify a entityTemplate
+*TmpApi* | [**modifyTmpEntityTemplates**](docs/TmpApi.md#modifytmpentitytemplates) | **PUT** /rest/v1/tmp/entityTemplate/batch | Modify a batch of healthcare elements
 *TmpApi* | [**modifyTmpForm**](docs/TmpApi.md#modifytmpform) | **PUT** /rest/v1/tmp/form | Modify a form
 *TmpApi* | [**modifyTmpForms**](docs/TmpApi.md#modifytmpforms) | **PUT** /rest/v1/tmp/form/batch | Modify a batch of healthcare elements
 *TmpApi* | [**modifyTmpHealthElement**](docs/TmpApi.md#modifytmphealthelement) | **PUT** /rest/v1/tmp/healthElement | Modify a healthElement
@@ -554,7 +563,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.AppointmentImportDto](docs/AppointmentImportDto.md)
  - [io.icure.kraken.client.models.ArticleDto](docs/ArticleDto.md)
  - [io.icure.kraken.client.models.AtcDto](docs/AtcDto.md)
- - [io.icure.kraken.client.models.Attachment](docs/Attachment.md)
  - [io.icure.kraken.client.models.AuthenticationResponse](docs/AuthenticationResponse.md)
  - [io.icure.kraken.client.models.ByteArrayDto](docs/ByteArrayDto.md)
  - [io.icure.kraken.client.models.CalendarItemDto](docs/CalendarItemDto.md)
@@ -593,7 +601,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.EmployerDto](docs/EmployerDto.md)
  - [io.icure.kraken.client.models.EmploymentInfoDto](docs/EmploymentInfoDto.md)
  - [io.icure.kraken.client.models.EntityReferenceDto](docs/EntityReferenceDto.md)
- - [io.icure.kraken.client.models.EntityTemplate](docs/EntityTemplate.md)
  - [io.icure.kraken.client.models.EntityTemplateDto](docs/EntityTemplateDto.md)
  - [io.icure.kraken.client.models.EpisodeDto](docs/EpisodeDto.md)
  - [io.icure.kraken.client.models.FilterChainCode](docs/FilterChainCode.md)
@@ -669,6 +676,7 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.PaginatedListCodeDto](docs/PaginatedListCodeDto.md)
  - [io.icure.kraken.client.models.PaginatedListContactDto](docs/PaginatedListContactDto.md)
  - [io.icure.kraken.client.models.PaginatedListDocumentDto](docs/PaginatedListDocumentDto.md)
+ - [io.icure.kraken.client.models.PaginatedListEntityTemplateDto](docs/PaginatedListEntityTemplateDto.md)
  - [io.icure.kraken.client.models.PaginatedListFormDto](docs/PaginatedListFormDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthElementDto](docs/PaginatedListHealthElementDto.md)
  - [io.icure.kraken.client.models.PaginatedListHealthcarePartyDto](docs/PaginatedListHealthcarePartyDto.md)
@@ -712,7 +720,6 @@ Class | Method | HTTP request | Description
  - [io.icure.kraken.client.models.ReplicationStats](docs/ReplicationStats.md)
  - [io.icure.kraken.client.models.ReplicatorDocument](docs/ReplicatorDocument.md)
  - [io.icure.kraken.client.models.ResultInfoDto](docs/ResultInfoDto.md)
- - [io.icure.kraken.client.models.RevisionInfo](docs/RevisionInfo.md)
  - [io.icure.kraken.client.models.RightDto](docs/RightDto.md)
  - [io.icure.kraken.client.models.RouteOfAdministrationDto](docs/RouteOfAdministrationDto.md)
  - [io.icure.kraken.client.models.SamTextDto](docs/SamTextDto.md)

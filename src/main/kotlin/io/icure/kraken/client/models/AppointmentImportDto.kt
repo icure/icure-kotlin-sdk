@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param comments 
  * @param externalCustomerId 
  * @param customerId 
@@ -39,48 +43,72 @@ import com.squareup.moshi.Json
  * @param customerFixPhone 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AppointmentImportDto (
-    @Json(name = "comments")
+
+    @field:JsonProperty("comments")
     val comments: kotlin.String? = null,
-    @Json(name = "externalCustomerId")
+
+    @field:JsonProperty("externalCustomerId")
     val externalCustomerId: kotlin.String? = null,
-    @Json(name = "customerId")
+
+    @field:JsonProperty("customerId")
     val customerId: kotlin.String? = null,
-    @Json(name = "customerComments")
+
+    @field:JsonProperty("customerComments")
     val customerComments: kotlin.String? = null,
-    @Json(name = "title")
+
+    @field:JsonProperty("title")
     val title: kotlin.String? = null,
-    @Json(name = "endTime")
+
+    @field:JsonProperty("endTime")
     val endTime: java.time.OffsetDateTime? = null,
-    @Json(name = "startTime")
+
+    @field:JsonProperty("startTime")
     val startTime: java.time.OffsetDateTime? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "appointmentTypeId")
+
+    @field:JsonProperty("appointmentTypeId")
     val appointmentTypeId: kotlin.String? = null,
-    @Json(name = "ownerRef")
+
+    @field:JsonProperty("ownerRef")
     val ownerRef: kotlin.String? = null,
-    @Json(name = "customerName")
+
+    @field:JsonProperty("customerName")
     val customerName: kotlin.String? = null,
-    @Json(name = "customerFirstname")
+
+    @field:JsonProperty("customerFirstname")
     val customerFirstname: kotlin.String? = null,
-    @Json(name = "customerEmail")
+
+    @field:JsonProperty("customerEmail")
     val customerEmail: kotlin.String? = null,
-    @Json(name = "city")
+
+    @field:JsonProperty("city")
     val city: kotlin.String? = null,
-    @Json(name = "postcode")
+
+    @field:JsonProperty("postcode")
     val postcode: kotlin.String? = null,
-    @Json(name = "street")
+
+    @field:JsonProperty("street")
     val street: kotlin.String? = null,
-    @Json(name = "sex")
+
+    @field:JsonProperty("sex")
     val sex: kotlin.String? = null,
-    @Json(name = "externalId")
+
+    @field:JsonProperty("externalId")
     val externalId: kotlin.String? = null,
-    @Json(name = "customerBirthDate")
+
+    @field:JsonProperty("customerBirthDate")
     val customerBirthDate: java.time.OffsetDateTime? = null,
-    @Json(name = "customerGsm")
+
+    @field:JsonProperty("customerGsm")
     val customerGsm: kotlin.String? = null,
-    @Json(name = "customerFixPhone")
+
+    @field:JsonProperty("customerFixPhone")
     val customerFixPhone: kotlin.String? = null
+
 )
 

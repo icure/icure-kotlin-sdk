@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.PermissionDto
 import io.icure.kraken.client.models.PropertyStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * This entity is a root level object. It represents an user that can log in to the iCure platform. It is serialized in JSON and saved in the underlying icure-base CouchDB database.
+ *
  * @param id the Id of the user. We encourage using either a v4 UUID or a HL7 Id.
  * @param properties Extra properties for the user. Those properties are typed (see class Property)
  * @param permissions If permission to modify patient data is granted or revoked
@@ -42,91 +46,118 @@ import com.squareup.moshi.Json
  * @param email email address of the user.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class UserDto (
+
     /* the Id of the user. We encourage using either a v4 UUID or a HL7 Id. */
-    @Json(name = "id")
+    @field:JsonProperty("id")
     val id: kotlin.String,
+
     /* Extra properties for the user. Those properties are typed (see class Property) */
-    @Json(name = "properties")
+    @field:JsonProperty("properties")
     val properties: kotlin.collections.List<PropertyStubDto>,
+
     /* If permission to modify patient data is granted or revoked */
-    @Json(name = "permissions")
+    @field:JsonProperty("permissions")
     val permissions: kotlin.collections.List<PermissionDto>,
+
     /* Roles specified for the user */
-    @Json(name = "roles")
+    @field:JsonProperty("roles")
     val roles: kotlin.collections.List<kotlin.String>,
+
     /* Delegations that are automatically generated client side when a new database object is created by this user */
-    @Json(name = "autoDelegations")
+    @field:JsonProperty("autoDelegations")
     val autoDelegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<kotlin.String>>,
+
     /* Long lived authentication tokens used for inter-applications authentication. */
-    @Json(name = "applicationTokens")
+    @field:JsonProperty("applicationTokens")
     val applicationTokens: kotlin.collections.Map<kotlin.String, kotlin.String>,
+
     /* the revision of the user in the database, used for conflict management / optimistic locking. */
-    @Json(name = "rev")
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "created")
+
+    @field:JsonProperty("created")
     val created: kotlin.Long? = null,
+
     /* Last name of the user. This is the official last name that should be used for official administrative purposes. */
-    @Json(name = "name")
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
+
     /* Authorization source for user. 'Database', 'ldap' or 'token' */
-    @Json(name = "type")
+    @field:JsonProperty("type")
     val type: UserDto.Type? = null,
+
     /* State of user's activeness: 'Active', 'Disabled' or 'Registering' */
-    @Json(name = "status")
+    @field:JsonProperty("status")
     val status: UserDto.Status? = null,
+
     /* Username for this user. We encourage using an email address */
-    @Json(name = "login")
+    @field:JsonProperty("login")
     val login: kotlin.String? = null,
+
     /* Hashed version of the password (BCrypt is used for hashing) */
-    @Json(name = "passwordHash")
+    @field:JsonProperty("passwordHash")
     val passwordHash: kotlin.String? = null,
+
     /* Secret token used to verify 2fa */
-    @Json(name = "secret")
+    @field:JsonProperty("secret")
     val secret: kotlin.String? = null,
+
     /* Whether the user has activated two factors authentication */
-    @Json(name = "use2fa")
+    @field:JsonProperty("use2fa")
     val use2fa: kotlin.Boolean? = null,
+
     /* id of the group (practice/hospital) the user is member of */
-    @Json(name = "groupId")
+    @field:JsonProperty("groupId")
     val groupId: kotlin.String? = null,
+
     /* Id of the healthcare party if the user is a healthcare party. */
-    @Json(name = "healthcarePartyId")
+    @field:JsonProperty("healthcarePartyId")
     val healthcarePartyId: kotlin.String? = null,
+
     /* Id of the patient if the user is a patient */
-    @Json(name = "patientId")
+    @field:JsonProperty("patientId")
     val patientId: kotlin.String? = null,
+
     /* the timestamp (unix epoch in ms) of creation of the user, will be filled automatically if missing. Not enforced by the application server. */
-    @Json(name = "createdDate")
+    @field:JsonProperty("createdDate")
     val createdDate: java.time.OffsetDateTime? = null,
+
     /* the timestamp (unix epoch in ms) of the latest validation of the terms of use of the application */
-    @Json(name = "termsOfUseDate")
+    @field:JsonProperty("termsOfUseDate")
     val termsOfUseDate: java.time.OffsetDateTime? = null,
+
     /* email address of the user. */
-    @Json(name = "email")
+    @field:JsonProperty("email")
     val email: kotlin.String? = null
+
 ) {
 
     /**
      * Authorization source for user. 'Database', 'ldap' or 'token'
+     *
      * Values: database,ldap,token
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "database") database("database"),
-        @Json(name = "ldap") ldap("ldap"),
-        @Json(name = "token") token("token");
+        @JsonProperty(value = "database") database("database"),
+        @JsonProperty(value = "ldap") ldap("ldap"),
+        @JsonProperty(value = "token") token("token");
     }
     /**
      * State of user's activeness: 'Active', 'Disabled' or 'Registering'
+     *
      * Values: aCTIVE,dISABLED,rEGISTERING
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "ACTIVE") aCTIVE("ACTIVE"),
-        @Json(name = "DISABLED") dISABLED("DISABLED"),
-        @Json(name = "REGISTERING") rEGISTERING("REGISTERING");
+        @JsonProperty(value = "ACTIVE") aCTIVE("ACTIVE"),
+        @JsonProperty(value = "DISABLED") dISABLED("DISABLED"),
+        @JsonProperty(value = "REGISTERING") rEGISTERING("REGISTERING");
     }
 }
 

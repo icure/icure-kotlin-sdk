@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * A relationship between this patient and another person.
+ *
  * @param type Type of relationship.
  * @param status Status of the relationship.
  * @param partnerId UUID of the contact person or patient in this relationship.
@@ -23,67 +27,77 @@ import com.squareup.moshi.Json
  * @param otherToMeRelationshipDescription 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PartnershipDto (
+
     /* Type of relationship. */
-    @Json(name = "type")
+    @field:JsonProperty("type")
     val type: PartnershipDto.Type? = null,
+
     /* Status of the relationship. */
-    @Json(name = "status")
+    @field:JsonProperty("status")
     val status: PartnershipDto.Status? = null,
+
     /* UUID of the contact person or patient in this relationship. */
-    @Json(name = "partnerId")
+    @field:JsonProperty("partnerId")
     val partnerId: kotlin.String? = null,
-    @Json(name = "meToOtherRelationshipDescription")
+
+    @field:JsonProperty("meToOtherRelationshipDescription")
     @Deprecated(message = "This property is deprecated.")
     val meToOtherRelationshipDescription: kotlin.String? = null,
-    @Json(name = "otherToMeRelationshipDescription")
+
+    @field:JsonProperty("otherToMeRelationshipDescription")
     @Deprecated(message = "This property is deprecated.")
     val otherToMeRelationshipDescription: kotlin.String? = null
+
 ) {
 
     /**
      * Type of relationship.
+     *
      * Values: primaryContact,primaryContactFor,family,friend,counselor,contact,brother,brotherinlaw,child,daughter,employer,father,grandchild,grandparent,husband,lawyer,mother,neighbour,notary,partner,sister,sisterinlaw,son,spouse,stepdaughter,stepfather,stepmother,stepson,tutor
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "primary_contact") primaryContact("primary_contact"),
-        @Json(name = "primary_contact_for") primaryContactFor("primary_contact_for"),
-        @Json(name = "family") family("family"),
-        @Json(name = "friend") friend("friend"),
-        @Json(name = "counselor") counselor("counselor"),
-        @Json(name = "contact") contact("contact"),
-        @Json(name = "brother") brother("brother"),
-        @Json(name = "brotherinlaw") brotherinlaw("brotherinlaw"),
-        @Json(name = "child") child("child"),
-        @Json(name = "daughter") daughter("daughter"),
-        @Json(name = "employer") employer("employer"),
-        @Json(name = "father") father("father"),
-        @Json(name = "grandchild") grandchild("grandchild"),
-        @Json(name = "grandparent") grandparent("grandparent"),
-        @Json(name = "husband") husband("husband"),
-        @Json(name = "lawyer") lawyer("lawyer"),
-        @Json(name = "mother") mother("mother"),
-        @Json(name = "neighbour") neighbour("neighbour"),
-        @Json(name = "notary") notary("notary"),
-        @Json(name = "partner") partner("partner"),
-        @Json(name = "sister") sister("sister"),
-        @Json(name = "sisterinlaw") sisterinlaw("sisterinlaw"),
-        @Json(name = "son") son("son"),
-        @Json(name = "spouse") spouse("spouse"),
-        @Json(name = "stepdaughter") stepdaughter("stepdaughter"),
-        @Json(name = "stepfather") stepfather("stepfather"),
-        @Json(name = "stepmother") stepmother("stepmother"),
-        @Json(name = "stepson") stepson("stepson"),
-        @Json(name = "tutor") tutor("tutor");
+        @JsonProperty(value = "primary_contact") primaryContact("primary_contact"),
+        @JsonProperty(value = "primary_contact_for") primaryContactFor("primary_contact_for"),
+        @JsonProperty(value = "family") family("family"),
+        @JsonProperty(value = "friend") friend("friend"),
+        @JsonProperty(value = "counselor") counselor("counselor"),
+        @JsonProperty(value = "contact") contact("contact"),
+        @JsonProperty(value = "brother") brother("brother"),
+        @JsonProperty(value = "brotherinlaw") brotherinlaw("brotherinlaw"),
+        @JsonProperty(value = "child") child("child"),
+        @JsonProperty(value = "daughter") daughter("daughter"),
+        @JsonProperty(value = "employer") employer("employer"),
+        @JsonProperty(value = "father") father("father"),
+        @JsonProperty(value = "grandchild") grandchild("grandchild"),
+        @JsonProperty(value = "grandparent") grandparent("grandparent"),
+        @JsonProperty(value = "husband") husband("husband"),
+        @JsonProperty(value = "lawyer") lawyer("lawyer"),
+        @JsonProperty(value = "mother") mother("mother"),
+        @JsonProperty(value = "neighbour") neighbour("neighbour"),
+        @JsonProperty(value = "notary") notary("notary"),
+        @JsonProperty(value = "partner") partner("partner"),
+        @JsonProperty(value = "sister") sister("sister"),
+        @JsonProperty(value = "sisterinlaw") sisterinlaw("sisterinlaw"),
+        @JsonProperty(value = "son") son("son"),
+        @JsonProperty(value = "spouse") spouse("spouse"),
+        @JsonProperty(value = "stepdaughter") stepdaughter("stepdaughter"),
+        @JsonProperty(value = "stepfather") stepfather("stepfather"),
+        @JsonProperty(value = "stepmother") stepmother("stepmother"),
+        @JsonProperty(value = "stepson") stepson("stepson"),
+        @JsonProperty(value = "tutor") tutor("tutor");
     }
     /**
      * Status of the relationship.
+     *
      * Values: active,complicated,past
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "active") active("active"),
-        @Json(name = "complicated") complicated("complicated"),
-        @Json(name = "past") past("past");
+        @JsonProperty(value = "active") active("active"),
+        @JsonProperty(value = "complicated") complicated("complicated"),
+        @JsonProperty(value = "past") past("past");
     }
 }
 

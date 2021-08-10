@@ -12,24 +12,34 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Time periods
+ *
  * @param startDate The date (unix epoch in ms) when the referral period initiated, will be filled instantaneously.
  * @param endDate The date (unix epoch in ms) the referral period ended, will be instantaneously filled.
  * @param comment Comments made during the referral.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReferralPeriodDto (
+
     /* The date (unix epoch in ms) when the referral period initiated, will be filled instantaneously. */
-    @Json(name = "startDate")
+    @field:JsonProperty("startDate")
     val startDate: java.time.OffsetDateTime? = null,
+
     /* The date (unix epoch in ms) the referral period ended, will be instantaneously filled. */
-    @Json(name = "endDate")
+    @field:JsonProperty("endDate")
     val endDate: java.time.OffsetDateTime? = null,
+
     /* Comments made during the referral. */
-    @Json(name = "comment")
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null
+
 )
 

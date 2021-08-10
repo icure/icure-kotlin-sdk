@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.HealthcarePartyDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param secretForeignKeys 
  * @param excludedIds 
  * @param tags 
@@ -30,28 +34,42 @@ import com.squareup.moshi.Json
  * @param note 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DiaryNoteExportInfoDto (
-    @Json(name = "secretForeignKeys")
+
+    @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.List<kotlin.String>,
-    @Json(name = "excludedIds")
+
+    @field:JsonProperty("excludedIds")
     val excludedIds: kotlin.collections.List<kotlin.String>,
-    @Json(name = "tags")
+
+    @field:JsonProperty("tags")
     val tags: kotlin.collections.List<kotlin.String>,
-    @Json(name = "contexts")
+
+    @field:JsonProperty("contexts")
     val contexts: kotlin.collections.List<kotlin.String>,
-    @Json(name = "recipient")
+
+    @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,
-    @Json(name = "softwareName")
+
+    @field:JsonProperty("softwareName")
     val softwareName: kotlin.String? = null,
-    @Json(name = "softwareVersion")
+
+    @field:JsonProperty("softwareVersion")
     val softwareVersion: kotlin.String? = null,
-    @Json(name = "psy")
+
+    @field:JsonProperty("psy")
     val psy: kotlin.Boolean? = null,
-    @Json(name = "documentId")
+
+    @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null,
-    @Json(name = "attachmentId")
+
+    @field:JsonProperty("attachmentId")
     val attachmentId: kotlin.String? = null,
-    @Json(name = "note")
+
+    @field:JsonProperty("note")
     val note: kotlin.String? = null
+
 )
 

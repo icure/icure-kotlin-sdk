@@ -11,25 +11,28 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthcarePartyDto
 import io.icure.kraken.client.models.PublicKeyDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class HcpartyApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -48,26 +51,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto {
+    suspend fun createHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
         val localVariableConfig = createHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
-        val localVarResponse = request<HealthcarePartyDto, HealthcarePartyDto>(
+        return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -102,26 +91,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto {
+    suspend fun createHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
         val localVariableConfig = createHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
-        val localVarResponse = request<HealthcarePartyDto, HealthcarePartyDto>(
+        return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -156,26 +131,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -210,26 +171,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteHealthcarePartiesInGroup(groupId: kotlin.String, healthcarePartyIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteHealthcarePartiesInGroupRequestConfig(groupId = groupId, healthcarePartyIds = healthcarePartyIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -268,26 +215,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto {
+    suspend fun findByName(name: kotlin.String?, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
         val localVariableConfig = findByNameRequestConfig(name = name, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
-        val localVarResponse = request<Unit, PaginatedListHealthcarePartyDto>(
+        return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListHealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -346,26 +279,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto {
+    suspend fun findBySpecialityAndPostCode(type: kotlin.String, spec: kotlin.String, firstCode: kotlin.String, lastCode: kotlin.String, limit: kotlin.Int?) : PaginatedListHealthcarePartyDto?  {
         val localVariableConfig = findBySpecialityAndPostCodeRequestConfig(type = type, spec = spec, firstCode = firstCode, lastCode = lastCode, limit = limit)
 
-        val localVarResponse = request<Unit, PaginatedListHealthcarePartyDto>(
+        return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListHealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -412,26 +331,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto {
+    suspend fun findBySsinOrNihii(searchValue: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
         val localVariableConfig = findBySsinOrNihiiRequestConfig(searchValue = searchValue, startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
-        val localVarResponse = request<Unit, PaginatedListHealthcarePartyDto>(
+        return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListHealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -482,26 +387,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCurrentHealthcareParty() : HealthcarePartyDto {
+    suspend fun getCurrentHealthcareParty() : HealthcarePartyDto?  {
         val localVariableConfig = getCurrentHealthcarePartyRequestConfig()
 
-        val localVarResponse = request<Unit, HealthcarePartyDto>(
+        return request<Unit, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -534,26 +425,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String> {
+    suspend fun getHcPartyKeysForDelegate(healthcarePartyId: kotlin.String) : kotlin.collections.Map<kotlin.String, kotlin.String>?  {
         val localVariableConfig = getHcPartyKeysForDelegateRequestConfig(healthcarePartyId = healthcarePartyId)
 
-        val localVarResponse = request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
+        return request<Unit, kotlin.collections.Map<kotlin.String, kotlin.String>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.Map<kotlin.String, kotlin.String>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -587,26 +464,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<HealthcarePartyDto> {
+    suspend fun getHealthcareParties(healthcarePartyIds: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
         val localVariableConfig = getHealthcarePartiesRequestConfig(healthcarePartyIds = healthcarePartyIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
+        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthcarePartyDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -640,26 +503,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto> {
+    suspend fun getHealthcarePartiesByParentId(parentId: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
         val localVariableConfig = getHealthcarePartiesByParentIdRequestConfig(parentId = parentId)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
+        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthcarePartyDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -694,26 +543,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<HealthcarePartyDto> {
+    suspend fun getHealthcarePartiesInGroup(groupId: kotlin.String, listOfIdsDto: ListOfIdsDto?) : kotlin.collections.List<HealthcarePartyDto>?  {
         val localVariableConfig = getHealthcarePartiesInGroupRequestConfig(groupId = groupId, listOfIdsDto = listOfIdsDto)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.collections.List<HealthcarePartyDto>>(
+        return request<ListOfIdsDto, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthcarePartyDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -748,26 +583,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto {
+    suspend fun getHealthcareParty(healthcarePartyId: kotlin.String) : HealthcarePartyDto?  {
         val localVariableConfig = getHealthcarePartyRequestConfig(healthcarePartyId = healthcarePartyId)
 
-        val localVarResponse = request<Unit, HealthcarePartyDto>(
+        return request<Unit, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -801,26 +622,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto {
+    suspend fun getPublicKey(healthcarePartyId: kotlin.String) : PublicKeyDto?  {
         val localVariableConfig = getPublicKeyRequestConfig(healthcarePartyId = healthcarePartyId)
 
-        val localVarResponse = request<Unit, PublicKeyDto>(
+        return request<Unit, PublicKeyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PublicKeyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -854,26 +661,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto> {
+    suspend fun listByName(name: kotlin.String) : kotlin.collections.List<HealthcarePartyDto>?  {
         val localVariableConfig = listByNameRequestConfig(name = name)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
+        return request<Unit, kotlin.collections.List<HealthcarePartyDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthcarePartyDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -910,26 +703,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listHealthcareParties(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto {
+    suspend fun listHealthcareParties(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, desc: kotlin.Boolean?) : PaginatedListHealthcarePartyDto?  {
         val localVariableConfig = listHealthcarePartiesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, desc = desc)
 
-        val localVarResponse = request<Unit, PaginatedListHealthcarePartyDto>(
+        return request<Unit, PaginatedListHealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListHealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -980,26 +759,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto {
+    suspend fun modifyHealthcareParty(healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
         val localVariableConfig = modifyHealthcarePartyRequestConfig(healthcarePartyDto = healthcarePartyDto)
 
-        val localVarResponse = request<HealthcarePartyDto, HealthcarePartyDto>(
+        return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1034,26 +799,12 @@ class HcpartyApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto {
+    suspend fun modifyHealthcarePartyInGroup(groupId: kotlin.String, healthcarePartyDto: HealthcarePartyDto) : HealthcarePartyDto?  {
         val localVariableConfig = modifyHealthcarePartyInGroupRequestConfig(groupId = groupId, healthcarePartyDto = healthcarePartyDto)
 
-        val localVarResponse = request<HealthcarePartyDto, HealthcarePartyDto>(
+        return request<HealthcarePartyDto, HealthcarePartyDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthcarePartyDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

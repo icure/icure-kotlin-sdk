@@ -11,6 +11,8 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.AppointmentDto
 import io.icure.kraken.client.models.AppointmentImportDto
 import io.icure.kraken.client.models.EmailOrSmsMessageDto
@@ -18,19 +20,20 @@ import io.icure.kraken.client.models.MikronoAppointmentTypeRestDto
 import io.icure.kraken.client.models.MikronoCredentialsDto
 import io.icure.kraken.client.models.UserDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class BemikronoApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -49,26 +52,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun appointmentsByDate(calendarDate: kotlin.Long) : kotlin.collections.List<AppointmentDto> {
+    suspend fun appointmentsByDate(calendarDate: kotlin.Long) : kotlin.collections.List<AppointmentDto>?  {
         val localVariableConfig = appointmentsByDateRequestConfig(calendarDate = calendarDate)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<AppointmentDto>>(
+        return request<Unit, kotlin.collections.List<AppointmentDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AppointmentDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -104,26 +93,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun appointmentsByPatient(patientId: kotlin.String, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<AppointmentDto> {
+    suspend fun appointmentsByPatient(patientId: kotlin.String, from: kotlin.Long?, to: kotlin.Long?) : kotlin.collections.List<AppointmentDto>?  {
         val localVariableConfig = appointmentsByPatientRequestConfig(patientId = patientId, from = from, to = to)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<AppointmentDto>>(
+        return request<Unit, kotlin.collections.List<AppointmentDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<AppointmentDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -167,26 +142,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createAppointmentTypes(mikronoAppointmentTypeRestDto: kotlin.collections.List<MikronoAppointmentTypeRestDto>?) : kotlin.collections.List<MikronoAppointmentTypeRestDto> {
+    suspend fun createAppointmentTypes(mikronoAppointmentTypeRestDto: kotlin.collections.List<MikronoAppointmentTypeRestDto>?) : kotlin.collections.List<MikronoAppointmentTypeRestDto>?  {
         val localVariableConfig = createAppointmentTypesRequestConfig(mikronoAppointmentTypeRestDto = mikronoAppointmentTypeRestDto)
 
-        val localVarResponse = request<kotlin.collections.List<MikronoAppointmentTypeRestDto>, kotlin.collections.List<MikronoAppointmentTypeRestDto>>(
+        return request<kotlin.collections.List<MikronoAppointmentTypeRestDto>, kotlin.collections.List<MikronoAppointmentTypeRestDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<MikronoAppointmentTypeRestDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -220,26 +181,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createAppointments(appointmentImportDto: kotlin.collections.List<AppointmentImportDto>) : kotlin.collections.List<kotlin.String> {
+    suspend fun createAppointments(appointmentImportDto: kotlin.collections.List<AppointmentImportDto>) : kotlin.collections.List<kotlin.String>?  {
         val localVariableConfig = createAppointmentsRequestConfig(appointmentImportDto = appointmentImportDto)
 
-        val localVarResponse = request<kotlin.collections.List<AppointmentImportDto>, kotlin.collections.List<kotlin.String>>(
+        return request<kotlin.collections.List<AppointmentImportDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<kotlin.String>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -273,26 +220,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     * @throws ServerException If the API returns a server error response
     */
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun notify(appointmentId: kotlin.String, action: kotlin.String) : Unit {
+    suspend fun notify(appointmentId: kotlin.String, action: kotlin.String) : Unit?  {
         val localVariableConfig = notifyRequestConfig(appointmentId = appointmentId, action = action)
 
-        val localVarResponse = request<Unit, Unit>(
+        return request<Unit, Unit>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> Unit
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -328,26 +261,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun register(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto) : UserDto {
+    suspend fun register(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto) : UserDto?  {
         val localVariableConfig = registerRequestConfig(userId = userId, mikronoCredentialsDto = mikronoCredentialsDto)
 
-        val localVarResponse = request<MikronoCredentialsDto, UserDto>(
+        return request<MikronoCredentialsDto, UserDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as UserDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -382,26 +301,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun sendMessage(emailOrSmsMessageDto: EmailOrSmsMessageDto) : kotlin.Any {
+    suspend fun sendMessage(emailOrSmsMessageDto: EmailOrSmsMessageDto) : kotlin.Any?  {
         val localVariableConfig = sendMessageRequestConfig(emailOrSmsMessageDto = emailOrSmsMessageDto)
 
-        val localVarResponse = request<EmailOrSmsMessageDto, kotlin.Any>(
+        return request<EmailOrSmsMessageDto, kotlin.Any>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -436,26 +341,12 @@ class BemikronoApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePa
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setUserCredentials(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto?) : UserDto {
+    suspend fun setUserCredentials(userId: kotlin.String, mikronoCredentialsDto: MikronoCredentialsDto?) : UserDto?  {
         val localVariableConfig = setUserCredentialsRequestConfig(userId = userId, mikronoCredentialsDto = mikronoCredentialsDto)
 
-        val localVarResponse = request<MikronoCredentialsDto, UserDto>(
+        return request<MikronoCredentialsDto, UserDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as UserDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

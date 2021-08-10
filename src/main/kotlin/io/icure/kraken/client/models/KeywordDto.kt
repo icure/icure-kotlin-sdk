@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.KeywordSubwordDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param tags A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags.
  * @param codes A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes
@@ -34,43 +38,60 @@ import com.squareup.moshi.Json
  * @param userId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class KeywordDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
+
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
-    @Json(name = "tags")
+    @field:JsonProperty("tags")
     val tags: kotlin.collections.List<CodeStubDto>,
+
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
-    @Json(name = "codes")
+    @field:JsonProperty("codes")
     val codes: kotlin.collections.List<CodeStubDto>,
-    @Json(name = "subWords")
+
+    @field:JsonProperty("subWords")
     val subWords: kotlin.collections.List<KeywordSubwordDto>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @Json(name = "created")
+    @field:JsonProperty("created")
     val created: kotlin.Long? = null,
+
     /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @Json(name = "modified")
+    @field:JsonProperty("modified")
     val modified: kotlin.Long? = null,
+
     /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @Json(name = "author")
+    @field:JsonProperty("author")
     val author: kotlin.String? = null,
+
     /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
-    @Json(name = "responsible")
+    @field:JsonProperty("responsible")
     val responsible: kotlin.String? = null,
+
     /* The id of the medical location where this entity was created. */
-    @Json(name = "medicalLocationId")
+    @field:JsonProperty("medicalLocationId")
     val medicalLocationId: kotlin.String? = null,
+
     /* Soft delete (unix epoch in ms) timestamp of the object. */
-    @Json(name = "endOfLife")
+    @field:JsonProperty("endOfLife")
     val endOfLife: kotlin.Long? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: kotlin.String? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null
+
 )
 

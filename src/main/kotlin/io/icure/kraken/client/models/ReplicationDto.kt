@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.DatabaseSynchronizationDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param databaseSynchronizations 
  * @param rev 
@@ -25,19 +29,28 @@ import com.squareup.moshi.Json
  * @param context 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReplicationDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "databaseSynchronizations")
+
+    @field:JsonProperty("databaseSynchronizations")
     val databaseSynchronizations: kotlin.collections.List<DatabaseSynchronizationDto>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "context")
+
+    @field:JsonProperty("context")
     val context: kotlin.String? = null
+
 )
 

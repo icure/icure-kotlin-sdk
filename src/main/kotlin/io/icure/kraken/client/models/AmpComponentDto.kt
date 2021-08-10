@@ -16,10 +16,14 @@ import io.icure.kraken.client.models.PharmaceuticalFormStubDto
 import io.icure.kraken.client.models.RouteOfAdministrationDto
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param ingredients 
@@ -37,56 +41,76 @@ import com.squareup.moshi.Json
  * @param note 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AmpComponentDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "ingredients")
+
+    @field:JsonProperty("ingredients")
     val ingredients: kotlin.collections.List<IngredientDto>? = null,
-    @Json(name = "pharmaceuticalForms")
+
+    @field:JsonProperty("pharmaceuticalForms")
     val pharmaceuticalForms: kotlin.collections.List<PharmaceuticalFormStubDto>? = null,
-    @Json(name = "routeOfAdministrations")
+
+    @field:JsonProperty("routeOfAdministrations")
     val routeOfAdministrations: kotlin.collections.List<RouteOfAdministrationDto>? = null,
-    @Json(name = "dividable")
+
+    @field:JsonProperty("dividable")
     val dividable: kotlin.String? = null,
-    @Json(name = "scored")
+
+    @field:JsonProperty("scored")
     val scored: kotlin.String? = null,
-    @Json(name = "crushable")
+
+    @field:JsonProperty("crushable")
     val crushable: AmpComponentDto.Crushable? = null,
-    @Json(name = "containsAlcohol")
+
+    @field:JsonProperty("containsAlcohol")
     val containsAlcohol: AmpComponentDto.ContainsAlcohol? = null,
-    @Json(name = "sugarFree")
+
+    @field:JsonProperty("sugarFree")
     val sugarFree: kotlin.Boolean? = null,
-    @Json(name = "modifiedReleaseType")
+
+    @field:JsonProperty("modifiedReleaseType")
     val modifiedReleaseType: kotlin.Int? = null,
-    @Json(name = "specificDrugDevice")
+
+    @field:JsonProperty("specificDrugDevice")
     val specificDrugDevice: kotlin.Int? = null,
-    @Json(name = "dimensions")
+
+    @field:JsonProperty("dimensions")
     val dimensions: kotlin.String? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "note")
+
+    @field:JsonProperty("note")
     val note: SamTextDto? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: y,n,x
      */
     enum class Crushable(val value: kotlin.String) {
-        @Json(name = "Y") y("Y"),
-        @Json(name = "N") n("N"),
-        @Json(name = "X") x("X");
+        @JsonProperty(value = "Y") y("Y"),
+        @JsonProperty(value = "N") n("N"),
+        @JsonProperty(value = "X") x("X");
     }
     /**
      * 
+     *
      * Values: y,n,x
      */
     enum class ContainsAlcohol(val value: kotlin.String) {
-        @Json(name = "Y") y("Y"),
-        @Json(name = "N") n("N"),
-        @Json(name = "X") x("X");
+        @JsonProperty(value = "Y") y("Y"),
+        @JsonProperty(value = "N") n("N"),
+        @JsonProperty(value = "X") x("X");
     }
 }
 

@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param label 
  * @param occurence 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class LabelledOccurenceDto (
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.String? = null,
-    @Json(name = "occurence")
+
+    @field:JsonProperty("occurence")
     val occurence: kotlin.Long? = null
+
 )
 

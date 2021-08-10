@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Members of the careteam involved in this approach
+ *
  * @param startDate 
  * @param endDate 
  * @param careTeamMemberId 
@@ -23,30 +27,39 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CareTeamMembershipDto (
-    @Json(name = "startDate")
+
+    @field:JsonProperty("startDate")
     val startDate: kotlin.Long? = null,
-    @Json(name = "endDate")
+
+    @field:JsonProperty("endDate")
     val endDate: kotlin.Long? = null,
-    @Json(name = "careTeamMemberId")
+
+    @field:JsonProperty("careTeamMemberId")
     val careTeamMemberId: kotlin.String? = null,
-    @Json(name = "membershipType")
+
+    @field:JsonProperty("membershipType")
     val membershipType: CareTeamMembershipDto.MembershipType? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: doctor,mutuality,patient,specialist,other
      */
     enum class MembershipType(val value: kotlin.String) {
-        @Json(name = "doctor") doctor("doctor"),
-        @Json(name = "mutuality") mutuality("mutuality"),
-        @Json(name = "patient") patient("patient"),
-        @Json(name = "specialist") specialist("specialist"),
-        @Json(name = "other") other("other");
+        @JsonProperty(value = "doctor") doctor("doctor"),
+        @JsonProperty(value = "mutuality") mutuality("mutuality"),
+        @JsonProperty(value = "patient") patient("patient"),
+        @JsonProperty(value = "specialist") specialist("specialist"),
+        @JsonProperty(value = "other") other("other");
     }
 }
 

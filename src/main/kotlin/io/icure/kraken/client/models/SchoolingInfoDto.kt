@@ -13,24 +13,35 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param startDate 
  * @param endDate 
  * @param school 
  * @param typeOfEducation 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SchoolingInfoDto (
-    @Json(name = "startDate")
+
+    @field:JsonProperty("startDate")
     val startDate: kotlin.Long? = null,
-    @Json(name = "endDate")
+
+    @field:JsonProperty("endDate")
     val endDate: kotlin.Long? = null,
-    @Json(name = "school")
+
+    @field:JsonProperty("school")
     val school: kotlin.String? = null,
-    @Json(name = "typeOfEducation")
+
+    @field:JsonProperty("typeOfEducation")
     val typeOfEducation: CodeStubDto? = null
+
 )
 

@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param code 
  * @param date 
  * @param userId 
  * @param userName 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CalendarItemTagDto (
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "date")
+
+    @field:JsonProperty("date")
     val date: kotlin.Long? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
-    @Json(name = "userName")
+
+    @field:JsonProperty("userName")
     val userName: kotlin.String? = null
+
 )
 

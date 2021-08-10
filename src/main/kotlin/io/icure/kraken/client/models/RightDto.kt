@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param read 
  * @param write 
  * @param administration 
  * @param userId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RightDto (
-    @Json(name = "read")
+
+    @field:JsonProperty("read")
     val read: kotlin.Boolean,
-    @Json(name = "write")
+
+    @field:JsonProperty("write")
     val write: kotlin.Boolean,
-    @Json(name = "administration")
+
+    @field:JsonProperty("administration")
     val administration: kotlin.Boolean,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null
+
 )
 

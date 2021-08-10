@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Status showing whether the message is read or not and the time of reading
+ *
  * @param read 
  * @param time 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MessageReadStatusDto (
-    @Json(name = "read")
+
+    @field:JsonProperty("read")
     val read: kotlin.Boolean,
-    @Json(name = "time")
+
+    @field:JsonProperty("time")
     val time: kotlin.Long? = null
+
 )
 

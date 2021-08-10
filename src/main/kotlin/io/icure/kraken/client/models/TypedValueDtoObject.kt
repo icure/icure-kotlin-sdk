@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param type 
  * @param booleanValue 
  * @param integerValue 
@@ -25,36 +29,47 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TypedValueDtoObject (
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: TypedValueDtoObject.Type? = null,
-    @Json(name = "booleanValue")
+
+    @field:JsonProperty("booleanValue")
     val booleanValue: kotlin.Boolean? = null,
-    @Json(name = "integerValue")
+
+    @field:JsonProperty("integerValue")
     val integerValue: kotlin.Int? = null,
-    @Json(name = "doubleValue")
+
+    @field:JsonProperty("doubleValue")
     val doubleValue: kotlin.Double? = null,
-    @Json(name = "stringValue")
+
+    @field:JsonProperty("stringValue")
     val stringValue: kotlin.String? = null,
-    @Json(name = "dateValue")
+
+    @field:JsonProperty("dateValue")
     val dateValue: java.time.OffsetDateTime? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: bOOLEAN,iNTEGER,dOUBLE,sTRING,dATE,cLOB,jSON
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "BOOLEAN") bOOLEAN("BOOLEAN"),
-        @Json(name = "INTEGER") iNTEGER("INTEGER"),
-        @Json(name = "DOUBLE") dOUBLE("DOUBLE"),
-        @Json(name = "STRING") sTRING("STRING"),
-        @Json(name = "DATE") dATE("DATE"),
-        @Json(name = "CLOB") cLOB("CLOB"),
-        @Json(name = "JSON") jSON("JSON");
+        @JsonProperty(value = "BOOLEAN") bOOLEAN("BOOLEAN"),
+        @JsonProperty(value = "INTEGER") iNTEGER("INTEGER"),
+        @JsonProperty(value = "DOUBLE") dOUBLE("DOUBLE"),
+        @JsonProperty(value = "STRING") sTRING("STRING"),
+        @JsonProperty(value = "DATE") dATE("DATE"),
+        @JsonProperty(value = "CLOB") cLOB("CLOB"),
+        @JsonProperty(value = "JSON") jSON("JSON");
     }
 }
 

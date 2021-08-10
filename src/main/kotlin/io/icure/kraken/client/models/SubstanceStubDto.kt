@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.SamTextDto
 import io.icure.kraken.client.models.StandardSubstanceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param code 
  * @param chemicalForm 
@@ -26,18 +30,27 @@ import com.squareup.moshi.Json
  * @param standardSubstances 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SubstanceStubDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "chemicalForm")
+
+    @field:JsonProperty("chemicalForm")
     val chemicalForm: kotlin.String? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "note")
+
+    @field:JsonProperty("note")
     val note: SamTextDto? = null,
-    @Json(name = "standardSubstances")
+
+    @field:JsonProperty("standardSubstances")
     val standardSubstances: kotlin.collections.List<StandardSubstanceDto>? = null
+
 )
 

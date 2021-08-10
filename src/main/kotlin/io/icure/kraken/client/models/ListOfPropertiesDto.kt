@@ -13,15 +13,23 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.PropertyStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * The new properties for the group
+ *
  * @param properties 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ListOfPropertiesDto (
-    @Json(name = "properties")
+
+    @field:JsonProperty("properties")
     val properties: kotlin.collections.List<PropertyStubDto>
+
 )
 

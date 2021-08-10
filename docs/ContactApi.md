@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**closeForHCPartyPatientForeignKeys**](ContactApi.md#closeForHCPartyPatientForeignKeys) | **PUT** /rest/v1/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 [**createContact**](ContactApi.md#createContact) | **POST** /rest/v1/contact | Create a contact with the current user
-[**createContacts**](ContactApi.md#createContacts) | **POST** /rest/v1/contact/batch | Modify a batch of contacts
+[**createContacts**](ContactApi.md#createContacts) | **POST** /rest/v1/contact/batch | Create a batch of contacts
 [**deleteContacts**](ContactApi.md#deleteContacts) | **DELETE** /rest/v1/contact/{contactIds} | Delete contacts.
 [**filterContactsBy**](ContactApi.md#filterContactsBy) | **POST** /rest/v1/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
 [**filterServicesBy**](ContactApi.md#filterServicesBy) | **POST** /rest/v1/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
@@ -138,7 +138,7 @@ Configure basicScheme:
 # **createContacts**
 > kotlin.collections.List&lt;ContactDto&gt; createContacts(contactDto)
 
-Modify a batch of contacts
+Create a batch of contacts
 
 Returns the modified contacts.
 

@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param value 
  * @param unit 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class QuantityDto (
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: java.math.BigDecimal? = null,
-    @Json(name = "unit")
+
+    @field:JsonProperty("unit")
     val unit: kotlin.String? = null
+
 )
 

@@ -11,22 +11,25 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ResultInfoDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class BeresultimportApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -46,26 +49,12 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean {
+    suspend fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean?  {
         val localVariableConfig = canHandleRequestConfig(id = id, enckeys = enckeys)
 
-        val localVarResponse = request<Unit, kotlin.Boolean>(
+        return request<Unit, kotlin.Boolean>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Boolean
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -110,26 +99,12 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto {
+    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto?  {
         val localVariableConfig = doImportRequestConfig(documentId = documentId, hcpId = hcpId, language = language, protocolIds = protocolIds, formIds = formIds, planOfActionId = planOfActionId, enckeys = enckeys, ctc = ctc)
 
-        val localVarResponse = request<Unit, ContactDto>(
+        return request<Unit, ContactDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContactDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -180,26 +155,12 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto> {
+    suspend fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto>?  {
         val localVariableConfig = getInfosRequestConfig(id = id, language = language, enckeys = enckeys, full = full)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<ResultInfoDto>>(
+        return request<Unit, kotlin.collections.List<ResultInfoDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ResultInfoDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

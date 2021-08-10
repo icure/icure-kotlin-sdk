@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.TimeTableHourDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param days 
  * @param hours 
  * @param recurrenceTypes 
@@ -26,20 +30,30 @@ import com.squareup.moshi.Json
  * @param placeId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TimeTableItemDto (
-    @Json(name = "days")
+
+    @field:JsonProperty("days")
     val days: kotlin.collections.List<kotlin.String>,
-    @Json(name = "hours")
+
+    @field:JsonProperty("hours")
     val hours: kotlin.collections.List<TimeTableHourDto>,
-    @Json(name = "recurrenceTypes")
+
+    @field:JsonProperty("recurrenceTypes")
     val recurrenceTypes: kotlin.collections.List<kotlin.String>,
-    @Json(name = "homeVisit")
+
+    @field:JsonProperty("homeVisit")
     val homeVisit: kotlin.Boolean,
-    @Json(name = "unavailable")
+
+    @field:JsonProperty("unavailable")
     val unavailable: kotlin.Boolean,
-    @Json(name = "calendarItemTypeId")
+
+    @field:JsonProperty("calendarItemTypeId")
     val calendarItemTypeId: kotlin.String? = null,
-    @Json(name = "placeId")
+
+    @field:JsonProperty("placeId")
     val placeId: kotlin.String? = null
+
 )
 

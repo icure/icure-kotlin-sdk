@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * List of episodes of occurrences of the healthcare element.
+ *
  * @param id 
  * @param name 
  * @param comment 
@@ -24,19 +28,28 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EpisodeDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null,
-    @Json(name = "startDate")
+
+    @field:JsonProperty("startDate")
     val startDate: kotlin.Long? = null,
-    @Json(name = "endDate")
+
+    @field:JsonProperty("endDate")
     val endDate: kotlin.Long? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 )
 

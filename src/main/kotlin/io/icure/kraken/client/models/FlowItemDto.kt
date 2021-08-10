@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param title 
  * @param comment 
@@ -49,68 +53,102 @@ import com.squareup.moshi.Json
  * @param patientFirstName 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FlowItemDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "title")
+
+    @field:JsonProperty("title")
     val title: kotlin.String? = null,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null,
-    @Json(name = "receptionDate")
+
+    @field:JsonProperty("receptionDate")
     val receptionDate: kotlin.Long? = null,
-    @Json(name = "processingDate")
+
+    @field:JsonProperty("processingDate")
     val processingDate: kotlin.Long? = null,
-    @Json(name = "processer")
+
+    @field:JsonProperty("processer")
     val processer: kotlin.String? = null,
-    @Json(name = "cancellationDate")
+
+    @field:JsonProperty("cancellationDate")
     val cancellationDate: kotlin.Long? = null,
-    @Json(name = "canceller")
+
+    @field:JsonProperty("canceller")
     val canceller: kotlin.String? = null,
-    @Json(name = "cancellationReason")
+
+    @field:JsonProperty("cancellationReason")
     val cancellationReason: kotlin.String? = null,
-    @Json(name = "cancellationNote")
+
+    @field:JsonProperty("cancellationNote")
     val cancellationNote: kotlin.String? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.String? = null,
-    @Json(name = "homeVisit")
+
+    @field:JsonProperty("homeVisit")
     val homeVisit: kotlin.Boolean? = null,
-    @Json(name = "municipality")
+
+    @field:JsonProperty("municipality")
     val municipality: kotlin.String? = null,
-    @Json(name = "town")
+
+    @field:JsonProperty("town")
     val town: kotlin.String? = null,
-    @Json(name = "zipCode")
+
+    @field:JsonProperty("zipCode")
     val zipCode: kotlin.String? = null,
-    @Json(name = "street")
+
+    @field:JsonProperty("street")
     val street: kotlin.String? = null,
-    @Json(name = "building")
+
+    @field:JsonProperty("building")
     val building: kotlin.String? = null,
-    @Json(name = "buildingNumber")
+
+    @field:JsonProperty("buildingNumber")
     val buildingNumber: kotlin.String? = null,
-    @Json(name = "doorbellName")
+
+    @field:JsonProperty("doorbellName")
     val doorbellName: kotlin.String? = null,
-    @Json(name = "floor")
+
+    @field:JsonProperty("floor")
     val floor: kotlin.String? = null,
-    @Json(name = "letterBox")
+
+    @field:JsonProperty("letterBox")
     val letterBox: kotlin.String? = null,
-    @Json(name = "notesOps")
+
+    @field:JsonProperty("notesOps")
     val notesOps: kotlin.String? = null,
-    @Json(name = "notesContact")
+
+    @field:JsonProperty("notesContact")
     val notesContact: kotlin.String? = null,
-    @Json(name = "latitude")
+
+    @field:JsonProperty("latitude")
     val latitude: kotlin.String? = null,
-    @Json(name = "longitude")
+
+    @field:JsonProperty("longitude")
     val longitude: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "emergency")
+
+    @field:JsonProperty("emergency")
     val emergency: kotlin.Boolean? = null,
-    @Json(name = "phoneNumber")
+
+    @field:JsonProperty("phoneNumber")
     val phoneNumber: kotlin.String? = null,
-    @Json(name = "patientId")
+
+    @field:JsonProperty("patientId")
     val patientId: kotlin.String? = null,
-    @Json(name = "patientLastName")
+
+    @field:JsonProperty("patientLastName")
     val patientLastName: kotlin.String? = null,
-    @Json(name = "patientFirstName")
+
+    @field:JsonProperty("patientFirstName")
     val patientFirstName: kotlin.String? = null
+
 )
 

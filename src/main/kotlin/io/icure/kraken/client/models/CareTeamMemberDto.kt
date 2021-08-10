@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * List of care team members assigned for the healthcare element.
+ *
  * @param id 
  * @param careTeamMemberType 
  * @param healthcarePartyId 
@@ -24,28 +28,37 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CareTeamMemberDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "careTeamMemberType")
+
+    @field:JsonProperty("careTeamMemberType")
     val careTeamMemberType: CareTeamMemberDto.CareTeamMemberType? = null,
-    @Json(name = "healthcarePartyId")
+
+    @field:JsonProperty("healthcarePartyId")
     val healthcarePartyId: kotlin.String? = null,
-    @Json(name = "quality")
+
+    @field:JsonProperty("quality")
     val quality: CodeStubDto? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: physician,specialist,other
      */
     enum class CareTeamMemberType(val value: kotlin.String) {
-        @Json(name = "physician") physician("physician"),
-        @Json(name = "specialist") specialist("specialist"),
-        @Json(name = "other") other("other");
+        @JsonProperty(value = "physician") physician("physician"),
+        @JsonProperty(value = "specialist") specialist("specialist"),
+        @JsonProperty(value = "other") other("other");
     }
 }
 

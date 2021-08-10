@@ -11,6 +11,8 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.CheckSMFPatientResult
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DiaryNoteExportInfoDto
@@ -22,19 +24,20 @@ import io.icure.kraken.client.models.SumehrContentDto
 import io.icure.kraken.client.models.SumehrExportInfoDto
 import io.icure.kraken.client.models.SumehrValidityDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class BekmehrApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -57,26 +60,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun checkIfSMFPatientsExists(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<CheckSMFPatientResult> {
+    suspend fun checkIfSMFPatientsExists(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<CheckSMFPatientResult>?  {
         val localVariableConfig = checkIfSMFPatientsExistsRequestConfig(documentId = documentId, documentKey = documentKey, patientId = patientId, language = language, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<CheckSMFPatientResult>>(
+        return request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<CheckSMFPatientResult>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<CheckSMFPatientResult>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -134,26 +123,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateContactreportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateContactreportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -207,26 +182,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateDiaryNote(patientId: kotlin.String, language: kotlin.String, diaryNoteExportInfoDto: DiaryNoteExportInfoDto) : java.io.File {
+    suspend fun generateDiaryNote(patientId: kotlin.String, language: kotlin.String, diaryNoteExportInfoDto: DiaryNoteExportInfoDto) : java.io.File?  {
         val localVariableConfig = generateDiaryNoteRequestConfig(patientId = patientId, language = language, diaryNoteExportInfoDto = diaryNoteExportInfoDto)
 
-        val localVarResponse = request<DiaryNoteExportInfoDto, java.io.File>(
+        return request<DiaryNoteExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -274,26 +235,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateLabresultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateLabresultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -349,26 +296,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateMedicationSchemeExport(patientId: kotlin.String, language: kotlin.String, recipientSafe: kotlin.String, version: kotlin.Int, medicationSchemeExportInfoDto: MedicationSchemeExportInfoDto) : java.io.File {
+    suspend fun generateMedicationSchemeExport(patientId: kotlin.String, language: kotlin.String, recipientSafe: kotlin.String, version: kotlin.Int, medicationSchemeExportInfoDto: MedicationSchemeExportInfoDto) : java.io.File?  {
         val localVariableConfig = generateMedicationSchemeExportRequestConfig(patientId = patientId, language = language, recipientSafe = recipientSafe, version = version, medicationSchemeExportInfoDto = medicationSchemeExportInfoDto)
 
-        val localVarResponse = request<MedicationSchemeExportInfoDto, java.io.File>(
+        return request<MedicationSchemeExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -420,26 +353,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateNoteExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateNoteExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -492,26 +411,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generatePatientInfoExport(patientId: kotlin.String, language: kotlin.String?) : java.io.File {
+    suspend fun generatePatientInfoExport(patientId: kotlin.String, language: kotlin.String?) : java.io.File?  {
         val localVariableConfig = generatePatientInfoExportRequestConfig(patientId = patientId, language = language)
 
-        val localVarResponse = request<Unit, java.io.File>(
+        return request<Unit, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -560,26 +465,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generatePrescriptionExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generatePrescriptionExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -640,26 +531,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateReportExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateReportExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -720,26 +597,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateRequestExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateRequestExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -800,26 +663,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File {
+    suspend fun generateResultExport(patientId: kotlin.String, id: kotlin.String, date: kotlin.Long, language: kotlin.String, recipientNihii: kotlin.String, recipientSsin: kotlin.String, recipientFirstName: kotlin.String, recipientLastName: kotlin.String, mimeType: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = generateResultExportRequestConfig(patientId = patientId, id = id, date = date, language = language, recipientNihii = recipientNihii, recipientSsin = recipientSsin, recipientFirstName = recipientFirstName, recipientLastName = recipientLastName, mimeType = mimeType, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
+        return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -873,26 +722,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateSmfExport(patientId: kotlin.String, language: kotlin.String, softwareMedicalFileExportDto: SoftwareMedicalFileExportDto) : java.io.File {
+    suspend fun generateSmfExport(patientId: kotlin.String, language: kotlin.String, softwareMedicalFileExportDto: SoftwareMedicalFileExportDto) : java.io.File?  {
         val localVariableConfig = generateSmfExportRequestConfig(patientId = patientId, language = language, softwareMedicalFileExportDto = softwareMedicalFileExportDto)
 
-        val localVarResponse = request<SoftwareMedicalFileExportDto, java.io.File>(
+        return request<SoftwareMedicalFileExportDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -933,26 +768,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File {
+    suspend fun generateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
         val localVariableConfig = generateSumehrRequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -993,26 +814,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File {
+    suspend fun generateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
         val localVariableConfig = generateSumehrV2RequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1052,26 +859,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getSumehrContent(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrContentDto {
+    suspend fun getSumehrContent(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrContentDto?  {
         val localVariableConfig = getSumehrContentRequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, SumehrContentDto>(
+        return request<SumehrExportInfoDto, SumehrContentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as SumehrContentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1107,26 +900,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getSumehrMd5(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : ContentDto {
+    suspend fun getSumehrMd5(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : ContentDto?  {
         val localVariableConfig = getSumehrMd5RequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, ContentDto>(
+        return request<SumehrExportInfoDto, ContentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1162,26 +941,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getSumehrV2Content(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrContentDto {
+    suspend fun getSumehrV2Content(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrContentDto?  {
         val localVariableConfig = getSumehrV2ContentRequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, SumehrContentDto>(
+        return request<SumehrExportInfoDto, SumehrContentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as SumehrContentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1217,26 +982,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getSumehrV2Md5(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : ContentDto {
+    suspend fun getSumehrV2Md5(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : ContentDto?  {
         val localVariableConfig = getSumehrV2Md5RequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, ContentDto>(
+        return request<SumehrExportInfoDto, ContentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1276,26 +1027,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun importMedicationScheme(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto> {
+    suspend fun importMedicationScheme(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto>?  {
         val localVariableConfig = importMedicationSchemeRequestConfig(documentId = documentId, documentKey = documentKey, dryRun = dryRun, patientId = patientId, language = language, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
+        return request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ImportResultDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1353,26 +1090,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun importSmf(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, dryRun: kotlin.Boolean?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto> {
+    suspend fun importSmf(documentId: kotlin.String, documentKey: kotlin.String?, patientId: kotlin.String?, language: kotlin.String?, dryRun: kotlin.Boolean?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto>?  {
         val localVariableConfig = importSmfRequestConfig(documentId = documentId, documentKey = documentKey, patientId = patientId, language = language, dryRun = dryRun, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
+        return request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ImportResultDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1430,26 +1153,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun importSumehr(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto> {
+    suspend fun importSumehr(documentId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto>?  {
         val localVariableConfig = importSumehrRequestConfig(documentId = documentId, documentKey = documentKey, dryRun = dryRun, patientId = patientId, language = language, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
+        return request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ImportResultDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1508,26 +1217,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun importSumehrByItemId(documentId: kotlin.String, itemId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto> {
+    suspend fun importSumehrByItemId(documentId: kotlin.String, itemId: kotlin.String, documentKey: kotlin.String?, dryRun: kotlin.Boolean?, patientId: kotlin.String?, language: kotlin.String?, requestBody: kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>?) : kotlin.collections.List<ImportResultDto>?  {
         val localVariableConfig = importSumehrByItemIdRequestConfig(documentId = documentId, itemId = itemId, documentKey = documentKey, dryRun = dryRun, patientId = patientId, language = language, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
+        return request<kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>>, kotlin.collections.List<ImportResultDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ImportResultDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1583,26 +1278,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun isSumehrV2Valid(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrValidityDto {
+    suspend fun isSumehrV2Valid(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrValidityDto?  {
         val localVariableConfig = isSumehrV2ValidRequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, SumehrValidityDto>(
+        return request<SumehrExportInfoDto, SumehrValidityDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as SumehrValidityDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1638,26 +1319,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun isSumehrValid(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrValidityDto {
+    suspend fun isSumehrValid(patientId: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : SumehrValidityDto?  {
         val localVariableConfig = isSumehrValidRequestConfig(patientId = patientId, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, SumehrValidityDto>(
+        return request<SumehrExportInfoDto, SumehrValidityDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as SumehrValidityDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1694,26 +1361,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun validateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File {
+    suspend fun validateSumehr(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
         val localVariableConfig = validateSumehrRequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1754,26 +1407,12 @@ class BekmehrApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun validateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File {
+    suspend fun validateSumehrV2(patientId: kotlin.String, language: kotlin.String, sumehrExportInfoDto: SumehrExportInfoDto) : java.io.File?  {
         val localVariableConfig = validateSumehrV2RequestConfig(patientId = patientId, language = language, sumehrExportInfoDto = sumehrExportInfoDto)
 
-        val localVarResponse = request<SumehrExportInfoDto, java.io.File>(
+        return request<SumehrExportInfoDto, java.io.File>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as java.io.File
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

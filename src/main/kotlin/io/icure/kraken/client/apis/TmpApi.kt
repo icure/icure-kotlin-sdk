@@ -11,16 +11,20 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ClassificationDto
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentDto
+import io.icure.kraken.client.models.EntityTemplateDto
 import io.icure.kraken.client.models.FormDto
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.InvoiceDto
 import io.icure.kraken.client.models.MessageDto
 import io.icure.kraken.client.models.PaginatedListClassificationDto
 import io.icure.kraken.client.models.PaginatedListDocumentDto
+import io.icure.kraken.client.models.PaginatedListEntityTemplateDto
 import io.icure.kraken.client.models.PaginatedListFormDto
 import io.icure.kraken.client.models.PaginatedListHealthElementDto
 import io.icure.kraken.client.models.PaginatedListInvoiceDto
@@ -28,19 +32,20 @@ import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PatientDto
 import io.icure.kraken.client.models.ReplicatorDocument
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -59,26 +64,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto {
+    suspend fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = createTmpClassificationRequestConfig(classificationDto = classificationDto)
 
-        val localVarResponse = request<ClassificationDto, ClassificationDto>(
+        return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -112,26 +103,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto> {
+    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = createTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
-        val localVarResponse = request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
+        return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ClassificationDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -165,26 +142,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpContact(contactDto: ContactDto) : ContactDto {
+    suspend fun createTmpContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = createTmpContactRequestConfig(contactDto = contactDto)
 
-        val localVarResponse = request<ContactDto, ContactDto>(
+        return request<ContactDto, ContactDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContactDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -218,26 +181,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto> {
+    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = createTmpContactsRequestConfig(contactDto = contactDto)
 
-        val localVarResponse = request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
+        return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ContactDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -270,26 +219,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDatabase() : kotlin.Any {
+    suspend fun createTmpDatabase() : kotlin.Any?  {
         val localVariableConfig = createTmpDatabaseRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.Any>(
+        return request<Unit, kotlin.Any>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -322,26 +257,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDocument(documentDto: DocumentDto) : DocumentDto {
+    suspend fun createTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = createTmpDocumentRequestConfig(documentDto = documentDto)
 
-        val localVarResponse = request<DocumentDto, DocumentDto>(
+        return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -375,26 +296,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto> {
+    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = createTmpDocumentsRequestConfig(documentDto = documentDto)
 
-        val localVarResponse = request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
+        return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -418,6 +325,84 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     }
 
     /**
+    * Create a entityTemplate with the current user
+    * Returns an instance of created entityTemplate.
+    * @param entityTemplateDto  
+    * @return EntityTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
+        val localVariableConfig = createTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<EntityTemplateDto, EntityTemplateDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation createTmpEntityTemplate
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun createTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/tmp/entityTemplate",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Create a entityTemplate with the current user
+    * Returns an instance of created entityTemplate.
+    * @param entityTemplateDto  
+    * @return kotlin.collections.List<EntityTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+        val localVariableConfig = createTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation createTmpEntityTemplates
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun createTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/tmp/entityTemplate/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Create a form with the current user
     * Returns an instance of created form.
     * @param formDto  
@@ -428,26 +413,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpForm(formDto: FormDto) : FormDto {
+    suspend fun createTmpForm(formDto: FormDto) : FormDto?  {
         val localVariableConfig = createTmpFormRequestConfig(formDto = formDto)
 
-        val localVarResponse = request<FormDto, FormDto>(
+        return request<FormDto, FormDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FormDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -481,26 +452,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto> {
+    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = createTmpFormsRequestConfig(formDto = formDto)
 
-        val localVarResponse = request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
+        return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<FormDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -534,26 +491,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto {
+    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = createTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
-        val localVarResponse = request<HealthElementDto, HealthElementDto>(
+        return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthElementDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -587,26 +530,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto> {
+    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = createTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
-        val localVarResponse = request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
+        return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthElementDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -640,26 +569,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto {
+    suspend fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
         val localVariableConfig = createTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
-        val localVarResponse = request<InvoiceDto, InvoiceDto>(
+        return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as InvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -693,26 +608,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto> {
+    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = createTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
-        val localVarResponse = request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
+        return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<InvoiceDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -746,26 +647,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpMessage(messageDto: MessageDto) : MessageDto {
+    suspend fun createTmpMessage(messageDto: MessageDto) : MessageDto?  {
         val localVariableConfig = createTmpMessageRequestConfig(messageDto = messageDto)
 
-        val localVarResponse = request<MessageDto, MessageDto>(
+        return request<MessageDto, MessageDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as MessageDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -799,26 +686,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto> {
+    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = createTmpMessagesRequestConfig(messageDto = messageDto)
 
-        val localVarResponse = request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
+        return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<MessageDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -852,26 +725,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpPatient(patientDto: PatientDto) : PatientDto {
+    suspend fun createTmpPatient(patientDto: PatientDto) : PatientDto?  {
         val localVariableConfig = createTmpPatientRequestConfig(patientDto = patientDto)
 
-        val localVarResponse = request<PatientDto, PatientDto>(
+        return request<PatientDto, PatientDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PatientDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -905,26 +764,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto> {
+    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = createTmpPatientsRequestConfig(patientDto = patientDto)
 
-        val localVarResponse = request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
+        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<PatientDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -958,26 +803,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteTmpItemsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1010,26 +841,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun destroyTmpDatabase() : kotlin.Any {
+    suspend fun destroyTmpDatabase() : kotlin.Any?  {
         val localVariableConfig = destroyTmpDatabaseRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.Any>(
+        return request<Unit, kotlin.Any>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1062,26 +879,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpClassification(id: kotlin.String) : ClassificationDto {
+    suspend fun getTmpClassification(id: kotlin.String) : ClassificationDto?  {
         val localVariableConfig = getTmpClassificationRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, ClassificationDto>(
+        return request<Unit, ClassificationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1115,26 +918,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto> {
+    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = getTmpClassificationsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ClassificationDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1168,26 +957,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpContact(id: kotlin.String) : ContactDto {
+    suspend fun getTmpContact(id: kotlin.String) : ContactDto?  {
         val localVariableConfig = getTmpContactRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, ContactDto>(
+        return request<Unit, ContactDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContactDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1221,26 +996,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto> {
+    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = getTmpContactsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ContactDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1274,26 +1035,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpDocument(id: kotlin.String) : DocumentDto {
+    suspend fun getTmpDocument(id: kotlin.String) : DocumentDto?  {
         val localVariableConfig = getTmpDocumentRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, DocumentDto>(
+        return request<Unit, DocumentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1327,26 +1074,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto> {
+    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = getTmpDocumentsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1370,6 +1103,84 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     }
 
     /**
+    * Get a entityTemplate by id
+    * Returns an instance of entityTemplate.
+    * @param id  
+    * @return EntityTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto?  {
+        val localVariableConfig = getTmpEntityTemplateRequestConfig(id = id)
+
+        return request<Unit, EntityTemplateDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation getTmpEntityTemplate
+    *
+    * @param id  
+    * @return RequestConfig
+    */
+    fun getTmpEntityTemplateRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/tmp/entityTemplate/byId/{id}".replace("{"+"id"+"}", "$id"),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Get entityTemplates by ids with the current user
+    * Returns an instance of created entityTemplate.
+    * @param requestBody  
+    * @return kotlin.collections.List<EntityTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>?  {
+        val localVariableConfig = getTmpEntityTemplatesRequestConfig(requestBody = requestBody)
+
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<EntityTemplateDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation getTmpEntityTemplates
+    *
+    * @param requestBody  
+    * @return RequestConfig
+    */
+    fun getTmpEntityTemplatesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+        val localVariableBody = requestBody
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/tmp/entityTemplate/get",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Get a form by id
     * Returns an instance of form.
     * @param id  
@@ -1380,26 +1191,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpForm(id: kotlin.String) : FormDto {
+    suspend fun getTmpForm(id: kotlin.String) : FormDto?  {
         val localVariableConfig = getTmpFormRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, FormDto>(
+        return request<Unit, FormDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FormDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1433,26 +1230,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto> {
+    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = getTmpFormsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<FormDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1486,26 +1269,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpHealthElement(id: kotlin.String) : HealthElementDto {
+    suspend fun getTmpHealthElement(id: kotlin.String) : HealthElementDto?  {
         val localVariableConfig = getTmpHealthElementRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, HealthElementDto>(
+        return request<Unit, HealthElementDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthElementDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1539,26 +1308,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto> {
+    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = getTmpHealthElementsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthElementDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1592,26 +1347,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpInvoice(id: kotlin.String) : InvoiceDto {
+    suspend fun getTmpInvoice(id: kotlin.String) : InvoiceDto?  {
         val localVariableConfig = getTmpInvoiceRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, InvoiceDto>(
+        return request<Unit, InvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as InvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1645,26 +1386,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto> {
+    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = getTmpInvoicesRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<InvoiceDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1698,26 +1425,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpMessage(id: kotlin.String) : MessageDto {
+    suspend fun getTmpMessage(id: kotlin.String) : MessageDto?  {
         val localVariableConfig = getTmpMessageRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, MessageDto>(
+        return request<Unit, MessageDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as MessageDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1751,26 +1464,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto> {
+    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = getTmpMessagesRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<MessageDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1804,26 +1503,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpPatient(id: kotlin.String) : PatientDto {
+    suspend fun getTmpPatient(id: kotlin.String) : PatientDto?  {
         val localVariableConfig = getTmpPatientRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, PatientDto>(
+        return request<Unit, PatientDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PatientDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1857,26 +1542,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto> {
+    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = getTmpPatientsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<PatientDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1911,26 +1582,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto {
+    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto?  {
         val localVariableConfig = listTmpClassificationsRequestConfig(firstClassificationId = firstClassificationId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListClassificationDto>(
+        return request<Unit, PaginatedListClassificationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListClassificationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -1974,26 +1631,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto {
+    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpContactsRequestConfig(firstContactId = firstContactId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListInvoiceDto>(
+        return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListInvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2037,26 +1680,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto {
+    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto?  {
         val localVariableConfig = listTmpDocumentsRequestConfig(firstDocumentId = firstDocumentId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListDocumentDto>(
+        return request<Unit, PaginatedListDocumentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListDocumentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2089,6 +1718,55 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     }
 
     /**
+    * List entityTemplates with the current user
+    * Returns paginated entityTemplates.
+    * @param firstEntityTemplateId  (optional)
+    * @param pageSize  (optional)
+    * @return PaginatedListEntityTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto?  {
+        val localVariableConfig = listTmpEntityTemplatesRequestConfig(firstEntityTemplateId = firstEntityTemplateId, pageSize = pageSize)
+
+        return request<Unit, PaginatedListEntityTemplateDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation listTmpEntityTemplates
+    *
+    * @param firstEntityTemplateId  (optional)
+    * @param pageSize  (optional)
+    * @return RequestConfig
+    */
+    fun listTmpEntityTemplatesRequestConfig(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+            .apply {
+                if (firstEntityTemplateId != null) {
+                    put("firstEntityTemplateId", listOf(firstEntityTemplateId.toString()))
+                }
+                if (pageSize != null) {
+                    put("pageSize", listOf(pageSize.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v1/tmp/entityTemplate/list",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * List forms with the current user
     * Returns paginated forms.
     * @param firstFormId  (optional)
@@ -2100,26 +1778,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto {
+    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto?  {
         val localVariableConfig = listTmpFormsRequestConfig(firstFormId = firstFormId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListFormDto>(
+        return request<Unit, PaginatedListFormDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListFormDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2163,26 +1827,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto {
+    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto?  {
         val localVariableConfig = listTmpHealthElementsRequestConfig(firstHealthElementId = firstHealthElementId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListHealthElementDto>(
+        return request<Unit, PaginatedListHealthElementDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListHealthElementDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2226,26 +1876,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto {
+    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpInvoicesRequestConfig(firstInvoiceId = firstInvoiceId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListInvoiceDto>(
+        return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListInvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2289,26 +1925,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto {
+    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpMessagesRequestConfig(firstMessageId = firstMessageId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListInvoiceDto>(
+        return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListInvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2352,26 +1974,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto {
+    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto?  {
         val localVariableConfig = listTmpPatientsRequestConfig(firstPatientId = firstPatientId, pageSize = pageSize)
 
-        val localVarResponse = request<Unit, PaginatedListPatientDto>(
+        return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PaginatedListPatientDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2414,26 +2022,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto {
+    suspend fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = modifyTmpClassificationRequestConfig(classificationDto = classificationDto)
 
-        val localVarResponse = request<ClassificationDto, ClassificationDto>(
+        return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ClassificationDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2467,26 +2061,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto> {
+    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = modifyTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
-        val localVarResponse = request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
+        return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ClassificationDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2520,26 +2100,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpContact(contactDto: ContactDto) : ContactDto {
+    suspend fun modifyTmpContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = modifyTmpContactRequestConfig(contactDto = contactDto)
 
-        val localVarResponse = request<ContactDto, ContactDto>(
+        return request<ContactDto, ContactDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ContactDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2573,26 +2139,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto> {
+    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = modifyTmpContactsRequestConfig(contactDto = contactDto)
 
-        val localVarResponse = request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
+        return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<ContactDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2626,26 +2178,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto {
+    suspend fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = modifyTmpDocumentRequestConfig(documentDto = documentDto)
 
-        val localVarResponse = request<DocumentDto, DocumentDto>(
+        return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DocumentDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2679,26 +2217,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto> {
+    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = modifyTmpDocumentsRequestConfig(documentDto = documentDto)
 
-        val localVarResponse = request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
+        return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocumentDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2722,6 +2246,84 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     }
 
     /**
+    * Modify a entityTemplate
+    * Returns the modified entityTemplate.
+    * @param entityTemplateDto  
+    * @return EntityTemplateDto
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
+        val localVariableConfig = modifyTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<EntityTemplateDto, EntityTemplateDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation modifyTmpEntityTemplate
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun modifyTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v1/tmp/entityTemplate",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Modify a batch of healthcare elements
+    * Returns the modified healthcare elements.
+    * @param entityTemplateDto  
+    * @return kotlin.collections.List<EntityTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+        val localVariableConfig = modifyTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation modifyTmpEntityTemplates
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun modifyTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v1/tmp/entityTemplate/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Modify a form
     * Returns the modified form.
     * @param formDto  
@@ -2732,26 +2334,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpForm(formDto: FormDto) : FormDto {
+    suspend fun modifyTmpForm(formDto: FormDto) : FormDto?  {
         val localVariableConfig = modifyTmpFormRequestConfig(formDto = formDto)
 
-        val localVarResponse = request<FormDto, FormDto>(
+        return request<FormDto, FormDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as FormDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2785,26 +2373,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto> {
+    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = modifyTmpFormsRequestConfig(formDto = formDto)
 
-        val localVarResponse = request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
+        return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<FormDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2838,26 +2412,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto {
+    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = modifyTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
-        val localVarResponse = request<HealthElementDto, HealthElementDto>(
+        return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as HealthElementDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2891,26 +2451,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto> {
+    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = modifyTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
-        val localVarResponse = request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
+        return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<HealthElementDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2944,26 +2490,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto {
+    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
         val localVariableConfig = modifyTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
-        val localVarResponse = request<InvoiceDto, InvoiceDto>(
+        return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as InvoiceDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -2997,26 +2529,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto> {
+    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = modifyTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
-        val localVarResponse = request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
+        return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<InvoiceDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3050,26 +2568,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpMessage(messageDto: MessageDto) : MessageDto {
+    suspend fun modifyTmpMessage(messageDto: MessageDto) : MessageDto?  {
         val localVariableConfig = modifyTmpMessageRequestConfig(messageDto = messageDto)
 
-        val localVarResponse = request<MessageDto, MessageDto>(
+        return request<MessageDto, MessageDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as MessageDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3103,26 +2607,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto> {
+    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = modifyTmpMessagesRequestConfig(messageDto = messageDto)
 
-        val localVarResponse = request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
+        return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<MessageDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3156,26 +2646,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpPatient(patientDto: PatientDto) : PatientDto {
+    suspend fun modifyTmpPatient(patientDto: PatientDto) : PatientDto?  {
         val localVariableConfig = modifyTmpPatientRequestConfig(patientDto = patientDto)
 
-        val localVarResponse = request<PatientDto, PatientDto>(
+        return request<PatientDto, PatientDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as PatientDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3209,26 +2685,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto> {
+    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = modifyTmpPatientsRequestConfig(patientDto = patientDto)
 
-        val localVarResponse = request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
+        return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<PatientDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3262,26 +2724,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier> {
+    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = purgeTmpItemsRequestConfig(requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
+        return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -3316,26 +2764,12 @@ class TmpApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocument {
+    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocument?  {
         val localVariableConfig = replicateToTmpDatabaseRequestConfig(from = from, requestBody = requestBody)
 
-        val localVarResponse = request<kotlin.collections.List<kotlin.String>, ReplicatorDocument>(
+        return request<kotlin.collections.List<kotlin.String>, ReplicatorDocument>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ReplicatorDocument
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

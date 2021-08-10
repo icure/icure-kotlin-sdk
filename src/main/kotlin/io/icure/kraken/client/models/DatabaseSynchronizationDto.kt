@@ -12,35 +12,47 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param source 
  * @param target 
  * @param filter 
  * @param localTarget 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DatabaseSynchronizationDto (
-    @Json(name = "source")
+
+    @field:JsonProperty("source")
     val source: kotlin.String? = null,
-    @Json(name = "target")
+
+    @field:JsonProperty("target")
     val target: kotlin.String? = null,
-    @Json(name = "filter")
+
+    @field:JsonProperty("filter")
     val filter: kotlin.String? = null,
-    @Json(name = "localTarget")
+
+    @field:JsonProperty("localTarget")
     val localTarget: DatabaseSynchronizationDto.LocalTarget? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: base,healthdata,patient
      */
     enum class LocalTarget(val value: kotlin.String) {
-        @Json(name = "base") base("base"),
-        @Json(name = "healthdata") healthdata("healthdata"),
-        @Json(name = "patient") patient("patient");
+        @JsonProperty(value = "base") base("base"),
+        @JsonProperty(value = "healthdata") healthdata("healthdata"),
+        @JsonProperty(value = "patient") patient("patient");
     }
 }
 

@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Financial information (Bank, bank account) used to reimburse the patient.
+ *
  * @param preferredFiiForPartners 
  * @param name 
  * @param key 
@@ -26,23 +30,34 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FinancialInstitutionInformationDto (
-    @Json(name = "preferredFiiForPartners")
+
+    @field:JsonProperty("preferredFiiForPartners")
     val preferredFiiForPartners: kotlin.collections.List<kotlin.String>,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "key")
+
+    @field:JsonProperty("key")
     val key: kotlin.String? = null,
-    @Json(name = "bankAccount")
+
+    @field:JsonProperty("bankAccount")
     val bankAccount: kotlin.String? = null,
-    @Json(name = "bic")
+
+    @field:JsonProperty("bic")
     val bic: kotlin.String? = null,
-    @Json(name = "proxyBankAccount")
+
+    @field:JsonProperty("proxyBankAccount")
     val proxyBankAccount: kotlin.String? = null,
-    @Json(name = "proxyBic")
+
+    @field:JsonProperty("proxyBic")
     val proxyBic: kotlin.String? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 )
 

@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param startHour 
  * @param endHour 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TimeTableHourDto (
-    @Json(name = "startHour")
+
+    @field:JsonProperty("startHour")
     val startHour: kotlin.Long? = null,
-    @Json(name = "endHour")
+
+    @field:JsonProperty("endHour")
     val endHour: kotlin.Long? = null
+
 )
 

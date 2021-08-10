@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param hcPartyId 
  * @param hexString 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PublicKeyDto (
-    @Json(name = "hcPartyId")
+
+    @field:JsonProperty("hcPartyId")
     val hcPartyId: kotlin.String? = null,
-    @Json(name = "hexString")
+
+    @field:JsonProperty("hexString")
     val hexString: kotlin.String? = null
+
 )
 

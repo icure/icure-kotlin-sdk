@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.ReimbursementDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param from 
  * @param to 
@@ -31,50 +35,67 @@ import com.squareup.moshi.Json
  * @param productId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class DmppDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "deliveryEnvironment")
+
+    @field:JsonProperty("deliveryEnvironment")
     val deliveryEnvironment: DmppDto.DeliveryEnvironment? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "codeType")
+
+    @field:JsonProperty("codeType")
     val codeType: DmppDto.CodeType? = null,
-    @Json(name = "price")
+
+    @field:JsonProperty("price")
     val price: kotlin.String? = null,
-    @Json(name = "cheap")
+
+    @field:JsonProperty("cheap")
     val cheap: kotlin.Boolean? = null,
-    @Json(name = "cheapest")
+
+    @field:JsonProperty("cheapest")
     val cheapest: kotlin.Boolean? = null,
-    @Json(name = "reimbursable")
+
+    @field:JsonProperty("reimbursable")
     val reimbursable: kotlin.Boolean? = null,
-    @Json(name = "reimbursements")
+
+    @field:JsonProperty("reimbursements")
     val reimbursements: kotlin.collections.List<ReimbursementDto>? = null,
-    @Json(name = "productId")
+
+    @field:JsonProperty("productId")
     val productId: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: p,a,h,r
      */
     enum class DeliveryEnvironment(val value: kotlin.String) {
-        @Json(name = "P") p("P"),
-        @Json(name = "A") a("A"),
-        @Json(name = "H") h("H"),
-        @Json(name = "R") r("R");
+        @JsonProperty(value = "P") p("P"),
+        @JsonProperty(value = "A") a("A"),
+        @JsonProperty(value = "H") h("H"),
+        @JsonProperty(value = "R") r("R");
     }
     /**
      * 
+     *
      * Values: cNK,pSEUDO
      */
     enum class CodeType(val value: kotlin.String) {
-        @Json(name = "CNK") cNK("CNK"),
-        @Json(name = "PSEUDO") pSEUDO("PSEUDO");
+        @JsonProperty(value = "CNK") cNK("CNK"),
+        @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
     }
 }
 

@@ -16,24 +16,35 @@ import io.icure.kraken.client.models.PartnershipDto
 import io.icure.kraken.client.models.PatientHealthCarePartyDto
 import io.icure.kraken.client.models.ServiceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param services 
  * @param healthElements 
  * @param partnerships 
  * @param patientHealthcareParties 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SumehrContentDto (
-    @Json(name = "services")
+
+    @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto>? = null,
-    @Json(name = "healthElements")
+
+    @field:JsonProperty("healthElements")
     val healthElements: kotlin.collections.List<HealthElementDto>? = null,
-    @Json(name = "partnerships")
+
+    @field:JsonProperty("partnerships")
     val partnerships: kotlin.collections.List<PartnershipDto>? = null,
-    @Json(name = "patientHealthcareParties")
+
+    @field:JsonProperty("patientHealthcareParties")
     val patientHealthcareParties: kotlin.collections.List<PatientHealthCarePartyDto>? = null
+
 )
 

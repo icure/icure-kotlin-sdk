@@ -12,21 +12,31 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param beginMoment 
  * @param endMoment 
  * @param suspensionReason 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SuspensionDto (
-    @Json(name = "beginMoment")
+
+    @field:JsonProperty("beginMoment")
     val beginMoment: kotlin.Long? = null,
-    @Json(name = "endMoment")
+
+    @field:JsonProperty("endMoment")
     val endMoment: kotlin.Long? = null,
-    @Json(name = "suspensionReason")
+
+    @field:JsonProperty("suspensionReason")
     val suspensionReason: kotlin.String? = null
+
 )
 

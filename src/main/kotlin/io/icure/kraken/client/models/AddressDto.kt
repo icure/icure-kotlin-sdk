@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.TelecomDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * This entity represents an Address
+ *
  * @param telecoms List of other contact details available through telecom services, ex: email, phone number, fax, etc.
  * @param addressType The type of place the address represents, ex: home, office, hospital, clinic, etc. 
  * @param descr Descriptive notes about the address
@@ -31,61 +35,77 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AddressDto (
+
     /* List of other contact details available through telecom services, ex: email, phone number, fax, etc. */
-    @Json(name = "telecoms")
+    @field:JsonProperty("telecoms")
     val telecoms: kotlin.collections.List<TelecomDto>,
+
     /* The type of place the address represents, ex: home, office, hospital, clinic, etc.  */
-    @Json(name = "addressType")
+    @field:JsonProperty("addressType")
     val addressType: AddressDto.AddressType? = null,
+
     /* Descriptive notes about the address */
-    @Json(name = "descr")
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null,
+
     /* Street name */
-    @Json(name = "street")
+    @field:JsonProperty("street")
     val street: kotlin.String? = null,
+
     /* Building / house number */
-    @Json(name = "houseNumber")
+    @field:JsonProperty("houseNumber")
     val houseNumber: kotlin.String? = null,
+
     /* Post / PO box number */
-    @Json(name = "postboxNumber")
+    @field:JsonProperty("postboxNumber")
     val postboxNumber: kotlin.String? = null,
+
     /* Postal/PIN/ZIP/Area code */
-    @Json(name = "postalCode")
+    @field:JsonProperty("postalCode")
     val postalCode: kotlin.String? = null,
+
     /* Name of city in the address */
-    @Json(name = "city")
+    @field:JsonProperty("city")
     val city: kotlin.String? = null,
+
     /* Name of state in the Address */
-    @Json(name = "state")
+    @field:JsonProperty("state")
     val state: kotlin.String? = null,
+
     /* Name / code of country in the address */
-    @Json(name = "country")
+    @field:JsonProperty("country")
     val country: kotlin.String? = null,
+
     /* Additional notes */
-    @Json(name = "note")
+    @field:JsonProperty("note")
     val note: kotlin.String? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * The type of place the address represents, ex: home, office, hospital, clinic, etc. 
+     *
      * Values: home,work,vacation,hospital,clinic,hq,other,temporary,postal,diplomatic,reference
      */
     enum class AddressType(val value: kotlin.String) {
-        @Json(name = "home") home("home"),
-        @Json(name = "work") work("work"),
-        @Json(name = "vacation") vacation("vacation"),
-        @Json(name = "hospital") hospital("hospital"),
-        @Json(name = "clinic") clinic("clinic"),
-        @Json(name = "hq") hq("hq"),
-        @Json(name = "other") other("other"),
-        @Json(name = "temporary") temporary("temporary"),
-        @Json(name = "postal") postal("postal"),
-        @Json(name = "diplomatic") diplomatic("diplomatic"),
-        @Json(name = "reference") reference("reference");
+        @JsonProperty(value = "home") home("home"),
+        @JsonProperty(value = "work") work("work"),
+        @JsonProperty(value = "vacation") vacation("vacation"),
+        @JsonProperty(value = "hospital") hospital("hospital"),
+        @JsonProperty(value = "clinic") clinic("clinic"),
+        @JsonProperty(value = "hq") hq("hq"),
+        @JsonProperty(value = "other") other("other"),
+        @JsonProperty(value = "temporary") temporary("temporary"),
+        @JsonProperty(value = "postal") postal("postal"),
+        @JsonProperty(value = "diplomatic") diplomatic("diplomatic"),
+        @JsonProperty(value = "reference") reference("reference");
     }
 }
 

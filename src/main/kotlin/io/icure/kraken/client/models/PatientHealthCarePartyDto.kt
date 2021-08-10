@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.ReferralPeriodDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * One or several periods of care by an hcp for this patient
+ *
  * @param sendFormats Preferred format of exchange for diverse means of communication
  * @param referralPeriods Time periods
  * @param referral 
@@ -25,40 +29,50 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PatientHealthCarePartyDto (
+
     /* Preferred format of exchange for diverse means of communication */
-    @Json(name = "sendFormats")
+    @field:JsonProperty("sendFormats")
     val sendFormats: kotlin.collections.Map<kotlin.String, kotlin.String>,
+
     /* Time periods */
-    @Json(name = "referralPeriods")
+    @field:JsonProperty("referralPeriods")
     val referralPeriods: kotlin.collections.List<ReferralPeriodDto>,
-    @Json(name = "referral")
+
+    @field:JsonProperty("referral")
     @Deprecated(message = "This property is deprecated.")
     val referral: kotlin.Boolean,
+
     /* Type of care/relationship. */
-    @Json(name = "type")
+    @field:JsonProperty("type")
     val type: PatientHealthCarePartyDto.Type? = null,
+
     /* UUID of the hcp. */
-    @Json(name = "healthcarePartyId")
+    @field:JsonProperty("healthcarePartyId")
     val healthcarePartyId: kotlin.String? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * Type of care/relationship.
+     *
      * Values: doctor,referral,medicalhouse,retirementhome,hospital,other,referringphysician,referralHospital
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "doctor") doctor("doctor"),
-        @Json(name = "referral") referral("referral"),
-        @Json(name = "medicalhouse") medicalhouse("medicalhouse"),
-        @Json(name = "retirementhome") retirementhome("retirementhome"),
-        @Json(name = "hospital") hospital("hospital"),
-        @Json(name = "other") other("other"),
-        @Json(name = "referringphysician") referringphysician("referringphysician"),
-        @Json(name = "referralHospital") referralHospital("referralHospital");
+        @JsonProperty(value = "doctor") doctor("doctor"),
+        @JsonProperty(value = "referral") referral("referral"),
+        @JsonProperty(value = "medicalhouse") medicalhouse("medicalhouse"),
+        @JsonProperty(value = "retirementhome") retirementhome("retirementhome"),
+        @JsonProperty(value = "hospital") hospital("hospital"),
+        @JsonProperty(value = "other") other("other"),
+        @JsonProperty(value = "referringphysician") referringphysician("referringphysician"),
+        @JsonProperty(value = "referralHospital") referralHospital("referralHospital");
     }
 }
 

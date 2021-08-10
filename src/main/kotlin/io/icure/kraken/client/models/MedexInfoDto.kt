@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.PatientDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param beginDate 
  * @param endDate 
  * @param patientLanguage 
@@ -33,32 +37,48 @@ import com.squareup.moshi.Json
  * @param diagnosisDescr 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MedexInfoDto (
-    @Json(name = "beginDate")
+
+    @field:JsonProperty("beginDate")
     val beginDate: kotlin.Long,
-    @Json(name = "endDate")
+
+    @field:JsonProperty("endDate")
     val endDate: kotlin.Long,
-    @Json(name = "patientLanguage")
+
+    @field:JsonProperty("patientLanguage")
     val patientLanguage: kotlin.String,
-    @Json(name = "incapacityType")
+
+    @field:JsonProperty("incapacityType")
     val incapacityType: kotlin.String,
-    @Json(name = "incapacityReason")
+
+    @field:JsonProperty("incapacityReason")
     val incapacityReason: kotlin.String,
-    @Json(name = "outOfHomeAllowed")
+
+    @field:JsonProperty("outOfHomeAllowed")
     val outOfHomeAllowed: kotlin.Boolean,
-    @Json(name = "author")
+
+    @field:JsonProperty("author")
     val author: HealthcarePartyDto? = null,
-    @Json(name = "patient")
+
+    @field:JsonProperty("patient")
     val patient: PatientDto? = null,
-    @Json(name = "certificateDate")
+
+    @field:JsonProperty("certificateDate")
     val certificateDate: kotlin.Long? = null,
-    @Json(name = "contentDate")
+
+    @field:JsonProperty("contentDate")
     val contentDate: kotlin.Long? = null,
-    @Json(name = "diagnosisICPC")
+
+    @field:JsonProperty("diagnosisICPC")
     val diagnosisICPC: kotlin.String? = null,
-    @Json(name = "diagnosisICD")
+
+    @field:JsonProperty("diagnosisICD")
     val diagnosisICD: kotlin.String? = null,
-    @Json(name = "diagnosisDescr")
+
+    @field:JsonProperty("diagnosisDescr")
     val diagnosisDescr: kotlin.String? = null
+
 )
 

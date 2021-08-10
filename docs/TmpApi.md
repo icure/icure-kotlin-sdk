@@ -11,6 +11,8 @@ Method | HTTP request | Description
 [**createTmpDatabase**](TmpApi.md#createTmpDatabase) | **POST** /rest/v1/tmp | Create tmp database for current user
 [**createTmpDocument**](TmpApi.md#createTmpDocument) | **POST** /rest/v1/tmp/document | Create a document with the current user
 [**createTmpDocuments**](TmpApi.md#createTmpDocuments) | **POST** /rest/v1/tmp/document/batch | Create a document with the current user
+[**createTmpEntityTemplate**](TmpApi.md#createTmpEntityTemplate) | **POST** /rest/v1/tmp/entityTemplate | Create a entityTemplate with the current user
+[**createTmpEntityTemplates**](TmpApi.md#createTmpEntityTemplates) | **POST** /rest/v1/tmp/entityTemplate/batch | Create a entityTemplate with the current user
 [**createTmpForm**](TmpApi.md#createTmpForm) | **POST** /rest/v1/tmp/form | Create a form with the current user
 [**createTmpForms**](TmpApi.md#createTmpForms) | **POST** /rest/v1/tmp/form/batch | Create a form with the current user
 [**createTmpHealthElement**](TmpApi.md#createTmpHealthElement) | **POST** /rest/v1/tmp/healthElement | Create a healthElement with the current user
@@ -29,6 +31,8 @@ Method | HTTP request | Description
 [**getTmpContacts**](TmpApi.md#getTmpContacts) | **POST** /rest/v1/tmp/contact/get | Get contacts by ids with the current user
 [**getTmpDocument**](TmpApi.md#getTmpDocument) | **GET** /rest/v1/tmp/document/byId/{id} | Get a document by id
 [**getTmpDocuments**](TmpApi.md#getTmpDocuments) | **POST** /rest/v1/tmp/document/get | Get documents by ids with the current user
+[**getTmpEntityTemplate**](TmpApi.md#getTmpEntityTemplate) | **GET** /rest/v1/tmp/entityTemplate/byId/{id} | Get a entityTemplate by id
+[**getTmpEntityTemplates**](TmpApi.md#getTmpEntityTemplates) | **POST** /rest/v1/tmp/entityTemplate/get | Get entityTemplates by ids with the current user
 [**getTmpForm**](TmpApi.md#getTmpForm) | **GET** /rest/v1/tmp/form/byId/{id} | Get a form by id
 [**getTmpForms**](TmpApi.md#getTmpForms) | **POST** /rest/v1/tmp/form/get | Get forms by ids with the current user
 [**getTmpHealthElement**](TmpApi.md#getTmpHealthElement) | **GET** /rest/v1/tmp/healthElement/byId/{id} | Get a healthElement by id
@@ -42,6 +46,7 @@ Method | HTTP request | Description
 [**listTmpClassifications**](TmpApi.md#listTmpClassifications) | **GET** /rest/v1/tmp/classification/list | List classifications with the current user
 [**listTmpContacts**](TmpApi.md#listTmpContacts) | **GET** /rest/v1/tmp/contact/list | List contacts with the current user
 [**listTmpDocuments**](TmpApi.md#listTmpDocuments) | **GET** /rest/v1/tmp/document/list | List documents with the current user
+[**listTmpEntityTemplates**](TmpApi.md#listTmpEntityTemplates) | **GET** /rest/v1/tmp/entityTemplate/list | List entityTemplates with the current user
 [**listTmpForms**](TmpApi.md#listTmpForms) | **GET** /rest/v1/tmp/form/list | List forms with the current user
 [**listTmpHealthElements**](TmpApi.md#listTmpHealthElements) | **GET** /rest/v1/tmp/healthElement/list | List healthElements with the current user
 [**listTmpInvoices**](TmpApi.md#listTmpInvoices) | **GET** /rest/v1/tmp/invoice/list | List invoices with the current user
@@ -53,6 +58,8 @@ Method | HTTP request | Description
 [**modifyTmpContacts**](TmpApi.md#modifyTmpContacts) | **PUT** /rest/v1/tmp/contact/batch | Modify a batch of healthcare elements
 [**modifyTmpDocument**](TmpApi.md#modifyTmpDocument) | **PUT** /rest/v1/tmp/document | Modify a document
 [**modifyTmpDocuments**](TmpApi.md#modifyTmpDocuments) | **PUT** /rest/v1/tmp/document/batch | Modify a batch of healthcare elements
+[**modifyTmpEntityTemplate**](TmpApi.md#modifyTmpEntityTemplate) | **PUT** /rest/v1/tmp/entityTemplate | Modify a entityTemplate
+[**modifyTmpEntityTemplates**](TmpApi.md#modifyTmpEntityTemplates) | **PUT** /rest/v1/tmp/entityTemplate/batch | Modify a batch of healthcare elements
 [**modifyTmpForm**](TmpApi.md#modifyTmpForm) | **PUT** /rest/v1/tmp/form | Modify a form
 [**modifyTmpForms**](TmpApi.md#modifyTmpForms) | **PUT** /rest/v1/tmp/form/batch | Modify a batch of healthcare elements
 [**modifyTmpHealthElement**](TmpApi.md#modifyTmpHealthElement) | **PUT** /rest/v1/tmp/healthElement | Modify a healthElement
@@ -400,6 +407,106 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createTmpEntityTemplate"></a>
+# **createTmpEntityTemplate**
+> EntityTemplateDto createTmpEntityTemplate(entityTemplateDto)
+
+Create a entityTemplate with the current user
+
+Returns an instance of created entityTemplate.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+try {
+    val result : EntityTemplateDto = apiInstance.createTmpEntityTemplate(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#createTmpEntityTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#createTmpEntityTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**EntityTemplateDto**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="createTmpEntityTemplates"></a>
+# **createTmpEntityTemplates**
+> kotlin.collections.List&lt;EntityTemplateDto&gt; createTmpEntityTemplates(entityTemplateDto)
+
+Create a entityTemplate with the current user
+
+Returns an instance of created entityTemplate.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+try {
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.createTmpEntityTemplates(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#createTmpEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#createTmpEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 
@@ -1309,6 +1416,106 @@ Configure basicScheme:
  - **Content-Type**: application/json
  - **Accept**: */*
 
+<a name="getTmpEntityTemplate"></a>
+# **getTmpEntityTemplate**
+> EntityTemplateDto getTmpEntityTemplate(id)
+
+Get a entityTemplate by id
+
+Returns an instance of entityTemplate.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val id : kotlin.String = id_example // kotlin.String | 
+try {
+    val result : EntityTemplateDto = apiInstance.getTmpEntityTemplate(id)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#getTmpEntityTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#getTmpEntityTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **kotlin.String**|  |
+
+### Return type
+
+[**EntityTemplateDto**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+<a name="getTmpEntityTemplates"></a>
+# **getTmpEntityTemplates**
+> kotlin.collections.List&lt;EntityTemplateDto&gt; getTmpEntityTemplates(requestBody)
+
+Get entityTemplates by ids with the current user
+
+Returns an instance of created entityTemplate.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+try {
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.getTmpEntityTemplates(requestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#getTmpEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#getTmpEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **requestBody** | [**kotlin.collections.List&lt;kotlin.String&gt;**](kotlin.String.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
 <a name="getTmpForm"></a>
 # **getTmpForm**
 > FormDto getTmpForm(id)
@@ -1965,6 +2172,58 @@ Configure basicScheme:
  - **Content-Type**: Not defined
  - **Accept**: */*
 
+<a name="listTmpEntityTemplates"></a>
+# **listTmpEntityTemplates**
+> PaginatedListEntityTemplateDto listTmpEntityTemplates(firstEntityTemplateId, pageSize)
+
+List entityTemplates with the current user
+
+Returns paginated entityTemplates.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val firstEntityTemplateId : kotlin.String = firstEntityTemplateId_example // kotlin.String | 
+val pageSize : kotlin.Int = 56 // kotlin.Int | 
+try {
+    val result : PaginatedListEntityTemplateDto = apiInstance.listTmpEntityTemplates(firstEntityTemplateId, pageSize)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#listTmpEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#listTmpEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **firstEntityTemplateId** | **kotlin.String**|  | [optional]
+ **pageSize** | **kotlin.Int**|  | [optional]
+
+### Return type
+
+[**PaginatedListEntityTemplateDto**](PaginatedListEntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
 <a name="listTmpForms"></a>
 # **listTmpForms**
 > PaginatedListFormDto listTmpForms(firstFormId, pageSize)
@@ -2512,6 +2771,106 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyTmpEntityTemplate"></a>
+# **modifyTmpEntityTemplate**
+> EntityTemplateDto modifyTmpEntityTemplate(entityTemplateDto)
+
+Modify a entityTemplate
+
+Returns the modified entityTemplate.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+try {
+    val result : EntityTemplateDto = apiInstance.modifyTmpEntityTemplate(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#modifyTmpEntityTemplate")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#modifyTmpEntityTemplate")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**EntityTemplateDto**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**EntityTemplateDto**](EntityTemplateDto.md)
+
+### Authorization
+
+
+Configure basicScheme:
+    ApiClient.username = ""
+    ApiClient.password = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+<a name="modifyTmpEntityTemplates"></a>
+# **modifyTmpEntityTemplates**
+> kotlin.collections.List&lt;EntityTemplateDto&gt; modifyTmpEntityTemplates(entityTemplateDto)
+
+Modify a batch of healthcare elements
+
+Returns the modified healthcare elements.
+
+### Example
+```kotlin
+// Import classes:
+//import io.icure.kraken.client.infrastructure.*
+//import io.icure.kraken.client.models.*
+
+val apiInstance = TmpApi()
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+try {
+    val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.modifyTmpEntityTemplates(entityTemplateDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling TmpApi#modifyTmpEntityTemplates")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling TmpApi#modifyTmpEntityTemplates")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **entityTemplateDto** | [**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)|  |
+
+### Return type
+
+[**kotlin.collections.List&lt;EntityTemplateDto&gt;**](EntityTemplateDto.md)
 
 ### Authorization
 

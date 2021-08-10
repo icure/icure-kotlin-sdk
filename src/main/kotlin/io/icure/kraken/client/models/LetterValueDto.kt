@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param letter 
  * @param index 
  * @param coefficient 
  * @param value 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class LetterValueDto (
-    @Json(name = "letter")
+
+    @field:JsonProperty("letter")
     val letter: kotlin.String? = null,
-    @Json(name = "index")
+
+    @field:JsonProperty("index")
     val index: kotlin.String? = null,
-    @Json(name = "coefficient")
+
+    @field:JsonProperty("coefficient")
     val coefficient: kotlin.Double? = null,
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: kotlin.Double? = null
+
 )
 

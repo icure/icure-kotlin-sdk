@@ -17,10 +17,14 @@ import io.icure.kraken.client.models.CompanyDto
 import io.icure.kraken.client.models.SamTextDto
 import io.icure.kraken.client.models.VmpStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param blackTriangle 
  * @param ampps 
@@ -41,62 +45,85 @@ import com.squareup.moshi.Json
  * @param prescriptionName 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AmpDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "blackTriangle")
+
+    @field:JsonProperty("blackTriangle")
     val blackTriangle: kotlin.Boolean,
-    @Json(name = "ampps")
+
+    @field:JsonProperty("ampps")
     val ampps: kotlin.collections.List<AmppDto>,
-    @Json(name = "components")
+
+    @field:JsonProperty("components")
     val components: kotlin.collections.List<AmpComponentDto>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "vmp")
+
+    @field:JsonProperty("vmp")
     val vmp: VmpStubDto? = null,
-    @Json(name = "officialName")
+
+    @field:JsonProperty("officialName")
     val officialName: kotlin.String? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: AmpDto.Status? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "medicineType")
+
+    @field:JsonProperty("medicineType")
     val medicineType: AmpDto.MedicineType? = null,
-    @Json(name = "company")
+
+    @field:JsonProperty("company")
     val company: CompanyDto? = null,
-    @Json(name = "abbreviatedName")
+
+    @field:JsonProperty("abbreviatedName")
     val abbreviatedName: SamTextDto? = null,
-    @Json(name = "proprietarySuffix")
+
+    @field:JsonProperty("proprietarySuffix")
     val proprietarySuffix: SamTextDto? = null,
-    @Json(name = "prescriptionName")
+
+    @field:JsonProperty("prescriptionName")
     val prescriptionName: SamTextDto? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: aUTHORIZED,sUSPENDED,rEVOKED
      */
     enum class Status(val value: kotlin.String) {
-        @Json(name = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
-        @Json(name = "SUSPENDED") sUSPENDED("SUSPENDED"),
-        @Json(name = "REVOKED") rEVOKED("REVOKED");
+        @JsonProperty(value = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
+        @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
+        @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
     }
     /**
      * 
+     *
      * Values: aLLOPATHIC,hOMEOPATHIC
      */
     enum class MedicineType(val value: kotlin.String) {
-        @Json(name = "ALLOPATHIC") aLLOPATHIC("ALLOPATHIC"),
-        @Json(name = "HOMEOPATHIC") hOMEOPATHIC("HOMEOPATHIC");
+        @JsonProperty(value = "ALLOPATHIC") aLLOPATHIC("ALLOPATHIC"),
+        @JsonProperty(value = "HOMEOPATHIC") hOMEOPATHIC("HOMEOPATHIC");
     }
 }
 

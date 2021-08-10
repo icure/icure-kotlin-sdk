@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param ids 
  * @param time 
  * @param status 
  * @param userId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MessagesReadStatusUpdate (
-    @Json(name = "ids")
+
+    @field:JsonProperty("ids")
     val ids: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "time")
+
+    @field:JsonProperty("time")
     val time: kotlin.Long? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.Boolean? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null
+
 )
 

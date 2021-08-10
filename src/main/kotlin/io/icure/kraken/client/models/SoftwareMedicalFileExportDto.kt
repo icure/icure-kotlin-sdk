@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param secretForeignKeys 
  * @param exportAsPMF 
  * @param comment 
@@ -23,16 +27,24 @@ import com.squareup.moshi.Json
  * @param softwareVersion 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class SoftwareMedicalFileExportDto (
-    @Json(name = "secretForeignKeys")
+
+    @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.List<kotlin.String>,
-    @Json(name = "exportAsPMF")
+
+    @field:JsonProperty("exportAsPMF")
     val exportAsPMF: kotlin.Boolean,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null,
-    @Json(name = "softwareName")
+
+    @field:JsonProperty("softwareName")
     val softwareName: kotlin.String? = null,
-    @Json(name = "softwareVersion")
+
+    @field:JsonProperty("softwareVersion")
     val softwareVersion: kotlin.String? = null
+
 )
 

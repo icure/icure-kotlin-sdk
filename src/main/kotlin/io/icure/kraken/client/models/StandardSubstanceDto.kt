@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.SamTextDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param code 
  * @param type 
  * @param name 
@@ -24,28 +28,37 @@ import com.squareup.moshi.Json
  * @param url 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class StandardSubstanceDto (
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: StandardSubstanceDto.Type? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "definition")
+
+    @field:JsonProperty("definition")
     val definition: SamTextDto? = null,
-    @Json(name = "url")
+
+    @field:JsonProperty("url")
     val url: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: cAS,dMD,eDQM,sNOMEDCT
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "CAS") cAS("CAS"),
-        @Json(name = "DM_D") dMD("DM_D"),
-        @Json(name = "EDQM") eDQM("EDQM"),
-        @Json(name = "SNOMED_CT") sNOMEDCT("SNOMED_CT");
+        @JsonProperty(value = "CAS") cAS("CAS"),
+        @JsonProperty(value = "DM_D") dMD("DM_D"),
+        @JsonProperty(value = "EDQM") eDQM("EDQM"),
+        @JsonProperty(value = "SNOMED_CT") sNOMEDCT("SNOMED_CT");
     }
 }
 

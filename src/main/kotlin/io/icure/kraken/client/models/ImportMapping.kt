@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStub
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param label 
  * @param tags 
  * @param lifecycle 
@@ -24,16 +28,24 @@ import com.squareup.moshi.Json
  * @param cdLocal 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ImportMapping (
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "tags")
+
+    @field:JsonProperty("tags")
     val tags: kotlin.collections.List<CodeStub>,
-    @Json(name = "lifecycle")
+
+    @field:JsonProperty("lifecycle")
     val lifecycle: kotlin.String? = null,
-    @Json(name = "content")
+
+    @field:JsonProperty("content")
     val content: kotlin.String? = null,
-    @Json(name = "cdLocal")
+
+    @field:JsonProperty("cdLocal")
     val cdLocal: kotlin.String? = null
+
 )
 

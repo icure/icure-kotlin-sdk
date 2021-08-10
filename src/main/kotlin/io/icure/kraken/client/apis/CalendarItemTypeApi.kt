@@ -11,22 +11,25 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.CalendarItemTypeDto
 import io.icure.kraken.client.models.DocIdentifier
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -45,26 +48,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto {
+    suspend fun createCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto?  {
         val localVariableConfig = createCalendarItemTypeRequestConfig(calendarItemTypeDto = calendarItemTypeDto)
 
-        val localVarResponse = request<CalendarItemTypeDto, CalendarItemTypeDto>(
+        return request<CalendarItemTypeDto, CalendarItemTypeDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as CalendarItemTypeDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -98,26 +87,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteCalendarItemType(calendarItemTypeIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteCalendarItemType(calendarItemTypeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteCalendarItemTypeRequestConfig(calendarItemTypeIds = calendarItemTypeIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -151,26 +126,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemType(calendarItemTypeId: kotlin.String) : CalendarItemTypeDto {
+    suspend fun getCalendarItemType(calendarItemTypeId: kotlin.String) : CalendarItemTypeDto?  {
         val localVariableConfig = getCalendarItemTypeRequestConfig(calendarItemTypeId = calendarItemTypeId)
 
-        val localVarResponse = request<Unit, CalendarItemTypeDto>(
+        return request<Unit, CalendarItemTypeDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as CalendarItemTypeDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -203,26 +164,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemTypes() : kotlin.collections.List<CalendarItemTypeDto> {
+    suspend fun getCalendarItemTypes() : kotlin.collections.List<CalendarItemTypeDto>?  {
         val localVariableConfig = getCalendarItemTypesRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
+        return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<CalendarItemTypeDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -254,26 +201,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemTypesIncludeDeleted() : kotlin.collections.List<CalendarItemTypeDto> {
+    suspend fun getCalendarItemTypesIncludeDeleted() : kotlin.collections.List<CalendarItemTypeDto>?  {
         val localVariableConfig = getCalendarItemTypesIncludeDeletedRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
+        return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<CalendarItemTypeDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -306,26 +239,12 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath) : ApiClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto {
+    suspend fun modifyCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto?  {
         val localVariableConfig = modifyCalendarItemTypeRequestConfig(calendarItemTypeDto = calendarItemTypeDto)
 
-        val localVarResponse = request<CalendarItemTypeDto, CalendarItemTypeDto>(
+        return request<CalendarItemTypeDto, CalendarItemTypeDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as CalendarItemTypeDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

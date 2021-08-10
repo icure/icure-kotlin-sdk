@@ -12,47 +12,59 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * This entity represents available contact details of a user, reachable by telecom methods
+ *
  * @param telecomType The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc.
  * @param telecomNumber 
  * @param telecomDescription 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class TelecomDto (
+
     /* The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc. */
-    @Json(name = "telecomType")
+    @field:JsonProperty("telecomType")
     val telecomType: TelecomDto.TelecomType? = null,
-    @Json(name = "telecomNumber")
+
+    @field:JsonProperty("telecomNumber")
     val telecomNumber: kotlin.String? = null,
-    @Json(name = "telecomDescription")
+
+    @field:JsonProperty("telecomDescription")
     val telecomDescription: kotlin.String? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc.
+     *
      * Values: mobile,phone,email,fax,skype,im,medibridge,ehealthbox,apicrypt,web,print,disk,other
      */
     enum class TelecomType(val value: kotlin.String) {
-        @Json(name = "mobile") mobile("mobile"),
-        @Json(name = "phone") phone("phone"),
-        @Json(name = "email") email("email"),
-        @Json(name = "fax") fax("fax"),
-        @Json(name = "skype") skype("skype"),
-        @Json(name = "im") im("im"),
-        @Json(name = "medibridge") medibridge("medibridge"),
-        @Json(name = "ehealthbox") ehealthbox("ehealthbox"),
-        @Json(name = "apicrypt") apicrypt("apicrypt"),
-        @Json(name = "web") web("web"),
-        @Json(name = "print") print("print"),
-        @Json(name = "disk") disk("disk"),
-        @Json(name = "other") other("other");
+        @JsonProperty(value = "mobile") mobile("mobile"),
+        @JsonProperty(value = "phone") phone("phone"),
+        @JsonProperty(value = "email") email("email"),
+        @JsonProperty(value = "fax") fax("fax"),
+        @JsonProperty(value = "skype") skype("skype"),
+        @JsonProperty(value = "im") im("im"),
+        @JsonProperty(value = "medibridge") medibridge("medibridge"),
+        @JsonProperty(value = "ehealthbox") ehealthbox("ehealthbox"),
+        @JsonProperty(value = "apicrypt") apicrypt("apicrypt"),
+        @JsonProperty(value = "web") web("web"),
+        @JsonProperty(value = "print") print("print"),
+        @JsonProperty(value = "disk") disk("disk"),
+        @JsonProperty(value = "other") other("other");
     }
 }
 

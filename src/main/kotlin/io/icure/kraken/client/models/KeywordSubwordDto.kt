@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param value 
  * @param subWords 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class KeywordSubwordDto (
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: kotlin.String? = null,
-    @Json(name = "subWords")
+
+    @field:JsonProperty("subWords")
     val subWords: kotlin.collections.List<KeywordSubwordDto>? = null
+
 )
 

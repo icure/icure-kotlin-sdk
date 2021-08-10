@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.InvoiceItem
 import io.icure.kraken.client.models.PatientDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param items 
  * @param ignorePrescriptionDate 
  * @param hospitalisedPatient 
@@ -33,45 +37,62 @@ import com.squareup.moshi.Json
  * @param relatedBatchYearMonth 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EfactInvoice (
-    @Json(name = "items")
+
+    @field:JsonProperty("items")
     val items: kotlin.collections.List<InvoiceItem>,
-    @Json(name = "ignorePrescriptionDate")
+
+    @field:JsonProperty("ignorePrescriptionDate")
     val ignorePrescriptionDate: kotlin.Boolean,
-    @Json(name = "hospitalisedPatient")
+
+    @field:JsonProperty("hospitalisedPatient")
     val hospitalisedPatient: kotlin.Boolean,
-    @Json(name = "creditNote")
+
+    @field:JsonProperty("creditNote")
     val creditNote: kotlin.Boolean,
-    @Json(name = "patient")
+
+    @field:JsonProperty("patient")
     val patient: PatientDto? = null,
-    @Json(name = "ioCode")
+
+    @field:JsonProperty("ioCode")
     val ioCode: kotlin.String? = null,
-    @Json(name = "reason")
+
+    @field:JsonProperty("reason")
     val reason: EfactInvoice.Reason? = null,
-    @Json(name = "invoiceRef")
+
+    @field:JsonProperty("invoiceRef")
     val invoiceRef: kotlin.String? = null,
-    @Json(name = "invoiceNumber")
+
+    @field:JsonProperty("invoiceNumber")
     val invoiceNumber: kotlin.Long? = null,
-    @Json(name = "relatedInvoiceIoCode")
+
+    @field:JsonProperty("relatedInvoiceIoCode")
     val relatedInvoiceIoCode: kotlin.String? = null,
-    @Json(name = "relatedInvoiceNumber")
+
+    @field:JsonProperty("relatedInvoiceNumber")
     val relatedInvoiceNumber: kotlin.Long? = null,
-    @Json(name = "relatedBatchSendNumber")
+
+    @field:JsonProperty("relatedBatchSendNumber")
     val relatedBatchSendNumber: kotlin.Long? = null,
-    @Json(name = "relatedBatchYearMonth")
+
+    @field:JsonProperty("relatedBatchYearMonth")
     val relatedBatchYearMonth: kotlin.Long? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: chimiotherapy,professionalDisease,workAccident,accident,other
      */
     enum class Reason(val value: kotlin.String) {
-        @Json(name = "Chimiotherapy") chimiotherapy("Chimiotherapy"),
-        @Json(name = "ProfessionalDisease") professionalDisease("ProfessionalDisease"),
-        @Json(name = "WorkAccident") workAccident("WorkAccident"),
-        @Json(name = "Accident") accident("Accident"),
-        @Json(name = "Other") other("Other");
+        @JsonProperty(value = "Chimiotherapy") chimiotherapy("Chimiotherapy"),
+        @JsonProperty(value = "ProfessionalDisease") professionalDisease("ProfessionalDisease"),
+        @JsonProperty(value = "WorkAccident") workAccident("WorkAccident"),
+        @JsonProperty(value = "Accident") accident("Accident"),
+        @JsonProperty(value = "Other") other("Other");
     }
 }
 

@@ -12,18 +12,27 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param startKey 
  * @param startKeyDocId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PaginatedDocumentKeyIdPairObject (
-    @Json(name = "startKey")
+
+    @field:JsonProperty("startKey")
     val startKey: kotlin.Any? = null,
-    @Json(name = "startKeyDocId")
+
+    @field:JsonProperty("startKeyDocId")
     val startKeyDocId: kotlin.String? = null
+
 )
 

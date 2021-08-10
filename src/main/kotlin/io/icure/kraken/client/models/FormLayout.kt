@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.FormSection
 import io.icure.kraken.client.models.Tag
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param name 
  * @param width 
  * @param height 
@@ -29,24 +33,36 @@ import com.squareup.moshi.Json
  * @param importedServiceXPaths 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormLayout (
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "width")
+
+    @field:JsonProperty("width")
     val width: kotlin.Double? = null,
-    @Json(name = "height")
+
+    @field:JsonProperty("height")
     val height: kotlin.Double? = null,
-    @Json(name = "descr")
+
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null,
-    @Json(name = "tag")
+
+    @field:JsonProperty("tag")
     val tag: Tag? = null,
-    @Json(name = "guid")
+
+    @field:JsonProperty("guid")
     val guid: kotlin.String? = null,
-    @Json(name = "group")
+
+    @field:JsonProperty("group")
     val group: kotlin.String? = null,
-    @Json(name = "sections")
+
+    @field:JsonProperty("sections")
     val sections: kotlin.collections.List<FormSection>? = null,
-    @Json(name = "importedServiceXPaths")
+
+    @field:JsonProperty("importedServiceXPaths")
     val importedServiceXPaths: kotlin.collections.List<kotlin.String>? = null
+
 )
 

@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Values of measurements recorded. Fields included would be the value, permissible range (min. and max.), severity, unit of measurement, etc 
+ *
  * @param value 
  * @param min 
  * @param max 
@@ -29,26 +33,39 @@ import com.squareup.moshi.Json
  * @param comment 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MeasureDto (
-    @Json(name = "value")
+
+    @field:JsonProperty("value")
     val value: kotlin.Double? = null,
-    @Json(name = "min")
+
+    @field:JsonProperty("min")
     val min: kotlin.Double? = null,
-    @Json(name = "max")
+
+    @field:JsonProperty("max")
     val max: kotlin.Double? = null,
-    @Json(name = "ref")
+
+    @field:JsonProperty("ref")
     val ref: kotlin.Double? = null,
-    @Json(name = "severity")
+
+    @field:JsonProperty("severity")
     val severity: kotlin.Int? = null,
-    @Json(name = "severityCode")
+
+    @field:JsonProperty("severityCode")
     val severityCode: kotlin.String? = null,
-    @Json(name = "evolution")
+
+    @field:JsonProperty("evolution")
     val evolution: kotlin.Int? = null,
-    @Json(name = "unit")
+
+    @field:JsonProperty("unit")
     val unit: kotlin.String? = null,
-    @Json(name = "unitCodes")
+
+    @field:JsonProperty("unitCodes")
     val unitCodes: kotlin.collections.Set<CodeStubDto>? = null,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null
+
 )
 

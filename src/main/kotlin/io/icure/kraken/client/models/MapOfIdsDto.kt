@@ -12,15 +12,23 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param mapOfIds 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MapOfIdsDto (
-    @Json(name = "mapOfIds")
+
+    @field:JsonProperty("mapOfIds")
     val mapOfIds: kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>
+
 )
 

@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param color 
  * @param durationInMinutes 
  * @param externalRef 
@@ -25,20 +29,30 @@ import com.squareup.moshi.Json
  * @param subjectByLanguage 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MikronoAppointmentTypeRestDto (
-    @Json(name = "color")
+
+    @field:JsonProperty("color")
     val color: kotlin.String? = null,
-    @Json(name = "durationInMinutes")
+
+    @field:JsonProperty("durationInMinutes")
     val durationInMinutes: kotlin.Int? = null,
-    @Json(name = "externalRef")
+
+    @field:JsonProperty("externalRef")
     val externalRef: kotlin.String? = null,
-    @Json(name = "mikronoId")
+
+    @field:JsonProperty("mikronoId")
     val mikronoId: kotlin.String? = null,
-    @Json(name = "docIds")
+
+    @field:JsonProperty("docIds")
     val docIds: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "otherInfos")
+
+    @field:JsonProperty("otherInfos")
     val otherInfos: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
-    @Json(name = "subjectByLanguage")
+
+    @field:JsonProperty("subjectByLanguage")
     val subjectByLanguage: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+
 )
 

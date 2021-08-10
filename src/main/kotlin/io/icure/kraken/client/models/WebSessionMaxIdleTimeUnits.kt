@@ -12,21 +12,31 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param durationEstimated 
  * @param dateBased 
  * @param timeBased 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class WebSessionMaxIdleTimeUnits (
-    @Json(name = "durationEstimated")
+
+    @field:JsonProperty("durationEstimated")
     val durationEstimated: kotlin.Boolean? = null,
-    @Json(name = "dateBased")
+
+    @field:JsonProperty("dateBased")
     val dateBased: kotlin.Boolean? = null,
-    @Json(name = "timeBased")
+
+    @field:JsonProperty("timeBased")
     val timeBased: kotlin.Boolean? = null
+
 )
 

@@ -18,10 +18,14 @@ import io.icure.kraken.client.models.VmpGroupStubDto
 import io.icure.kraken.client.models.VtmDto
 import io.icure.kraken.client.models.WadaDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param rev 
  * @param deletionDate hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called.
@@ -37,33 +41,49 @@ import com.squareup.moshi.Json
  * @param commentedClassifications 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class VmpDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "vmpGroup")
+
+    @field:JsonProperty("vmpGroup")
     val vmpGroup: VmpGroupStubDto? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "abbreviation")
+
+    @field:JsonProperty("abbreviation")
     val abbreviation: SamTextDto? = null,
-    @Json(name = "vtm")
+
+    @field:JsonProperty("vtm")
     val vtm: VtmDto? = null,
-    @Json(name = "wadas")
+
+    @field:JsonProperty("wadas")
     val wadas: kotlin.collections.List<WadaDto>? = null,
-    @Json(name = "components")
+
+    @field:JsonProperty("components")
     val components: kotlin.collections.List<VmpComponentDto>? = null,
-    @Json(name = "commentedClassifications")
+
+    @field:JsonProperty("commentedClassifications")
     val commentedClassifications: kotlin.collections.List<CommentedClassificationDto>? = null
+
 )
 

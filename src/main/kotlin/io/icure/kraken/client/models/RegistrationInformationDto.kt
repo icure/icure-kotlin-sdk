@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param firstName 
  * @param lastName 
  * @param emailAddress 
  * @param userOptions 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RegistrationInformationDto (
-    @Json(name = "firstName")
+
+    @field:JsonProperty("firstName")
     val firstName: kotlin.String,
-    @Json(name = "lastName")
+
+    @field:JsonProperty("lastName")
     val lastName: kotlin.String,
-    @Json(name = "emailAddress")
+
+    @field:JsonProperty("emailAddress")
     val emailAddress: kotlin.String,
-    @Json(name = "userOptions")
+
+    @field:JsonProperty("userOptions")
     val userOptions: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+
 )
 

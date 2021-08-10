@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.ReplicationStats
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param createTarget 
  * @param continuous 
@@ -31,30 +35,45 @@ import com.squareup.moshi.Json
  * @param revHistory 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReplicatorDocument (
-    @Json(name = "_id")
+
+    @field:JsonProperty("_id")
     val id: kotlin.String,
-    @Json(name = "create_target")
+
+    @field:JsonProperty("create_target")
     val createTarget: kotlin.Boolean,
-    @Json(name = "continuous")
+
+    @field:JsonProperty("continuous")
     val continuous: kotlin.Boolean,
-    @Json(name = "_rev")
+
+    @field:JsonProperty("_rev")
     val rev: kotlin.String? = null,
-    @Json(name = "source")
+
+    @field:JsonProperty("source")
     val source: kotlin.String? = null,
-    @Json(name = "target")
+
+    @field:JsonProperty("target")
     val target: kotlin.String? = null,
-    @Json(name = "owner")
+
+    @field:JsonProperty("owner")
     val owner: kotlin.String? = null,
-    @Json(name = "doc_ids")
+
+    @field:JsonProperty("doc_ids")
     val docIds: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "_replication_state")
+
+    @field:JsonProperty("_replication_state")
     val replicationState: kotlin.String? = null,
-    @Json(name = "_replication_state_time")
+
+    @field:JsonProperty("_replication_state_time")
     val replicationStateTime: kotlin.String? = null,
-    @Json(name = "_replication_stats")
+
+    @field:JsonProperty("_replication_stats")
     val replicationStats: ReplicationStats? = null,
-    @Json(name = "rev_history")
+
+    @field:JsonProperty("rev_history")
     val revHistory: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+
 )
 

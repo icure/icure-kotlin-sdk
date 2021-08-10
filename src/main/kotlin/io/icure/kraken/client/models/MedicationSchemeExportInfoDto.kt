@@ -14,24 +14,35 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.ServiceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param secretForeignKeys 
  * @param services 
  * @param recipient 
  * @param comment 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MedicationSchemeExportInfoDto (
-    @Json(name = "secretForeignKeys")
+
+    @field:JsonProperty("secretForeignKeys")
     val secretForeignKeys: kotlin.collections.List<kotlin.String>,
-    @Json(name = "services")
+
+    @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto>,
-    @Json(name = "recipient")
+
+    @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,
-    @Json(name = "comment")
+
+    @field:JsonProperty("comment")
     val comment: kotlin.String? = null
+
 )
 

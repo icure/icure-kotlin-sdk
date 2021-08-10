@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param entity 
  * @param rev 
@@ -28,27 +32,40 @@ import com.squareup.moshi.Json
  * @param defaultTemplate 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EntityTemplateDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String,
-    @Json(name = "entity")
+
+    @field:JsonProperty("entity")
     val entity: kotlin.collections.List<kotlin.collections.Map<kotlin.String, kotlin.Any>>,
-    @Json(name = "rev")
+
+    @field:JsonProperty("rev")
     val rev: kotlin.String? = null,
+
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
-    @Json(name = "deletionDate")
+    @field:JsonProperty("deletionDate")
     val deletionDate: kotlin.Long? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
-    @Json(name = "descr")
+
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null,
-    @Json(name = "keywords")
+
+    @field:JsonProperty("keywords")
     val keywords: kotlin.collections.Set<kotlin.String>? = null,
-    @Json(name = "entityType")
+
+    @field:JsonProperty("entityType")
     val entityType: kotlin.String? = null,
-    @Json(name = "subType")
+
+    @field:JsonProperty("subType")
     val subType: kotlin.String? = null,
-    @Json(name = "defaultTemplate")
+
+    @field:JsonProperty("defaultTemplate")
     val defaultTemplate: kotlin.Boolean? = null
+
 )
 

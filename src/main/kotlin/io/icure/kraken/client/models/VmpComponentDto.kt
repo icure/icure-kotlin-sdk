@@ -16,10 +16,14 @@ import io.icure.kraken.client.models.SamTextDto
 import io.icure.kraken.client.models.VirtualFormDto
 import io.icure.kraken.client.models.VirtualIngredientDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param code 
  * @param virtualForm 
  * @param routeOfAdministrations 
@@ -28,18 +32,27 @@ import com.squareup.moshi.Json
  * @param virtualIngredients 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class VmpComponentDto (
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "virtualForm")
+
+    @field:JsonProperty("virtualForm")
     val virtualForm: VirtualFormDto? = null,
-    @Json(name = "routeOfAdministrations")
+
+    @field:JsonProperty("routeOfAdministrations")
     val routeOfAdministrations: kotlin.collections.List<RouteOfAdministrationDto>? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: SamTextDto? = null,
-    @Json(name = "phaseNumber")
+
+    @field:JsonProperty("phaseNumber")
     val phaseNumber: kotlin.Int? = null,
-    @Json(name = "virtualIngredients")
+
+    @field:JsonProperty("virtualIngredients")
     val virtualIngredients: kotlin.collections.List<VirtualIngredientDto>? = null
+
 )
 

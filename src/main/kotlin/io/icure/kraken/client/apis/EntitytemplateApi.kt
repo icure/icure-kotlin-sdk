@@ -11,23 +11,25 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.EntityTemplate
 import io.icure.kraken.client.models.EntityTemplateDto
+
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -46,26 +48,12 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto {
+    suspend fun createEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = createEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
-        val localVarResponse = request<EntityTemplateDto, EntityTemplateDto>(
+        return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as EntityTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -89,6 +77,45 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     }
 
     /**
+    * Create a batch of entityTemplates
+    * Returns the modified entityTemplates.
+    * @param entityTemplateDto  
+    * @return kotlin.collections.List<EntityTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun createEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+        val localVariableConfig = createEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation createEntityTemplates
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun createEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v1/entitytemplate/batch",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
     * Delete entity templates
     * 
     * @param entityTemplateIds  
@@ -99,26 +126,12 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteEntityTemplate(entityTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier> {
+    suspend fun deleteEntityTemplate(entityTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteEntityTemplateRequestConfig(entityTemplateIds = entityTemplateIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<DocIdentifier>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -147,33 +160,19 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     * @param type  
     * @param searchString  (optional)
     * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplate>
+    * @return kotlin.collections.List<EntityTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllEntityTemplates(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplate> {
+    suspend fun findAllEntityTemplates(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findAllEntityTemplatesRequestConfig(type = type, searchString = searchString, includeEntities = includeEntities)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<EntityTemplate>>(
+        return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<EntityTemplate>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -212,33 +211,19 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     * @param type  
     * @param keyword  
     * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplate>
+    * @return kotlin.collections.List<EntityTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplate> {
+    suspend fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findAllEntityTemplatesByKeywordRequestConfig(type = type, keyword = keyword, includeEntities = includeEntities)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<EntityTemplate>>(
+        return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<EntityTemplate>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -275,33 +260,19 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     * @param type  
     * @param searchString  (optional)
     * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplate>
+    * @return kotlin.collections.List<EntityTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findEntityTemplates(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplate> {
+    suspend fun findEntityTemplates(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findEntityTemplatesRequestConfig(userId = userId, type = type, searchString = searchString, includeEntities = includeEntities)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<EntityTemplate>>(
+        return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<EntityTemplate>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -342,33 +313,19 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     * @param type  
     * @param keyword  
     * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplate>
+    * @return kotlin.collections.List<EntityTemplateDto>
     * @throws UnsupportedOperationException If the API returns an informational or redirection response
     * @throws ClientException If the API returns a client error response
     * @throws ServerException If the API returns a server error response
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplate> {
+    suspend fun findEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findEntityTemplatesByKeywordRequestConfig(userId = userId, type = type, keyword = keyword, includeEntities = includeEntities)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<EntityTemplate>>(
+        return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<EntityTemplate>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -410,26 +367,12 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getEntityTemplate(entityTemplateId: kotlin.String) : EntityTemplateDto {
+    suspend fun getEntityTemplate(entityTemplateId: kotlin.String) : EntityTemplateDto?  {
         val localVariableConfig = getEntityTemplateRequestConfig(entityTemplateId = entityTemplateId)
 
-        val localVarResponse = request<Unit, EntityTemplateDto>(
+        return request<Unit, EntityTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as EntityTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -463,26 +406,12 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getEntityTemplates(entityTemplateIds: kotlin.String) : kotlin.collections.List<EntityTemplateDto> {
+    suspend fun getEntityTemplates(entityTemplateIds: kotlin.String) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = getEntityTemplatesRequestConfig(entityTemplateIds = entityTemplateIds)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<EntityTemplateDto>>(
+        return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<EntityTemplateDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -516,26 +445,12 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto {
+    suspend fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = modifyEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
-        val localVarResponse = request<EntityTemplateDto, EntityTemplateDto>(
+        return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as EntityTemplateDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -552,6 +467,45 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath) : ApiClient(b
         return RequestConfig(
             method = RequestMethod.PUT,
             path = "/rest/v1/entitytemplate",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+    * Modify a batch of entityTemplates
+    * Returns the modified entityTemplates.
+    * @param entityTemplateDto  
+    * @return kotlin.collections.List<EntityTemplateDto>
+    * @throws UnsupportedOperationException If the API returns an informational or redirection response
+    * @throws ClientException If the API returns a client error response
+    * @throws ServerException If the API returns a server error response
+    */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun modifyEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
+        val localVariableConfig = modifyEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
+
+        return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
+            localVariableConfig
+        )
+    }
+
+    /**
+    * To obtain the request config of the operation modifyEntityTemplates
+    *
+    * @param entityTemplateDto  
+    * @return RequestConfig
+    */
+    fun modifyEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+        val localVariableBody = entityTemplateDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v1/entitytemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

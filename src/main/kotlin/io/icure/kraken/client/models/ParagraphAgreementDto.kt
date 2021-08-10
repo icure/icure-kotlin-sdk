@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.AgreementAppendixDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param timestamp 
  * @param paragraph 
  * @param accepted 
@@ -41,50 +45,75 @@ import com.squareup.moshi.Json
  * @param documentId 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ParagraphAgreementDto (
-    @Json(name = "timestamp")
+
+    @field:JsonProperty("timestamp")
     val timestamp: kotlin.Long? = null,
-    @Json(name = "paragraph")
+
+    @field:JsonProperty("paragraph")
     val paragraph: kotlin.String? = null,
-    @Json(name = "accepted")
+
+    @field:JsonProperty("accepted")
     val accepted: kotlin.Boolean? = null,
-    @Json(name = "inTreatment")
+
+    @field:JsonProperty("inTreatment")
     val inTreatment: kotlin.Boolean? = null,
-    @Json(name = "canceled")
+
+    @field:JsonProperty("canceled")
     val canceled: kotlin.Boolean? = null,
-    @Json(name = "careProviderReference")
+
+    @field:JsonProperty("careProviderReference")
     val careProviderReference: kotlin.String? = null,
-    @Json(name = "decisionReference")
+
+    @field:JsonProperty("decisionReference")
     val decisionReference: kotlin.String? = null,
-    @Json(name = "start")
+
+    @field:JsonProperty("start")
     val start: kotlin.Long? = null,
-    @Json(name = "end")
+
+    @field:JsonProperty("end")
     val end: kotlin.Long? = null,
-    @Json(name = "cancelationDate")
+
+    @field:JsonProperty("cancelationDate")
     val cancelationDate: kotlin.Long? = null,
-    @Json(name = "quantityValue")
+
+    @field:JsonProperty("quantityValue")
     val quantityValue: kotlin.Double? = null,
-    @Json(name = "quantityUnit")
+
+    @field:JsonProperty("quantityUnit")
     val quantityUnit: kotlin.String? = null,
-    @Json(name = "ioRequestReference")
+
+    @field:JsonProperty("ioRequestReference")
     val ioRequestReference: kotlin.String? = null,
-    @Json(name = "responseType")
+
+    @field:JsonProperty("responseType")
     val responseType: kotlin.String? = null,
-    @Json(name = "refusalJustification")
+
+    @field:JsonProperty("refusalJustification")
     val refusalJustification: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
-    @Json(name = "verses")
+
+    @field:JsonProperty("verses")
     val verses: kotlin.collections.Set<kotlin.Long>? = null,
-    @Json(name = "coverageType")
+
+    @field:JsonProperty("coverageType")
     val coverageType: kotlin.String? = null,
-    @Json(name = "unitNumber")
+
+    @field:JsonProperty("unitNumber")
     val unitNumber: kotlin.Double? = null,
-    @Json(name = "strength")
+
+    @field:JsonProperty("strength")
     val strength: kotlin.Double? = null,
-    @Json(name = "strengthUnit")
+
+    @field:JsonProperty("strengthUnit")
     val strengthUnit: kotlin.String? = null,
-    @Json(name = "agreementAppendices")
+
+    @field:JsonProperty("agreementAppendices")
     val agreementAppendices: kotlin.collections.List<AgreementAppendixDto>? = null,
-    @Json(name = "documentId")
+
+    @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null
+
 )
 

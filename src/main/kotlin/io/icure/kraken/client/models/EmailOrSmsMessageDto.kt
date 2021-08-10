@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.MimeAttachmentDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param attachments 
  * @param destinationIsNotPatient 
  * @param sendCopyToSender 
@@ -32,42 +36,59 @@ import com.squareup.moshi.Json
  * @param type 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class EmailOrSmsMessageDto (
-    @Json(name = "attachments")
+
+    @field:JsonProperty("attachments")
     val attachments: kotlin.collections.List<MimeAttachmentDto>,
-    @Json(name = "destinationIsNotPatient")
+
+    @field:JsonProperty("destinationIsNotPatient")
     val destinationIsNotPatient: kotlin.Boolean,
-    @Json(name = "sendCopyToSender")
+
+    @field:JsonProperty("sendCopyToSender")
     val sendCopyToSender: kotlin.Boolean,
-    @Json(name = "destination")
+
+    @field:JsonProperty("destination")
     val destination: kotlin.String? = null,
-    @Json(name = "destinationName")
+
+    @field:JsonProperty("destinationName")
     val destinationName: kotlin.String? = null,
-    @Json(name = "senderName")
+
+    @field:JsonProperty("senderName")
     val senderName: kotlin.String? = null,
-    @Json(name = "replyToEmail")
+
+    @field:JsonProperty("replyToEmail")
     val replyToEmail: kotlin.String? = null,
-    @Json(name = "content")
+
+    @field:JsonProperty("content")
     val content: kotlin.String? = null,
-    @Json(name = "messageId")
+
+    @field:JsonProperty("messageId")
     val messageId: kotlin.String? = null,
-    @Json(name = "patientId")
+
+    @field:JsonProperty("patientId")
     val patientId: kotlin.String? = null,
-    @Json(name = "senderId")
+
+    @field:JsonProperty("senderId")
     val senderId: kotlin.String? = null,
-    @Json(name = "subject")
+
+    @field:JsonProperty("subject")
     val subject: kotlin.String? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: EmailOrSmsMessageDto.Type? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: eMAIL,sMS
      */
     enum class Type(val value: kotlin.String) {
-        @Json(name = "EMAIL") eMAIL("EMAIL"),
-        @Json(name = "SMS") sMS("SMS");
+        @JsonProperty(value = "EMAIL") eMAIL("EMAIL"),
+        @JsonProperty(value = "SMS") sMS("SMS");
     }
 }
 

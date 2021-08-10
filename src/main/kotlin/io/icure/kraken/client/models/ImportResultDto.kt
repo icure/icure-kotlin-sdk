@@ -19,10 +19,14 @@ import io.icure.kraken.client.models.HealthcarePartyDto
 import io.icure.kraken.client.models.MimeAttachmentDto
 import io.icure.kraken.client.models.PatientDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param patient 
  * @param hes 
  * @param ctcs 
@@ -34,24 +38,36 @@ import com.squareup.moshi.Json
  * @param attachments 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ImportResultDto (
-    @Json(name = "patient")
+
+    @field:JsonProperty("patient")
     val patient: PatientDto? = null,
-    @Json(name = "hes")
+
+    @field:JsonProperty("hes")
     val hes: kotlin.collections.List<HealthElementDto>? = null,
-    @Json(name = "ctcs")
+
+    @field:JsonProperty("ctcs")
     val ctcs: kotlin.collections.List<ContactDto>? = null,
-    @Json(name = "warnings")
+
+    @field:JsonProperty("warnings")
     val warnings: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "errors")
+
+    @field:JsonProperty("errors")
     val errors: kotlin.collections.List<kotlin.String>? = null,
-    @Json(name = "forms")
+
+    @field:JsonProperty("forms")
     val forms: kotlin.collections.List<FormDto>? = null,
-    @Json(name = "hcps")
+
+    @field:JsonProperty("hcps")
     val hcps: kotlin.collections.List<HealthcarePartyDto>? = null,
-    @Json(name = "documents")
+
+    @field:JsonProperty("documents")
     val documents: kotlin.collections.List<DocumentDto>? = null,
-    @Json(name = "attachments")
+
+    @field:JsonProperty("attachments")
     val attachments: kotlin.collections.Map<kotlin.String, MimeAttachmentDto>? = null
+
 )
 

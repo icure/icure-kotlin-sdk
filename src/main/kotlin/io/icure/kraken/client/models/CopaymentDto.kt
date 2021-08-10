@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param regimeType 
  * @param from 
  * @param to 
  * @param feeAmount 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CopaymentDto (
-    @Json(name = "regimeType")
+
+    @field:JsonProperty("regimeType")
     val regimeType: kotlin.Int? = null,
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "feeAmount")
+
+    @field:JsonProperty("feeAmount")
     val feeAmount: kotlin.String? = null
+
 )
 

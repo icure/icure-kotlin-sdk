@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.CodeStubDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param relatedCode 
  * @param relatedPeriodicity 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PeriodicityDto (
-    @Json(name = "relatedCode")
+
+    @field:JsonProperty("relatedCode")
     val relatedCode: CodeStubDto? = null,
-    @Json(name = "relatedPeriodicity")
+
+    @field:JsonProperty("relatedPeriodicity")
     val relatedPeriodicity: CodeStubDto? = null
+
 )
 

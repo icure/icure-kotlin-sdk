@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param id 
  * @param dateCode 
  * @param logicalId 
@@ -68,123 +72,177 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class InvoicingCodeDto (
-    @Json(name = "id")
+
+    @field:JsonProperty("id")
     val id: kotlin.String? = null,
-    @Json(name = "dateCode")
+
+    @field:JsonProperty("dateCode")
     val dateCode: kotlin.Long? = null,
-    @Json(name = "logicalId")
+
+    @field:JsonProperty("logicalId")
     val logicalId: kotlin.String? = null,
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.String? = null,
-    @Json(name = "userId")
+
+    @field:JsonProperty("userId")
     val userId: kotlin.String? = null,
-    @Json(name = "contactId")
+
+    @field:JsonProperty("contactId")
     val contactId: kotlin.String? = null,
-    @Json(name = "serviceId")
+
+    @field:JsonProperty("serviceId")
     val serviceId: kotlin.String? = null,
-    @Json(name = "tarificationId")
+
+    @field:JsonProperty("tarificationId")
     val tarificationId: kotlin.String? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "paymentType")
+
+    @field:JsonProperty("paymentType")
     val paymentType: InvoicingCodeDto.PaymentType? = null,
-    @Json(name = "paid")
+
+    @field:JsonProperty("paid")
     val paid: kotlin.Double? = null,
-    @Json(name = "totalAmount")
+
+    @field:JsonProperty("totalAmount")
     val totalAmount: kotlin.Double? = null,
-    @Json(name = "reimbursement")
+
+    @field:JsonProperty("reimbursement")
     val reimbursement: kotlin.Double? = null,
-    @Json(name = "patientIntervention")
+
+    @field:JsonProperty("patientIntervention")
     val patientIntervention: kotlin.Double? = null,
-    @Json(name = "doctorSupplement")
+
+    @field:JsonProperty("doctorSupplement")
     val doctorSupplement: kotlin.Double? = null,
-    @Json(name = "conventionAmount")
+
+    @field:JsonProperty("conventionAmount")
     val conventionAmount: kotlin.Double? = null,
-    @Json(name = "vat")
+
+    @field:JsonProperty("vat")
     val vat: kotlin.Double? = null,
-    @Json(name = "error")
+
+    @field:JsonProperty("error")
     val error: kotlin.String? = null,
-    @Json(name = "contract")
+
+    @field:JsonProperty("contract")
     val contract: kotlin.String? = null,
-    @Json(name = "contractDate")
+
+    @field:JsonProperty("contractDate")
     val contractDate: kotlin.Long? = null,
-    @Json(name = "units")
+
+    @field:JsonProperty("units")
     val units: kotlin.Int? = null,
-    @Json(name = "side")
+
+    @field:JsonProperty("side")
     val side: kotlin.Int? = null,
-    @Json(name = "timeOfDay")
+
+    @field:JsonProperty("timeOfDay")
     val timeOfDay: kotlin.Int? = null,
-    @Json(name = "eidReadingHour")
+
+    @field:JsonProperty("eidReadingHour")
     val eidReadingHour: kotlin.Int? = null,
-    @Json(name = "eidReadingValue")
+
+    @field:JsonProperty("eidReadingValue")
     val eidReadingValue: kotlin.String? = null,
-    @Json(name = "override3rdPayerCode")
+
+    @field:JsonProperty("override3rdPayerCode")
     val override3rdPayerCode: kotlin.Int? = null,
-    @Json(name = "override3rdPayerReason")
+
+    @field:JsonProperty("override3rdPayerReason")
     val override3rdPayerReason: kotlin.String? = null,
-    @Json(name = "transplantationCode")
+
+    @field:JsonProperty("transplantationCode")
     val transplantationCode: kotlin.Int? = null,
-    @Json(name = "prescriberNorm")
+
+    @field:JsonProperty("prescriberNorm")
     val prescriberNorm: kotlin.Int? = null,
-    @Json(name = "percentNorm")
+
+    @field:JsonProperty("percentNorm")
     val percentNorm: kotlin.Int? = null,
-    @Json(name = "prescriberNihii")
+
+    @field:JsonProperty("prescriberNihii")
     val prescriberNihii: kotlin.String? = null,
-    @Json(name = "relatedCode")
+
+    @field:JsonProperty("relatedCode")
     val relatedCode: kotlin.String? = null,
-    @Json(name = "prescriptionDate")
+
+    @field:JsonProperty("prescriptionDate")
     val prescriptionDate: kotlin.Long? = null,
-    @Json(name = "derogationMaxNumber")
+
+    @field:JsonProperty("derogationMaxNumber")
     val derogationMaxNumber: kotlin.Int? = null,
-    @Json(name = "prescriberSsin")
+
+    @field:JsonProperty("prescriberSsin")
     val prescriberSsin: kotlin.String? = null,
-    @Json(name = "prescriberLastName")
+
+    @field:JsonProperty("prescriberLastName")
     val prescriberLastName: kotlin.String? = null,
-    @Json(name = "prescriberFirstName")
+
+    @field:JsonProperty("prescriberFirstName")
     val prescriberFirstName: kotlin.String? = null,
-    @Json(name = "prescriberCdHcParty")
+
+    @field:JsonProperty("prescriberCdHcParty")
     val prescriberCdHcParty: kotlin.String? = null,
-    @Json(name = "locationNihii")
+
+    @field:JsonProperty("locationNihii")
     val locationNihii: kotlin.String? = null,
-    @Json(name = "locationCdHcParty")
+
+    @field:JsonProperty("locationCdHcParty")
     val locationCdHcParty: kotlin.String? = null,
-    @Json(name = "canceled")
+
+    @field:JsonProperty("canceled")
     val canceled: kotlin.Boolean? = null,
-    @Json(name = "accepted")
+
+    @field:JsonProperty("accepted")
     val accepted: kotlin.Boolean? = null,
-    @Json(name = "pending")
+
+    @field:JsonProperty("pending")
     val pending: kotlin.Boolean? = null,
-    @Json(name = "resent")
+
+    @field:JsonProperty("resent")
     val resent: kotlin.Boolean? = null,
-    @Json(name = "archived")
+
+    @field:JsonProperty("archived")
     val archived: kotlin.Boolean? = null,
-    @Json(name = "lost")
+
+    @field:JsonProperty("lost")
     val lost: kotlin.Boolean? = null,
-    @Json(name = "insuranceJustification")
+
+    @field:JsonProperty("insuranceJustification")
     val insuranceJustification: kotlin.Int? = null,
-    @Json(name = "cancelPatientInterventionReason")
+
+    @field:JsonProperty("cancelPatientInterventionReason")
     val cancelPatientInterventionReason: kotlin.Int? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.Long? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: cash,wired,insurance,creditcard,debitcard,paypal,bitcoin,other
      */
     enum class PaymentType(val value: kotlin.String) {
-        @Json(name = "cash") cash("cash"),
-        @Json(name = "wired") wired("wired"),
-        @Json(name = "insurance") insurance("insurance"),
-        @Json(name = "creditcard") creditcard("creditcard"),
-        @Json(name = "debitcard") debitcard("debitcard"),
-        @Json(name = "paypal") paypal("paypal"),
-        @Json(name = "bitcoin") bitcoin("bitcoin"),
-        @Json(name = "other") other("other");
+        @JsonProperty(value = "cash") cash("cash"),
+        @JsonProperty(value = "wired") wired("wired"),
+        @JsonProperty(value = "insurance") insurance("insurance"),
+        @JsonProperty(value = "creditcard") creditcard("creditcard"),
+        @JsonProperty(value = "debitcard") debitcard("debitcard"),
+        @JsonProperty(value = "paypal") paypal("paypal"),
+        @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
+        @JsonProperty(value = "other") other("other");
     }
 }
 

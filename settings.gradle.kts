@@ -1,2 +1,2 @@
-rootProject.name = "icure-java-client"
+rootProject.name = "icure-reactive-kotlin-client"
 

@@ -13,18 +13,27 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.DurationDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param decimal 
  * @param duration 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RenewalDto (
-    @Json(name = "decimal")
+
+    @field:JsonProperty("decimal")
     val decimal: kotlin.Int? = null,
-    @Json(name = "duration")
+
+    @field:JsonProperty("duration")
     val duration: DurationDto? = null
+
 )
 

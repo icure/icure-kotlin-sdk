@@ -14,22 +14,32 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.PropertyTypeStubDto
 import io.icure.kraken.client.models.TypedValueDtoObject
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Extra properties
+ *
  * @param type 
  * @param typedValue 
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class PropertyStubDto (
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: PropertyTypeStubDto? = null,
-    @Json(name = "typedValue")
+
+    @field:JsonProperty("typedValue")
     val typedValue: TypedValueDtoObject? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 )
 

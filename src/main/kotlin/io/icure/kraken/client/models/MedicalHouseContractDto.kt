@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * Contracts between the patient and the healthcare entity.
+ *
  * @param kine 
  * @param gp 
  * @param ptd 
@@ -51,106 +55,145 @@ import com.squareup.moshi.Json
  * @param encryptedSelf The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys.
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class MedicalHouseContractDto (
-    @Json(name = "kine")
+
+    @field:JsonProperty("kine")
     val kine: kotlin.Boolean,
-    @Json(name = "gp")
+
+    @field:JsonProperty("gp")
     val gp: kotlin.Boolean,
-    @Json(name = "ptd")
+
+    @field:JsonProperty("ptd")
     val ptd: kotlin.Boolean,
-    @Json(name = "nurse")
+
+    @field:JsonProperty("nurse")
     val nurse: kotlin.Boolean,
-    @Json(name = "noKine")
+
+    @field:JsonProperty("noKine")
     val noKine: kotlin.Boolean,
-    @Json(name = "noGp")
+
+    @field:JsonProperty("noGp")
     val noGp: kotlin.Boolean,
-    @Json(name = "noNurse")
+
+    @field:JsonProperty("noNurse")
     val noNurse: kotlin.Boolean,
-    @Json(name = "forcedSuspension")
+
+    @field:JsonProperty("forcedSuspension")
     val forcedSuspension: kotlin.Boolean,
-    @Json(name = "options")
+
+    @field:JsonProperty("options")
     val options: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "receipts")
+
+    @field:JsonProperty("receipts")
     val receipts: kotlin.collections.Map<kotlin.String, kotlin.String>,
-    @Json(name = "contractId")
+
+    @field:JsonProperty("contractId")
     val contractId: kotlin.String? = null,
-    @Json(name = "validFrom")
+
+    @field:JsonProperty("validFrom")
     val validFrom: kotlin.Long? = null,
-    @Json(name = "validTo")
+
+    @field:JsonProperty("validTo")
     val validTo: kotlin.Long? = null,
-    @Json(name = "mmNihii")
+
+    @field:JsonProperty("mmNihii")
     val mmNihii: kotlin.String? = null,
-    @Json(name = "hcpId")
+
+    @field:JsonProperty("hcpId")
     val hcpId: kotlin.String? = null,
-    @Json(name = "changeType")
+
+    @field:JsonProperty("changeType")
     val changeType: MedicalHouseContractDto.ChangeType? = null,
-    @Json(name = "parentContractId")
+
+    @field:JsonProperty("parentContractId")
     val parentContractId: kotlin.String? = null,
-    @Json(name = "changedBy")
+
+    @field:JsonProperty("changedBy")
     val changedBy: kotlin.String? = null,
-    @Json(name = "startOfContract")
+
+    @field:JsonProperty("startOfContract")
     val startOfContract: kotlin.Long? = null,
-    @Json(name = "startOfCoverage")
+
+    @field:JsonProperty("startOfCoverage")
     val startOfCoverage: kotlin.Long? = null,
-    @Json(name = "endOfContract")
+
+    @field:JsonProperty("endOfContract")
     val endOfContract: kotlin.Long? = null,
-    @Json(name = "endOfCoverage")
+
+    @field:JsonProperty("endOfCoverage")
     val endOfCoverage: kotlin.Long? = null,
-    @Json(name = "unsubscriptionReasonId")
+
+    @field:JsonProperty("unsubscriptionReasonId")
     val unsubscriptionReasonId: kotlin.Int? = null,
-    @Json(name = "ptdStart")
+
+    @field:JsonProperty("ptdStart")
     val ptdStart: kotlin.Long? = null,
-    @Json(name = "ptdEnd")
+
+    @field:JsonProperty("ptdEnd")
     val ptdEnd: kotlin.Long? = null,
-    @Json(name = "ptdLastInvoiced")
+
+    @field:JsonProperty("ptdLastInvoiced")
     val ptdLastInvoiced: kotlin.Long? = null,
-    @Json(name = "startOfSuspension")
+
+    @field:JsonProperty("startOfSuspension")
     val startOfSuspension: kotlin.Long? = null,
-    @Json(name = "endOfSuspension")
+
+    @field:JsonProperty("endOfSuspension")
     val endOfSuspension: kotlin.Long? = null,
-    @Json(name = "suspensionReason")
+
+    @field:JsonProperty("suspensionReason")
     val suspensionReason: MedicalHouseContractDto.SuspensionReason? = null,
-    @Json(name = "suspensionSource")
+
+    @field:JsonProperty("suspensionSource")
     val suspensionSource: kotlin.String? = null,
-    @Json(name = "signatureType")
+
+    @field:JsonProperty("signatureType")
     val signatureType: MedicalHouseContractDto.SignatureType? = null,
-    @Json(name = "status")
+
+    @field:JsonProperty("status")
     val status: kotlin.Int? = null,
+
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
-    @Json(name = "encryptedSelf")
+    @field:JsonProperty("encryptedSelf")
     val encryptedSelf: kotlin.String? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: inscriptionStart,inscriptionEnd,suspension,coverageChange
      */
     enum class ChangeType(val value: kotlin.String) {
-        @Json(name = "inscriptionStart") inscriptionStart("inscriptionStart"),
-        @Json(name = "inscriptionEnd") inscriptionEnd("inscriptionEnd"),
-        @Json(name = "suspension") suspension("suspension"),
-        @Json(name = "coverageChange") coverageChange("coverageChange");
+        @JsonProperty(value = "inscriptionStart") inscriptionStart("inscriptionStart"),
+        @JsonProperty(value = "inscriptionEnd") inscriptionEnd("inscriptionEnd"),
+        @JsonProperty(value = "suspension") suspension("suspension"),
+        @JsonProperty(value = "coverageChange") coverageChange("coverageChange");
     }
     /**
      * 
+     *
      * Values: notInsured,noReasonGiven,isHospitalized,outsideOfCountry,changeOfMutuality
      */
     enum class SuspensionReason(val value: kotlin.String) {
-        @Json(name = "notInsured") notInsured("notInsured"),
-        @Json(name = "noReasonGiven") noReasonGiven("noReasonGiven"),
-        @Json(name = "isHospitalized") isHospitalized("isHospitalized"),
-        @Json(name = "outsideOfCountry") outsideOfCountry("outsideOfCountry"),
-        @Json(name = "changeOfMutuality") changeOfMutuality("changeOfMutuality");
+        @JsonProperty(value = "notInsured") notInsured("notInsured"),
+        @JsonProperty(value = "noReasonGiven") noReasonGiven("noReasonGiven"),
+        @JsonProperty(value = "isHospitalized") isHospitalized("isHospitalized"),
+        @JsonProperty(value = "outsideOfCountry") outsideOfCountry("outsideOfCountry"),
+        @JsonProperty(value = "changeOfMutuality") changeOfMutuality("changeOfMutuality");
     }
     /**
      * 
+     *
      * Values: holderEid,holderPaper,legalrepresentativeEid,legalrepresentativePaper
      */
     enum class SignatureType(val value: kotlin.String) {
-        @Json(name = "holderEid") holderEid("holderEid"),
-        @Json(name = "holderPaper") holderPaper("holderPaper"),
-        @Json(name = "legalrepresentativeEid") legalrepresentativeEid("legalrepresentativeEid"),
-        @Json(name = "legalrepresentativePaper") legalrepresentativePaper("legalrepresentativePaper");
+        @JsonProperty(value = "holderEid") holderEid("holderEid"),
+        @JsonProperty(value = "holderPaper") holderPaper("holderPaper"),
+        @JsonProperty(value = "legalrepresentativeEid") legalrepresentativeEid("legalrepresentativeEid"),
+        @JsonProperty(value = "legalrepresentativePaper") legalrepresentativePaper("legalrepresentativePaper");
     }
 }
 

@@ -12,15 +12,23 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * The ids of databases to reset
+ *
  * @param ids 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ListOfIdsDto (
-    @Json(name = "ids")
+
+    @field:JsonProperty("ids")
     val ids: kotlin.collections.List<kotlin.String>
+
 )
 

@@ -14,10 +14,14 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.EfactInvoice
 import io.icure.kraken.client.models.InvoiceSender
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param invoicingYear 
  * @param invoicingMonth 
  * @param invoices 
@@ -29,24 +33,36 @@ import com.squareup.moshi.Json
  * @param numericalRef 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class InvoicesBatch (
-    @Json(name = "invoicingYear")
+
+    @field:JsonProperty("invoicingYear")
     val invoicingYear: kotlin.Int,
-    @Json(name = "invoicingMonth")
+
+    @field:JsonProperty("invoicingMonth")
     val invoicingMonth: kotlin.Int,
-    @Json(name = "invoices")
+
+    @field:JsonProperty("invoices")
     val invoices: kotlin.collections.List<EfactInvoice>,
-    @Json(name = "fileRef")
+
+    @field:JsonProperty("fileRef")
     val fileRef: kotlin.String? = null,
-    @Json(name = "batchRef")
+
+    @field:JsonProperty("batchRef")
     val batchRef: kotlin.String? = null,
-    @Json(name = "ioFederationCode")
+
+    @field:JsonProperty("ioFederationCode")
     val ioFederationCode: kotlin.String? = null,
-    @Json(name = "uniqueSendNumber")
+
+    @field:JsonProperty("uniqueSendNumber")
     val uniqueSendNumber: kotlin.Long? = null,
-    @Json(name = "sender")
+
+    @field:JsonProperty("sender")
     val sender: InvoiceSender? = null,
-    @Json(name = "numericalRef")
+
+    @field:JsonProperty("numericalRef")
     val numericalRef: kotlin.Long? = null
+
 )
 

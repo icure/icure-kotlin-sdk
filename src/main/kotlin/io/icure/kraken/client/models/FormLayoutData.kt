@@ -20,10 +20,14 @@ import io.icure.kraken.client.models.GuiCode
 import io.icure.kraken.client.models.GuiCodeType
 import io.icure.kraken.client.models.Suggest
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param subForm 
  * @param irrelevant 
  * @param determinesSscontactName 
@@ -44,42 +48,63 @@ import com.squareup.moshi.Json
  * @param formulas 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class FormLayoutData (
-    @Json(name = "subForm")
+
+    @field:JsonProperty("subForm")
     val subForm: kotlin.Boolean? = null,
-    @Json(name = "irrelevant")
+
+    @field:JsonProperty("irrelevant")
     val irrelevant: kotlin.Boolean? = null,
-    @Json(name = "determinesSscontactName")
+
+    @field:JsonProperty("determinesSscontactName")
     val determinesSscontactName: kotlin.Boolean? = null,
-    @Json(name = "type")
+
+    @field:JsonProperty("type")
     val type: kotlin.String? = null,
-    @Json(name = "name")
+
+    @field:JsonProperty("name")
     val name: kotlin.String? = null,
-    @Json(name = "sortOrder")
+
+    @field:JsonProperty("sortOrder")
     val sortOrder: kotlin.Double? = null,
-    @Json(name = "options")
+
+    @field:JsonProperty("options")
     val options: kotlin.collections.Map<kotlin.String, FormDataOption>? = null,
-    @Json(name = "descr")
+
+    @field:JsonProperty("descr")
     val descr: kotlin.String? = null,
-    @Json(name = "label")
+
+    @field:JsonProperty("label")
     val label: kotlin.String? = null,
-    @Json(name = "editor")
+
+    @field:JsonProperty("editor")
     val editor: Editor? = null,
-    @Json(name = "defaultValue")
+
+    @field:JsonProperty("defaultValue")
     val defaultValue: kotlin.collections.List<ContentDto>? = null,
-    @Json(name = "defaultStatus")
+
+    @field:JsonProperty("defaultStatus")
     val defaultStatus: kotlin.Int? = null,
-    @Json(name = "suggest")
+
+    @field:JsonProperty("suggest")
     val suggest: kotlin.collections.List<Suggest>? = null,
-    @Json(name = "plannings")
+
+    @field:JsonProperty("plannings")
     val plannings: kotlin.collections.List<FormPlanning>? = null,
-    @Json(name = "tags")
+
+    @field:JsonProperty("tags")
     val tags: kotlin.collections.List<GuiCode>? = null,
-    @Json(name = "codes")
+
+    @field:JsonProperty("codes")
     val codes: kotlin.collections.List<GuiCode>? = null,
-    @Json(name = "codeTypes")
+
+    @field:JsonProperty("codeTypes")
     val codeTypes: kotlin.collections.List<GuiCodeType>? = null,
-    @Json(name = "formulas")
+
+    @field:JsonProperty("formulas")
     val formulas: kotlin.collections.List<Formula>? = null
+
 )
 

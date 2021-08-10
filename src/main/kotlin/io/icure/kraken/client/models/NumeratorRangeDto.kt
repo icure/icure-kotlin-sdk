@@ -12,21 +12,31 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param min 
  * @param max 
  * @param unit 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class NumeratorRangeDto (
-    @Json(name = "min")
+
+    @field:JsonProperty("min")
     val min: java.math.BigDecimal? = null,
-    @Json(name = "max")
+
+    @field:JsonProperty("max")
     val max: java.math.BigDecimal? = null,
-    @Json(name = "unit")
+
+    @field:JsonProperty("unit")
     val unit: kotlin.String? = null
+
 )
 

@@ -14,18 +14,27 @@ package io.icure.kraken.client.models
 import io.icure.kraken.client.models.NumeratorRangeDto
 import io.icure.kraken.client.models.QuantityDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param numeratorRange 
  * @param denominator 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class StrengthRangeDto (
-    @Json(name = "numeratorRange")
+
+    @field:JsonProperty("numeratorRange")
     val numeratorRange: NumeratorRangeDto? = null,
-    @Json(name = "denominator")
+
+    @field:JsonProperty("denominator")
     val denominator: QuantityDto? = null
+
 )
 

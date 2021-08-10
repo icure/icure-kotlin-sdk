@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param active 
  * @param running 
  * @param pendingFrom 
  * @param pendingTo 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReplicationInfoDto (
-    @Json(name = "active")
+
+    @field:JsonProperty("active")
     val active: kotlin.Boolean,
-    @Json(name = "running")
+
+    @field:JsonProperty("running")
     val running: kotlin.Boolean,
-    @Json(name = "pendingFrom")
+
+    @field:JsonProperty("pendingFrom")
     val pendingFrom: kotlin.Int? = null,
-    @Json(name = "pendingTo")
+
+    @field:JsonProperty("pendingTo")
     val pendingTo: kotlin.Int? = null
+
 )
 

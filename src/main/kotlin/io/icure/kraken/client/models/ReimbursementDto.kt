@@ -15,10 +15,14 @@ import io.icure.kraken.client.models.CopaymentDto
 import io.icure.kraken.client.models.PricingDto
 import io.icure.kraken.client.models.ReimbursementCriterionDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param from 
  * @param to 
  * @param deliveryEnvironment 
@@ -38,68 +42,91 @@ import com.squareup.moshi.Json
  * @param copayments 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ReimbursementDto (
-    @Json(name = "from")
+
+    @field:JsonProperty("from")
     val from: kotlin.Long? = null,
-    @Json(name = "to")
+
+    @field:JsonProperty("to")
     val to: kotlin.Long? = null,
-    @Json(name = "deliveryEnvironment")
+
+    @field:JsonProperty("deliveryEnvironment")
     val deliveryEnvironment: ReimbursementDto.DeliveryEnvironment? = null,
-    @Json(name = "code")
+
+    @field:JsonProperty("code")
     val code: kotlin.String? = null,
-    @Json(name = "codeType")
+
+    @field:JsonProperty("codeType")
     val codeType: ReimbursementDto.CodeType? = null,
-    @Json(name = "multiple")
+
+    @field:JsonProperty("multiple")
     val multiple: ReimbursementDto.Multiple? = null,
-    @Json(name = "temporary")
+
+    @field:JsonProperty("temporary")
     val temporary: kotlin.Boolean? = null,
-    @Json(name = "reference")
+
+    @field:JsonProperty("reference")
     val reference: kotlin.Boolean? = null,
-    @Json(name = "legalReferencePath")
+
+    @field:JsonProperty("legalReferencePath")
     val legalReferencePath: kotlin.String? = null,
-    @Json(name = "flatRateSystem")
+
+    @field:JsonProperty("flatRateSystem")
     val flatRateSystem: kotlin.Boolean? = null,
-    @Json(name = "reimbursementBasePrice")
+
+    @field:JsonProperty("reimbursementBasePrice")
     val reimbursementBasePrice: java.math.BigDecimal? = null,
-    @Json(name = "referenceBasePrice")
+
+    @field:JsonProperty("referenceBasePrice")
     val referenceBasePrice: java.math.BigDecimal? = null,
-    @Json(name = "copaymentSupplement")
+
+    @field:JsonProperty("copaymentSupplement")
     val copaymentSupplement: java.math.BigDecimal? = null,
-    @Json(name = "pricingUnit")
+
+    @field:JsonProperty("pricingUnit")
     val pricingUnit: PricingDto? = null,
-    @Json(name = "pricingSlice")
+
+    @field:JsonProperty("pricingSlice")
     val pricingSlice: PricingDto? = null,
-    @Json(name = "reimbursementCriterion")
+
+    @field:JsonProperty("reimbursementCriterion")
     val reimbursementCriterion: ReimbursementCriterionDto? = null,
-    @Json(name = "copayments")
+
+    @field:JsonProperty("copayments")
     val copayments: kotlin.collections.List<CopaymentDto>? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: p,a,h,r
      */
     enum class DeliveryEnvironment(val value: kotlin.String) {
-        @Json(name = "P") p("P"),
-        @Json(name = "A") a("A"),
-        @Json(name = "H") h("H"),
-        @Json(name = "R") r("R");
+        @JsonProperty(value = "P") p("P"),
+        @JsonProperty(value = "A") a("A"),
+        @JsonProperty(value = "H") h("H"),
+        @JsonProperty(value = "R") r("R");
     }
     /**
      * 
+     *
      * Values: cNK,pSEUDO
      */
     enum class CodeType(val value: kotlin.String) {
-        @Json(name = "CNK") cNK("CNK"),
-        @Json(name = "PSEUDO") pSEUDO("PSEUDO");
+        @JsonProperty(value = "CNK") cNK("CNK"),
+        @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
     }
     /**
      * 
+     *
      * Values: m,v
      */
     enum class Multiple(val value: kotlin.String) {
-        @Json(name = "M") m("M"),
-        @Json(name = "V") v("V");
+        @JsonProperty(value = "M") m("M"),
+        @JsonProperty(value = "V") v("V");
     }
 }
 

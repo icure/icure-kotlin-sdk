@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.WebSessionMaxIdleTimeUnits
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param seconds 
  * @param units 
  * @param zero 
@@ -24,16 +28,24 @@ import com.squareup.moshi.Json
  * @param nano 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class WebSessionMaxIdleTime (
-    @Json(name = "seconds")
+
+    @field:JsonProperty("seconds")
     val seconds: kotlin.Long? = null,
-    @Json(name = "units")
+
+    @field:JsonProperty("units")
     val units: kotlin.collections.List<WebSessionMaxIdleTimeUnits>? = null,
-    @Json(name = "zero")
+
+    @field:JsonProperty("zero")
     val zero: kotlin.Boolean? = null,
-    @Json(name = "negative")
+
+    @field:JsonProperty("negative")
     val negative: kotlin.Boolean? = null,
-    @Json(name = "nano")
+
+    @field:JsonProperty("nano")
     val nano: kotlin.Int? = null
+
 )
 

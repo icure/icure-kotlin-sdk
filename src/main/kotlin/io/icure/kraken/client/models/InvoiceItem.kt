@@ -13,10 +13,14 @@ package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.EIDItem
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param codeNomenclature 
  * @param units 
  * @param reimbursedAmount 
@@ -41,108 +45,138 @@ import com.squareup.moshi.Json
  * @param percentNorm 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class InvoiceItem (
-    @Json(name = "codeNomenclature")
+
+    @field:JsonProperty("codeNomenclature")
     val codeNomenclature: kotlin.Long,
-    @Json(name = "units")
+
+    @field:JsonProperty("units")
     val units: kotlin.Int,
-    @Json(name = "reimbursedAmount")
+
+    @field:JsonProperty("reimbursedAmount")
     val reimbursedAmount: kotlin.Long,
-    @Json(name = "patientFee")
+
+    @field:JsonProperty("patientFee")
     val patientFee: kotlin.Long,
-    @Json(name = "doctorSupplement")
+
+    @field:JsonProperty("doctorSupplement")
     val doctorSupplement: kotlin.Long,
-    @Json(name = "dateCode")
+
+    @field:JsonProperty("dateCode")
     val dateCode: kotlin.Long? = null,
-    @Json(name = "relatedCode")
+
+    @field:JsonProperty("relatedCode")
     val relatedCode: kotlin.Long? = null,
-    @Json(name = "eidItem")
+
+    @field:JsonProperty("eidItem")
     val eidItem: EIDItem? = null,
-    @Json(name = "insuranceRef")
+
+    @field:JsonProperty("insuranceRef")
     val insuranceRef: kotlin.String? = null,
-    @Json(name = "insuranceRefDate")
+
+    @field:JsonProperty("insuranceRefDate")
     val insuranceRefDate: kotlin.Long? = null,
-    @Json(name = "sideCode")
+
+    @field:JsonProperty("sideCode")
     val sideCode: InvoiceItem.SideCode? = null,
-    @Json(name = "timeOfDay")
+
+    @field:JsonProperty("timeOfDay")
     val timeOfDay: InvoiceItem.TimeOfDay? = null,
-    @Json(name = "override3rdPayerCode")
+
+    @field:JsonProperty("override3rdPayerCode")
     val override3rdPayerCode: kotlin.Int? = null,
-    @Json(name = "gnotionNihii")
+
+    @field:JsonProperty("gnotionNihii")
     val gnotionNihii: kotlin.String? = null,
-    @Json(name = "derogationMaxNumber")
+
+    @field:JsonProperty("derogationMaxNumber")
     val derogationMaxNumber: InvoiceItem.DerogationMaxNumber? = null,
-    @Json(name = "prescriberNorm")
+
+    @field:JsonProperty("prescriberNorm")
     val prescriberNorm: InvoiceItem.PrescriberNorm? = null,
-    @Json(name = "prescriberNihii")
+
+    @field:JsonProperty("prescriberNihii")
     val prescriberNihii: kotlin.String? = null,
-    @Json(name = "prescriptionDate")
+
+    @field:JsonProperty("prescriptionDate")
     val prescriptionDate: kotlin.Long? = null,
-    @Json(name = "personalInterventionCoveredByThirdPartyCode")
+
+    @field:JsonProperty("personalInterventionCoveredByThirdPartyCode")
     val personalInterventionCoveredByThirdPartyCode: kotlin.Int? = null,
-    @Json(name = "doctorIdentificationNumber")
+
+    @field:JsonProperty("doctorIdentificationNumber")
     val doctorIdentificationNumber: kotlin.String? = null,
-    @Json(name = "invoiceRef")
+
+    @field:JsonProperty("invoiceRef")
     val invoiceRef: kotlin.String? = null,
-    @Json(name = "percentNorm")
+
+    @field:JsonProperty("percentNorm")
     val percentNorm: InvoiceItem.PercentNorm? = null
+
 ) {
 
     /**
      * 
+     *
      * Values: none,left,right
      */
     enum class SideCode(val value: kotlin.String) {
-        @Json(name = "None") none("None"),
-        @Json(name = "Left") left("Left"),
-        @Json(name = "Right") right("Right");
+        @JsonProperty(value = "None") none("None"),
+        @JsonProperty(value = "Left") left("Left"),
+        @JsonProperty(value = "Right") right("Right");
     }
     /**
      * 
+     *
      * Values: other,night,weekend,bankholiday,urgent
      */
     enum class TimeOfDay(val value: kotlin.String) {
-        @Json(name = "Other") other("Other"),
-        @Json(name = "Night") night("Night"),
-        @Json(name = "Weekend") weekend("Weekend"),
-        @Json(name = "Bankholiday") bankholiday("Bankholiday"),
-        @Json(name = "Urgent") urgent("Urgent");
+        @JsonProperty(value = "Other") other("Other"),
+        @JsonProperty(value = "Night") night("Night"),
+        @JsonProperty(value = "Weekend") weekend("Weekend"),
+        @JsonProperty(value = "Bankholiday") bankholiday("Bankholiday"),
+        @JsonProperty(value = "Urgent") urgent("Urgent");
     }
     /**
      * 
+     *
      * Values: other,derogationMaxNumber,otherPrescription,secondPrestationOfDay,thirdAndNextPrestationOfDay
      */
     enum class DerogationMaxNumber(val value: kotlin.String) {
-        @Json(name = "Other") other("Other"),
-        @Json(name = "DerogationMaxNumber") derogationMaxNumber("DerogationMaxNumber"),
-        @Json(name = "OtherPrescription") otherPrescription("OtherPrescription"),
-        @Json(name = "SecondPrestationOfDay") secondPrestationOfDay("SecondPrestationOfDay"),
-        @Json(name = "ThirdAndNextPrestationOfDay") thirdAndNextPrestationOfDay("ThirdAndNextPrestationOfDay");
+        @JsonProperty(value = "Other") other("Other"),
+        @JsonProperty(value = "DerogationMaxNumber") derogationMaxNumber("DerogationMaxNumber"),
+        @JsonProperty(value = "OtherPrescription") otherPrescription("OtherPrescription"),
+        @JsonProperty(value = "SecondPrestationOfDay") secondPrestationOfDay("SecondPrestationOfDay"),
+        @JsonProperty(value = "ThirdAndNextPrestationOfDay") thirdAndNextPrestationOfDay("ThirdAndNextPrestationOfDay");
     }
     /**
      * 
+     *
      * Values: none,onePrescriber,selfPrescriber,addedCode,manyPrescribers
      */
     enum class PrescriberNorm(val value: kotlin.String) {
-        @Json(name = "None") none("None"),
-        @Json(name = "OnePrescriber") onePrescriber("OnePrescriber"),
-        @Json(name = "SelfPrescriber") selfPrescriber("SelfPrescriber"),
-        @Json(name = "AddedCode") addedCode("AddedCode"),
-        @Json(name = "ManyPrescribers") manyPrescribers("ManyPrescribers");
+        @JsonProperty(value = "None") none("None"),
+        @JsonProperty(value = "OnePrescriber") onePrescriber("OnePrescriber"),
+        @JsonProperty(value = "SelfPrescriber") selfPrescriber("SelfPrescriber"),
+        @JsonProperty(value = "AddedCode") addedCode("AddedCode"),
+        @JsonProperty(value = "ManyPrescribers") manyPrescribers("ManyPrescribers");
     }
     /**
      * 
+     *
      * Values: none,surgicalAid1,surgicalAid2,reducedFee,ah1n1,halfPriceSecondAct,invoiceException,forInformation
      */
     enum class PercentNorm(val value: kotlin.String) {
-        @Json(name = "None") none("None"),
-        @Json(name = "SurgicalAid1") surgicalAid1("SurgicalAid1"),
-        @Json(name = "SurgicalAid2") surgicalAid2("SurgicalAid2"),
-        @Json(name = "ReducedFee") reducedFee("ReducedFee"),
-        @Json(name = "Ah1n1") ah1n1("Ah1n1"),
-        @Json(name = "HalfPriceSecondAct") halfPriceSecondAct("HalfPriceSecondAct"),
-        @Json(name = "InvoiceException") invoiceException("InvoiceException"),
-        @Json(name = "ForInformation") forInformation("ForInformation");
+        @JsonProperty(value = "None") none("None"),
+        @JsonProperty(value = "SurgicalAid1") surgicalAid1("SurgicalAid1"),
+        @JsonProperty(value = "SurgicalAid2") surgicalAid2("SurgicalAid2"),
+        @JsonProperty(value = "ReducedFee") reducedFee("ReducedFee"),
+        @JsonProperty(value = "Ah1n1") ah1n1("Ah1n1"),
+        @JsonProperty(value = "HalfPriceSecondAct") halfPriceSecondAct("HalfPriceSecondAct"),
+        @JsonProperty(value = "InvoiceException") invoiceException("InvoiceException"),
+        @JsonProperty(value = "ForInformation") forInformation("ForInformation");
     }
 }
 

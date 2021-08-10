@@ -15,10 +15,14 @@ import io.icure.kraken.client.models.MeasureDto
 import io.icure.kraken.client.models.MedicationDto
 import io.icure.kraken.client.models.ServiceDto
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * The type of the content recorded in the documents for the service
+ *
  * @param stringValue 
  * @param numberValue 
  * @param booleanValue 
@@ -31,29 +35,42 @@ import com.squareup.moshi.Json
  * @param compoundValue The service for which the content is being filled
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ContentDto (
-    @Json(name = "stringValue")
+
+    @field:JsonProperty("stringValue")
     val stringValue: kotlin.String? = null,
-    @Json(name = "numberValue")
+
+    @field:JsonProperty("numberValue")
     val numberValue: kotlin.Double? = null,
-    @Json(name = "booleanValue")
+
+    @field:JsonProperty("booleanValue")
     val booleanValue: kotlin.Boolean? = null,
-    @Json(name = "instantValue")
+
+    @field:JsonProperty("instantValue")
     val instantValue: java.time.OffsetDateTime? = null,
+
     /* Known values in a date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
-    @Json(name = "fuzzyDateValue")
+    @field:JsonProperty("fuzzyDateValue")
     val fuzzyDateValue: kotlin.Long? = null,
-    @Json(name = "binaryValue")
+
+    @field:JsonProperty("binaryValue")
     val binaryValue: kotlin.collections.List<kotlin.ByteArray>? = null,
+
     /* Id of the document in which the content is being filled. */
-    @Json(name = "documentId")
+    @field:JsonProperty("documentId")
     val documentId: kotlin.String? = null,
-    @Json(name = "measureValue")
+
+    @field:JsonProperty("measureValue")
     val measureValue: MeasureDto? = null,
-    @Json(name = "medicationValue")
+
+    @field:JsonProperty("medicationValue")
     val medicationValue: MedicationDto? = null,
+
     /* The service for which the content is being filled */
-    @Json(name = "compoundValue")
+    @field:JsonProperty("compoundValue")
     val compoundValue: kotlin.collections.List<ServiceDto>? = null
+
 )
 

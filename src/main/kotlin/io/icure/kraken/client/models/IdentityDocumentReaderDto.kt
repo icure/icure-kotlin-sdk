@@ -12,10 +12,14 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param eidDocumentSupportType 
  * @param reasonManualEncoding 
  * @param reasonUsingVignette 
@@ -24,18 +28,27 @@ import com.squareup.moshi.Json
  * @param timeReadingEIdDocument 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class IdentityDocumentReaderDto (
-    @Json(name = "eidDocumentSupportType")
+
+    @field:JsonProperty("eidDocumentSupportType")
     val eidDocumentSupportType: kotlin.Int,
-    @Json(name = "reasonManualEncoding")
+
+    @field:JsonProperty("reasonManualEncoding")
     val reasonManualEncoding: kotlin.Int,
-    @Json(name = "reasonUsingVignette")
+
+    @field:JsonProperty("reasonUsingVignette")
     val reasonUsingVignette: kotlin.Int,
-    @Json(name = "justificatifDocumentNumber")
+
+    @field:JsonProperty("justificatifDocumentNumber")
     val justificatifDocumentNumber: kotlin.String? = null,
-    @Json(name = "supportSerialNumber")
+
+    @field:JsonProperty("supportSerialNumber")
     val supportSerialNumber: kotlin.String? = null,
-    @Json(name = "timeReadingEIdDocument")
+
+    @field:JsonProperty("timeReadingEIdDocument")
     val timeReadingEIdDocument: kotlin.Long? = null
+
 )
 

@@ -12,24 +12,35 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param successful 
  * @param healthcarePartyId 
  * @param reason 
  * @param username 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class AuthenticationResponse (
-    @Json(name = "successful")
+
+    @field:JsonProperty("successful")
     val successful: kotlin.Boolean,
-    @Json(name = "healthcarePartyId")
+
+    @field:JsonProperty("healthcarePartyId")
     val healthcarePartyId: kotlin.String? = null,
-    @Json(name = "reason")
+
+    @field:JsonProperty("reason")
     val reason: kotlin.String? = null,
-    @Json(name = "username")
+
+    @field:JsonProperty("username")
     val username: kotlin.String? = null
+
 )
 

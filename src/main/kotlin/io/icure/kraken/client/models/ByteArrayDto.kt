@@ -12,15 +12,23 @@
 package io.icure.kraken.client.models
 
 
-import com.squareup.moshi.Json
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 /**
  * 
+ *
  * @param data 
  */
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ByteArrayDto (
-    @Json(name = "data")
+
+    @field:JsonProperty("data")
     val data: kotlin.collections.List<kotlin.ByteArray>? = null
+
 )
 

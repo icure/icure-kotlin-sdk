@@ -11,6 +11,8 @@
 */
 package io.icure.kraken.client.apis
 
+import io.icure.asyncjacksonhttpclient.net.web.WebClient
+import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DatabaseInitialisationDto
 import io.icure.kraken.client.models.GroupDto
 import io.icure.kraken.client.models.IdWithRevDto
@@ -20,19 +22,20 @@ import io.icure.kraken.client.models.RegistrationInformationDto
 import io.icure.kraken.client.models.RegistrationSuccessDto
 import io.icure.kraken.client.models.ReplicationInfoDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ClientError
 import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.ServerError
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import io.icure.kraken.client.infrastructure.ResponseType
-import io.icure.kraken.client.infrastructure.Success
-import io.icure.kraken.client.infrastructure.toMultiValue
+import javax.inject.Named
 
-class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) {
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@Named
+class GroupApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient()) : ApiClient(basePath, webClient) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -57,26 +60,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto {
+    suspend fun createGroup(id: kotlin.String, name: kotlin.String, password: kotlin.String, databaseInitialisationDto: DatabaseInitialisationDto, server: kotlin.String?, q: kotlin.Int?, n: kotlin.Int?) : GroupDto?  {
         val localVariableConfig = createGroupRequestConfig(id = id, name = name, password = password, databaseInitialisationDto = databaseInitialisationDto, server = server, q = q, n = n)
 
-        val localVarResponse = request<DatabaseInitialisationDto, GroupDto>(
+        return request<DatabaseInitialisationDto, GroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -129,26 +118,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getGroup(id: kotlin.String) : GroupDto {
+    suspend fun getGroup(id: kotlin.String) : GroupDto?  {
         val localVariableConfig = getGroupRequestConfig(id = id)
 
-        val localVarResponse = request<Unit, GroupDto>(
+        return request<Unit, GroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -182,26 +157,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto {
+    suspend fun getReplicationInfo1(id: kotlin.String) : ReplicationInfoDto?  {
         val localVariableConfig = getReplicationInfo1RequestConfig(id = id)
 
-        val localVarResponse = request<Unit, ReplicationInfoDto>(
+        return request<Unit, ReplicationInfoDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ReplicationInfoDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -237,26 +198,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any {
+    suspend fun initDesignDocs(id: kotlin.String, clazz: kotlin.String?, warmup: kotlin.Boolean?) : kotlin.Any?  {
         val localVariableConfig = initDesignDocsRequestConfig(id = id, clazz = clazz, warmup = warmup)
 
-        val localVarResponse = request<Unit, kotlin.Any>(
+        return request<Unit, kotlin.Any>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -299,26 +246,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listGroups() : kotlin.collections.List<GroupDto> {
+    suspend fun listGroups() : kotlin.collections.List<GroupDto>?  {
         val localVariableConfig = listGroupsRequestConfig()
 
-        val localVarResponse = request<Unit, kotlin.collections.List<GroupDto>>(
+        return request<Unit, kotlin.collections.List<GroupDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<GroupDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -352,26 +285,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto {
+    suspend fun modifyGroupName(id: kotlin.String, name: kotlin.String) : GroupDto?  {
         val localVariableConfig = modifyGroupNameRequestConfig(id = id, name = name)
 
-        val localVarResponse = request<Unit, GroupDto>(
+        return request<Unit, GroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -407,26 +326,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto {
+    suspend fun modifyGroupProperties(id: kotlin.String, listOfPropertiesDto: ListOfPropertiesDto) : GroupDto?  {
         val localVariableConfig = modifyGroupPropertiesRequestConfig(id = id, listOfPropertiesDto = listOfPropertiesDto)
 
-        val localVarResponse = request<ListOfPropertiesDto, GroupDto>(
+        return request<ListOfPropertiesDto, GroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -461,26 +366,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto {
+    suspend fun registerNewGroupAdministrator(registrationInformationDto: RegistrationInformationDto) : RegistrationSuccessDto?  {
         val localVariableConfig = registerNewGroupAdministratorRequestConfig(registrationInformationDto = registrationInformationDto)
 
-        val localVarResponse = request<RegistrationInformationDto, RegistrationSuccessDto>(
+        return request<RegistrationInformationDto, RegistrationSuccessDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as RegistrationSuccessDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -517,26 +408,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any {
+    suspend fun resetStorage(id: kotlin.String, listOfIdsDto: ListOfIdsDto, q: kotlin.Int?, n: kotlin.Int?) : kotlin.Any?  {
         val localVariableConfig = resetStorageRequestConfig(id = id, listOfIdsDto = listOfIdsDto, q = q, n = n)
 
-        val localVarResponse = request<ListOfIdsDto, kotlin.Any>(
+        return request<ListOfIdsDto, kotlin.Any>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -582,26 +459,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto {
+    suspend fun setGroupPassword(id: kotlin.String, password: kotlin.String) : GroupDto?  {
         val localVariableConfig = setGroupPasswordRequestConfig(id = id, password = password)
 
-        val localVarResponse = request<Unit, GroupDto>(
+        return request<Unit, GroupDto>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GroupDto
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**
@@ -638,26 +501,12 @@ class GroupApi(basePath: kotlin.String = defaultBasePath) : ApiClient(basePath) 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun solveConflicts(id: kotlin.String, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto> {
+    suspend fun solveConflicts(id: kotlin.String, warmup: kotlin.Boolean?) : kotlin.collections.List<IdWithRevDto>?  {
         val localVariableConfig = solveConflictsRequestConfig(id = id, warmup = warmup)
 
-        val localVarResponse = request<Unit, kotlin.collections.List<IdWithRevDto>>(
+        return request<Unit, kotlin.collections.List<IdWithRevDto>>(
             localVariableConfig
         )
-
-        return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.collections.List<IdWithRevDto>
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-        }
     }
 
     /**

@@ -37,6 +37,7 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = "2.11.3")
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.11.3")
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = "2.11.3")
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")

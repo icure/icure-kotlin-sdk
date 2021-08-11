@@ -12,7 +12,7 @@ buildscript {
         maven { url = uri("https://maven.taktik.be/content/groups/public") }
     }
     dependencies {
-        classpath("com.taktik.gradle:gradle-plugin-git-version:1.0.13")
+        classpath("com.taktik.gradle:gradle-plugin-git-version:2.0.2")
     }
     plugins {
         `maven-publish`

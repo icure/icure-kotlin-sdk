@@ -13,6 +13,7 @@ buildscript {
     }
     dependencies {
         classpath("com.taktik.gradle:gradle-plugin-git-version:2.0.2")
+        classpath ("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
     }
     plugins {
         `maven-publish`
@@ -21,7 +22,7 @@ buildscript {
 }
 
 apply(plugin = "git-version")
-apply(plugin = "maven-publish")
+apply(plugin = "maven-repository")
 val gitVersion: String? by project
 
 group = "io.icure"
@@ -103,28 +104,6 @@ tasks.register("apply-custom-fixes") {
                     "dir" to File("${rootDir}/src/main/kotlin/io/icure/kraken/client/models"),
                     "includes" to "PatientDto.kt"
                 )
-            }
-        }
-    }
-}
-
-val repoUsername: String by project
-val repoPassword: String by project
-val mavenReleasesRepository: String by project
-publishing {
-    publications {
-        create<MavenPublication>(rootProject.name) {
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        maven {
-            name = "Taktik"
-            url = uri(mavenReleasesRepository)
-            credentials {
-                username = repoUsername
-                password = repoPassword
             }
         }
     }

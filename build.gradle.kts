@@ -56,14 +56,6 @@ java {
     withSourcesJar()
 }
 
-tasks.publish {
-    dependsOn("build")
-    mustRunAfter("build")
-    doFirst {
-        println("Artifact >>> ${project.group}:${project.name}:${project.version} <<< published to Maven repository")
-    }
-}
-
 tasks.build {
     dependsOn("openApiGenerate")
     mustRunAfter("apply-custom-fixes")

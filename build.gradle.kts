@@ -16,7 +16,6 @@ buildscript {
         classpath ("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
     }
     plugins {
-        `maven-publish`
         id("org.openapi.generator") version "5.2.0"
     }
 }

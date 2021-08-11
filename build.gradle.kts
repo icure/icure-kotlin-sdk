@@ -54,7 +54,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.build {
+tasks.publish {
     dependsOn("openApiGenerate")
     mustRunAfter("apply-custom-fixes")
 }

@@ -1,9 +1,10 @@
-val kotlinVersion = "1.4.21"
-val kotlinCoroutinesVersion = "1.4.2"
+val kotlinVersion = "1.5.21"
+val kotlinCoroutinesVersion = "1.5.1"
 val jacksonVersion = "2.12.4"
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.5.21"
+    kotlin("kapt") version "1.5.21"
 }
 
 buildscript {
@@ -35,15 +36,25 @@ repositories {
 }
 
 dependencies {
+    api(group = "com.github.pozo", name = "mapstruct-kotlin", version = "1.4.0.0")
+    kapt(group = "com.github.pozo", name = "mapstruct-kotlin-processor", version = "1.4.0.0")
+
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
+
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
     implementation(group = "io.icure", name = "async-jackson-http-client", version = "bc6844fb0b")
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
+    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.4.2.Final")
+
+    // Bouncy Castle
+    implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
+    implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
 
     testImplementation("io.kotlintest", "kotlintest", "2.0.7")
     testImplementation("junit", "junit", "4.12")

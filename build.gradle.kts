@@ -54,8 +54,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.compileKotlin {
-    dependsOn("openApiGenerate")
+tasks.getByName("publish") {
+    dependsOn("openApiGenerate", "build")
     mustRunAfter("apply-custom-fixes")
 }
 
@@ -97,4 +97,8 @@ tasks.register("apply-custom-fixes") {
             }
         }
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

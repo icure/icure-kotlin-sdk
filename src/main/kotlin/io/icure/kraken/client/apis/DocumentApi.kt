@@ -19,6 +19,7 @@ import io.icure.kraken.client.models.DocumentDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -50,7 +51,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createDocument(documentDto: DocumentDto) : DocumentDto? {
+    suspend fun createDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = createDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
@@ -89,7 +90,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteAttachment(documentId: kotlin.String) : DocumentDto? {
+    suspend fun deleteAttachment(documentId: kotlin.String) : DocumentDto?  {
         val localVariableConfig = deleteAttachmentRequestConfig(documentId = documentId)
 
         return request<Unit, DocumentDto>(
@@ -128,7 +129,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteDocument(documentIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteDocument(documentIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteDocumentRequestConfig(documentIds = documentIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -169,7 +170,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>? {
+    suspend fun findByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = findByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode = documentTypeCode, hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
@@ -216,7 +217,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>? {
+    suspend fun findDocumentsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = findDocumentsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
@@ -260,7 +261,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findWithoutDelegation(limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>? {
+    suspend fun findWithoutDelegation(limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = findWithoutDelegationRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
@@ -304,7 +305,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocument(documentId: kotlin.String) : DocumentDto? {
+    suspend fun getDocument(documentId: kotlin.String) : DocumentDto?  {
         val localVariableConfig = getDocumentRequestConfig(documentId = documentId)
 
         return request<Unit, DocumentDto>(
@@ -346,7 +347,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : java.io.File? {
+    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : java.io.File?  {
         val localVariableConfig = getDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
 
         return request<Unit, java.io.File>(
@@ -396,7 +397,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentByExternalUuid(externalUuid: kotlin.String) : DocumentDto? {
+    suspend fun getDocumentByExternalUuid(externalUuid: kotlin.String) : DocumentDto?  {
         val localVariableConfig = getDocumentByExternalUuidRequestConfig(externalUuid = externalUuid)
 
         return request<Unit, DocumentDto>(
@@ -435,7 +436,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocuments(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocumentDto>? {
+    suspend fun getDocuments(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = getDocumentsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocumentDto>>(
@@ -474,7 +475,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentsByExternalUuid(externalUuid: kotlin.String) : kotlin.collections.List<DocumentDto>? {
+    suspend fun getDocumentsByExternalUuid(externalUuid: kotlin.String) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = getDocumentsByExternalUuidRequestConfig(externalUuid = externalUuid)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
@@ -513,7 +514,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyDocument(documentDto: DocumentDto) : DocumentDto? {
+    suspend fun modifyDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = modifyDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
@@ -552,7 +553,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>? {
+    suspend fun modifyDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = modifyDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
@@ -593,7 +594,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto? {
+    suspend fun setDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
         val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, requestBody = requestBody, enckeys = enckeys)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, DocumentDto>(
@@ -641,7 +642,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto? {
+    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
         val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, attachment = attachment, enckeys = enckeys)
 
         return request<Map<String, Any?>, DocumentDto>(
@@ -687,7 +688,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>? {
+    suspend fun setDocumentsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>?  {
         val localVariableConfig = setDocumentsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
@@ -728,7 +729,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setSafeDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto? {
+    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, enckeys: kotlin.String?) : DocumentDto?  {
         val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, requestBody = requestBody, enckeys = enckeys)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, DocumentDto>(

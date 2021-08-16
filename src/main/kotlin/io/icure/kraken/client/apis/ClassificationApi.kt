@@ -19,6 +19,7 @@ import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.IcureStubDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -50,7 +51,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createClassification(classificationDto: ClassificationDto) : ClassificationDto? {
+    suspend fun createClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = createClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
@@ -89,7 +90,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteClassifications(classificationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteClassifications(classificationIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteClassificationsRequestConfig(classificationIds = classificationIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -129,7 +130,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findClassificationsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationDto>? {
+    suspend fun findClassificationsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = findClassificationsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<ClassificationDto>>(
@@ -173,7 +174,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassification(classificationId: kotlin.String) : ClassificationDto? {
+    suspend fun getClassification(classificationId: kotlin.String) : ClassificationDto?  {
         val localVariableConfig = getClassificationRequestConfig(classificationId = classificationId)
 
         return request<Unit, ClassificationDto>(
@@ -212,7 +213,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassificationByHcPartyId(ids: kotlin.String) : kotlin.collections.List<ClassificationDto>? {
+    suspend fun getClassificationByHcPartyId(ids: kotlin.String) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = getClassificationByHcPartyIdRequestConfig(ids = ids)
 
         return request<Unit, kotlin.collections.List<ClassificationDto>>(
@@ -251,7 +252,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyClassification(classificationDto: ClassificationDto) : ClassificationDto? {
+    suspend fun modifyClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = modifyClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
@@ -291,7 +292,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun newClassificationDelegations(classificationId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationDto? {
+    suspend fun newClassificationDelegations(classificationId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationDto?  {
         val localVariableConfig = newClassificationDelegationsRequestConfig(classificationId = classificationId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, ClassificationDto>(
@@ -331,7 +332,7 @@ class ClassificationApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setClassificationsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>? {
+    suspend fun setClassificationsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>?  {
         val localVariableConfig = setClassificationsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(

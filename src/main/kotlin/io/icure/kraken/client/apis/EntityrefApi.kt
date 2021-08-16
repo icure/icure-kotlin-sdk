@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.EntityReferenceDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -47,7 +48,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto? {
+    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto?  {
         val localVariableConfig = createEntityReferenceRequestConfig(entityReferenceDto = entityReferenceDto)
 
         return request<EntityReferenceDto, EntityReferenceDto>(
@@ -86,7 +87,7 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getLatest(prefix: kotlin.String) : EntityReferenceDto? {
+    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto?  {
         val localVariableConfig = getLatestRequestConfig(prefix = prefix)
 
         return request<Unit, EntityReferenceDto>(

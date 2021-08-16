@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.EntityTemplateDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto? {
+    suspend fun createEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = createEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
@@ -87,7 +88,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun createEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = createEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
@@ -126,7 +127,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteEntityTemplate(entityTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteEntityTemplate(entityTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteEntityTemplateRequestConfig(entityTemplateIds = entityTemplateIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -167,7 +168,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllEntityTemplates(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun findAllEntityTemplates(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findAllEntityTemplatesRequestConfig(type = type, searchString = searchString, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
@@ -218,7 +219,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findAllEntityTemplatesByKeywordRequestConfig(type = type, keyword = keyword, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
@@ -267,7 +268,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findEntityTemplates(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun findEntityTemplates(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findEntityTemplatesRequestConfig(userId = userId, type = type, searchString = searchString, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
@@ -320,7 +321,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun findEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = findEntityTemplatesByKeywordRequestConfig(userId = userId, type = type, keyword = keyword, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
@@ -367,7 +368,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getEntityTemplate(entityTemplateId: kotlin.String) : EntityTemplateDto? {
+    suspend fun getEntityTemplate(entityTemplateId: kotlin.String) : EntityTemplateDto?  {
         val localVariableConfig = getEntityTemplateRequestConfig(entityTemplateId = entityTemplateId)
 
         return request<Unit, EntityTemplateDto>(
@@ -406,7 +407,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getEntityTemplates(entityTemplateIds: kotlin.String) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun getEntityTemplates(entityTemplateIds: kotlin.String) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = getEntityTemplatesRequestConfig(entityTemplateIds = entityTemplateIds)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
@@ -445,7 +446,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto? {
+    suspend fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = modifyEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
@@ -484,7 +485,7 @@ class EntitytemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun modifyEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = modifyEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(

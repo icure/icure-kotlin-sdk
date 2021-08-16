@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.KeywordDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createKeyword(keywordDto: KeywordDto) : KeywordDto? {
+    suspend fun createKeyword(keywordDto: KeywordDto) : KeywordDto?  {
         val localVariableConfig = createKeywordRequestConfig(keywordDto = keywordDto)
 
         return request<KeywordDto, KeywordDto>(
@@ -87,7 +88,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteKeywords(keywordIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteKeywords(keywordIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteKeywordsRequestConfig(keywordIds = keywordIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -126,7 +127,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getKeyword(keywordId: kotlin.String) : KeywordDto? {
+    suspend fun getKeyword(keywordId: kotlin.String) : KeywordDto?  {
         val localVariableConfig = getKeywordRequestConfig(keywordId = keywordId)
 
         return request<Unit, KeywordDto>(
@@ -164,7 +165,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getKeywords() : kotlin.collections.List<KeywordDto>? {
+    suspend fun getKeywords() : kotlin.collections.List<KeywordDto>?  {
         val localVariableConfig = getKeywordsRequestConfig()
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
@@ -202,7 +203,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getKeywordsByUser(userId: kotlin.String) : kotlin.collections.List<KeywordDto>? {
+    suspend fun getKeywordsByUser(userId: kotlin.String) : kotlin.collections.List<KeywordDto>?  {
         val localVariableConfig = getKeywordsByUserRequestConfig(userId = userId)
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
@@ -241,7 +242,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyKeyword(keywordDto: KeywordDto) : KeywordDto? {
+    suspend fun modifyKeyword(keywordDto: KeywordDto) : KeywordDto?  {
         val localVariableConfig = modifyKeywordRequestConfig(keywordDto = keywordDto)
 
         return request<KeywordDto, KeywordDto>(

@@ -33,6 +33,7 @@ import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PatientDto
 import io.icure.kraken.client.models.ReplicatorDocument
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -64,7 +65,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto? {
+    suspend fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = createTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
@@ -103,7 +104,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>? {
+    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = createTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
@@ -142,7 +143,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpContact(contactDto: ContactDto) : ContactDto? {
+    suspend fun createTmpContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = createTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
@@ -181,7 +182,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>? {
+    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = createTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
@@ -219,7 +220,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDatabase() : kotlin.Any? {
+    suspend fun createTmpDatabase() : kotlin.Any?  {
         val localVariableConfig = createTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
@@ -257,7 +258,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDocument(documentDto: DocumentDto) : DocumentDto? {
+    suspend fun createTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = createTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
@@ -296,7 +297,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>? {
+    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = createTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
@@ -335,7 +336,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto? {
+    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = createTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
@@ -374,7 +375,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = createTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
@@ -413,7 +414,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpForm(formDto: FormDto) : FormDto? {
+    suspend fun createTmpForm(formDto: FormDto) : FormDto?  {
         val localVariableConfig = createTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
@@ -452,7 +453,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>? {
+    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = createTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
@@ -491,7 +492,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto? {
+    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = createTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
@@ -530,7 +531,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = createTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
@@ -569,7 +570,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto? {
+    suspend fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
         val localVariableConfig = createTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
@@ -608,7 +609,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>? {
+    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = createTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
@@ -647,7 +648,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpMessage(messageDto: MessageDto) : MessageDto? {
+    suspend fun createTmpMessage(messageDto: MessageDto) : MessageDto?  {
         val localVariableConfig = createTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
@@ -686,7 +687,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>? {
+    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = createTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
@@ -725,7 +726,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpPatient(patientDto: PatientDto) : PatientDto? {
+    suspend fun createTmpPatient(patientDto: PatientDto) : PatientDto?  {
         val localVariableConfig = createTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
@@ -764,7 +765,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>? {
+    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = createTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
@@ -803,7 +804,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
@@ -841,7 +842,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun destroyTmpDatabase() : kotlin.Any? {
+    suspend fun destroyTmpDatabase() : kotlin.Any?  {
         val localVariableConfig = destroyTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
@@ -879,7 +880,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpClassification(id: kotlin.String) : ClassificationDto? {
+    suspend fun getTmpClassification(id: kotlin.String) : ClassificationDto?  {
         val localVariableConfig = getTmpClassificationRequestConfig(id = id)
 
         return request<Unit, ClassificationDto>(
@@ -918,7 +919,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>? {
+    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = getTmpClassificationsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
@@ -957,7 +958,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpContact(id: kotlin.String) : ContactDto? {
+    suspend fun getTmpContact(id: kotlin.String) : ContactDto?  {
         val localVariableConfig = getTmpContactRequestConfig(id = id)
 
         return request<Unit, ContactDto>(
@@ -996,7 +997,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>? {
+    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = getTmpContactsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
@@ -1035,7 +1036,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpDocument(id: kotlin.String) : DocumentDto? {
+    suspend fun getTmpDocument(id: kotlin.String) : DocumentDto?  {
         val localVariableConfig = getTmpDocumentRequestConfig(id = id)
 
         return request<Unit, DocumentDto>(
@@ -1074,7 +1075,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>? {
+    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = getTmpDocumentsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
@@ -1113,7 +1114,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto? {
+    suspend fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto?  {
         val localVariableConfig = getTmpEntityTemplateRequestConfig(id = id)
 
         return request<Unit, EntityTemplateDto>(
@@ -1152,7 +1153,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = getTmpEntityTemplatesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<EntityTemplateDto>>(
@@ -1191,7 +1192,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpForm(id: kotlin.String) : FormDto? {
+    suspend fun getTmpForm(id: kotlin.String) : FormDto?  {
         val localVariableConfig = getTmpFormRequestConfig(id = id)
 
         return request<Unit, FormDto>(
@@ -1230,7 +1231,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>? {
+    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = getTmpFormsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
@@ -1269,7 +1270,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpHealthElement(id: kotlin.String) : HealthElementDto? {
+    suspend fun getTmpHealthElement(id: kotlin.String) : HealthElementDto?  {
         val localVariableConfig = getTmpHealthElementRequestConfig(id = id)
 
         return request<Unit, HealthElementDto>(
@@ -1308,7 +1309,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = getTmpHealthElementsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
@@ -1347,7 +1348,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpInvoice(id: kotlin.String) : InvoiceDto? {
+    suspend fun getTmpInvoice(id: kotlin.String) : InvoiceDto?  {
         val localVariableConfig = getTmpInvoiceRequestConfig(id = id)
 
         return request<Unit, InvoiceDto>(
@@ -1386,7 +1387,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>? {
+    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = getTmpInvoicesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
@@ -1425,7 +1426,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpMessage(id: kotlin.String) : MessageDto? {
+    suspend fun getTmpMessage(id: kotlin.String) : MessageDto?  {
         val localVariableConfig = getTmpMessageRequestConfig(id = id)
 
         return request<Unit, MessageDto>(
@@ -1464,7 +1465,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>? {
+    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = getTmpMessagesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
@@ -1503,7 +1504,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpPatient(id: kotlin.String) : PatientDto? {
+    suspend fun getTmpPatient(id: kotlin.String) : PatientDto?  {
         val localVariableConfig = getTmpPatientRequestConfig(id = id)
 
         return request<Unit, PatientDto>(
@@ -1542,7 +1543,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>? {
+    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = getTmpPatientsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
@@ -1582,7 +1583,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto? {
+    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto?  {
         val localVariableConfig = listTmpClassificationsRequestConfig(firstClassificationId = firstClassificationId, pageSize = pageSize)
 
         return request<Unit, PaginatedListClassificationDto>(
@@ -1631,7 +1632,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto? {
+    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpContactsRequestConfig(firstContactId = firstContactId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
@@ -1680,7 +1681,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto? {
+    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto?  {
         val localVariableConfig = listTmpDocumentsRequestConfig(firstDocumentId = firstDocumentId, pageSize = pageSize)
 
         return request<Unit, PaginatedListDocumentDto>(
@@ -1729,7 +1730,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto? {
+    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto?  {
         val localVariableConfig = listTmpEntityTemplatesRequestConfig(firstEntityTemplateId = firstEntityTemplateId, pageSize = pageSize)
 
         return request<Unit, PaginatedListEntityTemplateDto>(
@@ -1778,7 +1779,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto? {
+    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto?  {
         val localVariableConfig = listTmpFormsRequestConfig(firstFormId = firstFormId, pageSize = pageSize)
 
         return request<Unit, PaginatedListFormDto>(
@@ -1827,7 +1828,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto? {
+    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto?  {
         val localVariableConfig = listTmpHealthElementsRequestConfig(firstHealthElementId = firstHealthElementId, pageSize = pageSize)
 
         return request<Unit, PaginatedListHealthElementDto>(
@@ -1876,7 +1877,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto? {
+    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpInvoicesRequestConfig(firstInvoiceId = firstInvoiceId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
@@ -1925,7 +1926,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto? {
+    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto?  {
         val localVariableConfig = listTmpMessagesRequestConfig(firstMessageId = firstMessageId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
@@ -1974,7 +1975,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto? {
+    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto?  {
         val localVariableConfig = listTmpPatientsRequestConfig(firstPatientId = firstPatientId, pageSize = pageSize)
 
         return request<Unit, PaginatedListPatientDto>(
@@ -2022,7 +2023,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto? {
+    suspend fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto?  {
         val localVariableConfig = modifyTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
@@ -2061,7 +2062,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>? {
+    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>?  {
         val localVariableConfig = modifyTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
@@ -2100,7 +2101,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpContact(contactDto: ContactDto) : ContactDto? {
+    suspend fun modifyTmpContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = modifyTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
@@ -2139,7 +2140,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>? {
+    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = modifyTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
@@ -2178,7 +2179,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto? {
+    suspend fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto?  {
         val localVariableConfig = modifyTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
@@ -2217,7 +2218,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>? {
+    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>?  {
         val localVariableConfig = modifyTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
@@ -2256,7 +2257,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto? {
+    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto?  {
         val localVariableConfig = modifyTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
@@ -2295,7 +2296,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>? {
+    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>?  {
         val localVariableConfig = modifyTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
@@ -2334,7 +2335,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpForm(formDto: FormDto) : FormDto? {
+    suspend fun modifyTmpForm(formDto: FormDto) : FormDto?  {
         val localVariableConfig = modifyTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
@@ -2373,7 +2374,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>? {
+    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>?  {
         val localVariableConfig = modifyTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
@@ -2412,7 +2413,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto? {
+    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = modifyTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
@@ -2451,7 +2452,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = modifyTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
@@ -2490,7 +2491,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto? {
+    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto?  {
         val localVariableConfig = modifyTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
@@ -2529,7 +2530,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>? {
+    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>?  {
         val localVariableConfig = modifyTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
@@ -2568,7 +2569,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpMessage(messageDto: MessageDto) : MessageDto? {
+    suspend fun modifyTmpMessage(messageDto: MessageDto) : MessageDto?  {
         val localVariableConfig = modifyTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
@@ -2607,7 +2608,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>? {
+    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>?  {
         val localVariableConfig = modifyTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
@@ -2646,7 +2647,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpPatient(patientDto: PatientDto) : PatientDto? {
+    suspend fun modifyTmpPatient(patientDto: PatientDto) : PatientDto?  {
         val localVariableConfig = modifyTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
@@ -2685,7 +2686,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>? {
+    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>?  {
         val localVariableConfig = modifyTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
@@ -2724,7 +2725,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = purgeTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
@@ -2764,7 +2765,7 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocument? {
+    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocument?  {
         val localVariableConfig = replicateToTmpDatabaseRequestConfig(from = from, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, ReplicatorDocument>(

@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -47,7 +48,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun offerAuth(bucket: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>? {
+    suspend fun offerAuth(bucket: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
         val localVariableConfig = offerAuthRequestConfig(bucket = bucket, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
@@ -88,7 +89,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun pub(key: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>? {
+    suspend fun pub(key: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : kotlin.collections.Map<kotlin.String, kotlin.Boolean>?  {
         val localVariableConfig = pubRequestConfig(key = key, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, kotlin.collections.Map<kotlin.String, kotlin.Boolean>>(
@@ -128,7 +129,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun recoverAuth(bucket: kotlin.String) : java.io.File? {
+    suspend fun recoverAuth(bucket: kotlin.String) : java.io.File?  {
         val localVariableConfig = recoverAuthRequestConfig(bucket = bucket)
 
         return request<Unit, java.io.File>(
@@ -167,7 +168,7 @@ class PubsubApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun sub(key: kotlin.String) : java.io.File? {
+    suspend fun sub(key: kotlin.String) : java.io.File?  {
         val localVariableConfig = subRequestConfig(key = key)
 
         return request<Unit, java.io.File>(

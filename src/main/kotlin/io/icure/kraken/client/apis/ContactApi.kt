@@ -28,6 +28,7 @@ import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
 import io.icure.kraken.client.models.ServiceDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -60,7 +61,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun closeForHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ContactDto>? {
+    suspend fun closeForHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = closeForHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -104,7 +105,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createContact(contactDto: ContactDto) : ContactDto? {
+    suspend fun createContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = createContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
@@ -143,7 +144,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>? {
+    suspend fun createContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = createContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
@@ -182,7 +183,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteContacts(contactIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteContacts(contactIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteContactsRequestConfig(contactIds = contactIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -223,7 +224,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun filterContactsBy(filterChainContact: FilterChainContact, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto? {
+    suspend fun filterContactsBy(filterChainContact: FilterChainContact, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto?  {
         val localVariableConfig = filterContactsByRequestConfig(filterChainContact = filterChainContact, startDocumentId = startDocumentId, limit = limit)
 
         return request<FilterChainContact, PaginatedListContactDto>(
@@ -274,7 +275,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun filterServicesBy(filterChainService: FilterChainService, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListServiceDto? {
+    suspend fun filterServicesBy(filterChainService: FilterChainService, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListServiceDto?  {
         val localVariableConfig = filterServicesByRequestConfig(filterChainService = filterChainService, startDocumentId = startDocumentId, limit = limit)
 
         return request<FilterChainService, PaginatedListServiceDto>(
@@ -324,7 +325,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByHCPartyFormId(hcPartyId: kotlin.String, formId: kotlin.String) : kotlin.collections.List<ContactDto>? {
+    suspend fun findByHCPartyFormId(hcPartyId: kotlin.String, formId: kotlin.String) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findByHCPartyFormIdRequestConfig(hcPartyId = hcPartyId, formId = formId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -369,7 +370,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByHCPartyFormIds(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>? {
+    suspend fun findByHCPartyFormIds(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findByHCPartyFormIdsRequestConfig(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
@@ -415,7 +416,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByHCPartyPatientSecretFKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?) : kotlin.collections.List<ContactDto>? {
+    suspend fun findByHCPartyPatientSecretFKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findByHCPartyPatientSecretFKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys, planOfActionsIds = planOfActionsIds, skipClosedContacts = skipClosedContacts)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -468,7 +469,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findByHCPartyServiceId(hcPartyId: kotlin.String, serviceId: kotlin.String) : kotlin.collections.List<ContactDto>? {
+    suspend fun findByHCPartyServiceId(hcPartyId: kotlin.String, serviceId: kotlin.String) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findByHCPartyServiceIdRequestConfig(hcPartyId = hcPartyId, serviceId = serviceId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -512,7 +513,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findContactsByExternalId(externalId: kotlin.String) : kotlin.collections.List<ContactDto>? {
+    suspend fun findContactsByExternalId(externalId: kotlin.String) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findContactsByExternalIdRequestConfig(externalId = externalId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
@@ -555,7 +556,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findContactsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>? {
+    suspend fun findContactsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = findContactsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
@@ -599,7 +600,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findContactsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>? {
+    suspend fun findContactsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>?  {
         val localVariableConfig = findContactsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
@@ -643,7 +644,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getContact(contactId: kotlin.String) : ContactDto? {
+    suspend fun getContact(contactId: kotlin.String) : ContactDto?  {
         val localVariableConfig = getContactRequestConfig(contactId = contactId)
 
         return request<Unit, ContactDto>(
@@ -682,7 +683,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getContacts(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>? {
+    suspend fun getContacts(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = getContactsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
@@ -720,7 +721,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getEmptyContent() : ContentDto? {
+    suspend fun getEmptyContent() : ContentDto?  {
         val localVariableConfig = getEmptyContentRequestConfig()
 
         return request<Unit, ContentDto>(
@@ -759,7 +760,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getServiceCodesOccurences(codeType: kotlin.String, minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>? {
+    suspend fun getServiceCodesOccurences(codeType: kotlin.String, minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>?  {
         val localVariableConfig = getServiceCodesOccurencesRequestConfig(codeType = codeType, minOccurences = minOccurences)
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
@@ -803,7 +804,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listContactsByOpeningDate(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto? {
+    suspend fun listContactsByOpeningDate(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto?  {
         val localVariableConfig = listContactsByOpeningDateRequestConfig(startKey = startKey, endKey = endKey, hcpartyid = hcpartyid, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListContactDto>(
@@ -857,7 +858,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listServices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ServiceDto>? {
+    suspend fun listServices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ServiceDto>?  {
         val localVariableConfig = listServicesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
@@ -896,7 +897,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listServicesByAssociationId(associationId: kotlin.String) : kotlin.collections.List<ServiceDto>? {
+    suspend fun listServicesByAssociationId(associationId: kotlin.String) : kotlin.collections.List<ServiceDto>?  {
         val localVariableConfig = listServicesByAssociationIdRequestConfig(associationId = associationId)
 
         return request<Unit, kotlin.collections.List<ServiceDto>>(
@@ -939,7 +940,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listServicesLinkedTo(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?) : kotlin.collections.List<ServiceDto>? {
+    suspend fun listServicesLinkedTo(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?) : kotlin.collections.List<ServiceDto>?  {
         val localVariableConfig = listServicesLinkedToRequestConfig(listOfIdsDto = listOfIdsDto, linkType = linkType)
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
@@ -984,7 +985,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun matchContactsBy(abstractFilterDtoContact: AbstractFilterDtoContact) : kotlin.collections.List<kotlin.String>? {
+    suspend fun matchContactsBy(abstractFilterDtoContact: AbstractFilterDtoContact) : kotlin.collections.List<kotlin.String>?  {
         val localVariableConfig = matchContactsByRequestConfig(abstractFilterDtoContact = abstractFilterDtoContact)
 
         return request<AbstractFilterDtoContact, kotlin.collections.List<kotlin.String>>(
@@ -1023,7 +1024,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyContact(contactDto: ContactDto) : ContactDto? {
+    suspend fun modifyContact(contactDto: ContactDto) : ContactDto?  {
         val localVariableConfig = modifyContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
@@ -1062,7 +1063,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>? {
+    suspend fun modifyContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = modifyContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
@@ -1102,7 +1103,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun newContactDelegations(contactId: kotlin.String, delegationDto: DelegationDto) : ContactDto? {
+    suspend fun newContactDelegations(contactId: kotlin.String, delegationDto: DelegationDto) : ContactDto?  {
         val localVariableConfig = newContactDelegationsRequestConfig(contactId = contactId, delegationDto = delegationDto)
 
         return request<DelegationDto, ContactDto>(
@@ -1142,7 +1143,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<ContactDto>? {
+    suspend fun setContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<ContactDto>?  {
         val localVariableConfig = setContactsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<ContactDto>>(

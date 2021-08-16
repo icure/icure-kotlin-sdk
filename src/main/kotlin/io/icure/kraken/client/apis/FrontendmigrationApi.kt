@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.FrontEndMigrationDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto? {
+    suspend fun createFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto?  {
         val localVariableConfig = createFrontEndMigrationRequestConfig(frontEndMigrationDto = frontEndMigrationDto)
 
         return request<FrontEndMigrationDto, FrontEndMigrationDto>(
@@ -87,7 +88,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteFrontEndMigration(frontEndMigrationId: kotlin.String) : DocIdentifier? {
+    suspend fun deleteFrontEndMigration(frontEndMigrationId: kotlin.String) : DocIdentifier?  {
         val localVariableConfig = deleteFrontEndMigrationRequestConfig(frontEndMigrationId = frontEndMigrationId)
 
         return request<Unit, DocIdentifier>(
@@ -126,7 +127,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigration(frontEndMigrationId: kotlin.String) : FrontEndMigrationDto? {
+    suspend fun getFrontEndMigration(frontEndMigrationId: kotlin.String) : FrontEndMigrationDto?  {
         val localVariableConfig = getFrontEndMigrationRequestConfig(frontEndMigrationId = frontEndMigrationId)
 
         return request<Unit, FrontEndMigrationDto>(
@@ -165,7 +166,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigrationByName(frontEndMigrationName: kotlin.String) : kotlin.collections.List<FrontEndMigrationDto>? {
+    suspend fun getFrontEndMigrationByName(frontEndMigrationName: kotlin.String) : kotlin.collections.List<FrontEndMigrationDto>?  {
         val localVariableConfig = getFrontEndMigrationByNameRequestConfig(frontEndMigrationName = frontEndMigrationName)
 
         return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
@@ -203,7 +204,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getFrontEndMigrations() : kotlin.collections.List<FrontEndMigrationDto>? {
+    suspend fun getFrontEndMigrations() : kotlin.collections.List<FrontEndMigrationDto>?  {
         val localVariableConfig = getFrontEndMigrationsRequestConfig()
 
         return request<Unit, kotlin.collections.List<FrontEndMigrationDto>>(
@@ -241,7 +242,7 @@ class FrontendmigrationApi(basePath: kotlin.String = defaultBasePath, webClient:
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto? {
+    suspend fun modifyFrontEndMigration(frontEndMigrationDto: FrontEndMigrationDto) : FrontEndMigrationDto?  {
         val localVariableConfig = modifyFrontEndMigrationRequestConfig(frontEndMigrationDto = frontEndMigrationDto)
 
         return request<FrontEndMigrationDto, FrontEndMigrationDto>(

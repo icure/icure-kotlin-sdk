@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.MedexInfoDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -47,7 +48,7 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String? {
+    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String?  {
         val localVariableConfig = generateMedexRequestConfig(medexInfoDto = medexInfoDto)
 
         return request<MedexInfoDto, kotlin.String>(

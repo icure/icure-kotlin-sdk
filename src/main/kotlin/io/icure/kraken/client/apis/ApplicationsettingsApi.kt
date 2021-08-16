@@ -16,6 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ApplicationSettingsDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -46,7 +47,7 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getApplicationSettings() : kotlin.collections.List<ApplicationSettingsDto>? {
+    suspend fun getApplicationSettings() : kotlin.collections.List<ApplicationSettingsDto>?  {
         val localVariableConfig = getApplicationSettingsRequestConfig()
 
         return request<Unit, kotlin.collections.List<ApplicationSettingsDto>>(

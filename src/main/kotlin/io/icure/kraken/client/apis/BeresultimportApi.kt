@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ResultInfoDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -49,7 +50,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean? {
+    suspend fun canHandle(id: kotlin.String, enckeys: kotlin.String) : kotlin.Boolean?  {
         val localVariableConfig = canHandleRequestConfig(id = id, enckeys = enckeys)
 
         return request<Unit, kotlin.Boolean>(
@@ -99,7 +100,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto? {
+    suspend fun doImport(documentId: kotlin.String, hcpId: kotlin.String, language: kotlin.String, protocolIds: kotlin.String, formIds: kotlin.String, planOfActionId: kotlin.String, enckeys: kotlin.String, ctc: ContactDto) : ContactDto?  {
         val localVariableConfig = doImportRequestConfig(documentId = documentId, hcpId = hcpId, language = language, protocolIds = protocolIds, formIds = formIds, planOfActionId = planOfActionId, enckeys = enckeys, ctc = ctc)
 
         return request<Unit, ContactDto>(
@@ -155,7 +156,7 @@ class BeresultimportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto>? {
+    suspend fun getInfos(id: kotlin.String, language: kotlin.String, enckeys: kotlin.String, full: kotlin.Boolean?) : kotlin.collections.List<ResultInfoDto>?  {
         val localVariableConfig = getInfosRequestConfig(id = id, language = language, enckeys = enckeys, full = full)
 
         return request<Unit, kotlin.collections.List<ResultInfoDto>>(

@@ -15,6 +15,7 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -51,7 +52,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun exportHealthOne(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File? {
+    suspend fun exportHealthOne(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = exportHealthOneRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
@@ -101,7 +102,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun exportKmehrReport(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, mimeType: kotlin.Boolean?) : java.io.File? {
+    suspend fun exportKmehrReport(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>, mimeType: kotlin.Boolean?) : java.io.File?  {
         val localVariableConfig = exportKmehrReportRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, requestBody = requestBody, mimeType = mimeType)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(
@@ -156,7 +157,7 @@ class BeresultexportApi(basePath: kotlin.String = defaultBasePath, webClient: We
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun exportMedidoc(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File? {
+    suspend fun exportMedidoc(fromHcpId: kotlin.String, toHcpId: kotlin.String, patId: kotlin.String, date: kotlin.Long, ref: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : java.io.File?  {
         val localVariableConfig = exportMedidocRequestConfig(fromHcpId = fromHcpId, toHcpId = toHcpId, patId = patId, date = date, ref = ref, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, java.io.File>(

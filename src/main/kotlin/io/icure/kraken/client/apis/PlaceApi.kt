@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.PlaceDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createPlace(placeDto: PlaceDto) : PlaceDto? {
+    suspend fun createPlace(placeDto: PlaceDto) : PlaceDto?  {
         val localVariableConfig = createPlaceRequestConfig(placeDto = placeDto)
 
         return request<PlaceDto, PlaceDto>(
@@ -87,7 +88,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deletePlace(placeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deletePlace(placeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deletePlaceRequestConfig(placeIds = placeIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -126,7 +127,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getPlace(placeId: kotlin.String) : PlaceDto? {
+    suspend fun getPlace(placeId: kotlin.String) : PlaceDto?  {
         val localVariableConfig = getPlaceRequestConfig(placeId = placeId)
 
         return request<Unit, PlaceDto>(
@@ -164,7 +165,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getPlaces() : kotlin.collections.List<PlaceDto>? {
+    suspend fun getPlaces() : kotlin.collections.List<PlaceDto>?  {
         val localVariableConfig = getPlacesRequestConfig()
 
         return request<Unit, kotlin.collections.List<PlaceDto>>(
@@ -202,7 +203,7 @@ class PlaceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyPlace(placeDto: PlaceDto) : PlaceDto? {
+    suspend fun modifyPlace(placeDto: PlaceDto) : PlaceDto?  {
         val localVariableConfig = modifyPlaceRequestConfig(placeDto = placeDto)
 
         return request<PlaceDto, PlaceDto>(

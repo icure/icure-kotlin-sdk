@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.CalendarItemTypeDto
 import io.icure.kraken.client.models.DocIdentifier
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto? {
+    suspend fun createCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto?  {
         val localVariableConfig = createCalendarItemTypeRequestConfig(calendarItemTypeDto = calendarItemTypeDto)
 
         return request<CalendarItemTypeDto, CalendarItemTypeDto>(
@@ -87,7 +88,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteCalendarItemType(calendarItemTypeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteCalendarItemType(calendarItemTypeIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteCalendarItemTypeRequestConfig(calendarItemTypeIds = calendarItemTypeIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -126,7 +127,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemType(calendarItemTypeId: kotlin.String) : CalendarItemTypeDto? {
+    suspend fun getCalendarItemType(calendarItemTypeId: kotlin.String) : CalendarItemTypeDto?  {
         val localVariableConfig = getCalendarItemTypeRequestConfig(calendarItemTypeId = calendarItemTypeId)
 
         return request<Unit, CalendarItemTypeDto>(
@@ -164,7 +165,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemTypes() : kotlin.collections.List<CalendarItemTypeDto>? {
+    suspend fun getCalendarItemTypes() : kotlin.collections.List<CalendarItemTypeDto>?  {
         val localVariableConfig = getCalendarItemTypesRequestConfig()
 
         return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
@@ -201,7 +202,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getCalendarItemTypesIncludeDeleted() : kotlin.collections.List<CalendarItemTypeDto>? {
+    suspend fun getCalendarItemTypesIncludeDeleted() : kotlin.collections.List<CalendarItemTypeDto>?  {
         val localVariableConfig = getCalendarItemTypesIncludeDeletedRequestConfig()
 
         return request<Unit, kotlin.collections.List<CalendarItemTypeDto>>(
@@ -239,7 +240,7 @@ class CalendarItemTypeApi(basePath: kotlin.String = defaultBasePath, webClient: 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto? {
+    suspend fun modifyCalendarItemType(calendarItemTypeDto: CalendarItemTypeDto) : CalendarItemTypeDto?  {
         val localVariableConfig = modifyCalendarItemTypeRequestConfig(calendarItemTypeDto = calendarItemTypeDto)
 
         return request<CalendarItemTypeDto, CalendarItemTypeDto>(

@@ -19,6 +19,7 @@ import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.PaginatedListClassificationTemplateDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -50,7 +51,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto? {
+    suspend fun createClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
         val localVariableConfig = createClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
@@ -89,7 +90,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteClassificationTemplates(classificationTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteClassificationTemplatesRequestConfig(classificationTemplateIds = classificationTemplateIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -129,7 +130,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>? {
+    suspend fun findClassificationTemplatesByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
         val localVariableConfig = findClassificationTemplatesByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
@@ -173,7 +174,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto? {
+    suspend fun getClassificationTemplate(classificationTemplateId: kotlin.String) : ClassificationTemplateDto?  {
         val localVariableConfig = getClassificationTemplateRequestConfig(classificationTemplateId = classificationTemplateId)
 
         return request<Unit, ClassificationTemplateDto>(
@@ -212,7 +213,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>? {
+    suspend fun getClassificationTemplateByIds(ids: kotlin.String) : kotlin.collections.List<ClassificationTemplateDto>?  {
         val localVariableConfig = getClassificationTemplateByIdsRequestConfig(ids = ids)
 
         return request<Unit, kotlin.collections.List<ClassificationTemplateDto>>(
@@ -253,7 +254,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto? {
+    suspend fun listClassificationTemplates(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListClassificationTemplateDto?  {
         val localVariableConfig = listClassificationTemplatesRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListClassificationTemplateDto>(
@@ -305,7 +306,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto? {
+    suspend fun modifyClassificationTemplate(classificationTemplateDto: ClassificationTemplateDto) : ClassificationTemplateDto?  {
         val localVariableConfig = modifyClassificationTemplateRequestConfig(classificationTemplateDto = classificationTemplateDto)
 
         return request<ClassificationTemplateDto, ClassificationTemplateDto>(
@@ -345,7 +346,7 @@ class ClassificationTemplateApi(basePath: kotlin.String = defaultBasePath, webCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto? {
+    suspend fun newClassificationTemplateDelegations(classificationTemplateId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : ClassificationTemplateDto?  {
         val localVariableConfig = newClassificationTemplateDelegationsRequestConfig(classificationTemplateId = classificationTemplateId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, ClassificationTemplateDto>(

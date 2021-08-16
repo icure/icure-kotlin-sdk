@@ -18,6 +18,7 @@ import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListTarificationDto
 import io.icure.kraken.client.models.TarificationDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -49,7 +50,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTarification(tarificationDto: TarificationDto) : TarificationDto? {
+    suspend fun createTarification(tarificationDto: TarificationDto) : TarificationDto?  {
         val localVariableConfig = createTarificationRequestConfig(tarificationDto = tarificationDto)
 
         return request<TarificationDto, TarificationDto>(
@@ -93,7 +94,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto? {
+    suspend fun findPaginatedTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto?  {
         val localVariableConfig = findPaginatedTarificationsRequestConfig(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
@@ -162,7 +163,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findPaginatedTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto? {
+    suspend fun findPaginatedTarificationsByLabel(region: kotlin.String?, types: kotlin.String?, language: kotlin.String?, label: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListTarificationDto?  {
         val localVariableConfig = findPaginatedTarificationsByLabelRequestConfig(region = region, types = types, language = language, label = label, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListTarificationDto>(
@@ -229,7 +230,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<TarificationDto>? {
+    suspend fun findTarifications(region: kotlin.String?, type: kotlin.String?, tarification: kotlin.String?, version: kotlin.String?) : kotlin.collections.List<TarificationDto>?  {
         val localVariableConfig = findTarificationsRequestConfig(region = region, type = type, tarification = tarification, version = version)
 
         return request<Unit, kotlin.collections.List<TarificationDto>>(
@@ -285,7 +286,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTarification(tarificationId: kotlin.String) : TarificationDto? {
+    suspend fun getTarification(tarificationId: kotlin.String) : TarificationDto?  {
         val localVariableConfig = getTarificationRequestConfig(tarificationId = tarificationId)
 
         return request<Unit, TarificationDto>(
@@ -326,7 +327,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTarificationWithParts(type: kotlin.String, tarification: kotlin.String, version: kotlin.String) : TarificationDto? {
+    suspend fun getTarificationWithParts(type: kotlin.String, tarification: kotlin.String, version: kotlin.String) : TarificationDto?  {
         val localVariableConfig = getTarificationWithPartsRequestConfig(type = type, tarification = tarification, version = version)
 
         return request<Unit, TarificationDto>(
@@ -367,7 +368,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getTarifications(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<TarificationDto>? {
+    suspend fun getTarifications(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<TarificationDto>?  {
         val localVariableConfig = getTarificationsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<TarificationDto>>(
@@ -406,7 +407,7 @@ class TarificationApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyTarification(tarificationDto: TarificationDto) : TarificationDto? {
+    suspend fun modifyTarification(tarificationDto: TarificationDto) : TarificationDto?  {
         val localVariableConfig = modifyTarificationRequestConfig(tarificationDto = tarificationDto)
 
         return request<TarificationDto, TarificationDto>(

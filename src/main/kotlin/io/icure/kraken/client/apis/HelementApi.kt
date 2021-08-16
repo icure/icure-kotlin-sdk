@@ -20,6 +20,7 @@ import io.icure.kraken.client.models.FilterChainHealthElement
 import io.icure.kraken.client.models.HealthElementDto
 import io.icure.kraken.client.models.IcureStubDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -51,7 +52,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createHealthElement(healthElementDto: HealthElementDto) : HealthElementDto? {
+    suspend fun createHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = createHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
@@ -90,7 +91,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun createHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = createHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
@@ -129,7 +130,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteHealthElements(healthElementIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteHealthElements(healthElementIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteHealthElementsRequestConfig(healthElementIds = healthElementIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -168,7 +169,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun filterHealthElementsBy(filterChainHealthElement: FilterChainHealthElement) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun filterHealthElementsBy(filterChainHealthElement: FilterChainHealthElement) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = filterHealthElementsByRequestConfig(filterChainHealthElement = filterChainHealthElement)
 
         return request<FilterChainHealthElement, kotlin.collections.List<HealthElementDto>>(
@@ -208,7 +209,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findHealthElementsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun findHealthElementsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = findHealthElementsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<HealthElementDto>>(
@@ -253,7 +254,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>? {
+    suspend fun findHealthElementsDelegationsStubsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>?  {
         val localVariableConfig = findHealthElementsDelegationsStubsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
@@ -297,7 +298,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getHealthElement(healthElementId: kotlin.String) : HealthElementDto? {
+    suspend fun getHealthElement(healthElementId: kotlin.String) : HealthElementDto?  {
         val localVariableConfig = getHealthElementRequestConfig(healthElementId = healthElementId)
 
         return request<Unit, HealthElementDto>(
@@ -336,7 +337,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyHealthElement(healthElementDto: HealthElementDto) : HealthElementDto? {
+    suspend fun modifyHealthElement(healthElementDto: HealthElementDto) : HealthElementDto?  {
         val localVariableConfig = modifyHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
@@ -375,7 +376,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun modifyHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun modifyHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = modifyHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
@@ -415,7 +416,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun newHealthElementDelegations(healthElementId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : HealthElementDto? {
+    suspend fun newHealthElementDelegations(healthElementId: kotlin.String, delegationDto: kotlin.collections.List<DelegationDto>) : HealthElementDto?  {
         val localVariableConfig = newHealthElementDelegationsRequestConfig(healthElementId = healthElementId, delegationDto = delegationDto)
 
         return request<kotlin.collections.List<DelegationDto>, HealthElementDto>(
@@ -455,7 +456,7 @@ class HelementApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setHealthElementsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<HealthElementDto>? {
+    suspend fun setHealthElementsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<HealthElementDto>?  {
         val localVariableConfig = setHealthElementsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<HealthElementDto>>(

@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.MapOfIdsDto
 import io.icure.kraken.client.models.MessageWithBatch
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -51,7 +52,7 @@ class BeefactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createBatchAndMessage(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : MessageWithBatch? {
+    suspend fun createBatchAndMessage(insuranceId: kotlin.String, newMessageId: kotlin.String, numericalRef: kotlin.Long, mapOfIdsDto: MapOfIdsDto) : MessageWithBatch?  {
         val localVariableConfig = createBatchAndMessageRequestConfig(insuranceId = insuranceId, newMessageId = newMessageId, numericalRef = numericalRef, mapOfIdsDto = mapOfIdsDto)
 
         return request<MapOfIdsDto, MessageWithBatch>(

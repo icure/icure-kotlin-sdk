@@ -17,6 +17,7 @@ import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.models.AuthenticationResponse
 import io.icure.kraken.client.models.WebSession
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -48,7 +49,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun login(session: WebSession) : AuthenticationResponse? {
+    suspend fun login(session: WebSession) : AuthenticationResponse?  {
         val localVariableConfig = loginRequestConfig(session = session)
 
         return request<Unit, AuthenticationResponse>(
@@ -89,7 +90,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun logout() : AuthenticationResponse? {
+    suspend fun logout() : AuthenticationResponse?  {
         val localVariableConfig = logoutRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
@@ -126,7 +127,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun logoutPost() : AuthenticationResponse? {
+    suspend fun logoutPost() : AuthenticationResponse?  {
         val localVariableConfig = logoutPostRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
@@ -165,7 +166,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun token(method: kotlin.String, path: kotlin.String) : kotlin.String? {
+    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String?  {
         val localVariableConfig = tokenRequestConfig(method = method, path = path)
 
         return request<Unit, kotlin.String>(

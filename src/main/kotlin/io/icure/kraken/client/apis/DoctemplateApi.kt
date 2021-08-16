@@ -18,6 +18,7 @@ import io.icure.kraken.client.models.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentTemplateDto
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
@@ -49,7 +50,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto? {
+    suspend fun createDocumentTemplate(documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
         val localVariableConfig = createDocumentTemplateRequestConfig(documentTemplateDto = documentTemplateDto)
 
         return request<DocumentTemplateDto, DocumentTemplateDto>(
@@ -88,7 +89,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteDocumentTemplate(documentTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>? {
+    suspend fun deleteDocumentTemplate(documentTemplateIds: kotlin.String) : kotlin.collections.List<DocIdentifier>?  {
         val localVariableConfig = deleteDocumentTemplateRequestConfig(documentTemplateIds = documentTemplateIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
@@ -126,7 +127,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>? {
+    suspend fun findAllDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findAllDocumentTemplatesRequestConfig()
 
         return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
@@ -163,7 +164,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>? {
+    suspend fun findDocumentTemplates() : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesRequestConfig()
 
         return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
@@ -201,7 +202,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>? {
+    suspend fun findDocumentTemplatesByDocumentType(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesByDocumentTypeRequestConfig(documentTypeCode = documentTypeCode)
 
         return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
@@ -240,7 +241,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>? {
+    suspend fun findDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesByDocumentTypeForCurrentUserRequestConfig(documentTypeCode = documentTypeCode)
 
         return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
@@ -279,7 +280,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun findDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>? {
+    suspend fun findDocumentTemplatesBySpeciality(specialityCode: kotlin.String) : kotlin.collections.List<DocumentTemplateDto>?  {
         val localVariableConfig = findDocumentTemplatesBySpecialityRequestConfig(specialityCode = specialityCode)
 
         return request<Unit, kotlin.collections.List<DocumentTemplateDto>>(
@@ -319,7 +320,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File? {
+    suspend fun getAttachmentText(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File?  {
         val localVariableConfig = getAttachmentTextRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
         return request<Unit, java.io.File>(
@@ -359,7 +360,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto? {
+    suspend fun getDocumentTemplate(documentTemplateId: kotlin.String) : DocumentTemplateDto?  {
         val localVariableConfig = getDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId)
 
         return request<Unit, DocumentTemplateDto>(
@@ -399,7 +400,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File? {
+    suspend fun getDocumentTemplateAttachment(documentTemplateId: kotlin.String, attachmentId: kotlin.String) : java.io.File?  {
         val localVariableConfig = getDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, attachmentId = attachmentId)
 
         return request<Unit, java.io.File>(
@@ -440,7 +441,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : DocumentTemplateDto? {
+    suspend fun setDocumentTemplateAttachment(documentTemplateId: kotlin.String, requestBody: kotlin.collections.List<kotlin.ByteArray>) : DocumentTemplateDto?  {
         val localVariableConfig = setDocumentTemplateAttachmentRequestConfig(documentTemplateId = documentTemplateId, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.ByteArray>, DocumentTemplateDto>(
@@ -481,7 +482,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto? {
+    suspend fun setDocumentTemplateAttachmentJson(documentTemplateId: kotlin.String, byteArrayDto: ByteArrayDto) : DocumentTemplateDto?  {
         val localVariableConfig = setDocumentTemplateAttachmentJsonRequestConfig(documentTemplateId = documentTemplateId, byteArrayDto = byteArrayDto)
 
         return request<ByteArrayDto, DocumentTemplateDto>(
@@ -522,7 +523,7 @@ class DoctemplateApi(basePath: kotlin.String = defaultBasePath, webClient: WebCl
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun updateDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto? {
+    suspend fun updateDocumentTemplate(documentTemplateId: kotlin.String, documentTemplateDto: DocumentTemplateDto) : DocumentTemplateDto?  {
         val localVariableConfig = updateDocumentTemplateRequestConfig(documentTemplateId = documentTemplateId, documentTemplateDto = documentTemplateDto)
 
         return request<DocumentTemplateDto, DocumentTemplateDto>(

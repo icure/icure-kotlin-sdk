@@ -1,5 +1,8 @@
 package io.icure.kraken.client.infrastructure
 
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
 typealias MultiValueMap = MutableMap<String,List<String>>
 
 fun collectionDelimiter(collectionFormat: String) = when(collectionFormat) {
@@ -10,7 +13,7 @@ fun collectionDelimiter(collectionFormat: String) = when(collectionFormat) {
     else -> ""
 }
 
-val defaultMultiValueConverter: (item: Any?) -> String = { item -> "$item" }
+val defaultMultiValueConverter: (item: Any?) -> String = { item -> URLEncoder.encode("$item", StandardCharsets.UTF_8) }
 
 fun <T : Any?> toMultiValue(items: Array<T>, collectionFormat: String, map: (item: T) -> String = defaultMultiValueConverter)
         = toMultiValue(items.asIterable(), collectionFormat, map)

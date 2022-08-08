@@ -27,4 +27,8 @@ icure-openapi-spec.json
 /.credentialsCouchDB
 /.credentialsReadOnly
 /.credentialsReadWrite
+
+# Misc
+/out/
 /references
+__pycache__

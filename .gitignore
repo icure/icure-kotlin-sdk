@@ -27,3 +27,4 @@ icure-openapi-spec.json
 /.credentialsCouchDB
 /.credentialsReadOnly
 /.credentialsReadWrite
+/references

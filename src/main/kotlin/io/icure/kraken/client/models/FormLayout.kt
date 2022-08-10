@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.FormSection
-import io.icure.kraken.client.models.Tag
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -36,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FormLayout (
+data class FormLayout(
 
     @field:JsonProperty("name")
     val name: kotlin.String? = null,

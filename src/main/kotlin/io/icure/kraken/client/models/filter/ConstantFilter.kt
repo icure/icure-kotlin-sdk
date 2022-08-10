@@ -10,6 +10,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ConstantFilter<O>(
-        override val desc: String? = null,
-        val constant: Set<String>
+    override val desc: String? = null,
+    val constant: Set<String>
 ) : AbstractFilterDto<O>

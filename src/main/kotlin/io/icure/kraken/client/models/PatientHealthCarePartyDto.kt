@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.ReferralPeriodDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * One or several periods of care by an hcp for this patient
@@ -32,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PatientHealthCarePartyDto (
+data class PatientHealthCarePartyDto(
 
     /* Preferred format of exchange for diverse means of communication */
     @field:JsonProperty("sendFormats")
@@ -68,14 +65,29 @@ data class PatientHealthCarePartyDto (
      * Values: doctor,referral,medicalhouse,retirementhome,hospital,other,referringphysician,managingorganization
      */
     enum class Type(val value: kotlin.String) {
-        @JsonProperty(value = "doctor") doctor("doctor"),
-        @JsonProperty(value = "referral") referral("referral"),
-        @JsonProperty(value = "medicalhouse") medicalhouse("medicalhouse"),
-        @JsonProperty(value = "retirementhome") retirementhome("retirementhome"),
-        @JsonProperty(value = "hospital") hospital("hospital"),
-        @JsonProperty(value = "other") other("other"),
-        @JsonProperty(value = "referringphysician") referringphysician("referringphysician"),
-        @JsonProperty(value = "managingorganization") managingorganization("managingorganization");
+        @JsonProperty(value = "doctor")
+        doctor("doctor"),
+
+        @JsonProperty(value = "referral")
+        referral("referral"),
+
+        @JsonProperty(value = "medicalhouse")
+        medicalhouse("medicalhouse"),
+
+        @JsonProperty(value = "retirementhome")
+        retirementhome("retirementhome"),
+
+        @JsonProperty(value = "hospital")
+        hospital("hospital"),
+
+        @JsonProperty(value = "other")
+        other("other"),
+
+        @JsonProperty(value = "referringphysician")
+        referringphysician("referringphysician"),
+
+        @JsonProperty(value = "managingorganization")
+        managingorganization("managingorganization");
     }
 
     /* ktlint-enable enum-entry-name-case */

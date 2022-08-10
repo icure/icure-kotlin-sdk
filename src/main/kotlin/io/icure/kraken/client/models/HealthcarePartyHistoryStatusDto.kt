@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * The healthcare party's status history
@@ -29,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class HealthcarePartyHistoryStatusDto (
+data class HealthcarePartyHistoryStatusDto(
 
     @field:JsonProperty("status")
     val status: HealthcarePartyHistoryStatusDto.Status,
@@ -53,9 +51,14 @@ data class HealthcarePartyHistoryStatusDto (
      * Values: trainee,withconvention,accreditated
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "trainee") trainee("trainee"),
-        @JsonProperty(value = "withconvention") withconvention("withconvention"),
-        @JsonProperty(value = "accreditated") accreditated("accreditated");
+        @JsonProperty(value = "trainee")
+        trainee("trainee"),
+
+        @JsonProperty(value = "withconvention")
+        withconvention("withconvention"),
+
+        @JsonProperty(value = "accreditated")
+        accreditated("accreditated");
     }
 
     /* ktlint-enable enum-entry-name-case */

@@ -14,52 +14,38 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
-import io.icure.kraken.client.models.ListOfIdsDto
-import io.icure.kraken.client.models.PaginatedListTarificationDto
-import io.icure.kraken.client.models.TarificationDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.PaginatedListTarificationDto
+import io.icure.kraken.client.models.TarificationDto
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -81,7 +67,7 @@ class TarificationApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -91,23 +77,23 @@ class TarificationApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             TarificationDto::class.java -> it to objectMapper.convertValue(body, TarificationDto::class.java)
                             TarificationApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -121,7 +107,6 @@ class TarificationApiTest() {
         }
     }
 
-
     /**
      * Create a Tarification
      *
@@ -132,42 +117,43 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createTarificationTest(fileName: String) = runBlocking {
-
+    fun createTarificationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createTarification")) {
             assertTrue(true, "Test of createTarification endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createTarification")
                 val tarificationDto: TarificationDto = TestUtils.getParameter<TarificationDto>(fileName, "createTarification.tarificationDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createTarification") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? TarificationDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createTarification(tarificationDto = tarificationDto)
 
                 val testFileName = "TarificationApi.createTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("TarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("TarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<TarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<TarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("createTarification", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -180,8 +166,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -198,84 +183,85 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findTarificationsByTest(fileName: String) = runBlocking {
-
+    fun findTarificationsByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy")) {
             assertTrue(true, "Test of findTarificationsBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsBy")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.type")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val tarification: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.tarification")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val version: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.version")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.startDocumentId")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy.startKey")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findTarificationsBy.limit")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findTarificationsBy(region = region,type = type,tarification = tarification,version = version,startDocumentId = startDocumentId,startKey = startKey,limit = limit)
+                val response = api(credentialsFile).findTarificationsBy(region = region, type = type, tarification = tarification, version = version, startDocumentId = startDocumentId, startKey = startKey, limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
-                        if ("PaginatedListTarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListTarificationDto>? != null) {
+                            if ("PaginatedListTarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                            object : TypeReference<PaginatedListTarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListTarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("findTarificationsBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -288,8 +274,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -306,63 +291,64 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findTarificationsBy1Test(fileName: String) = runBlocking {
-
+    fun findTarificationsBy1Test(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findTarificationsBy1")) {
             assertTrue(true, "Test of findTarificationsBy1 endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsBy1")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy1.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy1") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val type: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy1.type")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy1") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val tarification: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy1.tarification")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy1") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val version: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsBy1.version")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsBy1") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findTarificationsBy1(region = region,type = type,tarification = tarification,version = version)
+                val response = api(credentialsFile).findTarificationsBy1(region = region, type = type, tarification = tarification, version = version)
 
                 val testFileName = "TarificationApi.findTarificationsBy1"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
-                    })
+                    )
                     assertAreEquals("findTarificationsBy1", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -375,8 +361,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -393,84 +378,85 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findTarificationsByLabelTest(fileName: String) = runBlocking {
-
+    fun findTarificationsByLabelTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findTarificationsByLabel")) {
             assertTrue(true, "Test of findTarificationsByLabel endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findTarificationsByLabel")
                 val region: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.region")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val types: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.types")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val language: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.language")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val label: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.label")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.startKey")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findTarificationsByLabel.startDocumentId")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findTarificationsByLabel.limit")?.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findTarificationsByLabel") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findTarificationsByLabel(region = region,types = types,language = language,label = label,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findTarificationsByLabel(region = region, types = types, language = language, label = label, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "TarificationApi.findTarificationsByLabel"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListTarificationDto>? != null) {
-                        if ("PaginatedListTarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListTarificationDto>? != null) {
+                            if ("PaginatedListTarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListTarificationDto>>() {}
+                            object : TypeReference<PaginatedListTarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListTarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("findTarificationsByLabel", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -483,8 +469,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -501,42 +486,43 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getTarificationTest(fileName: String) = runBlocking {
-
+    fun getTarificationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getTarification")) {
             assertTrue(true, "Test of getTarification endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarification")
                 val tarificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarification.tarificationId")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarification") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getTarification(tarificationId = tarificationId)
 
                 val testFileName = "TarificationApi.getTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("TarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("TarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<TarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<TarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("getTarification", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -549,8 +535,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -567,56 +552,57 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getTarificationWithPartsTest(fileName: String) = runBlocking {
-
+    fun getTarificationWithPartsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getTarificationWithParts")) {
             assertTrue(true, "Test of getTarificationWithParts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarificationWithParts")
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarificationWithParts.type")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarificationWithParts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val tarification: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarificationWithParts.tarification")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarificationWithParts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val version: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getTarificationWithParts.version")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarificationWithParts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).getTarificationWithParts(type = type,tarification = tarification,version = version)
+                val response = api(credentialsFile).getTarificationWithParts(type = type, tarification = tarification, version = version)
 
                 val testFileName = "TarificationApi.getTarificationWithParts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("TarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("TarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<TarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<TarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("getTarificationWithParts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -629,8 +615,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -647,42 +632,43 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getTarificationsTest(fileName: String) = runBlocking {
-
+    fun getTarificationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getTarifications")) {
             assertTrue(true, "Test of getTarifications endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarifications")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getTarifications.listOfIdsDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarifications") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getTarifications(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "TarificationApi.getTarifications"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("kotlin.collections.List<TarificationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<TarificationDto>>() {}
-                    })
+                    )
                     assertAreEquals("getTarifications", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -695,8 +681,7 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -713,42 +698,43 @@ class TarificationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyTarificationTest(fileName: String) = runBlocking {
-
+    fun modifyTarificationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyTarification")) {
             assertTrue(true, "Test of modifyTarification endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyTarification")
                 val tarificationDto: TarificationDto = TestUtils.getParameter<TarificationDto>(fileName, "modifyTarification.tarificationDto")!!.let {
                     (it as? TarificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyTarification") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getTarification(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? TarificationDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyTarification(tarificationDto = tarificationDto)
 
                 val testFileName = "TarificationApi.modifyTarification"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<TarificationDto>? != null) {
-                        if ("TarificationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<TarificationDto>? != null) {
+                            if ("TarificationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<TarificationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<TarificationDto>>() {}
+                            object : TypeReference<TarificationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<TarificationDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyTarification", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -761,19 +747,17 @@ class TarificationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -785,36 +769,39 @@ class TarificationApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

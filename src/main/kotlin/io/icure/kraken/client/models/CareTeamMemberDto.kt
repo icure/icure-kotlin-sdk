@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * List of care team members assigned for the healthcare element.
@@ -31,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class CareTeamMemberDto (
+data class CareTeamMemberDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,
@@ -59,9 +56,14 @@ data class CareTeamMemberDto (
      * Values: physician,specialist,other
      */
     enum class CareTeamMemberType(val value: kotlin.String) {
-        @JsonProperty(value = "physician") physician("physician"),
-        @JsonProperty(value = "specialist") specialist("specialist"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "physician")
+        physician("physician"),
+
+        @JsonProperty(value = "specialist")
+        specialist("specialist"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */

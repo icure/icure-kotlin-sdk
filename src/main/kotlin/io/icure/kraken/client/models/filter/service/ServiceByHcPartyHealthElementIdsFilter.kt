@@ -25,7 +25,7 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ServiceByHcPartyHealthElementIdsFilter(
-        override val desc: String? = null,
-        val healthcarePartyId: String? = null,
-        val healthElementIds: List<String> = emptyList()
+    override val desc: String? = null,
+    val healthcarePartyId: String? = null,
+    val healthElementIds: List<String> = emptyList()
 ) : AbstractFilterDto<ServiceDto>

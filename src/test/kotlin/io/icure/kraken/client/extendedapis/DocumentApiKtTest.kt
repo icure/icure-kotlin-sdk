@@ -38,8 +38,13 @@ internal class DocumentApiKtTest {
             val currentUser = userApi.getCurrentUser()
             val hcp = hcpartyApi.getCurrentHealthcareParty()
 
-            val localCrypto = localCrypto(iCureBackendUrl,
-                parentAuthorization, parentPrivKey, currentUser, hcp.toDataOwner())
+            val localCrypto = localCrypto(
+                iCureBackendUrl,
+                parentAuthorization,
+                parentPrivKey,
+                currentUser,
+                hcp.toDataOwner()
+            )
             val documentConfig = documentCryptoConfig(localCrypto)
 
             val attachmentToAdd = Files.readAllBytes(Paths.get("src/test/resources/set_attachment_test.txt"))

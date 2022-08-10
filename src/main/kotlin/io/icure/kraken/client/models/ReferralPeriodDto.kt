@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Time periods
@@ -28,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ReferralPeriodDto (
+data class ReferralPeriodDto(
 
     /* The date (unix epoch in ms) when the referral period initiated, will be filled instantaneously. */
     @field:JsonProperty("startDate")

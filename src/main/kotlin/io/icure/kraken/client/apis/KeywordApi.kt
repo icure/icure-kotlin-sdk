@@ -16,24 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.KeywordDto
-import io.icure.kraken.client.models.ListOfIdsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.KeywordDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +43,31 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Create a keyword with the current user
-    * Returns an instance of created keyword.
-    * @param keywordDto
-    * @return KeywordDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a keyword with the current user
+     * Returns an instance of created keyword.
+     * @param keywordDto
+     * @return KeywordDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createKeyword(keywordDto: KeywordDto) : KeywordDto  {
+    suspend fun createKeyword(keywordDto: KeywordDto): KeywordDto {
         val localVariableConfig = createKeywordRequestConfig(keywordDto = keywordDto)
 
         return request<KeywordDto, KeywordDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createKeyword
-    *
-    * @param keywordDto
-    * @return RequestConfig
-    */
-    fun createKeywordRequestConfig(keywordDto: KeywordDto) : RequestConfig<KeywordDto> {
+     * To obtain the request config of the operation createKeyword
+     *
+     * @param keywordDto
+     * @return RequestConfig
+     */
+    fun createKeywordRequestConfig(keywordDto: KeywordDto): RequestConfig<KeywordDto> {
         // val localVariableBody = keywordDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +79,36 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete keywords.
-    * Response is a set containing the ID&#39;s of deleted keywords.
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete keywords.
+     * Response is a set containing the ID&#39;s of deleted keywords.
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteKeywords(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteKeywords(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteKeywordsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteKeywords
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteKeywordsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteKeywords
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteKeywordsRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -122,34 +120,36 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/keyword/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a keyword
-    *
-    * @param keywordId
-    * @return KeywordDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a keyword
+     *
+     * @param keywordId
+     * @return KeywordDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getKeyword(keywordId: kotlin.String) : KeywordDto  {
+    suspend fun getKeyword(keywordId: kotlin.String): KeywordDto {
         val localVariableConfig = getKeywordRequestConfig(keywordId = keywordId)
 
         return request<Unit, KeywordDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getKeyword
-    *
-    * @param keywordId
-    * @return RequestConfig
-    */
-    fun getKeywordRequestConfig(keywordId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getKeyword
+     *
+     * @param keywordId
+     * @return RequestConfig
+     */
+    fun getKeywordRequestConfig(keywordId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -158,35 +158,37 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/keyword/{keywordId}".replace("{"+"keywordId"+"}", "${URLEncoder.encode(keywordId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/keyword/{keywordId}".replace("{" + "keywordId" + "}", "${URLEncoder.encode(keywordId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets all keywords
-    *
-    * @return kotlin.collections.List<KeywordDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets all keywords
+     *
+     * @return kotlin.collections.List<KeywordDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getKeywords() : kotlin.collections.List<KeywordDto>  {
+    suspend fun getKeywords(): kotlin.collections.List<KeywordDto> {
         val localVariableConfig = getKeywordsRequestConfig()
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getKeywords
-    *
-    * @return RequestConfig
-    */
-    fun getKeywordsRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getKeywords
+     *
+     * @return RequestConfig
+     */
+    fun getKeywordsRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -198,34 +200,36 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get keywords by user
-    *
-    * @param userId
-    * @return kotlin.collections.List<KeywordDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get keywords by user
+     *
+     * @param userId
+     * @return kotlin.collections.List<KeywordDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getKeywordsByUser(userId: kotlin.String) : kotlin.collections.List<KeywordDto>  {
+    suspend fun getKeywordsByUser(userId: kotlin.String): kotlin.collections.List<KeywordDto> {
         val localVariableConfig = getKeywordsByUserRequestConfig(userId = userId)
 
         return request<Unit, kotlin.collections.List<KeywordDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getKeywordsByUser
-    *
-    * @param userId
-    * @return RequestConfig
-    */
-    fun getKeywordsByUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getKeywordsByUser
+     *
+     * @param userId
+     * @return RequestConfig
+     */
+    fun getKeywordsByUserRequestConfig(userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -234,37 +238,39 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/keyword/byUser/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/keyword/byUser/{userId}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a keyword
-    * Returns the modified keyword.
-    * @param keywordDto
-    * @return KeywordDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a keyword
+     * Returns the modified keyword.
+     * @param keywordDto
+     * @return KeywordDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyKeyword(keywordDto: KeywordDto) : KeywordDto  {
+    suspend fun modifyKeyword(keywordDto: KeywordDto): KeywordDto {
         val localVariableConfig = modifyKeywordRequestConfig(keywordDto = keywordDto)
 
         return request<KeywordDto, KeywordDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyKeyword
-    *
-    * @param keywordDto
-    * @return RequestConfig
-    */
-    fun modifyKeywordRequestConfig(keywordDto: KeywordDto) : RequestConfig<KeywordDto> {
+     * To obtain the request config of the operation modifyKeyword
+     *
+     * @param keywordDto
+     * @return RequestConfig
+     */
+    fun modifyKeywordRequestConfig(keywordDto: KeywordDto): RequestConfig<KeywordDto> {
         // val localVariableBody = keywordDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -276,7 +282,7 @@ class KeywordApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/keyword",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

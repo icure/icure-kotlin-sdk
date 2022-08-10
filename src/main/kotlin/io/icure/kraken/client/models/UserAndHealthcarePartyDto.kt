@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.UserDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity embeds a User and its linked Healthcare Party.
@@ -29,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class UserAndHealthcarePartyDto (
+data class UserAndHealthcarePartyDto(
 
     @field:JsonProperty("user")
     val user: UserDto,

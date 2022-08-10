@@ -12,14 +12,12 @@
  */
 package io.icure.kraken.client.models.decrypted
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.MessageReadStatusDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonInclude
-
 
 /**
  * This entity is a root level object. It represents a Message. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -65,7 +63,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MessageDto (
+data class MessageDto(
 
     /* The ID of the message. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")

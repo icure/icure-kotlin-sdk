@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.DeviceTypeDto
-import io.icure.kraken.client.models.PackagingTypeDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -34,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AmppComponentDto (
+data class AmppComponentDto(
 
     @field:JsonProperty("from")
     val from: kotlin.Long? = null,
@@ -67,10 +63,17 @@ data class AmppComponentDto (
      * Values: aCTIVECOMPONENT,sOLVENT,dEVICE,eXCIPIENT
      */
     enum class ContentType(val value: kotlin.String) {
-        @JsonProperty(value = "ACTIVE_COMPONENT") aCTIVECOMPONENT("ACTIVE_COMPONENT"),
-        @JsonProperty(value = "SOLVENT") sOLVENT("SOLVENT"),
-        @JsonProperty(value = "DEVICE") dEVICE("DEVICE"),
-        @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
+        @JsonProperty(value = "ACTIVE_COMPONENT")
+        aCTIVECOMPONENT("ACTIVE_COMPONENT"),
+
+        @JsonProperty(value = "SOLVENT")
+        sOLVENT("SOLVENT"),
+
+        @JsonProperty(value = "DEVICE")
+        dEVICE("DEVICE"),
+
+        @JsonProperty(value = "EXCIPIENT")
+        eXCIPIENT("EXCIPIENT");
     }
 
     /* ktlint-enable enum-entry-name-case */

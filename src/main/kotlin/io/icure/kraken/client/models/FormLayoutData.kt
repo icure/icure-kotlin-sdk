@@ -12,19 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.ContentDto
-import io.icure.kraken.client.models.Editor
-import io.icure.kraken.client.models.FormDataOption
-import io.icure.kraken.client.models.FormPlanning
-import io.icure.kraken.client.models.Formula
-import io.icure.kraken.client.models.GuiCode
-import io.icure.kraken.client.models.GuiCodeType
-import io.icure.kraken.client.models.Suggest
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -51,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FormLayoutData (
+data class FormLayoutData(
 
     @field:JsonProperty("subForm")
     val subForm: kotlin.Boolean? = null,

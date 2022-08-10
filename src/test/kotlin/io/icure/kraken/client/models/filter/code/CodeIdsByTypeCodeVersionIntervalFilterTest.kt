@@ -28,14 +28,16 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
     }
 
     afterSpec {
-        removeEntities(testBatchIds,
+        removeEntities(
+            testBatchIds,
             System.getenv("ICURE_COUCHDB_USERNAME"),
             System.getenv("ICURE_COUCHDB_PASSWORD"),
             System.getenv("ICURE_COUCHDB_URL"),
-            System.getenv("ICURE_COUCHDB_PREFIX"))
+            System.getenv("ICURE_COUCHDB_PREFIX")
+        )
     }
 
-    //TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
+    // TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
     "If all parameters are null, all the code ids are returned" {
         val filteredResults = api.filterCodesBy(
             null,
@@ -66,21 +68,23 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
             null,
             null,
             null,
-            FilterChain(CodeIdsByTypeCodeVersionIntervalFilter(
-                startType = startCode.type,
-                startCode = startCode.code,
-                startVersion = startCode.version
-            ))
+            FilterChain(
+                CodeIdsByTypeCodeVersionIntervalFilter(
+                    startType = startCode.type,
+                    startCode = startCode.code,
+                    startVersion = startCode.version
+                )
+            )
         )
         filteredResults shouldNotBe null
         filteredResults.rows shouldNotBe null
-        filteredResults.rows.size shouldBe (testBatchSize-startIndex)
+        filteredResults.rows.size shouldBe (testBatchSize - startIndex)
         filteredResults.rows.forEach {
             testBatchIds shouldContain it.id
         }
     }
 
-    //TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
+    // TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
     "If the end ComplexKey is specified only the results that come before it are returned" {
         val endIndex = Random.nextInt(0, testBatchIds.size)
         val endCode = testBatch[testBatchIds[endIndex]]!!
@@ -91,11 +95,13 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
             null,
             null,
             null,
-            FilterChain(CodeIdsByTypeCodeVersionIntervalFilter(
-                endType = endCode.type,
-                endCode = endCode.code,
-                endVersion = endCode.version
-            ))
+            FilterChain(
+                CodeIdsByTypeCodeVersionIntervalFilter(
+                    endType = endCode.type,
+                    endCode = endCode.code,
+                    endVersion = endCode.version
+                )
+            )
         )
         filteredResults shouldNotBe null
         filteredResults.rows shouldNotBe null
@@ -105,7 +111,7 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
         }*/
     }
 
-    //TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
+    // TODO Can not work as the current user is not dedicated only to those tests : Its database is therefore garnished with many other information, making the test fail
     "If the start and end ComplexKey are specified only the results that come between them are returned" {
         val startIndex = Random.nextInt(0, testBatchIds.size / 2)
         val startCode = testBatch[testBatchIds[startIndex]]!!
@@ -118,14 +124,16 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
             null,
             null,
             null,
-            FilterChain(CodeIdsByTypeCodeVersionIntervalFilter(
-                startType = startCode.type,
-                startCode = startCode.code,
-                startVersion = startCode.version,
-                endType = endCode.type,
-                endCode = endCode.code,
-                endVersion = endCode.version
-            ))
+            FilterChain(
+                CodeIdsByTypeCodeVersionIntervalFilter(
+                    startType = startCode.type,
+                    startCode = startCode.code,
+                    startVersion = startCode.version,
+                    endType = endCode.type,
+                    endCode = endCode.code,
+                    endVersion = endCode.version
+                )
+            )
         )
         filteredResults shouldNotBe null
         filteredResults.rows shouldNotBe null
@@ -134,5 +142,4 @@ class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
             testBatchIds shouldContain it.id
         }*/
     }
-
 })

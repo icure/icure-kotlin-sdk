@@ -16,22 +16,17 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.PermissionDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.PermissionDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -46,32 +41,33 @@ class PermissionApi(basePath: kotlin.String = defaultBasePath, webClient: WebCli
     }
 
     /**
-    * Add / Revoke permissions to user
-    * Add a list of granted and revoked permissions to user.
-    * @param userId
-    * @param permissionDto
-    * @return kotlin.collections.List<PermissionDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Add / Revoke permissions to user
+     * Add a list of granted and revoked permissions to user.
+     * @param userId
+     * @param permissionDto
+     * @return kotlin.collections.List<PermissionDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUserPermissions(userId: kotlin.String, permissionDto: PermissionDto) : kotlin.collections.List<PermissionDto>  {
+    suspend fun modifyUserPermissions(userId: kotlin.String, permissionDto: PermissionDto): kotlin.collections.List<PermissionDto> {
         val localVariableConfig = modifyUserPermissionsRequestConfig(userId = userId, permissionDto = permissionDto)
 
         return request<PermissionDto, kotlin.collections.List<PermissionDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyUserPermissions
-    *
-    * @param userId
-    * @param permissionDto
-    * @return RequestConfig
-    */
-    fun modifyUserPermissionsRequestConfig(userId: kotlin.String, permissionDto: PermissionDto) : RequestConfig<PermissionDto> {
+     * To obtain the request config of the operation modifyUserPermissions
+     *
+     * @param userId
+     * @param permissionDto
+     * @return RequestConfig
+     */
+    fun modifyUserPermissionsRequestConfig(userId: kotlin.String, permissionDto: PermissionDto): RequestConfig<PermissionDto> {
         // val localVariableBody = permissionDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -80,10 +76,10 @@ class PermissionApi(basePath: kotlin.String = defaultBasePath, webClient: WebCli
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/permissions/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/permissions/{userId}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

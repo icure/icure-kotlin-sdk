@@ -16,25 +16,23 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.infrastructure.ClientException
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.DocumentDto
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.ListOfIdsDto
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import java.net.URLEncoder
 import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -49,30 +47,31 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
     }
 
     /**
-    * Creates a document
-    *
-    * @param documentDto
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a document
+     *
+     * @param documentDto
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createDocument(documentDto: DocumentDto) : DocumentDto  {
+    suspend fun createDocument(documentDto: DocumentDto): DocumentDto {
         val localVariableConfig = createDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createDocument
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun createDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
+     * To obtain the request config of the operation createDocument
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun createDocumentRequestConfig(documentDto: DocumentDto): RequestConfig<DocumentDto> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -84,34 +83,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes a document&#39;s attachment
-    *
-    * @param documentId
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes a document&#39;s attachment
+     *
+     * @param documentId
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAttachment(documentId: kotlin.String) : DocumentDto  {
+    suspend fun deleteAttachment(documentId: kotlin.String): DocumentDto {
         val localVariableConfig = deleteAttachmentRequestConfig(documentId = documentId)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteAttachment
-    *
-    * @param documentId
-    * @return RequestConfig
-    */
-    fun deleteAttachmentRequestConfig(documentId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation deleteAttachment
+     *
+     * @param documentId
+     * @return RequestConfig
+     */
+    fun deleteAttachmentRequestConfig(documentId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -120,37 +121,39 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{" + "documentId" + "}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes documents
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes documents
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteDocument(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteDocument(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteDocumentRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteDocument
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteDocumentRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteDocument
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteDocumentRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -162,34 +165,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List documents with no delegation
-    * Keys must be delimited by coma
-    * @param limit  (optional)
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List documents with no delegation
+     * Keys must be delimited by coma
+     * @param limit  (optional)
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findWithoutDelegation(limit: kotlin.Int?) : kotlin.collections.List<DocumentDto>  {
+    suspend fun findWithoutDelegation(limit: kotlin.Int?): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = findWithoutDelegationRequestConfig(limit = limit)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation findWithoutDelegation
-    *
-    * @param limit  (optional)
-    * @return RequestConfig
-    */
-    fun findWithoutDelegationRequestConfig(limit: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation findWithoutDelegation
+     *
+     * @param limit  (optional)
+     * @return RequestConfig
+     */
+    fun findWithoutDelegationRequestConfig(limit: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -206,34 +211,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/woDelegation",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a document
-    *
-    * @param documentId
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a document
+     *
+     * @param documentId
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocument(documentId: kotlin.String) : DocumentDto  {
+    suspend fun getDocument(documentId: kotlin.String): DocumentDto {
         val localVariableConfig = getDocumentRequestConfig(documentId = documentId)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getDocument
-    *
-    * @param documentId
-    * @return RequestConfig
-    */
-    fun getDocumentRequestConfig(documentId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getDocument
+     *
+     * @param documentId
+     * @return RequestConfig
+     */
+    fun getDocumentRequestConfig(documentId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -242,43 +249,45 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/{documentId}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/{documentId}".replace("{" + "documentId" + "}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Load document&#39;s attachment
-    *
-    * @param documentId
-    * @param attachmentId
-    * @param enckeys  (optional)
-    * @param fileName  (optional)
-    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Load document&#39;s attachment
+     *
+     * @param documentId
+     * @param attachmentId
+     * @param enckeys  (optional)
+     * @param fileName  (optional)
+     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+    suspend fun getDocumentAttachment(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?): kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> {
         val localVariableConfig = getDocumentAttachmentRequestConfig(documentId = documentId, attachmentId = attachmentId, enckeys = enckeys, fileName = fileName)
 
         return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getDocumentAttachment
-    *
-    * @param documentId
-    * @param attachmentId
-    * @param enckeys  (optional)
-    * @param fileName  (optional)
-    * @return RequestConfig
-    */
-    fun getDocumentAttachmentRequestConfig(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getDocumentAttachment
+     *
+     * @param documentId
+     * @param attachmentId
+     * @param enckeys  (optional)
+     * @param fileName  (optional)
+     * @return RequestConfig
+     */
+    fun getDocumentAttachmentRequestConfig(documentId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String?, fileName: kotlin.String?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -295,37 +304,39 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace("{" + "documentId" + "}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}").replace("{" + "attachmentId" + "}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a document
-    *
-    * @param externalUuid
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a document
+     *
+     * @param externalUuid
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentByExternalUuid(externalUuid: kotlin.String) : DocumentDto  {
+    suspend fun getDocumentByExternalUuid(externalUuid: kotlin.String): DocumentDto {
         val localVariableConfig = getDocumentByExternalUuidRequestConfig(externalUuid = externalUuid)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getDocumentByExternalUuid
-    *
-    * @param externalUuid
-    * @return RequestConfig
-    */
-    fun getDocumentByExternalUuidRequestConfig(externalUuid: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getDocumentByExternalUuid
+     *
+     * @param externalUuid
+     * @return RequestConfig
+     */
+    fun getDocumentByExternalUuidRequestConfig(externalUuid: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -334,37 +345,39 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/externaluuid/{externalUuid}".replace("{"+"externalUuid"+"}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}".replace("{" + "externalUuid" + "}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a document
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a document
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocuments(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocumentDto>  {
+    suspend fun getDocuments(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = getDocumentsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getDocuments
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun getDocumentsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getDocuments
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun getDocumentsRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -376,34 +389,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get all documents with externalUuid
-    *
-    * @param externalUuid
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get all documents with externalUuid
+     *
+     * @param externalUuid
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentsByExternalUuid(externalUuid: kotlin.String) : kotlin.collections.List<DocumentDto>  {
+    suspend fun getDocumentsByExternalUuid(externalUuid: kotlin.String): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = getDocumentsByExternalUuidRequestConfig(externalUuid = externalUuid)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getDocumentsByExternalUuid
-    *
-    * @param externalUuid
-    * @return RequestConfig
-    */
-    fun getDocumentsByExternalUuidRequestConfig(externalUuid: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getDocumentsByExternalUuid
+     *
+     * @param externalUuid
+     * @return RequestConfig
+     */
+    fun getDocumentsByExternalUuidRequestConfig(externalUuid: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -412,41 +427,43 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/externaluuid/{externalUuid}/all".replace("{"+"externalUuid"+"}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/externaluuid/{externalUuid}/all".replace("{" + "externalUuid" + "}", "${URLEncoder.encode(externalUuid.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List documents found By type, By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param documentTypeCode
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List documents found By type, By Healthcare Party and secret foreign keys.
+     * Keys must be delimited by coma
+     * @param documentTypeCode
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
+    suspend fun listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = listDocumentByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode = documentTypeCode, hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listDocumentByTypeHCPartyMessageSecretFKeys
-    *
-    * @param documentTypeCode
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return RequestConfig
-    */
-    fun listDocumentByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listDocumentByTypeHCPartyMessageSecretFKeys
+     *
+     * @param documentTypeCode
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return RequestConfig
+     */
+    fun listDocumentByTypeHCPartyMessageSecretFKeysRequestConfig(documentTypeCode: kotlin.String, hcPartyId: kotlin.String, secretFKeys: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -463,36 +480,38 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/byTypeHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List documents found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List documents found By Healthcare Party and secret foreign keys.
+     * Keys must be delimited by coma
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<DocumentDto>  {
+    suspend fun listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = listDocumentsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listDocumentsByHCPartyAndPatientForeignKeys
-    *
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return RequestConfig
-    */
-    fun listDocumentsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listDocumentsByHCPartyAndPatientForeignKeys
+     *
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return RequestConfig
+     */
+    fun listDocumentsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -508,34 +527,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Updates a document
-    *
-    * @param documentDto
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Updates a document
+     *
+     * @param documentDto
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyDocument(documentDto: DocumentDto) : DocumentDto  {
+    suspend fun modifyDocument(documentDto: DocumentDto): DocumentDto {
         val localVariableConfig = modifyDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyDocument
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun modifyDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
+     * To obtain the request config of the operation modifyDocument
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun modifyDocumentRequestConfig(documentDto: DocumentDto): RequestConfig<DocumentDto> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -547,34 +568,36 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Updates a batch of documents
-    * Returns the modified documents.
-    * @param documentDto
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Updates a batch of documents
+     * Returns the modified documents.
+     * @param documentDto
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>  {
+    suspend fun modifyDocuments(documentDto: kotlin.collections.List<DocumentDto>): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = modifyDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyDocuments
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun modifyDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
+     * To obtain the request config of the operation modifyDocuments
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun modifyDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>): RequestConfig<kotlin.collections.List<DocumentDto>> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -586,38 +609,40 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Creates a document&#39;s attachment
-    *
-    * @param documentId
-    * @param body
-    * @param enckeys  (optional)
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a document&#39;s attachment
+     *
+     * @param documentId
+     * @param body
+     * @param enckeys  (optional)
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): DocumentDto {
         val localVariableConfig = setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
         return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setDocumentAttachment
-    *
-    * @param documentId
-    * @param body
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+     * To obtain the request config of the operation setDocumentAttachment
+     *
+     * @param documentId
+     * @param body
+     * @param enckeys  (optional)
+     * @return RequestConfig
+     */
+    fun setDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         // val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -631,41 +656,43 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/document/{documentId}/attachment".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/{documentId}/attachment".replace("{" + "documentId" + "}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Creates a document&#39;s attachment
-    *
-    * @param documentId
-    * @param attachment
-    * @param enckeys  (optional)
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a document&#39;s attachment
+     *
+     * @param documentId
+     * @param attachment
+     * @param enckeys  (optional)
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setDocumentAttachmentMulti(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?): DocumentDto {
         val localVariableConfig = setDocumentAttachmentMultiRequestConfig(documentId = documentId, attachment = attachment, enckeys = enckeys)
 
         return request<Flow<ByteBuffer>, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setDocumentAttachmentMulti
-    *
-    * @param documentId
-    * @param attachment
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?) : RequestConfig<Flow<ByteBuffer>> {
+     * To obtain the request config of the operation setDocumentAttachmentMulti
+     *
+     * @param documentId
+     * @param attachment
+     * @param enckeys  (optional)
+     * @return RequestConfig
+     */
+    fun setDocumentAttachmentMultiRequestConfig(documentId: kotlin.String, attachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper, enckeys: kotlin.String?): RequestConfig<Flow<ByteBuffer>> {
         // val localVariableBody = mapOf("attachment" to attachment)
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -678,47 +705,51 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
         val localVariableBody = attachment.byteArray
         val boundary = UUID.randomUUID().toString()
 
-
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/document/{documentId}/attachment/multipart".replace("{"+"documentId"+"}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/document/{documentId}/attachment/multipart".replace("{" + "documentId" + "}", "${URLEncoder.encode(documentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody.let { flowOf(
-                ByteBuffer.wrap("""--${boundary}
+            body = localVariableBody.let {
+                flowOf(
+                    ByteBuffer.wrap(
+                        """--$boundary
         Content-Disposition: form-data; name="attachment"
         Content-Type: application/octet-stream
 
-    """.toByteArray(Charsets.UTF_8) + localVariableBody + "\n--${boundary}".toByteArray(Charsets.UTF_8))
-            ) }
+    """.toByteArray(Charsets.UTF_8) + localVariableBody + "\n--$boundary".toByteArray(Charsets.UTF_8)
+                    )
+                )
+            }
         )
     }
 
     /**
-    * Update delegations in healthElements.
-    * Keys must be delimited by coma
-    * @param icureStubDto
-    * @return kotlin.collections.List<IcureStubDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Update delegations in healthElements.
+     * Keys must be delimited by coma
+     * @param icureStubDto
+     * @return kotlin.collections.List<IcureStubDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setDocumentsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<IcureStubDto>  {
+    suspend fun setDocumentsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>): kotlin.collections.List<IcureStubDto> {
         val localVariableConfig = setDocumentsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setDocumentsDelegations
-    *
-    * @param icureStubDto
-    * @return RequestConfig
-    */
-    fun setDocumentsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
+     * To obtain the request config of the operation setDocumentsDelegations
+     *
+     * @param icureStubDto
+     * @return RequestConfig
+     */
+    fun setDocumentsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>): RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -730,38 +761,40 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Creates a document&#39;s attachment
-    *
-    * @param documentId
-    * @param body
-    * @param enckeys  (optional)
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a document&#39;s attachment
+     *
+     * @param documentId
+     * @param body
+     * @param enckeys  (optional)
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : DocumentDto  {
+    suspend fun setSafeDocumentAttachment(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): DocumentDto {
         val localVariableConfig = setSafeDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
 
         return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setSafeDocumentAttachment
-    *
-    * @param documentId
-    * @param body
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+     * To obtain the request config of the operation setSafeDocumentAttachment
+     *
+     * @param documentId
+     * @param body
+     * @param enckeys  (optional)
+     * @return RequestConfig
+     */
+    fun setSafeDocumentAttachmentRequestConfig(documentId: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         // val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -779,7 +812,7 @@ class DocumentApi(basePath: kotlin.String = defaultBasePath, webClient: WebClien
             path = "/rest/v2/document/attachment",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

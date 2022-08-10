@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.QuantityDto
-import io.icure.kraken.client.models.SubstanceStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -36,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class IngredientDto (
+data class IngredientDto(
 
     @field:JsonProperty("from")
     val from: kotlin.Long? = null,
@@ -75,8 +71,11 @@ data class IngredientDto (
      * Values: aCTIVESUBSTANCE,eXCIPIENT
      */
     enum class Type(val value: kotlin.String) {
-        @JsonProperty(value = "ACTIVE_SUBSTANCE") aCTIVESUBSTANCE("ACTIVE_SUBSTANCE"),
-        @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
+        @JsonProperty(value = "ACTIVE_SUBSTANCE")
+        aCTIVESUBSTANCE("ACTIVE_SUBSTANCE"),
+
+        @JsonProperty(value = "EXCIPIENT")
+        eXCIPIENT("EXCIPIENT");
     }
 
     /* ktlint-enable enum-entry-name-case */

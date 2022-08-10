@@ -12,17 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CommentedClassificationDto
-import io.icure.kraken.client.models.SamTextDto
-import io.icure.kraken.client.models.VmpComponentDto
-import io.icure.kraken.client.models.VmpGroupStubDto
-import io.icure.kraken.client.models.VtmDto
-import io.icure.kraken.client.models.WadaDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -44,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class VmpDto (
+data class VmpDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,

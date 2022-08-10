@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity is a root level object. It represents a Document. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -60,7 +56,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class DocumentDto (
+data class DocumentDto(
 
     /* The Id of the document. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -202,8 +198,11 @@ data class DocumentDto (
      * Values: annex,body
      */
     enum class DocumentLocation(val value: kotlin.String) {
-        @JsonProperty(value = "annex") annex("annex"),
-        @JsonProperty(value = "body") body("body");
+        @JsonProperty(value = "annex")
+        annex("annex"),
+
+        @JsonProperty(value = "body")
+        body("body");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -215,45 +214,122 @@ data class DocumentDto (
      * Values: admission,alert,bvtSample,clinicalpath,clinicalsummary,contactreport,quote,invoice,death,discharge,dischargereport,ebirthBabyMedicalform,ebirthBabyNotification,ebirthMotherMedicalform,ebirthMotherNotification,ecareSafeConsultation,epidemiology,intervention,labrequest,labresult,medicaladvisoragreement,medicationschemeelement,note,notification,pharmaceuticalprescription,prescription,productdelivery,quickdischargereport,radiationexposuremonitoring,referral,report,request,result,sumehr,telemonitoring,template,templateAdmin,treatmentsuspension,vaccination
      */
     enum class DocumentType(val value: kotlin.String) {
-        @JsonProperty(value = "admission") admission("admission"),
-        @JsonProperty(value = "alert") alert("alert"),
-        @JsonProperty(value = "bvt_sample") bvtSample("bvt_sample"),
-        @JsonProperty(value = "clinicalpath") clinicalpath("clinicalpath"),
-        @JsonProperty(value = "clinicalsummary") clinicalsummary("clinicalsummary"),
-        @JsonProperty(value = "contactreport") contactreport("contactreport"),
-        @JsonProperty(value = "quote") quote("quote"),
-        @JsonProperty(value = "invoice") invoice("invoice"),
-        @JsonProperty(value = "death") death("death"),
-        @JsonProperty(value = "discharge") discharge("discharge"),
-        @JsonProperty(value = "dischargereport") dischargereport("dischargereport"),
-        @JsonProperty(value = "ebirth_baby_medicalform") ebirthBabyMedicalform("ebirth_baby_medicalform"),
-        @JsonProperty(value = "ebirth_baby_notification") ebirthBabyNotification("ebirth_baby_notification"),
-        @JsonProperty(value = "ebirth_mother_medicalform") ebirthMotherMedicalform("ebirth_mother_medicalform"),
-        @JsonProperty(value = "ebirth_mother_notification") ebirthMotherNotification("ebirth_mother_notification"),
-        @JsonProperty(value = "ecare_safe_consultation") ecareSafeConsultation("ecare_safe_consultation"),
-        @JsonProperty(value = "epidemiology") epidemiology("epidemiology"),
-        @JsonProperty(value = "intervention") intervention("intervention"),
-        @JsonProperty(value = "labrequest") labrequest("labrequest"),
-        @JsonProperty(value = "labresult") labresult("labresult"),
-        @JsonProperty(value = "medicaladvisoragreement") medicaladvisoragreement("medicaladvisoragreement"),
-        @JsonProperty(value = "medicationschemeelement") medicationschemeelement("medicationschemeelement"),
-        @JsonProperty(value = "note") note("note"),
-        @JsonProperty(value = "notification") notification("notification"),
-        @JsonProperty(value = "pharmaceuticalprescription") pharmaceuticalprescription("pharmaceuticalprescription"),
-        @JsonProperty(value = "prescription") prescription("prescription"),
-        @JsonProperty(value = "productdelivery") productdelivery("productdelivery"),
-        @JsonProperty(value = "quickdischargereport") quickdischargereport("quickdischargereport"),
-        @JsonProperty(value = "radiationexposuremonitoring") radiationexposuremonitoring("radiationexposuremonitoring"),
-        @JsonProperty(value = "referral") referral("referral"),
-        @JsonProperty(value = "report") report("report"),
-        @JsonProperty(value = "request") request("request"),
-        @JsonProperty(value = "result") result("result"),
-        @JsonProperty(value = "sumehr") sumehr("sumehr"),
-        @JsonProperty(value = "telemonitoring") telemonitoring("telemonitoring"),
-        @JsonProperty(value = "template") template("template"),
-        @JsonProperty(value = "template_admin") templateAdmin("template_admin"),
-        @JsonProperty(value = "treatmentsuspension") treatmentsuspension("treatmentsuspension"),
-        @JsonProperty(value = "vaccination") vaccination("vaccination");
+        @JsonProperty(value = "admission")
+        admission("admission"),
+
+        @JsonProperty(value = "alert")
+        alert("alert"),
+
+        @JsonProperty(value = "bvt_sample")
+        bvtSample("bvt_sample"),
+
+        @JsonProperty(value = "clinicalpath")
+        clinicalpath("clinicalpath"),
+
+        @JsonProperty(value = "clinicalsummary")
+        clinicalsummary("clinicalsummary"),
+
+        @JsonProperty(value = "contactreport")
+        contactreport("contactreport"),
+
+        @JsonProperty(value = "quote")
+        quote("quote"),
+
+        @JsonProperty(value = "invoice")
+        invoice("invoice"),
+
+        @JsonProperty(value = "death")
+        death("death"),
+
+        @JsonProperty(value = "discharge")
+        discharge("discharge"),
+
+        @JsonProperty(value = "dischargereport")
+        dischargereport("dischargereport"),
+
+        @JsonProperty(value = "ebirth_baby_medicalform")
+        ebirthBabyMedicalform("ebirth_baby_medicalform"),
+
+        @JsonProperty(value = "ebirth_baby_notification")
+        ebirthBabyNotification("ebirth_baby_notification"),
+
+        @JsonProperty(value = "ebirth_mother_medicalform")
+        ebirthMotherMedicalform("ebirth_mother_medicalform"),
+
+        @JsonProperty(value = "ebirth_mother_notification")
+        ebirthMotherNotification("ebirth_mother_notification"),
+
+        @JsonProperty(value = "ecare_safe_consultation")
+        ecareSafeConsultation("ecare_safe_consultation"),
+
+        @JsonProperty(value = "epidemiology")
+        epidemiology("epidemiology"),
+
+        @JsonProperty(value = "intervention")
+        intervention("intervention"),
+
+        @JsonProperty(value = "labrequest")
+        labrequest("labrequest"),
+
+        @JsonProperty(value = "labresult")
+        labresult("labresult"),
+
+        @JsonProperty(value = "medicaladvisoragreement")
+        medicaladvisoragreement("medicaladvisoragreement"),
+
+        @JsonProperty(value = "medicationschemeelement")
+        medicationschemeelement("medicationschemeelement"),
+
+        @JsonProperty(value = "note")
+        note("note"),
+
+        @JsonProperty(value = "notification")
+        notification("notification"),
+
+        @JsonProperty(value = "pharmaceuticalprescription")
+        pharmaceuticalprescription("pharmaceuticalprescription"),
+
+        @JsonProperty(value = "prescription")
+        prescription("prescription"),
+
+        @JsonProperty(value = "productdelivery")
+        productdelivery("productdelivery"),
+
+        @JsonProperty(value = "quickdischargereport")
+        quickdischargereport("quickdischargereport"),
+
+        @JsonProperty(value = "radiationexposuremonitoring")
+        radiationexposuremonitoring("radiationexposuremonitoring"),
+
+        @JsonProperty(value = "referral")
+        referral("referral"),
+
+        @JsonProperty(value = "report")
+        report("report"),
+
+        @JsonProperty(value = "request")
+        request("request"),
+
+        @JsonProperty(value = "result")
+        result("result"),
+
+        @JsonProperty(value = "sumehr")
+        sumehr("sumehr"),
+
+        @JsonProperty(value = "telemonitoring")
+        telemonitoring("telemonitoring"),
+
+        @JsonProperty(value = "template")
+        template("template"),
+
+        @JsonProperty(value = "template_admin")
+        templateAdmin("template_admin"),
+
+        @JsonProperty(value = "treatmentsuspension")
+        treatmentsuspension("treatmentsuspension"),
+
+        @JsonProperty(value = "vaccination")
+        vaccination("vaccination");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -265,15 +341,32 @@ data class DocumentDto (
      * Values: draft,finalized,pendingReview,reviewed,pendingSignature,signed,canceled,sent,delivered
      */
     enum class DocumentStatus(val value: kotlin.String) {
-        @JsonProperty(value = "draft") draft("draft"),
-        @JsonProperty(value = "finalized") finalized("finalized"),
-        @JsonProperty(value = "pending_review") pendingReview("pending_review"),
-        @JsonProperty(value = "reviewed") reviewed("reviewed"),
-        @JsonProperty(value = "pending_signature") pendingSignature("pending_signature"),
-        @JsonProperty(value = "signed") signed("signed"),
-        @JsonProperty(value = "canceled") canceled("canceled"),
-        @JsonProperty(value = "sent") sent("sent"),
-        @JsonProperty(value = "delivered") delivered("delivered");
+        @JsonProperty(value = "draft")
+        draft("draft"),
+
+        @JsonProperty(value = "finalized")
+        finalized("finalized"),
+
+        @JsonProperty(value = "pending_review")
+        pendingReview("pending_review"),
+
+        @JsonProperty(value = "reviewed")
+        reviewed("reviewed"),
+
+        @JsonProperty(value = "pending_signature")
+        pendingSignature("pending_signature"),
+
+        @JsonProperty(value = "signed")
+        signed("signed"),
+
+        @JsonProperty(value = "canceled")
+        canceled("canceled"),
+
+        @JsonProperty(value = "sent")
+        sent("sent"),
+
+        @JsonProperty(value = "delivered")
+        delivered("delivered");
     }
 
     /* ktlint-enable enum-entry-name-case */

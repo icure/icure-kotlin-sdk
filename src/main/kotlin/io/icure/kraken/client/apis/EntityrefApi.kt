@@ -16,22 +16,17 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.EntityReferenceDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.EntityReferenceDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -46,30 +41,31 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     }
 
     /**
-    * Create an entity reference
-    *
-    * @param entityReferenceDto
-    * @return EntityReferenceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create an entity reference
+     *
+     * @param entityReferenceDto
+     * @return EntityReferenceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto) : EntityReferenceDto  {
+    suspend fun createEntityReference(entityReferenceDto: EntityReferenceDto): EntityReferenceDto {
         val localVariableConfig = createEntityReferenceRequestConfig(entityReferenceDto = entityReferenceDto)
 
         return request<EntityReferenceDto, EntityReferenceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createEntityReference
-    *
-    * @param entityReferenceDto
-    * @return RequestConfig
-    */
-    fun createEntityReferenceRequestConfig(entityReferenceDto: EntityReferenceDto) : RequestConfig<EntityReferenceDto> {
+     * To obtain the request config of the operation createEntityReference
+     *
+     * @param entityReferenceDto
+     * @return RequestConfig
+     */
+    fun createEntityReferenceRequestConfig(entityReferenceDto: EntityReferenceDto): RequestConfig<EntityReferenceDto> {
         // val localVariableBody = entityReferenceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -81,34 +77,36 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
             path = "/rest/v2/entityref",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Find latest reference for a prefix
-    *
-    * @param prefix
-    * @return EntityReferenceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Find latest reference for a prefix
+     *
+     * @param prefix
+     * @return EntityReferenceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getLatest(prefix: kotlin.String) : EntityReferenceDto  {
+    suspend fun getLatest(prefix: kotlin.String): EntityReferenceDto {
         val localVariableConfig = getLatestRequestConfig(prefix = prefix)
 
         return request<Unit, EntityReferenceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getLatest
-    *
-    * @param prefix
-    * @return RequestConfig
-    */
-    fun getLatestRequestConfig(prefix: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getLatest
+     *
+     * @param prefix
+     * @return RequestConfig
+     */
+    fun getLatestRequestConfig(prefix: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -117,10 +115,10 @@ class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entityref/latest/{prefix}".replace("{"+"prefix"+"}", "${URLEncoder.encode(prefix.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entityref/latest/{prefix}".replace("{" + "prefix" + "}", "${URLEncoder.encode(prefix.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

@@ -12,15 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.HealthElementDto
-import io.icure.kraken.client.models.PartnershipDto
-import io.icure.kraken.client.models.PatientHealthCarePartyDto
-import io.icure.kraken.client.models.ServiceDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -33,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class SumehrContentDto (
+data class SumehrContentDto(
 
     @field:JsonProperty("services")
     val services: kotlin.collections.List<ServiceDto>? = null,

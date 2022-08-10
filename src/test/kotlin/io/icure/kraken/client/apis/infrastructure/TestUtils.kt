@@ -44,13 +44,12 @@ import java.nio.file.StandardOpenOption
 import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
-
 class TestUtils {
     companion object {
         val log = LoggerFactory.getLogger(this.javaClass)
         val objectMapper = ObjectMapper()
             .registerModule(KotlinModule())
-            .registerModule(object:SimpleModule() {
+            .registerModule(object : SimpleModule() {
                 override fun setupModule(context: SetupContext?) {
                     addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
                     addSerializer(ByteArrayWrapper::class.java, ByteArrayWrapperSerializer())
@@ -64,19 +63,23 @@ class TestUtils {
                 configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
             }
 
-        val globalParams: Map<String, Any> = objectMapper.readValue(this::class.java.classLoader.getResource("parameters/Global.json").readText(),
-            object: TypeReference<Map<String, Any>>() {})
+        val globalParams: Map<String, Any> = objectMapper.readValue(
+            this::class.java.classLoader.getResource("parameters/Global.json").readText(),
+            object : TypeReference<Map<String, Any>>() {}
+        )
 
         inline fun <reified T> getParameter(fileName: String, name: String): T? {
             val paramElements = name.split(".")
-            val localParams = objectMapper.readValue(this::class.java.classLoader.getResource("parameters/$fileName").readText(),
-                object: TypeReference<Map<String, Any>>() {})
+            val localParams = objectMapper.readValue(
+                this::class.java.classLoader.getResource("parameters/$fileName").readText(),
+                object : TypeReference<Map<String, Any>>() {}
+            )
 
             return localParams?.let {
                 val methodParams: Map<String, Any>? = localParams[paramElements[0]] as Map<String, Any>?
                 methodParams?.let {
-                    when(T::class){
-                        Long::class -> (methodParams[paramElements[1]] as? Long?)?.toLong() as T? ?:(methodParams[paramElements[1]] as? Int?)?.toLong() as T? ?: (getGlobalParam(paramElements[1]) as Long?)?.toLong() as T?
+                    when (T::class) {
+                        Long::class -> (methodParams[paramElements[1]] as? Long?)?.toLong() as T? ?: (methodParams[paramElements[1]] as? Int?)?.toLong() as T? ?: (getGlobalParam(paramElements[1]) as Long?)?.toLong() as T?
                         Flow::class -> flowOf(methodParams[paramElements[1]]) as T?
                         else -> objectMapper.readValue(objectMapper.writeValueAsString(methodParams[paramElements[1]])) ?: getGlobalObjectParam(
                             paramElements[1]
@@ -101,7 +104,7 @@ class TestUtils {
             }
         }
 
-        inline fun <reified T> getGlobalObjectParam(globalParam: String): T?{
+        inline fun <reified T> getGlobalObjectParam(globalParam: String): T? {
             for ((k, v) in globalParams) {
                 if (globalParam.endsWith(k)) {
                     return objectMapper.readValue(objectMapper.writeValueAsString(v))
@@ -120,17 +123,17 @@ class TestUtils {
         }
 
         fun isAutoRev(parmatersFileName: String, callingFunctionName: String): Boolean {
-            val isAutoRev  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.autoRev")
+            val isAutoRev = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.autoRev")
             return isAutoRev ?: false
         }
 
         fun skipEndpoint(parmatersFileName: String, callingFunctionName: String): Boolean {
-            val skipEndpoint  = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.skipEndpoint")
+            val skipEndpoint = getParameter<Boolean>(parmatersFileName, "$callingFunctionName.skipEndpoint")
             return skipEndpoint ?: false
         }
 
         fun getCredentialsFile(parmatersFileName: String, callingFunctionName: String): String {
-            val credentialsFileFromParametersFile  = getParameter<String>(parmatersFileName, "$callingFunctionName.credentialsFile")
+            val credentialsFileFromParametersFile = getParameter<String>(parmatersFileName, "$callingFunctionName.credentialsFile")
             return credentialsFileFromParametersFile ?: infereCredentialsFile(callingFunctionName)
         }
 
@@ -139,10 +142,10 @@ class TestUtils {
             val usernamePassword: UsernamePassword = Companion.objectMapper.readValue(File(".credentialsCouchDb").readText())!!
             val u = usernamePassword.username
             val p = usernamePassword.password
-            val family  = getParameter<String>(parametersFileName, "$callingFunctionName.family")
-            val ids  = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
+            val family = getParameter<String>(parametersFileName, "$callingFunctionName.family")
+            val ids = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
             val httpClient = HttpClient.create().headers { h ->
-                h.set("Authorization", UsernamePassword(u,p).toBasicAuth())
+                h.set("Authorization", UsernamePassword(u, p).toBasicAuth())
                 h.set("Content-type", "application/json")
             }
 
@@ -150,15 +153,15 @@ class TestUtils {
                 ids.forEach { id ->
                     val res = httpClient.get()
                         .uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/${URLEncoder.encode(id, Charsets.UTF_8)}"))
-                        .responseSingle{ response, bytes ->
-                            if (response.status().code()<400) {
-                                bytes.mapNotNull { objectMapper?.readValue(it.toByteArraySafe(), object:TypeReference<IdWithRev>() {}) }
+                        .responseSingle { response, bytes ->
+                            if (response.status().code() < 400) {
+                                bytes.mapNotNull { objectMapper?.readValue(it.toByteArraySafe(), object : TypeReference<IdWithRev>() {}) }
                                     .flatMap {
                                         it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}")).response() } ?: Mono.empty()
                                     }
                             } else Mono.empty()
                         }.awaitFirstOrNull()
-                    log.info {"Delete : $id <- ${res?.status()?.code()}"}
+                    log.info { "Delete : $id <- ${res?.status()?.code()}" }
                 }
             }
         }
@@ -203,7 +206,7 @@ class TestUtils {
             }
         }
 
-        fun String.basicAuth() : String {
+        fun String.basicAuth(): String {
             val usernamePassword: UsernamePassword = objectMapper.readValue(File(this).readText())!!
             return usernamePassword.toBasicAuth()
         }
@@ -239,7 +242,7 @@ class TestUtils {
     }
 }
 
-suspend fun Flow<ByteBuffer>.writeToFile(file:File) = FileChannel.open(file.toPath(), StandardOpenOption.WRITE).use { channel ->
+suspend fun Flow<ByteBuffer>.writeToFile(file: File) = FileChannel.open(file.toPath(), StandardOpenOption.WRITE).use { channel ->
     this@writeToFile.collect { b -> channel.write(b) }
 }
 
@@ -257,8 +260,8 @@ fun File.readAsFlow() = flow {
         do {
             val b = ByteBuffer.allocate(4096)
             val read = channel.read(b)
-            if (read>0) { emit(b) }
-        } while(read>0)
+            if (read > 0) { emit(b) }
+        } while (read > 0)
     }
 }
 

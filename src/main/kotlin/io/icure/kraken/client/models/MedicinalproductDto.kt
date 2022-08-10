@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -31,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MedicinalproductDto (
+data class MedicinalproductDto(
 
     @field:JsonProperty("intendedcds")
     val intendedcds: kotlin.collections.List<CodeStubDto> = listOf(),

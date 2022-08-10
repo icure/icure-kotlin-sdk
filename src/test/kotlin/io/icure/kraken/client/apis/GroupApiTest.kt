@@ -14,6 +14,18 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.json.JsonReadFeature
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
 import io.icure.kraken.client.models.DatabaseInitialisationDto
 import io.icure.kraken.client.models.GroupDatabasesInfoDto
 import io.icure.kraken.client.models.GroupDto
@@ -24,49 +36,23 @@ import io.icure.kraken.client.models.PaginatedListGroupDto
 import io.icure.kraken.client.models.RegistrationInformationDto
 import io.icure.kraken.client.models.RegistrationSuccessDto
 import io.icure.kraken.client.models.ReplicationInfoDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
-import io.icure.kraken.client.infrastructure.TestUtils
-import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
-import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -88,7 +74,7 @@ class GroupApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -98,23 +84,23 @@ class GroupApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             GroupDto::class.java -> it to objectMapper.convertValue(body, GroupDto::class.java)
                             GroupApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -128,7 +114,6 @@ class GroupApiTest() {
         }
     }
 
-
     /**
      * Create a group
      *
@@ -139,91 +124,92 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createGroupTest(fileName: String) = runBlocking {
-
+    fun createGroupTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createGroup")) {
             assertTrue(true, "Test of createGroup endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createGroup")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val name: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.name")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val password: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.password")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val databaseInitialisationDto: DatabaseInitialisationDto = TestUtils.getParameter<DatabaseInitialisationDto>(fileName, "createGroup.databaseInitialisationDto")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? DatabaseInitialisationDto ?: it
-                    }
+                }
                 val server: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.server")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val q: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "createGroup.q")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
                 val n: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "createGroup.n")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
                 val superGroup: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "createGroup.superGroup")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "createGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).createGroup(id = id,name = name,password = password,databaseInitialisationDto = databaseInitialisationDto,server = server,q = q,n = n,superGroup = superGroup)
+                val response = api(credentialsFile).createGroup(id = id, name = name, password = password, databaseInitialisationDto = databaseInitialisationDto, server = server, q = q, n = n, superGroup = superGroup)
 
                 val testFileName = "GroupApi.createGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("GroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("GroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<GroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<GroupDto>() {}
-                    })
+                    )
                     assertAreEquals("createGroup", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -236,8 +222,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -254,56 +239,57 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findGroupsTest(fileName: String) = runBlocking {
-
+    fun findGroupsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findGroups")) {
             assertTrue(true, "Test of findGroups endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findGroups")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroups.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroups.startDocumentId")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findGroups.limit")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroups") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findGroups(id = id,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findGroups(id = id, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "GroupApi.findGroups"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListGroupDto>? != null) {
-                        if ("PaginatedListGroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListGroupDto>? != null) {
+                            if ("PaginatedListGroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListGroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListGroupDto>>() {}
+                            object : TypeReference<PaginatedListGroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListGroupDto>() {}
-                    })
+                    )
                     assertAreEquals("findGroups", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -316,8 +302,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -334,70 +319,71 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findGroupsWithContentTest(fileName: String) = runBlocking {
-
+    fun findGroupsWithContentTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findGroupsWithContent")) {
             assertTrue(true, "Test of findGroupsWithContent endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findGroupsWithContent")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val searchString: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.searchString")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.startKey")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findGroupsWithContent.startDocumentId")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findGroupsWithContent.limit")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "findGroupsWithContent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findGroupsWithContent(id = id,searchString = searchString,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findGroupsWithContent(id = id, searchString = searchString, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "GroupApi.findGroupsWithContent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListGroupDto>? != null) {
-                        if ("PaginatedListGroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListGroupDto>? != null) {
+                            if ("PaginatedListGroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListGroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListGroupDto>>() {}
+                            object : TypeReference<PaginatedListGroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListGroupDto>() {}
-                    })
+                    )
                     assertAreEquals("findGroupsWithContent", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -410,8 +396,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -428,42 +413,43 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getGroupTest(fileName: String) = runBlocking {
-
+    fun getGroupTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getGroup")) {
             assertTrue(true, "Test of getGroup endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getGroup")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getGroup.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "getGroup") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getGroup(id = id)
 
                 val testFileName = "GroupApi.getGroup"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("GroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("GroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<GroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<GroupDto>() {}
-                    })
+                    )
                     assertAreEquals("getGroup", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -476,8 +462,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -494,42 +479,43 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getGroupsStorageInfosTest(fileName: String) = runBlocking {
-
+    fun getGroupsStorageInfosTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getGroupsStorageInfos")) {
             assertTrue(true, "Test of getGroupsStorageInfos endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getGroupsStorageInfos")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getGroupsStorageInfos.listOfIdsDto")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "getGroupsStorageInfos") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getGroupsStorageInfos(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "GroupApi.getGroupsStorageInfos"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDatabasesInfoDto>? != null) {
-                        if ("kotlin.collections.List<GroupDatabasesInfoDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDatabasesInfoDto>? != null) {
+                            if ("kotlin.collections.List<GroupDatabasesInfoDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDatabasesInfoDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDatabasesInfoDto>>() {}
+                            object : TypeReference<kotlin.collections.List<GroupDatabasesInfoDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<GroupDatabasesInfoDto>>() {}
-                    })
+                    )
                     assertAreEquals("getGroupsStorageInfos", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -542,8 +528,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -560,42 +545,43 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getReplicationInfo1Test(fileName: String) = runBlocking {
-
+    fun getReplicationInfo1Test(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getReplicationInfo1")) {
             assertTrue(true, "Test of getReplicationInfo1 endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getReplicationInfo1")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getReplicationInfo1.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "getReplicationInfo1") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getReplicationInfo1(id = id)
 
                 val testFileName = "GroupApi.getReplicationInfo1"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ReplicationInfoDto>? != null) {
-                        if ("ReplicationInfoDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ReplicationInfoDto>? != null) {
+                            if ("ReplicationInfoDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ReplicationInfoDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ReplicationInfoDto>>() {}
+                            object : TypeReference<ReplicationInfoDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ReplicationInfoDto>() {}
-                    })
+                    )
                     assertAreEquals("getReplicationInfo1", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -608,8 +594,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -626,56 +611,57 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun initDesignDocsTest(fileName: String) = runBlocking {
-
+    fun initDesignDocsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "initDesignDocs")) {
             assertTrue(true, "Test of initDesignDocs endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "initDesignDocs")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "initDesignDocs.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "initDesignDocs") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val clazz: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "initDesignDocs.clazz")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "initDesignDocs") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val warmup: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "initDesignDocs.warmup")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "initDesignDocs") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).initDesignDocs(id = id,clazz = clazz,warmup = warmup)
+                val response = api(credentialsFile).initDesignDocs(id = id, clazz = clazz, warmup = warmup)
 
                 val testFileName = "GroupApi.initDesignDocs"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.Any>? != null) {
-                        if ("kotlin.Any".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<kotlin.Any>? != null) {
+                            if ("kotlin.Any".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.Any>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<kotlin.Any>>() {}
+                            object : TypeReference<kotlin.Any>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.Any>() {}
-                    })
+                    )
                     assertAreEquals("initDesignDocs", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -688,8 +674,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -706,12 +691,11 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listGroupsTest(fileName: String) = runBlocking {
-
+    fun listGroupsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listGroups")) {
             assertTrue(true, "Test of listGroups endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listGroups")
 
@@ -720,21 +704,23 @@ class GroupApiTest() {
                 val testFileName = "GroupApi.listGroups"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("kotlin.collections.List<GroupDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("kotlin.collections.List<GroupDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<kotlin.collections.List<GroupDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<GroupDto>>() {}
-                    })
+                    )
                     assertAreEquals("listGroups", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -747,8 +733,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -765,49 +750,50 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyGroupNameTest(fileName: String) = runBlocking {
-
+    fun modifyGroupNameTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyGroupName")) {
             assertTrue(true, "Test of modifyGroupName endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyGroupName")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "modifyGroupName.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyGroupName") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val name: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "modifyGroupName.name")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyGroupName") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).modifyGroupName(id = id,name = name)
+                val response = api(credentialsFile).modifyGroupName(id = id, name = name)
 
                 val testFileName = "GroupApi.modifyGroupName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("GroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("GroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<GroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<GroupDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyGroupName", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -820,8 +806,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -838,49 +823,50 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyGroupPropertiesTest(fileName: String) = runBlocking {
-
+    fun modifyGroupPropertiesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyGroupProperties")) {
             assertTrue(true, "Test of modifyGroupProperties endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyGroupProperties")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "modifyGroupProperties.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyGroupProperties") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfPropertiesDto: ListOfPropertiesDto = TestUtils.getParameter<ListOfPropertiesDto>(fileName, "modifyGroupProperties.listOfPropertiesDto")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyGroupProperties") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfPropertiesDto ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).modifyGroupProperties(id = id,listOfPropertiesDto = listOfPropertiesDto)
+                val response = api(credentialsFile).modifyGroupProperties(id = id, listOfPropertiesDto = listOfPropertiesDto)
 
                 val testFileName = "GroupApi.modifyGroupProperties"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("GroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("GroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<GroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<GroupDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyGroupProperties", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -893,8 +879,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -911,42 +896,43 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun registerNewGroupAdministratorTest(fileName: String) = runBlocking {
-
+    fun registerNewGroupAdministratorTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "registerNewGroupAdministrator")) {
             assertTrue(true, "Test of registerNewGroupAdministrator endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "registerNewGroupAdministrator")
                 val registrationInformationDto: RegistrationInformationDto = TestUtils.getParameter<RegistrationInformationDto>(fileName, "registerNewGroupAdministrator.registrationInformationDto")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "registerNewGroupAdministrator") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? RegistrationInformationDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).registerNewGroupAdministrator(registrationInformationDto = registrationInformationDto)
 
                 val testFileName = "GroupApi.registerNewGroupAdministrator"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<RegistrationSuccessDto>? != null) {
-                        if ("RegistrationSuccessDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<RegistrationSuccessDto>? != null) {
+                            if ("RegistrationSuccessDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<RegistrationSuccessDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<RegistrationSuccessDto>>() {}
+                            object : TypeReference<RegistrationSuccessDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<RegistrationSuccessDto>() {}
-                    })
+                    )
                     assertAreEquals("registerNewGroupAdministrator", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -959,8 +945,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -977,63 +962,64 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun resetStorageTest(fileName: String) = runBlocking {
-
+    fun resetStorageTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "resetStorage")) {
             assertTrue(true, "Test of resetStorage endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "resetStorage")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "resetStorage.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "resetStorage") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "resetStorage.listOfIdsDto")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "resetStorage") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
                 val q: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "resetStorage.q")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "resetStorage") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
                 val n: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "resetStorage.n")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "resetStorage") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).resetStorage(id = id,listOfIdsDto = listOfIdsDto,q = q,n = n)
+                val response = api(credentialsFile).resetStorage(id = id, listOfIdsDto = listOfIdsDto, q = q, n = n)
 
                 val testFileName = "GroupApi.resetStorage"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.Any>? != null) {
-                        if ("kotlin.Any".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<kotlin.Any>? != null) {
+                            if ("kotlin.Any".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.Any>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<kotlin.Any>>() {}
+                            object : TypeReference<kotlin.Any>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.Any>() {}
-                    })
+                    )
                     assertAreEquals("resetStorage", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1046,8 +1032,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1064,49 +1049,50 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun setGroupPasswordTest(fileName: String) = runBlocking {
-
+    fun setGroupPasswordTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "setGroupPassword")) {
             assertTrue(true, "Test of setGroupPassword endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setGroupPassword")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setGroupPassword.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "setGroupPassword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val password: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "setGroupPassword.password")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "setGroupPassword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).setGroupPassword(id = id,password = password)
+                val response = api(credentialsFile).setGroupPassword(id = id, password = password)
 
                 val testFileName = "GroupApi.setGroupPassword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<GroupDto>? != null) {
-                        if ("GroupDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<GroupDto>? != null) {
+                            if ("GroupDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<GroupDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<GroupDto>>() {}
+                            object : TypeReference<GroupDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<GroupDto>() {}
-                    })
+                    )
                     assertAreEquals("setGroupPassword", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1119,8 +1105,7 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1137,56 +1122,57 @@ class GroupApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun solveConflictsTest(fileName: String) = runBlocking {
-
+    fun solveConflictsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "solveConflicts")) {
             assertTrue(true, "Test of solveConflicts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "solveConflicts")
                 val id: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "solveConflicts.id")!!.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "solveConflicts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "solveConflicts.limit")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "solveConflicts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
                 val warmup: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "solveConflicts.warmup")?.let {
                     (it as? GroupDto)?.takeIf { TestUtils.isAutoRev(fileName, "solveConflicts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getGroup(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).solveConflicts(id = id,limit = limit,warmup = warmup)
+                val response = api(credentialsFile).solveConflicts(id = id, limit = limit, warmup = warmup)
 
                 val testFileName = "GroupApi.solveConflicts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IdWithRevDto>? != null) {
-                        if ("kotlin.collections.List<IdWithRevDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<IdWithRevDto>? != null) {
+                            if ("kotlin.collections.List<IdWithRevDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IdWithRevDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<IdWithRevDto>>() {}
+                            object : TypeReference<kotlin.collections.List<IdWithRevDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<IdWithRevDto>>() {}
-                    })
+                    )
                     assertAreEquals("solveConflicts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1199,19 +1185,17 @@ class GroupApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -1223,36 +1207,39 @@ class GroupApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

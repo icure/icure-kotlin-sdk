@@ -11,7 +11,6 @@ import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.FormDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.factory.Mappers
 import java.util.*
 
 suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
@@ -22,25 +21,29 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
         responsible = user.dataOwnerId(),
         author = user.id,
         delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(),
-                    user.dataOwnerId(),
-                    d,
-                    config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
-                ),
-            ))
+            m + (
+                d to setOf(
+                    DelegationDto(
+                        emptyList(),
+                        user.dataOwnerId(),
+                        d,
+                        config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first
+                    )
+                )
+                )
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(),
-                    user.dataOwnerId(),
-                    d,
-                    config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
-                ),
-            ))
-        },
+            m + (
+                d to setOf(
+                    DelegationDto(
+                        emptyList(),
+                        user.dataOwnerId(),
+                        d,
+                        config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first
+                    )
+                )
+                )
+        }
     )
 }
 
@@ -136,7 +139,6 @@ suspend fun FormApi.modifyForms(user: UserDto, form: List<FormDto>, config: Cryp
     ).map { config.decryptForm(user.dataOwnerId(), it) }
 }
 
-
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun FormApi.createForms(user: UserDto, form: List<FormDto>, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): List<FormDto> {
@@ -196,7 +198,6 @@ suspend fun FormApi.getFormsByUniqueId(user: UserDto, uniqueId: String, config: 
     return this.getFormsByUniqueId(uniqueId).map { config.decryptForm(user.dataOwnerId(), it) }
 }
 
-
 suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encryptForm(
     myId: String,
     delegations: Set<String>,
@@ -206,9 +207,11 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
         form
     } else {
         val secret = UUID.randomUUID().toString()
-        form.copy(encryptionKeys = (delegations + myId).fold(form.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, form.id, secret).first)))
-        })
+        form.copy(
+            encryptionKeys = (delegations + myId).fold(form.encryptionKeys) { m, d ->
+                m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, form.id, secret).first)))
+            }
+        )
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
             "-",

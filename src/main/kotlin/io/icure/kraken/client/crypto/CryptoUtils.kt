@@ -2,12 +2,20 @@ package io.icure.kraken.client.crypto
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.nio.ByteBuffer
-import java.security.*
+import java.security.Key
+import java.security.KeyFactory
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.PrivateKey
+import java.security.PublicKey
+import java.security.SecureRandom
+import java.security.Security
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
-import java.util.*
+import java.util.Arrays
+import java.util.UUID
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -46,17 +54,27 @@ object CryptoUtils {
     }
 
     fun decryptAESWithAnyKey(data: ByteArray, enckeys: List<String>) =
-        enckeys.fold(null) { decrypted: ByteArray?, key: String ->  decrypted ?: try { decryptAES(data, ByteBuffer.wrap(ByteArray(16)).also {
+        enckeys.fold(null) { decrypted: ByteArray?, key: String ->
+            decrypted ?: try {
+                decryptAES(
+                    data,
+                    ByteBuffer.wrap(ByteArray(16)).also {
+                        val uuid: UUID = UUID.fromString(key)
+                        it.putLong(uuid.mostSignificantBits)
+                        it.putLong(uuid.leastSignificantBits)
+                    }.array()
+                )
+            } catch (e: Exception) { null }
+        } ?: throw BadPaddingException("Invalid keys")
+
+    fun encryptAESWithAnyKey(data: ByteArray, key: String) = encryptAES(
+        data,
+        ByteBuffer.wrap(ByteArray(16)).also {
             val uuid: UUID = UUID.fromString(key)
             it.putLong(uuid.mostSignificantBits)
             it.putLong(uuid.leastSignificantBits)
-        }.array()) } catch (e:Exception) { null } } ?: throw BadPaddingException("Invalid keys")
-
-    fun encryptAESWithAnyKey(data: ByteArray, key: String) = encryptAES(data, ByteBuffer.wrap(ByteArray(16)).also {
-        val uuid: UUID = UUID.fromString(key)
-        it.putLong(uuid.mostSignificantBits)
-        it.putLong(uuid.leastSignificantBits)
-    }.array())
+        }.array()
+    )
 
     fun decryptAES(data: ByteArray, key: ByteArray): ByteArray {
         val iv: ByteArray = Arrays.copyOf(data, IV_BYTE_LENGTH)
@@ -96,13 +114,12 @@ object CryptoUtils {
 @ExperimentalUnsignedTypes // just to make it clear that the experimental unsigned types are used
 fun ByteArray.keyToHexString() = asUByteArray().joinToString("") { it.toString(16).padStart(2, '0') }
 fun String.keyFromHexString(): ByteArray {
-    this.replace("-","").let {
+    this.replace("-", "").let {
         check(it.length % 2 == 0) { "Must have an even length" }
 
         return it.chunked(2)
             .map { it.toInt(16).toByte() }
             .toByteArray()
-
     }
 }
 fun String.toPublicKey() = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(keyFromHexString())) as RSAPublicKey
@@ -110,13 +127,17 @@ fun String.toPublicKey() = KeyFactory.getInstance("RSA").generatePublic(X509Enco
 fun String.toPrivateKey() = KeyFactory.getInstance("RSA").generatePrivate(
     PKCS8EncodedKeySpec(
         keyFromHexString()
-    )) as RSAPrivateKey
+    )
+) as RSAPrivateKey
 
 @ExperimentalUnsignedTypes
 fun KeyPair.publicKeyAsString() = this.public.pubKeyAsString()
+
 @ExperimentalUnsignedTypes
 fun KeyPair.privateKeyAsString() = this.private.privKeyAsString()
+
 @ExperimentalUnsignedTypes
 fun PublicKey.pubKeyAsString() = this.encoded.keyToHexString()
+
 @ExperimentalUnsignedTypes
 fun PrivateKey.privKeyAsString() = this.encoded.keyToHexString()

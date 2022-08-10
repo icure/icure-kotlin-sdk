@@ -12,19 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AddressDto
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.FinancialInstitutionInformationDto
-import io.icure.kraken.client.models.FlatRateTarificationDto
-import io.icure.kraken.client.models.HealthcarePartyHistoryStatusDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.PersonNameDto
-import io.icure.kraken.client.models.PropertyStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity is a root level object. It represents a healthcare party. It is serialized in JSON and saved in the underlying icure-healthdata CouchDB database.
@@ -86,7 +76,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class HealthcarePartyDto (
+data class HealthcarePartyDto(
 
     /* the Id of the healthcare party. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -298,9 +288,14 @@ data class HealthcarePartyDto (
      * Values: trainee,withconvention,accreditated
      */
     enum class Statuses(val value: kotlin.String) {
-        @JsonProperty(value = "trainee") trainee("trainee"),
-        @JsonProperty(value = "withconvention") withconvention("withconvention"),
-        @JsonProperty(value = "accreditated") accreditated("accreditated");
+        @JsonProperty(value = "trainee")
+        trainee("trainee"),
+
+        @JsonProperty(value = "withconvention")
+        withconvention("withconvention"),
+
+        @JsonProperty(value = "accreditated")
+        accreditated("accreditated");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -312,13 +307,26 @@ data class HealthcarePartyDto (
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
      */
     enum class Gender(val value: kotlin.String) {
-        @JsonProperty(value = "male") male("male"),
-        @JsonProperty(value = "female") female("female"),
-        @JsonProperty(value = "indeterminate") indeterminate("indeterminate"),
-        @JsonProperty(value = "changed") changed("changed"),
-        @JsonProperty(value = "changedToMale") changedToMale("changedToMale"),
-        @JsonProperty(value = "changedToFemale") changedToFemale("changedToFemale"),
-        @JsonProperty(value = "unknown") unknown("unknown");
+        @JsonProperty(value = "male")
+        male("male"),
+
+        @JsonProperty(value = "female")
+        female("female"),
+
+        @JsonProperty(value = "indeterminate")
+        indeterminate("indeterminate"),
+
+        @JsonProperty(value = "changed")
+        changed("changed"),
+
+        @JsonProperty(value = "changedToMale")
+        changedToMale("changedToMale"),
+
+        @JsonProperty(value = "changedToFemale")
+        changedToFemale("changedToFemale"),
+
+        @JsonProperty(value = "unknown")
+        unknown("unknown");
     }
 
     /* ktlint-enable enum-entry-name-case */

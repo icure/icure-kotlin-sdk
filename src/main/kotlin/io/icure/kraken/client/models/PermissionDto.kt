@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.PermissionItemDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * If permission to modify patient data is granted or revoked
@@ -28,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PermissionDto (
+data class PermissionDto(
 
     /* Granted permissions. */
     @field:JsonProperty("grants")

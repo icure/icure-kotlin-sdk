@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -77,7 +75,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class InvoicingCodeDto (
+data class InvoicingCodeDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String? = null,
@@ -246,14 +244,29 @@ data class InvoicingCodeDto (
      * Values: cash,wired,insurance,creditcard,debitcard,paypal,bitcoin,other
      */
     enum class PaymentType(val value: kotlin.String) {
-        @JsonProperty(value = "cash") cash("cash"),
-        @JsonProperty(value = "wired") wired("wired"),
-        @JsonProperty(value = "insurance") insurance("insurance"),
-        @JsonProperty(value = "creditcard") creditcard("creditcard"),
-        @JsonProperty(value = "debitcard") debitcard("debitcard"),
-        @JsonProperty(value = "paypal") paypal("paypal"),
-        @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "cash")
+        cash("cash"),
+
+        @JsonProperty(value = "wired")
+        wired("wired"),
+
+        @JsonProperty(value = "insurance")
+        insurance("insurance"),
+
+        @JsonProperty(value = "creditcard")
+        creditcard("creditcard"),
+
+        @JsonProperty(value = "debitcard")
+        debitcard("debitcard"),
+
+        @JsonProperty(value = "paypal")
+        paypal("paypal"),
+
+        @JsonProperty(value = "bitcoin")
+        bitcoin("bitcoin"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */

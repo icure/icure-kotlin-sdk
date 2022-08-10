@@ -16,24 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.AgendaDto
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.ListOfIdsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.AgendaDto
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +43,31 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
     }
 
     /**
-    * Creates a agenda
-    *
-    * @param agendaDto
-    * @return AgendaDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a agenda
+     *
+     * @param agendaDto
+     * @return AgendaDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createAgenda(agendaDto: AgendaDto) : AgendaDto  {
+    suspend fun createAgenda(agendaDto: AgendaDto): AgendaDto {
         val localVariableConfig = createAgendaRequestConfig(agendaDto = agendaDto)
 
         return request<AgendaDto, AgendaDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createAgenda
-    *
-    * @param agendaDto
-    * @return RequestConfig
-    */
-    fun createAgendaRequestConfig(agendaDto: AgendaDto) : RequestConfig<AgendaDto> {
+     * To obtain the request config of the operation createAgenda
+     *
+     * @param agendaDto
+     * @return RequestConfig
+     */
+    fun createAgendaRequestConfig(agendaDto: AgendaDto): RequestConfig<AgendaDto> {
         // val localVariableBody = agendaDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +79,36 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes agendas
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes agendas
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAgendas(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteAgendas(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteAgendasRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteAgendas
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteAgendasRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteAgendas
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteAgendasRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -122,34 +120,36 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets an agenda
-    *
-    * @param agendaId
-    * @return AgendaDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets an agenda
+     *
+     * @param agendaId
+     * @return AgendaDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgenda(agendaId: kotlin.String) : AgendaDto  {
+    suspend fun getAgenda(agendaId: kotlin.String): AgendaDto {
         val localVariableConfig = getAgendaRequestConfig(agendaId = agendaId)
 
         return request<Unit, AgendaDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getAgenda
-    *
-    * @param agendaId
-    * @return RequestConfig
-    */
-    fun getAgendaRequestConfig(agendaId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getAgenda
+     *
+     * @param agendaId
+     * @return RequestConfig
+     */
+    fun getAgendaRequestConfig(agendaId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -158,35 +158,37 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/agenda/{agendaId}".replace("{"+"agendaId"+"}", "${URLEncoder.encode(agendaId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/agenda/{agendaId}".replace("{" + "agendaId" + "}", "${URLEncoder.encode(agendaId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets all agendas
-    *
-    * @return kotlin.collections.List<AgendaDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets all agendas
+     *
+     * @return kotlin.collections.List<AgendaDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgendas() : kotlin.collections.List<AgendaDto>  {
+    suspend fun getAgendas(): kotlin.collections.List<AgendaDto> {
         val localVariableConfig = getAgendasRequestConfig()
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getAgendas
-    *
-    * @return RequestConfig
-    */
-    fun getAgendasRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getAgendas
+     *
+     * @return RequestConfig
+     */
+    fun getAgendasRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -198,34 +200,36 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets all agendas for user
-    *
-    * @param userId
-    * @return AgendaDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets all agendas for user
+     *
+     * @param userId
+     * @return AgendaDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getAgendasForUser(userId: kotlin.String) : AgendaDto  {
+    suspend fun getAgendasForUser(userId: kotlin.String): AgendaDto {
         val localVariableConfig = getAgendasForUserRequestConfig(userId = userId)
 
         return request<Unit, AgendaDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getAgendasForUser
-    *
-    * @param userId
-    * @return RequestConfig
-    */
-    fun getAgendasForUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getAgendasForUser
+     *
+     * @param userId
+     * @return RequestConfig
+     */
+    fun getAgendasForUserRequestConfig(userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -240,34 +244,36 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda/byUser",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets readable agendas for user
-    *
-    * @param userId
-    * @return kotlin.collections.List<AgendaDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets readable agendas for user
+     *
+     * @param userId
+     * @return kotlin.collections.List<AgendaDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReadableAgendasForUser(userId: kotlin.String) : kotlin.collections.List<AgendaDto>  {
+    suspend fun getReadableAgendasForUser(userId: kotlin.String): kotlin.collections.List<AgendaDto> {
         val localVariableConfig = getReadableAgendasForUserRequestConfig(userId = userId)
 
         return request<Unit, kotlin.collections.List<AgendaDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getReadableAgendasForUser
-    *
-    * @param userId
-    * @return RequestConfig
-    */
-    fun getReadableAgendasForUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getReadableAgendasForUser
+     *
+     * @param userId
+     * @return RequestConfig
+     */
+    fun getReadableAgendasForUserRequestConfig(userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -282,34 +288,36 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda/readableForUser",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modifies an agenda
-    *
-    * @param agendaDto
-    * @return AgendaDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modifies an agenda
+     *
+     * @param agendaDto
+     * @return AgendaDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyAgenda(agendaDto: AgendaDto) : AgendaDto  {
+    suspend fun modifyAgenda(agendaDto: AgendaDto): AgendaDto {
         val localVariableConfig = modifyAgendaRequestConfig(agendaDto = agendaDto)
 
         return request<AgendaDto, AgendaDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyAgenda
-    *
-    * @param agendaDto
-    * @return RequestConfig
-    */
-    fun modifyAgendaRequestConfig(agendaDto: AgendaDto) : RequestConfig<AgendaDto> {
+     * To obtain the request config of the operation modifyAgenda
+     *
+     * @param agendaDto
+     * @return RequestConfig
+     */
+    fun modifyAgendaRequestConfig(agendaDto: AgendaDto): RequestConfig<AgendaDto> {
         // val localVariableBody = agendaDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -321,7 +329,7 @@ class AgendaApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient 
             path = "/rest/v2/agenda",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

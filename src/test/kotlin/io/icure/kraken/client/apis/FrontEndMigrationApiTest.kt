@@ -14,51 +14,37 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FrontEndMigrationDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.FrontEndMigrationDto
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -80,7 +66,7 @@ class FrontEndMigrationApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -90,23 +76,23 @@ class FrontEndMigrationApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             FrontEndMigrationDto::class.java -> it to objectMapper.convertValue(body, FrontEndMigrationDto::class.java)
                             FrontEndMigrationApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -120,7 +106,6 @@ class FrontEndMigrationApiTest() {
         }
     }
 
-
     /**
      * Creates a front end migration
      *
@@ -131,42 +116,43 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createFrontEndMigrationTest(fileName: String) = runBlocking {
-
+    fun createFrontEndMigrationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createFrontEndMigration")) {
             assertTrue(true, "Test of createFrontEndMigration endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createFrontEndMigration")
                 val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter<FrontEndMigrationDto>(fileName, "createFrontEndMigration.frontEndMigrationDto")!!.let {
                     (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "createFrontEndMigration") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? FrontEndMigrationDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createFrontEndMigration(frontEndMigrationDto = frontEndMigrationDto)
 
                 val testFileName = "FrontEndMigrationApi.createFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
-                        if ("FrontEndMigrationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            object : TypeReference<FrontEndMigrationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<FrontEndMigrationDto>() {}
-                    })
+                    )
                     assertAreEquals("createFrontEndMigration", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -179,8 +165,7 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -197,42 +182,43 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteFrontEndMigrationTest(fileName: String) = runBlocking {
-
+    fun deleteFrontEndMigrationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteFrontEndMigration")) {
             assertTrue(true, "Test of deleteFrontEndMigration endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteFrontEndMigration")
                 val frontEndMigrationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteFrontEndMigration.frontEndMigrationId")!!.let {
                     (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteFrontEndMigration") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteFrontEndMigration(frontEndMigrationId = frontEndMigrationId)
 
                 val testFileName = "FrontEndMigrationApi.deleteFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("DocIdentifier".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("DocIdentifier".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<DocIdentifier>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<DocIdentifier>() {}
-                    })
+                    )
                     assertAreEquals("deleteFrontEndMigration", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -245,8 +231,7 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -263,42 +248,43 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getFrontEndMigrationTest(fileName: String) = runBlocking {
-
+    fun getFrontEndMigrationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigration")) {
             assertTrue(true, "Test of getFrontEndMigration endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigration")
                 val frontEndMigrationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getFrontEndMigration.frontEndMigrationId")!!.let {
                     (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getFrontEndMigration") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getFrontEndMigration(frontEndMigrationId = frontEndMigrationId)
 
                 val testFileName = "FrontEndMigrationApi.getFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
-                        if ("FrontEndMigrationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            object : TypeReference<FrontEndMigrationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<FrontEndMigrationDto>() {}
-                    })
+                    )
                     assertAreEquals("getFrontEndMigration", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -311,8 +297,7 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -329,42 +314,43 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getFrontEndMigrationByNameTest(fileName: String) = runBlocking {
-
+    fun getFrontEndMigrationByNameTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrationByName")) {
             assertTrue(true, "Test of getFrontEndMigrationByName endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrationByName")
                 val frontEndMigrationName: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getFrontEndMigrationByName.frontEndMigrationName")!!.let {
                     (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getFrontEndMigrationByName") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getFrontEndMigrationByName(frontEndMigrationName = frontEndMigrationName)
 
                 val testFileName = "FrontEndMigrationApi.getFrontEndMigrationByName"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
-                        if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
-                    })
+                    )
                     assertAreEquals("getFrontEndMigrationByName", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -377,8 +363,7 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -395,12 +380,11 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getFrontEndMigrationsTest(fileName: String) = runBlocking {
-
+    fun getFrontEndMigrationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getFrontEndMigrations")) {
             assertTrue(true, "Test of getFrontEndMigrations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getFrontEndMigrations")
 
@@ -409,21 +393,23 @@ class FrontEndMigrationApiTest() {
                 val testFileName = "FrontEndMigrationApi.getFrontEndMigrations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
-                        if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("kotlin.collections.List<FrontEndMigrationDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<FrontEndMigrationDto>>() {}
-                    })
+                    )
                     assertAreEquals("getFrontEndMigrations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -436,8 +422,7 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -454,42 +439,43 @@ class FrontEndMigrationApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyFrontEndMigrationTest(fileName: String) = runBlocking {
-
+    fun modifyFrontEndMigrationTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyFrontEndMigration")) {
             assertTrue(true, "Test of modifyFrontEndMigration endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyFrontEndMigration")
                 val frontEndMigrationDto: FrontEndMigrationDto = TestUtils.getParameter<FrontEndMigrationDto>(fileName, "modifyFrontEndMigration.frontEndMigrationDto")!!.let {
                     (it as? FrontEndMigrationDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyFrontEndMigration") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getFrontEndMigration(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? FrontEndMigrationDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyFrontEndMigration(frontEndMigrationDto = frontEndMigrationDto)
 
                 val testFileName = "FrontEndMigrationApi.modifyFrontEndMigration"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<FrontEndMigrationDto>? != null) {
-                        if ("FrontEndMigrationDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<FrontEndMigrationDto>? != null) {
+                            if ("FrontEndMigrationDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<FrontEndMigrationDto>>() {}
+                            object : TypeReference<FrontEndMigrationDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<FrontEndMigrationDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyFrontEndMigration", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -502,19 +488,17 @@ class FrontEndMigrationApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -526,36 +510,39 @@ class FrontEndMigrationApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -26,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class SumehrValidityDto (
+data class SumehrValidityDto(
 
     @field:JsonProperty("sumehrValid")
     val sumehrValid: SumehrValidityDto.SumehrValid
@@ -41,9 +39,14 @@ data class SumehrValidityDto (
      * Values: absent,uptodate,outdated
      */
     enum class SumehrValid(val value: kotlin.String) {
-        @JsonProperty(value = "absent") absent("absent"),
-        @JsonProperty(value = "uptodate") uptodate("uptodate"),
-        @JsonProperty(value = "outdated") outdated("outdated");
+        @JsonProperty(value = "absent")
+        absent("absent"),
+
+        @JsonProperty(value = "uptodate")
+        uptodate("uptodate"),
+
+        @JsonProperty(value = "outdated")
+        outdated("outdated");
     }
 
     /* ktlint-enable enum-entry-name-case */

@@ -16,22 +16,16 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.ApplicationSettingsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.ApplicationSettingsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -46,30 +40,31 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
     }
 
     /**
-    * Create new application settings
-    *
-    * @param applicationSettingsDto
-    * @return ApplicationSettingsDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create new application settings
+     *
+     * @param applicationSettingsDto
+     * @return ApplicationSettingsDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createApplicationSettings(applicationSettingsDto: ApplicationSettingsDto) : ApplicationSettingsDto  {
+    suspend fun createApplicationSettings(applicationSettingsDto: ApplicationSettingsDto): ApplicationSettingsDto {
         val localVariableConfig = createApplicationSettingsRequestConfig(applicationSettingsDto = applicationSettingsDto)
 
         return request<ApplicationSettingsDto, ApplicationSettingsDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createApplicationSettings
-    *
-    * @param applicationSettingsDto
-    * @return RequestConfig
-    */
-    fun createApplicationSettingsRequestConfig(applicationSettingsDto: ApplicationSettingsDto) : RequestConfig<ApplicationSettingsDto> {
+     * To obtain the request config of the operation createApplicationSettings
+     *
+     * @param applicationSettingsDto
+     * @return RequestConfig
+     */
+    fun createApplicationSettingsRequestConfig(applicationSettingsDto: ApplicationSettingsDto): RequestConfig<ApplicationSettingsDto> {
         // val localVariableBody = applicationSettingsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -81,32 +76,34 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
             path = "/rest/v2/appsettings",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets all application settings
-    *
-    * @return kotlin.collections.List<ApplicationSettingsDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets all application settings
+     *
+     * @return kotlin.collections.List<ApplicationSettingsDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getApplicationSettings() : kotlin.collections.List<ApplicationSettingsDto>  {
+    suspend fun getApplicationSettings(): kotlin.collections.List<ApplicationSettingsDto> {
         val localVariableConfig = getApplicationSettingsRequestConfig()
 
         return request<Unit, kotlin.collections.List<ApplicationSettingsDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getApplicationSettings
-    *
-    * @return RequestConfig
-    */
-    fun getApplicationSettingsRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getApplicationSettings
+     *
+     * @return RequestConfig
+     */
+    fun getApplicationSettingsRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -118,34 +115,36 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
             path = "/rest/v2/appsettings",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Update application settings
-    *
-    * @param applicationSettingsDto
-    * @return ApplicationSettingsDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Update application settings
+     *
+     * @param applicationSettingsDto
+     * @return ApplicationSettingsDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun updateApplicationSettings(applicationSettingsDto: ApplicationSettingsDto) : ApplicationSettingsDto  {
+    suspend fun updateApplicationSettings(applicationSettingsDto: ApplicationSettingsDto): ApplicationSettingsDto {
         val localVariableConfig = updateApplicationSettingsRequestConfig(applicationSettingsDto = applicationSettingsDto)
 
         return request<ApplicationSettingsDto, ApplicationSettingsDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation updateApplicationSettings
-    *
-    * @param applicationSettingsDto
-    * @return RequestConfig
-    */
-    fun updateApplicationSettingsRequestConfig(applicationSettingsDto: ApplicationSettingsDto) : RequestConfig<ApplicationSettingsDto> {
+     * To obtain the request config of the operation updateApplicationSettings
+     *
+     * @param applicationSettingsDto
+     * @return RequestConfig
+     */
+    fun updateApplicationSettingsRequestConfig(applicationSettingsDto: ApplicationSettingsDto): RequestConfig<ApplicationSettingsDto> {
         // val localVariableBody = applicationSettingsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -157,7 +156,7 @@ class ApplicationsettingsApi(basePath: kotlin.String = defaultBasePath, webClien
             path = "/rest/v2/appsettings",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

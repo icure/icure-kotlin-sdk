@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -34,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Editor (
+data class Editor(
 
     @field:JsonProperty("left")
     val left: kotlin.Double? = null,
@@ -73,10 +71,17 @@ data class Editor (
      * Values: up,down,left,right
      */
     enum class LabelPosition(val value: kotlin.String) {
-        @JsonProperty(value = "Up") up("Up"),
-        @JsonProperty(value = "Down") down("Down"),
-        @JsonProperty(value = "Left") left("Left"),
-        @JsonProperty(value = "Right") right("Right");
+        @JsonProperty(value = "Up")
+        up("Up"),
+
+        @JsonProperty(value = "Down")
+        down("Down"),
+
+        @JsonProperty(value = "Left")
+        left("Left"),
+
+        @JsonProperty(value = "Right")
+        right("Right");
     }
 
     /* ktlint-enable enum-entry-name-case */

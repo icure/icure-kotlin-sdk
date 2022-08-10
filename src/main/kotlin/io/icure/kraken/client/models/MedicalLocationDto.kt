@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AddressDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -41,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MedicalLocationDto (
+data class MedicalLocationDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,

@@ -11,5 +11,5 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 data class HealthElementByHcPartyIdentifiersFilter(
     override val desc: String? = null,
     val healthcarePartyId: String? = null,
-    val identifiers: List<IdentifierDto> = emptyList(),
-): AbstractFilterDto<HealthElementDto>
+    val identifiers: List<IdentifierDto> = emptyList()
+) : AbstractFilterDto<HealthElementDto>

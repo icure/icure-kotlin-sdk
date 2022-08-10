@@ -14,58 +14,43 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.json.JsonReadFeature
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.InvoiceDto
 import io.icure.kraken.client.models.InvoicingCodeDto
 import io.icure.kraken.client.models.LabelledOccurenceDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListInvoiceDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
-import io.icure.kraken.client.infrastructure.TestUtils
-import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
-import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -87,7 +72,7 @@ class InvoiceApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -97,23 +82,23 @@ class InvoiceApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             InvoiceDto::class.java -> it to objectMapper.convertValue(body, InvoiceDto::class.java)
                             InvoiceApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -127,7 +112,6 @@ class InvoiceApiTest() {
         }
     }
 
-
     /**
      * Gets all invoices for author at date
      *
@@ -138,91 +122,92 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun appendCodesTest(fileName: String) = runBlocking {
-
+    fun appendCodesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "appendCodes")) {
             assertTrue(true, "Test of appendCodes endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "appendCodes")
                 val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.userId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.type")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val sentMediumType: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.sentMediumType")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.secretFKeys")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val invoicingCodeDto: kotlin.collections.List<InvoicingCodeDto> = TestUtils.getParameter<kotlin.collections.List<InvoicingCodeDto>>(fileName, "appendCodes.invoicingCodeDto")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<InvoicingCodeDto>
+                } as kotlin.collections.List<InvoicingCodeDto>
                 val insuranceId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.insuranceId")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val invoiceId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "appendCodes.invoiceId")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val gracePeriod: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "appendCodes.gracePeriod")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "appendCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).appendCodes(userId = userId,type = type,sentMediumType = sentMediumType,secretFKeys = secretFKeys,invoicingCodeDto = invoicingCodeDto,insuranceId = insuranceId,invoiceId = invoiceId,gracePeriod = gracePeriod)
+                val response = api(credentialsFile).appendCodes(userId = userId, type = type, sentMediumType = sentMediumType, secretFKeys = secretFKeys, invoicingCodeDto = invoicingCodeDto, insuranceId = insuranceId, invoiceId = invoiceId, gracePeriod = gracePeriod)
 
                 val testFileName = "InvoiceApi.appendCodes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("appendCodes", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -235,8 +220,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -253,42 +237,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createInvoiceTest(fileName: String) = runBlocking {
-
+    fun createInvoiceTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createInvoice")) {
             assertTrue(true, "Test of createInvoice endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createInvoice")
                 val invoiceDto: InvoiceDto = TestUtils.getParameter<InvoiceDto>(fileName, "createInvoice.invoiceDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "createInvoice") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? InvoiceDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.createInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("createInvoice", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -301,8 +286,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -319,42 +303,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createInvoicesTest(fileName: String) = runBlocking {
-
+    fun createInvoicesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createInvoices")) {
             assertTrue(true, "Test of createInvoices endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createInvoices")
                 val invoiceDto: kotlin.collections.List<InvoiceDto> = TestUtils.getParameter<kotlin.collections.List<InvoiceDto>>(fileName, "createInvoices.invoiceDto")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "createInvoices") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<InvoiceDto>
+                } as kotlin.collections.List<InvoiceDto>
 
                 val response = api(credentialsFile).createInvoices(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.createInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("createInvoices", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -367,8 +352,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -385,42 +369,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteInvoiceTest(fileName: String) = runBlocking {
-
+    fun deleteInvoiceTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteInvoice")) {
             assertTrue(true, "Test of deleteInvoice endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteInvoice")
                 val invoiceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteInvoice.invoiceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteInvoice") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteInvoice(invoiceId = invoiceId)
 
                 val testFileName = "InvoiceApi.deleteInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("DocIdentifier".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("DocIdentifier".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<DocIdentifier>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<DocIdentifier>() {}
-                    })
+                    )
                     assertAreEquals("deleteInvoice", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -433,8 +418,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -451,42 +435,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun filterInvoicesByTest(fileName: String) = runBlocking {
-
+    fun filterInvoicesByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "filterInvoicesBy")) {
             assertTrue(true, "Test of filterInvoicesBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterInvoicesBy")
                 val filterChainInvoice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto>>(fileName, "filterInvoicesBy.filterChainInvoice")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterInvoicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.InvoiceDto> ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).filterInvoicesBy(filterChainInvoice = filterChainInvoice)
 
                 val testFileName = "InvoiceApi.filterInvoicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("filterInvoicesBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -499,8 +484,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -517,77 +501,78 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findInvoicesByAuthorTest(fileName: String) = runBlocking {
-
+    fun findInvoicesByAuthorTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findInvoicesByAuthor")) {
             assertTrue(true, "Test of findInvoicesByAuthor endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findInvoicesByAuthor")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findInvoicesByAuthor.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val fromDate: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findInvoicesByAuthor.fromDate")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val toDate: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "findInvoicesByAuthor.toDate")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findInvoicesByAuthor.startKey")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findInvoicesByAuthor.startDocumentId")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findInvoicesByAuthor.limit")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "findInvoicesByAuthor") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findInvoicesByAuthor(hcPartyId = hcPartyId,fromDate = fromDate,toDate = toDate,startKey = startKey,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findInvoicesByAuthor(hcPartyId = hcPartyId, fromDate = fromDate, toDate = toDate, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "InvoiceApi.findInvoicesByAuthor"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListInvoiceDto>? != null) {
-                        if ("PaginatedListInvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListInvoiceDto>? != null) {
+                            if ("PaginatedListInvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListInvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListInvoiceDto>>() {}
+                            object : TypeReference<PaginatedListInvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListInvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("findInvoicesByAuthor", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -600,8 +585,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -618,42 +602,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getInvoiceTest(fileName: String) = runBlocking {
-
+    fun getInvoiceTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getInvoice")) {
             assertTrue(true, "Test of getInvoice endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInvoice")
                 val invoiceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getInvoice.invoiceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInvoice") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getInvoice(invoiceId = invoiceId)
 
                 val testFileName = "InvoiceApi.getInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("getInvoice", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -666,8 +651,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -684,42 +668,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getInvoicesTest(fileName: String) = runBlocking {
-
+    fun getInvoicesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getInvoices")) {
             assertTrue(true, "Test of getInvoices endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getInvoices")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getInvoices.listOfIdsDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getInvoices") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getInvoices(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.getInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("getInvoices", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -732,8 +717,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -750,42 +734,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getTarificationsCodesOccurencesTest(fileName: String) = runBlocking {
-
+    fun getTarificationsCodesOccurencesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getTarificationsCodesOccurences")) {
             assertTrue(true, "Test of getTarificationsCodesOccurences endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getTarificationsCodesOccurences")
                 val minOccurences: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getTarificationsCodesOccurences.minOccurences")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "getTarificationsCodesOccurences") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getTarificationsCodesOccurences(minOccurences = minOccurences)
 
                 val testFileName = "InvoiceApi.getTarificationsCodesOccurences"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<LabelledOccurenceDto>? != null) {
-                        if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<LabelledOccurenceDto>? != null) {
+                            if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<LabelledOccurenceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<LabelledOccurenceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<LabelledOccurenceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<LabelledOccurenceDto>>() {}
-                    })
+                    )
                     assertAreEquals("getTarificationsCodesOccurences", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -798,8 +783,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -816,63 +800,64 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listAllHcpsByStatusTest(fileName: String) = runBlocking {
-
+    fun listAllHcpsByStatusTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listAllHcpsByStatus")) {
             assertTrue(true, "Test of listAllHcpsByStatus endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAllHcpsByStatus")
                 val status: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAllHcpsByStatus.status")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllHcpsByStatus") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "listAllHcpsByStatus.listOfIdsDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllHcpsByStatus") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
                 val from: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listAllHcpsByStatus.from")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllHcpsByStatus") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val to: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listAllHcpsByStatus.to")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllHcpsByStatus") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listAllHcpsByStatus(status = status,listOfIdsDto = listOfIdsDto,from = from,to = to)
+                val response = api(credentialsFile).listAllHcpsByStatus(status = status, listOfIdsDto = listOfIdsDto, from = from, to = to)
 
                 val testFileName = "InvoiceApi.listAllHcpsByStatus"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listAllHcpsByStatus", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -885,8 +870,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -903,42 +887,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByContactIdsTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByContactIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByContactIds")) {
             assertTrue(true, "Test of listInvoicesByContactIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByContactIds")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "listInvoicesByContactIds.listOfIdsDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByContactIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listInvoicesByContactIds(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.listInvoicesByContactIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByContactIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -951,8 +936,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -969,49 +953,50 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHCPartyAndPatientForeignKeys")) {
             assertTrue(true, "Test of listInvoicesByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByHCPartyAndPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
+                val response = api(credentialsFile).listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
                 val testFileName = "InvoiceApi.listInvoicesByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByHCPartyAndPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1024,8 +1009,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1042,49 +1026,50 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByHcPartyAndGroupIdTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByHcPartyAndGroupIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcPartyAndGroupId")) {
             assertTrue(true, "Test of listInvoicesByHcPartyAndGroupId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByHcPartyAndGroupId")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcPartyAndGroupId.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartyAndGroupId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val groupId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcPartyAndGroupId.groupId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartyAndGroupId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listInvoicesByHcPartyAndGroupId(hcPartyId = hcPartyId,groupId = groupId)
+                val response = api(credentialsFile).listInvoicesByHcPartyAndGroupId(hcPartyId = hcPartyId, groupId = groupId)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcPartyAndGroupId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByHcPartyAndGroupId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1097,8 +1082,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1115,77 +1099,78 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDateTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate")) {
             assertTrue(true, "Test of listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val sentMediumType: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.sentMediumType")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val invoiceType: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.invoiceType")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val sent: kotlin.Boolean = TestUtils.getParameter<kotlin.Boolean>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.sent")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
                 val from: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.from")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val to: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate.to")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId = hcPartyId,sentMediumType = sentMediumType,invoiceType = invoiceType,sent = sent,from = from,to = to)
+                val response = api(credentialsFile).listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId = hcPartyId, sentMediumType = sentMediumType, invoiceType = invoiceType, sent = sent, from = from, to = to)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1198,8 +1183,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1216,70 +1200,71 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByHcpartySendingModeStatusDateTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByHcpartySendingModeStatusDateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByHcpartySendingModeStatusDate")) {
             assertTrue(true, "Test of listInvoicesByHcpartySendingModeStatusDate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByHcpartySendingModeStatusDate")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcpartySendingModeStatusDate.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcpartySendingModeStatusDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val sendingMode: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcpartySendingModeStatusDate.sendingMode")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcpartySendingModeStatusDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val status: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByHcpartySendingModeStatusDate.status")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcpartySendingModeStatusDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val from: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listInvoicesByHcpartySendingModeStatusDate.from")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcpartySendingModeStatusDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val to: kotlin.Long? = TestUtils.getParameter<kotlin.Long>(fileName, "listInvoicesByHcpartySendingModeStatusDate.to")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByHcpartySendingModeStatusDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listInvoicesByHcpartySendingModeStatusDate(hcPartyId = hcPartyId,sendingMode = sendingMode,status = status,from = from,to = to)
+                val response = api(credentialsFile).listInvoicesByHcpartySendingModeStatusDate(hcPartyId = hcPartyId, sendingMode = sendingMode, status = status, from = from, to = to)
 
                 val testFileName = "InvoiceApi.listInvoicesByHcpartySendingModeStatusDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByHcpartySendingModeStatusDate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1292,8 +1277,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1310,42 +1294,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByIdsTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByIds")) {
             assertTrue(true, "Test of listInvoicesByIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByIds")
                 val invoiceIds: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByIds.invoiceIds")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listInvoicesByIds(invoiceIds = invoiceIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1358,8 +1343,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1376,42 +1360,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByRecipientsIdsTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByRecipientsIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByRecipientsIds")) {
             assertTrue(true, "Test of listInvoicesByRecipientsIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByRecipientsIds")
                 val recipientIds: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByRecipientsIds.recipientIds")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByRecipientsIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listInvoicesByRecipientsIds(recipientIds = recipientIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByRecipientsIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByRecipientsIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1424,8 +1409,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1442,42 +1426,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesByServiceIdsTest(fileName: String) = runBlocking {
-
+    fun listInvoicesByServiceIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesByServiceIds")) {
             assertTrue(true, "Test of listInvoicesByServiceIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesByServiceIds")
                 val serviceIds: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesByServiceIds.serviceIds")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesByServiceIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listInvoicesByServiceIds(serviceIds = serviceIds)
 
                 val testFileName = "InvoiceApi.listInvoicesByServiceIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesByServiceIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1490,8 +1475,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1508,49 +1492,50 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys")) {
             assertTrue(true, "Test of listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
+                val response = api(credentialsFile).listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
                 val testFileName = "InvoiceApi.listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
-                        if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<IcureStubDto>>() {}
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
-                    })
+                    )
                     assertAreEquals("listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1563,8 +1548,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1581,42 +1565,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listToInsurancesTest(fileName: String) = runBlocking {
-
+    fun listToInsurancesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listToInsurances")) {
             assertTrue(true, "Test of listToInsurances endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listToInsurances")
                 val userIds: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listToInsurances.userIds")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listToInsurances") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listToInsurances(userIds = userIds)
 
                 val testFileName = "InvoiceApi.listToInsurances"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listToInsurances", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1629,8 +1614,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1647,42 +1631,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listToInsurancesUnsentTest(fileName: String) = runBlocking {
-
+    fun listToInsurancesUnsentTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listToInsurancesUnsent")) {
             assertTrue(true, "Test of listToInsurancesUnsent endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listToInsurancesUnsent")
                 val userIds: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listToInsurancesUnsent.userIds")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listToInsurancesUnsent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listToInsurancesUnsent(userIds = userIds)
 
                 val testFileName = "InvoiceApi.listToInsurancesUnsent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listToInsurancesUnsent", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1695,8 +1680,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1713,42 +1697,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listToPatientsTest(fileName: String) = runBlocking {
-
+    fun listToPatientsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listToPatients")) {
             assertTrue(true, "Test of listToPatients endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listToPatients")
                 val hcPartyId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listToPatients.hcPartyId")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listToPatients") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listToPatients(hcPartyId = hcPartyId)
 
                 val testFileName = "InvoiceApi.listToPatients"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listToPatients", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1761,8 +1746,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1779,42 +1763,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listToPatientsUnsentTest(fileName: String) = runBlocking {
-
+    fun listToPatientsUnsentTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listToPatientsUnsent")) {
             assertTrue(true, "Test of listToPatientsUnsent endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listToPatientsUnsent")
                 val hcPartyId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listToPatientsUnsent.hcPartyId")?.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "listToPatientsUnsent") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listToPatientsUnsent(hcPartyId = hcPartyId)
 
                 val testFileName = "InvoiceApi.listToPatientsUnsent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listToPatientsUnsent", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1827,8 +1812,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1845,49 +1829,50 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun mergeToTest(fileName: String) = runBlocking {
-
+    fun mergeToTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "mergeTo")) {
             assertTrue(true, "Test of mergeTo endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "mergeTo")
                 val invoiceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "mergeTo.invoiceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "mergeTo") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "mergeTo.listOfIdsDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "mergeTo") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).mergeTo(invoiceId = invoiceId,listOfIdsDto = listOfIdsDto)
+                val response = api(credentialsFile).mergeTo(invoiceId = invoiceId, listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "InvoiceApi.mergeTo"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("mergeTo", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1900,8 +1885,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1918,42 +1902,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyInvoiceTest(fileName: String) = runBlocking {
-
+    fun modifyInvoiceTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyInvoice")) {
             assertTrue(true, "Test of modifyInvoice endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyInvoice")
                 val invoiceDto: InvoiceDto = TestUtils.getParameter<InvoiceDto>(fileName, "modifyInvoice.invoiceDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyInvoice") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? InvoiceDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.modifyInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyInvoice", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1966,8 +1951,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1984,42 +1968,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyInvoicesTest(fileName: String) = runBlocking {
-
+    fun modifyInvoicesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyInvoices")) {
             assertTrue(true, "Test of modifyInvoices endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyInvoices")
                 val invoiceDto: kotlin.collections.List<InvoiceDto> = TestUtils.getParameter<kotlin.collections.List<InvoiceDto>>(fileName, "modifyInvoices.invoiceDto")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyInvoices") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<InvoiceDto>
+                } as kotlin.collections.List<InvoiceDto>
 
                 val response = api(credentialsFile).modifyInvoices(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.modifyInvoices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("modifyInvoices", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2032,8 +2017,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2050,49 +2034,50 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun newInvoiceDelegationsTest(fileName: String) = runBlocking {
-
+    fun newInvoiceDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "newInvoiceDelegations")) {
             assertTrue(true, "Test of newInvoiceDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newInvoiceDelegations")
                 val invoiceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newInvoiceDelegations.invoiceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "newInvoiceDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter<kotlin.collections.List<DelegationDto>>(fileName, "newInvoiceDelegations.delegationDto")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "newInvoiceDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<DelegationDto>
+                } as kotlin.collections.List<DelegationDto>
 
-                val response = api(credentialsFile).newInvoiceDelegations(invoiceId = invoiceId,delegationDto = delegationDto)
+                val response = api(credentialsFile).newInvoiceDelegations(invoiceId = invoiceId, delegationDto = delegationDto)
 
                 val testFileName = "InvoiceApi.newInvoiceDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("newInvoiceDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2105,8 +2090,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2123,42 +2107,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun reassignInvoiceTest(fileName: String) = runBlocking {
-
+    fun reassignInvoiceTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "reassignInvoice")) {
             assertTrue(true, "Test of reassignInvoice endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "reassignInvoice")
                 val invoiceDto: InvoiceDto = TestUtils.getParameter<InvoiceDto>(fileName, "reassignInvoice.invoiceDto")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "reassignInvoice") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? InvoiceDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).reassignInvoice(invoiceDto = invoiceDto)
 
                 val testFileName = "InvoiceApi.reassignInvoice"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("reassignInvoice", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2171,8 +2156,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2189,63 +2173,64 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun removeCodesTest(fileName: String) = runBlocking {
-
+    fun removeCodesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "removeCodes")) {
             assertTrue(true, "Test of removeCodes endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "removeCodes")
                 val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "removeCodes.userId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "removeCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val serviceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "removeCodes.serviceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "removeCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "removeCodes.secretFKeys")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "removeCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val requestBody: kotlin.collections.List<kotlin.String> = TestUtils.getParameter<kotlin.collections.List<kotlin.String>>(fileName, "removeCodes.requestBody")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "removeCodes") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<kotlin.String>
+                } as kotlin.collections.List<kotlin.String>
 
-                val response = api(credentialsFile).removeCodes(userId = userId,serviceId = serviceId,secretFKeys = secretFKeys,requestBody = requestBody)
+                val response = api(credentialsFile).removeCodes(userId = userId, serviceId = serviceId, secretFKeys = secretFKeys, requestBody = requestBody)
 
                 val testFileName = "InvoiceApi.removeCodes"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("kotlin.collections.List<InvoiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<InvoiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("removeCodes", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2258,8 +2243,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2276,42 +2260,43 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun setInvoicesDelegationsTest(fileName: String) = runBlocking {
-
+    fun setInvoicesDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "setInvoicesDelegations")) {
             assertTrue(true, "Test of setInvoicesDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setInvoicesDelegations")
                 val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setInvoicesDelegations.icureStubDto")!!.map {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "setInvoicesDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<IcureStubDto>
+                } as kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).setInvoicesDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "InvoiceApi.setInvoicesDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
-                        if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<IcureStubDto>>() {}
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
-                    })
+                    )
                     assertAreEquals("setInvoicesDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2324,8 +2309,7 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2342,56 +2326,57 @@ class InvoiceApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun validateTest(fileName: String) = runBlocking {
-
+    fun validateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "validate")) {
             assertTrue(true, "Test of validate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "validate")
                 val invoiceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "validate.invoiceId")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "validate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val scheme: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "validate.scheme")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "validate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val forcedValue: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "validate.forcedValue")!!.let {
                     (it as? InvoiceDto)?.takeIf { TestUtils.isAutoRev(fileName, "validate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getInvoice(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).validate(invoiceId = invoiceId,scheme = scheme,forcedValue = forcedValue)
+                val response = api(credentialsFile).validate(invoiceId = invoiceId, scheme = scheme, forcedValue = forcedValue)
 
                 val testFileName = "InvoiceApi.validate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<InvoiceDto>? != null) {
-                        if ("InvoiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<InvoiceDto>? != null) {
+                            if ("InvoiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<InvoiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<InvoiceDto>>() {}
+                            object : TypeReference<InvoiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<InvoiceDto>() {}
-                    })
+                    )
                     assertAreEquals("validate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2404,19 +2389,17 @@ class InvoiceApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -2428,36 +2411,39 @@ class InvoiceApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

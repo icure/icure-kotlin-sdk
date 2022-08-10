@@ -70,29 +70,34 @@ class LocalCrypto(
         specificKeyPairs: List<Pair<RSAPrivateKey, RSAPublicKey>>?
     ): Set<String> {
         val myDataOwner = dataOwnerResolver.getDataOwner(myId)
-        val directAesExchangeKeys = (keys[myId]?.flatMap { d ->
-            getDelegateAesExchangeKeys(d.delegatedTo!!, d.owner!!, specificKeyPairs)
-                .mapNotNull { k ->
-                    try {
-                        decryptAES(d.key!!.keyFromHexString(), k)
-                            .toString(Charsets.UTF_8)
-                            .split(":")[1]
-                    } catch (e: Exception) {
-                        null
+        val directAesExchangeKeys = (
+            keys[myId]?.flatMap { d ->
+                getDelegateAesExchangeKeys(d.delegatedTo!!, d.owner!!, specificKeyPairs)
+                    .mapNotNull { k ->
+                        try {
+                            decryptAES(d.key!!.keyFromHexString(), k)
+                                .toString(Charsets.UTF_8)
+                                .split(":")[1]
+                        } catch (e: Exception) {
+                            null
+                        }
                     }
-                }
-        }?.toSet() ?: emptySet()) + (myDataOwner.parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())
+            }?.toSet() ?: emptySet()
+            ) + (myDataOwner.parentId?.let { decryptEncryptionKeys(it, keys) } ?: emptySet())
 
         if (directAesExchangeKeys.isNotEmpty()) {
             return directAesExchangeKeys
         }
 
-        return (decryptTransferKeysOf(myDataOwner, specificKeyPairs).takeIf { it.isNotEmpty() }
-            ?: (myDataOwner.parentId?.let { parentId ->
-                decryptTransferKeysOf(dataOwnerResolver.getDataOwner(parentId), specificKeyPairs)
-                    .takeIf { it.isNotEmpty() }
-            })
-                )
+        return (
+            decryptTransferKeysOf(myDataOwner, specificKeyPairs).takeIf { it.isNotEmpty() }
+                ?: (
+                    myDataOwner.parentId?.let { parentId ->
+                        decryptTransferKeysOf(dataOwnerResolver.getDataOwner(parentId), specificKeyPairs)
+                            .takeIf { it.isNotEmpty() }
+                    }
+                    )
+            )
             ?.let { decryptedTransferKeys ->
                 decryptEncryptionKeys(myId, keys, decryptedTransferKeys)
             }
@@ -191,14 +196,16 @@ class LocalCrypto(
 
         val keyMap: Map<String, Map<String, Map<String, Map<String, Pair<String, ByteArray>>>>> =
             rsaKeyPairs.associate { (privKey, pubKey) ->
-                pubKey.pubKeyAsString() to (delegateHcpartyKeysCache.defGet(getDelegateHcPartyKeysCacheId(ownerId, delegateId, pubKey.pubKeyAsString())) {
-                    dataOwnerResolver.getDataOwnerAesExchangeKeysForDelegate(delegateId).decryptAesExchangeKeysFor(delegateId, privKey to pubKey)
-                } ?: throw IllegalArgumentException("Unknown data owner $delegateId"))
+                pubKey.pubKeyAsString() to (
+                    delegateHcpartyKeysCache.defGet(getDelegateHcPartyKeysCacheId(ownerId, delegateId, pubKey.pubKeyAsString())) {
+                        dataOwnerResolver.getDataOwnerAesExchangeKeysForDelegate(delegateId).decryptAesExchangeKeysFor(delegateId, privKey to pubKey)
+                    } ?: throw IllegalArgumentException("Unknown data owner $delegateId")
+                    )
             }
 
         return keyMap.flatMap { (_, aesKeysForPubKey) ->
-            aesKeysForPubKey[ownerId]?.flatMap { (_, delegatorKeys) -> delegatorKeys.mapNotNull { (_, decryptedKey) -> decryptedKey.second }} ?: emptyList()
-        }.applyIf({ it.isEmpty()}) {
+            aesKeysForPubKey[ownerId]?.flatMap { (_, delegatorKeys) -> delegatorKeys.mapNotNull { (_, decryptedKey) -> decryptedKey.second } } ?: emptyList()
+        }.applyIf({ it.isEmpty() }) {
             throw IllegalArgumentException("Missing share for $ownerId")
         }
     }
@@ -355,7 +362,6 @@ class LocalCrypto(
 
                 dataOwner.updateAesExchangeKeys(newAesExchangeKey.first, newAesExchangeKey.second)
                     .copy(transferKeys = mutableTransferKeys.toMap())
-
             } ?: dataOwner.updateAesExchangeKeys(newAesExchangeKey.first, newAesExchangeKey.second)
     }
 
@@ -482,7 +488,6 @@ class LocalCrypto(
                     }
                 }.firstOrNull()?.let { delegateId to it }
             }.toMap()
-
         }.applyIf({ it.isEmpty() }) {
             throw IllegalArgumentException("Could not decrypt any aesExchangeKeys with provided keyPairs")
         }.toMap()
@@ -491,10 +496,10 @@ class LocalCrypto(
     private fun Map<String, Map<String, Map<String, String>>>.decryptAesExchangeKeysFor(
         myId: String,
         myKeyPair: Pair<PrivateKey, PublicKey>
-    ) : Map<String, Map<String, Map<String, Pair<String, ByteArray>>>> {
+    ): Map<String, Map<String, Map<String, Pair<String, ByteArray>>>> {
         val decryptedAesExchangeKeys = this.map { (delegatorId, delegatorKeys) ->
-            delegatorId to delegatorKeys.map {(slicedDelegatorPubKey, aesExchangeKeys) ->
-                slicedDelegatorPubKey to aesExchangeKeys.mapNotNull { (delegatePubKey, encKey) -> //TODO Optimize
+            delegatorId to delegatorKeys.map { (slicedDelegatorPubKey, aesExchangeKeys) ->
+                slicedDelegatorPubKey to aesExchangeKeys.mapNotNull { (delegatePubKey, encKey) -> // TODO Optimize
                     try {
                         delegatePubKey to (encKey to CryptoUtils.decryptRSA(encKey.keyFromHexString(), myKeyPair.first))
                     } catch (exception: Exception) {

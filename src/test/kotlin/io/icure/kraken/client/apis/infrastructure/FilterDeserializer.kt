@@ -41,11 +41,10 @@ class FilterDeserializer : JsonDeserializer<AbstractFilterDto<*>>() {
     }
 
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): AbstractFilterDto<*> {
-        val codec =  p?.codec ?: throw IllegalArgumentException("Missing codec")
+        val codec = p?.codec ?: throw IllegalArgumentException("Missing codec")
         val tree = codec.readTree<JsonNode>(p)
         val discr = tree[discriminator].textValue() ?: throw IllegalArgumentException("Missing discriminator $discriminator in object")
         val selectedSubClass = subclasses[discr] ?: throw IllegalArgumentException("Invalid subclass $discr in object")
         return codec.treeToValue(tree, selectedSubClass)
     }
-
 }

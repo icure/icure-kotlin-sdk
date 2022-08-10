@@ -12,15 +12,13 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.AnnotationDto
+import io.icure.kraken.client.models.CodeStubDto
+import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IdentifierDto
-
 
 /**
  * This entity represents a Service. A Service is created in the course a contact. Services include subjective information provided by the patient, such as complaints, reason for visit, feelings, etc. or objective information like bio-metric measures (blood pressure, temperature, heart beat, etc.), or physical exam description, diagnosis, prescription, integration of lab reports from another healthcare party, action plan, etc. Any action performed by the healthcare party which is relevant for the healthcare element of a patient is considered a service. The services can be linked to healthcare elements or other structuring elements of the medical record
@@ -64,7 +62,7 @@ import io.icure.kraken.client.models.IdentifierDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ServiceDto (
+data class ServiceDto(
 
     /* The Id of the Service. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -204,29 +202,78 @@ data class ServiceDto (
     val encryptedSelf: kotlin.String? = null
 
 ) {
+    /* ktlint-disable enum-entry-name-case */
+
     enum class LinkQualification(val value: String) {
-        @JsonProperty("exact") exact("exact"),
-        @JsonProperty("narrower") narrower("narrower"),
-        @JsonProperty("broader") broader("broader"),
-        @JsonProperty("approximate") approximate("approximate"),
-        @JsonProperty("sequence") sequence("sequence"),
-        @JsonProperty("parent") parent("parent"),
-        @JsonProperty("child") child("child"),
-        @JsonProperty("relatedCode") relatedCode("relatedCode"),
-        @JsonProperty("linkedPackage") linkedPackage("linkedPackage"),
-        @JsonProperty("relatedService") relatedService("relatedService"),
-        @JsonProperty("inResponseTo") inResponseTo("inResponseTo"),
-        @JsonProperty("replaces") replaces("replaces"),
-        @JsonProperty("transforms") transforms("transforms"),
-        @JsonProperty("transformsAndReplaces") transformsAndReplaces("transformsAndReplaces"),
-        @JsonProperty("appendsTo") appendsTo("appendsTo"),
-        @JsonProperty("basedOn") basedOn("basedOn"),
-        @JsonProperty("derivedFrom") derivedFrom("derivedFrom"),
-        @JsonProperty("device") device("device"),
-        @JsonProperty("focus") focus("focus"),
-        @JsonProperty("hasMember") hasMember("hasMember"),
-        @JsonProperty("performer") performer("performer"),
-        @JsonProperty("specimen") specimen("specimen"),
-        @JsonProperty("resultInterpreter") resultInterpreter("resultInterpreter");
+        @JsonProperty("exact")
+        exact("exact"),
+
+        @JsonProperty("narrower")
+        narrower("narrower"),
+
+        @JsonProperty("broader")
+        broader("broader"),
+
+        @JsonProperty("approximate")
+        approximate("approximate"),
+
+        @JsonProperty("sequence")
+        sequence("sequence"),
+
+        @JsonProperty("parent")
+        parent("parent"),
+
+        @JsonProperty("child")
+        child("child"),
+
+        @JsonProperty("relatedCode")
+        relatedCode("relatedCode"),
+
+        @JsonProperty("linkedPackage")
+        linkedPackage("linkedPackage"),
+
+        @JsonProperty("relatedService")
+        relatedService("relatedService"),
+
+        @JsonProperty("inResponseTo")
+        inResponseTo("inResponseTo"),
+
+        @JsonProperty("replaces")
+        replaces("replaces"),
+
+        @JsonProperty("transforms")
+        transforms("transforms"),
+
+        @JsonProperty("transformsAndReplaces")
+        transformsAndReplaces("transformsAndReplaces"),
+
+        @JsonProperty("appendsTo")
+        appendsTo("appendsTo"),
+
+        @JsonProperty("basedOn")
+        basedOn("basedOn"),
+
+        @JsonProperty("derivedFrom")
+        derivedFrom("derivedFrom"),
+
+        @JsonProperty("device")
+        device("device"),
+
+        @JsonProperty("focus")
+        focus("focus"),
+
+        @JsonProperty("hasMember")
+        hasMember("hasMember"),
+
+        @JsonProperty("performer")
+        performer("performer"),
+
+        @JsonProperty("specimen")
+        specimen("specimen"),
+
+        @JsonProperty("resultInterpreter")
+        resultInterpreter("resultInterpreter");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

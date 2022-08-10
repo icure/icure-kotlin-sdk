@@ -25,6 +25,6 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ContactByHcPartyFilter(
-        override val desc:String? = null,
-        val hcpId: String,
+    override val desc: String? = null,
+    val hcpId: String
 ) : AbstractFilterDto<ContactDto>

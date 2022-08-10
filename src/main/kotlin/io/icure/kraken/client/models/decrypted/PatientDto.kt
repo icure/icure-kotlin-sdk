@@ -12,9 +12,9 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.infrastructure.ByteArrayWrapper
 import io.icure.kraken.client.models.AddressDto
 import io.icure.kraken.client.models.CodeStubDto
@@ -110,7 +110,7 @@ import io.icure.kraken.client.models.SchoolingInfoDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PatientDto (
+data class PatientDto(
 
     /* the Id of the patient. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -411,6 +411,7 @@ data class PatientDto (
     val mainSourceOfIncome: CodeStubDto? = null
 
 ) {
+    /* ktlint-disable enum-entry-name-case */
 
     /**
      * When not active, the reason for deactivation.
@@ -418,61 +419,132 @@ data class PatientDto (
      * Values: deceased,moved,otherDoctor,retired,noContact,unknown,none
      */
     enum class DeactivationReason(val value: kotlin.String) {
-        @JsonProperty(value = "deceased") deceased("deceased"),
-        @JsonProperty(value = "moved") moved("moved"),
-        @JsonProperty(value = "other_doctor") otherDoctor("other_doctor"),
-        @JsonProperty(value = "retired") retired("retired"),
-        @JsonProperty(value = "no_contact") noContact("no_contact"),
-        @JsonProperty(value = "unknown") unknown("unknown"),
-        @JsonProperty(value = "none") none("none");
+        @JsonProperty(value = "deceased")
+        deceased("deceased"),
+
+        @JsonProperty(value = "moved")
+        moved("moved"),
+
+        @JsonProperty(value = "other_doctor")
+        otherDoctor("other_doctor"),
+
+        @JsonProperty(value = "retired")
+        retired("retired"),
+
+        @JsonProperty(value = "no_contact")
+        noContact("no_contact"),
+
+        @JsonProperty(value = "unknown")
+        unknown("unknown"),
+
+        @JsonProperty(value = "none")
+        none("none");
     }
+
     /**
      * the gender of the patient: male, female, indeterminate, changed, changedToMale, changedToFemale, unknown
      *
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
      */
     enum class Gender(val value: kotlin.String) {
-        @JsonProperty(value = "male") male("male"),
-        @JsonProperty(value = "female") female("female"),
-        @JsonProperty(value = "indeterminate") indeterminate("indeterminate"),
-        @JsonProperty(value = "changed") changed("changed"),
-        @JsonProperty(value = "changedToMale") changedToMale("changedToMale"),
-        @JsonProperty(value = "changedToFemale") changedToFemale("changedToFemale"),
-        @JsonProperty(value = "unknown") unknown("unknown");
+        @JsonProperty(value = "male")
+        male("male"),
+
+        @JsonProperty(value = "female")
+        female("female"),
+
+        @JsonProperty(value = "indeterminate")
+        indeterminate("indeterminate"),
+
+        @JsonProperty(value = "changed")
+        changed("changed"),
+
+        @JsonProperty(value = "changedToMale")
+        changedToMale("changedToMale"),
+
+        @JsonProperty(value = "changedToFemale")
+        changedToFemale("changedToFemale"),
+
+        @JsonProperty(value = "unknown")
+        unknown("unknown");
     }
+
     /**
      * the birth sex of the patient: male, female, indeterminate, unknown
      *
      * Values: male,female,indeterminate,changed,changedToMale,changedToFemale,unknown
      */
     enum class BirthSex(val value: kotlin.String) {
-        @JsonProperty(value = "male") male("male"),
-        @JsonProperty(value = "female") female("female"),
-        @JsonProperty(value = "indeterminate") indeterminate("indeterminate"),
-        @JsonProperty(value = "changed") changed("changed"),
-        @JsonProperty(value = "changedToMale") changedToMale("changedToMale"),
-        @JsonProperty(value = "changedToFemale") changedToFemale("changedToFemale"),
-        @JsonProperty(value = "unknown") unknown("unknown");
+        @JsonProperty(value = "male")
+        male("male"),
+
+        @JsonProperty(value = "female")
+        female("female"),
+
+        @JsonProperty(value = "indeterminate")
+        indeterminate("indeterminate"),
+
+        @JsonProperty(value = "changed")
+        changed("changed"),
+
+        @JsonProperty(value = "changedToMale")
+        changedToMale("changedToMale"),
+
+        @JsonProperty(value = "changedToFemale")
+        changedToFemale("changedToFemale"),
+
+        @JsonProperty(value = "unknown")
+        unknown("unknown");
     }
+
     /**
      * any of `single`, `in_couple`, `married`, `separated`, `divorced`, `divorcing`, `widowed`, `widower`, `complicated`, `unknown`, `contract`, `other`.
      *
      * Values: single,inCouple,married,separated,divorced,divorcing,widowed,widower,complicated,unknown,`contract`,other,annulled,polygamous
      */
     enum class PersonalStatus(val value: kotlin.String) {
-        @JsonProperty(value = "single") single("single"),
-        @JsonProperty(value = "in_couple") inCouple("in_couple"),
-        @JsonProperty(value = "married") married("married"),
-        @JsonProperty(value = "separated") separated("separated"),
-        @JsonProperty(value = "divorced") divorced("divorced"),
-        @JsonProperty(value = "divorcing") divorcing("divorcing"),
-        @JsonProperty(value = "widowed") widowed("widowed"),
-        @JsonProperty(value = "widower") widower("widower"),
-        @JsonProperty(value = "complicated") complicated("complicated"),
-        @JsonProperty(value = "unknown") unknown("unknown"),
-        @JsonProperty(value = "contract") `contract`("contract"),
-        @JsonProperty(value = "other") other("other"),
-        @JsonProperty(value = "annulled") annulled("annulled"),
-        @JsonProperty(value = "polygamous") polygamous("polygamous");
+        @JsonProperty(value = "single")
+        single("single"),
+
+        @JsonProperty(value = "in_couple")
+        inCouple("in_couple"),
+
+        @JsonProperty(value = "married")
+        married("married"),
+
+        @JsonProperty(value = "separated")
+        separated("separated"),
+
+        @JsonProperty(value = "divorced")
+        divorced("divorced"),
+
+        @JsonProperty(value = "divorcing")
+        divorcing("divorcing"),
+
+        @JsonProperty(value = "widowed")
+        widowed("widowed"),
+
+        @JsonProperty(value = "widower")
+        widower("widower"),
+
+        @JsonProperty(value = "complicated")
+        complicated("complicated"),
+
+        @JsonProperty(value = "unknown")
+        unknown("unknown"),
+
+        @JsonProperty(value = "contract")
+        `contract`("contract"),
+
+        @JsonProperty(value = "other")
+        other("other"),
+
+        @JsonProperty(value = "annulled")
+        annulled("annulled"),
+
+        @JsonProperty(value = "polygamous")
+        polygamous("polygamous");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

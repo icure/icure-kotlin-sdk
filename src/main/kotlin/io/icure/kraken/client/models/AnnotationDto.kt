@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Text node with attribution. Could be written by a healthcare party, as a side node of a     |medical record. For example, after taking a temperature, the HCP adds a node explaining the     |thermometer is faulty.
@@ -31,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AnnotationDto (
+data class AnnotationDto(
 
     /* The Id of the Annotation. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")

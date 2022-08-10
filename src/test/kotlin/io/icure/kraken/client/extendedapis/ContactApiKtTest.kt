@@ -60,8 +60,16 @@ internal class ContactApiKtTest {
         // before
         val user = userApi.getCurrentUser()
         val hcp = hcPartyApi.getCurrentHealthcareParty()
-        val cc = contactCryptoConfig(localCrypto(iCureBackendUrl,
-            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()), user)
+        val cc = contactCryptoConfig(
+            localCrypto(
+                iCureBackendUrl,
+                parentAuthorization,
+                parentPrivKey,
+                user,
+                hcp.toDataOwner()
+            ),
+            user
+        )
 
         val contactToCreate = contactToCreate(contactToCreateId)
 
@@ -73,7 +81,8 @@ internal class ContactApiKtTest {
         Assertions.assertNotNull(contact.services.first().encryptedSelf, "Service content should be encrypted")
         Assertions.assertNotNull(contact.encryptionKeys, "Contact encryption keys should not be null")
         Assertions.assertNotNull(contact.encryptedSelf, "Contact content should be encrypted")
-        Assertions.assertEquals(contact.services.first().content["fr"]?.numberValue,
+        Assertions.assertEquals(
+            contact.services.first().content["fr"]?.numberValue,
             contactToCreate.services.first().content["fr"]?.numberValue,
             "Service content should not be null"
         )
@@ -98,32 +107,43 @@ internal class ContactApiKtTest {
         Assertions.assertNotNull(hcp1.parentId, "Hcp must have a parent for this test")
         Assertions.assertNotNull(hcp2.parentId, "Hcp must have a parent for this test")
 
-        val cc1 = contactCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor(iCureBackendUrl, child1Authorization), mapOf(
-                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
-            )
-        ), user1)
+        val cc1 = contactCryptoConfig(
+            LocalCrypto(
+                dataOwnerWrapperFor(iCureBackendUrl, child1Authorization),
+                mapOf(
+                    parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                    user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
+                )
+            ),
+            user1
+        )
 
-        val cc2 = contactCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor(iCureBackendUrl, child2Authorization), mapOf(
-                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
-            )
-        ), user2)
+        val cc2 = contactCryptoConfig(
+            LocalCrypto(
+                dataOwnerWrapperFor(iCureBackendUrl, child2Authorization),
+                mapOf(
+                    parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                    user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
+                )
+            ),
+            user2
+        )
 
-        val pcc = patientCryptoConfig(LocalCrypto(
-            dataOwnerWrapperFor(iCureBackendUrl, child1Authorization), mapOf(
-                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
+        val pcc = patientCryptoConfig(
+            LocalCrypto(
+                dataOwnerWrapperFor(iCureBackendUrl, child1Authorization),
+                mapOf(
+                    parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                    user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
+                )
             )
-        ))
+        )
 
-        val p = try { child1PatientApi.createPatient(user1, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), pcc) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p = try { child1PatientApi.createPatient(user1, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), pcc) } catch (e: Exception) { throw IllegalStateException(e) }
 
         // When
-        val p1 = try { child1ContactApi.createContact(user1, p, contactToCreate(), cc1) } catch(e:Exception) { throw IllegalStateException(e) }
-        try { child2ContactApi.createContact(user2, p, contactToCreate(), cc2) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p1 = try { child1ContactApi.createContact(user1, p, contactToCreate(), cc1) } catch (e: Exception) { throw IllegalStateException(e) }
+        try { child2ContactApi.createContact(user2, p, contactToCreate(), cc2) } catch (e: Exception) { throw IllegalStateException(e) }
 
         val ctcs1 = child1ContactApi.findByHCPartyPatient(user1, hcp1.id, p, null, null, cc1)
         val ctcs2 = child1ContactApi.findByHCPartyPatient(user2, hcp2.id, p, null, null, cc2)
@@ -164,7 +184,8 @@ internal class ContactApiKtTest {
         Assertions.assertNull(encryptedContact.medicalLocationId, "Medical Location Id should be encrypted")
 
         Assertions.assertNull(encryptedContact.services.first().encryptedSelf, "Service should not be encrypted")
-        Assertions.assertEquals(encryptedContact.services.first().content["fr"]?.numberValue,
+        Assertions.assertEquals(
+            encryptedContact.services.first().content["fr"]?.numberValue,
             contactToCreate.services.first().content["fr"]?.numberValue,
             "Service content should not be encrypted"
         )
@@ -204,10 +225,12 @@ internal class ContactApiKtTest {
                 ContactMapperFactory.instance.map(c).copy(
                     descr = null,
                     medicalLocationId = null
-                ) to ApiClient.objectMapper.writeValueAsBytes(mapOf(
-                    "descr" to c.descr,
-                    "medicalLocationId" to c.medicalLocationId
-                ))
+                ) to ApiClient.objectMapper.writeValueAsBytes(
+                    mapOf(
+                        "descr" to c.descr,
+                        "medicalLocationId" to c.medicalLocationId
+                    )
+                )
             },
             unmarshaller = { c, b ->
                 ContactMapperFactory.instance.map(c).copy(

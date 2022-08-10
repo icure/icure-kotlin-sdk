@@ -16,22 +16,16 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.MedexInfoDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.MedexInfoDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -46,30 +40,31 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
     }
 
     /**
-    * Generate a Medex XML String
-    *
-    * @param medexInfoDto
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Generate a Medex XML String
+     *
+     * @param medexInfoDto
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun generateMedex(medexInfoDto: MedexInfoDto) : kotlin.String  {
+    suspend fun generateMedex(medexInfoDto: MedexInfoDto): kotlin.String {
         val localVariableConfig = generateMedexRequestConfig(medexInfoDto = medexInfoDto)
 
         return request<MedexInfoDto, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation generateMedex
-    *
-    * @param medexInfoDto
-    * @return RequestConfig
-    */
-    fun generateMedexRequestConfig(medexInfoDto: MedexInfoDto) : RequestConfig<MedexInfoDto> {
+     * To obtain the request config of the operation generateMedex
+     *
+     * @param medexInfoDto
+     * @return RequestConfig
+     */
+    fun generateMedexRequestConfig(medexInfoDto: MedexInfoDto): RequestConfig<MedexInfoDto> {
         // val localVariableBody = medexInfoDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -81,7 +76,7 @@ class MedexApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient =
             path = "/rest/v2/medex/generate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

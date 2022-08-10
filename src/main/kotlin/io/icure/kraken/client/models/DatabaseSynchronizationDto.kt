@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -29,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class DatabaseSynchronizationDto (
+data class DatabaseSynchronizationDto(
 
     @field:JsonProperty("source")
     val source: kotlin.String? = null,
@@ -53,9 +51,14 @@ data class DatabaseSynchronizationDto (
      * Values: base,healthdata,patient
      */
     enum class LocalTarget(val value: kotlin.String) {
-        @JsonProperty(value = "base") base("base"),
-        @JsonProperty(value = "healthdata") healthdata("healthdata"),
-        @JsonProperty(value = "patient") patient("patient");
+        @JsonProperty(value = "base")
+        base("base"),
+
+        @JsonProperty(value = "healthdata")
+        healthdata("healthdata"),
+
+        @JsonProperty(value = "patient")
+        patient("patient");
     }
 
     /* ktlint-enable enum-entry-name-case */

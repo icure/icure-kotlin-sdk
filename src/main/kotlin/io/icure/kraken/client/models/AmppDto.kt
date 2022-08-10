@@ -12,19 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AmppComponentDto
-import io.icure.kraken.client.models.AtcDto
-import io.icure.kraken.client.models.CommercializationDto
-import io.icure.kraken.client.models.CompanyDto
-import io.icure.kraken.client.models.DmppDto
-import io.icure.kraken.client.models.QuantityDto
-import io.icure.kraken.client.models.SamTextDto
-import io.icure.kraken.client.models.SupplyProblemDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -74,7 +64,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AmppDto (
+data class AmppDto(
 
     @field:JsonProperty("orphan")
     val orphan: kotlin.Boolean,
@@ -209,9 +199,14 @@ data class AmppDto (
      * Values: aUTHORIZED,sUSPENDED,rEVOKED
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
-        @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
-        @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
+        @JsonProperty(value = "AUTHORIZED")
+        aUTHORIZED("AUTHORIZED"),
+
+        @JsonProperty(value = "SUSPENDED")
+        sUSPENDED("SUSPENDED"),
+
+        @JsonProperty(value = "REVOKED")
+        rEVOKED("REVOKED");
     }
 
     /* ktlint-enable enum-entry-name-case */

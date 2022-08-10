@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * List of all services provided to the patient under a given contact which is linked by this sub-contact to other structuring elements.
@@ -26,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ServiceLinkDto (
+data class ServiceLinkDto(
 
     @field:JsonProperty("serviceId")
     val serviceId: kotlin.String? = null

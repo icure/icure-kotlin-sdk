@@ -16,6 +16,12 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.infrastructure.ClientException
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.models.ClassificationDto
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.DocIdentifier
@@ -34,21 +40,10 @@ import io.icure.kraken.client.models.PaginatedListInvoiceDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PatientDto
 import io.icure.kraken.client.models.ReplicatorDocumentDto
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -63,30 +58,31 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
     }
 
     /**
-    * Create a classification with the current user
-    * Returns an instance of created classification.
-    * @param classificationDto
-    * @return ClassificationDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a classification with the current user
+     * Returns an instance of created classification.
+     * @param classificationDto
+     * @return ClassificationDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpClassification(classificationDto: ClassificationDto) : ClassificationDto  {
+    suspend fun createTmpClassification(classificationDto: ClassificationDto): ClassificationDto {
         val localVariableConfig = createTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpClassification
-    *
-    * @param classificationDto
-    * @return RequestConfig
-    */
-    fun createTmpClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
+     * To obtain the request config of the operation createTmpClassification
+     *
+     * @param classificationDto
+     * @return RequestConfig
+     */
+    fun createTmpClassificationRequestConfig(classificationDto: ClassificationDto): RequestConfig<ClassificationDto> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -98,34 +94,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a classification with the current user
-    * Returns an instance of created classification.
-    * @param classificationDto
-    * @return kotlin.collections.List<ClassificationDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a classification with the current user
+     * Returns an instance of created classification.
+     * @param classificationDto
+     * @return kotlin.collections.List<ClassificationDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>  {
+    suspend fun createTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>): kotlin.collections.List<ClassificationDto> {
         val localVariableConfig = createTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpClassifications
-    *
-    * @param classificationDto
-    * @return RequestConfig
-    */
-    fun createTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>) : RequestConfig<kotlin.collections.List<ClassificationDto>> {
+     * To obtain the request config of the operation createTmpClassifications
+     *
+     * @param classificationDto
+     * @return RequestConfig
+     */
+    fun createTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>): RequestConfig<kotlin.collections.List<ClassificationDto>> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -137,34 +135,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a contact with the current user
-    * Returns an instance of created contact.
-    * @param contactDto
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a contact with the current user
+     * Returns an instance of created contact.
+     * @param contactDto
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpContact(contactDto: ContactDto) : ContactDto  {
+    suspend fun createTmpContact(contactDto: ContactDto): ContactDto {
         val localVariableConfig = createTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpContact
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun createTmpContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
+     * To obtain the request config of the operation createTmpContact
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun createTmpContactRequestConfig(contactDto: ContactDto): RequestConfig<ContactDto> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -176,34 +176,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a contact with the current user
-    * Returns an instance of created contact.
-    * @param contactDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a contact with the current user
+     * Returns an instance of created contact.
+     * @param contactDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun createTmpContacts(contactDto: kotlin.collections.List<ContactDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = createTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpContacts
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun createTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
+     * To obtain the request config of the operation createTmpContacts
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun createTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>): RequestConfig<kotlin.collections.List<ContactDto>> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -215,32 +217,34 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create tmp database for current user
-    * Nothing happens if the database already exists
-    * @return kotlin.Any
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create tmp database for current user
+     * Nothing happens if the database already exists
+     * @return kotlin.Any
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDatabase() : kotlin.Any  {
+    suspend fun createTmpDatabase(): kotlin.Any {
         val localVariableConfig = createTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpDatabase
-    *
-    * @return RequestConfig
-    */
-    fun createTmpDatabaseRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation createTmpDatabase
+     *
+     * @return RequestConfig
+     */
+    fun createTmpDatabaseRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -252,34 +256,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a document with the current user
-    * Returns an instance of created document.
-    * @param documentDto
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a document with the current user
+     * Returns an instance of created document.
+     * @param documentDto
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDocument(documentDto: DocumentDto) : DocumentDto  {
+    suspend fun createTmpDocument(documentDto: DocumentDto): DocumentDto {
         val localVariableConfig = createTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpDocument
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun createTmpDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
+     * To obtain the request config of the operation createTmpDocument
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun createTmpDocumentRequestConfig(documentDto: DocumentDto): RequestConfig<DocumentDto> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -291,34 +297,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a document with the current user
-    * Returns an instance of created document.
-    * @param documentDto
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a document with the current user
+     * Returns an instance of created document.
+     * @param documentDto
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>  {
+    suspend fun createTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = createTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpDocuments
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun createTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
+     * To obtain the request config of the operation createTmpDocuments
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun createTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>): RequestConfig<kotlin.collections.List<DocumentDto>> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -330,34 +338,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a entityTemplate with the current user
-    * Returns an instance of created entityTemplate.
-    * @param entityTemplateDto
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a entityTemplate with the current user
+     * Returns an instance of created entityTemplate.
+     * @param entityTemplateDto
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
+    suspend fun createTmpEntityTemplate(entityTemplateDto: EntityTemplateDto): EntityTemplateDto {
         val localVariableConfig = createTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpEntityTemplate
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun createTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+     * To obtain the request config of the operation createTmpEntityTemplate
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun createTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto): RequestConfig<EntityTemplateDto> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -369,34 +379,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a entityTemplate with the current user
-    * Returns an instance of created entityTemplate.
-    * @param entityTemplateDto
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a entityTemplate with the current user
+     * Returns an instance of created entityTemplate.
+     * @param entityTemplateDto
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun createTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = createTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpEntityTemplates
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun createTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+     * To obtain the request config of the operation createTmpEntityTemplates
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun createTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -408,34 +420,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a form with the current user
-    * Returns an instance of created form.
-    * @param formDto
-    * @return FormDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a form with the current user
+     * Returns an instance of created form.
+     * @param formDto
+     * @return FormDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpForm(formDto: FormDto) : FormDto  {
+    suspend fun createTmpForm(formDto: FormDto): FormDto {
         val localVariableConfig = createTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpForm
-    *
-    * @param formDto
-    * @return RequestConfig
-    */
-    fun createTmpFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
+     * To obtain the request config of the operation createTmpForm
+     *
+     * @param formDto
+     * @return RequestConfig
+     */
+    fun createTmpFormRequestConfig(formDto: FormDto): RequestConfig<FormDto> {
         // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -447,34 +461,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a form with the current user
-    * Returns an instance of created form.
-    * @param formDto
-    * @return kotlin.collections.List<FormDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a form with the current user
+     * Returns an instance of created form.
+     * @param formDto
+     * @return kotlin.collections.List<FormDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
+    suspend fun createTmpForms(formDto: kotlin.collections.List<FormDto>): kotlin.collections.List<FormDto> {
         val localVariableConfig = createTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpForms
-    *
-    * @param formDto
-    * @return RequestConfig
-    */
-    fun createTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
+     * To obtain the request config of the operation createTmpForms
+     *
+     * @param formDto
+     * @return RequestConfig
+     */
+    fun createTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>): RequestConfig<kotlin.collections.List<FormDto>> {
         // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -486,34 +502,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a healthElement with the current user
-    * Returns an instance of created healthElement.
-    * @param healthElementDto
-    * @return HealthElementDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a healthElement with the current user
+     * Returns an instance of created healthElement.
+     * @param healthElementDto
+     * @return HealthElementDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto  {
+    suspend fun createTmpHealthElement(healthElementDto: HealthElementDto): HealthElementDto {
         val localVariableConfig = createTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpHealthElement
-    *
-    * @param healthElementDto
-    * @return RequestConfig
-    */
-    fun createTmpHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
+     * To obtain the request config of the operation createTmpHealthElement
+     *
+     * @param healthElementDto
+     * @return RequestConfig
+     */
+    fun createTmpHealthElementRequestConfig(healthElementDto: HealthElementDto): RequestConfig<HealthElementDto> {
         // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -525,34 +543,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a healthElement with the current user
-    * Returns an instance of created healthElement.
-    * @param healthElementDto
-    * @return kotlin.collections.List<HealthElementDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a healthElement with the current user
+     * Returns an instance of created healthElement.
+     * @param healthElementDto
+     * @return kotlin.collections.List<HealthElementDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>  {
+    suspend fun createTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>): kotlin.collections.List<HealthElementDto> {
         val localVariableConfig = createTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpHealthElements
-    *
-    * @param healthElementDto
-    * @return RequestConfig
-    */
-    fun createTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
+     * To obtain the request config of the operation createTmpHealthElements
+     *
+     * @param healthElementDto
+     * @return RequestConfig
+     */
+    fun createTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>): RequestConfig<kotlin.collections.List<HealthElementDto>> {
         // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -564,34 +584,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a invoice with the current user
-    * Returns an instance of created invoice.
-    * @param invoiceDto
-    * @return InvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a invoice with the current user
+     * Returns an instance of created invoice.
+     * @param invoiceDto
+     * @return InvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
+    suspend fun createTmpInvoice(invoiceDto: InvoiceDto): InvoiceDto {
         val localVariableConfig = createTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpInvoice
-    *
-    * @param invoiceDto
-    * @return RequestConfig
-    */
-    fun createTmpInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
+     * To obtain the request config of the operation createTmpInvoice
+     *
+     * @param invoiceDto
+     * @return RequestConfig
+     */
+    fun createTmpInvoiceRequestConfig(invoiceDto: InvoiceDto): RequestConfig<InvoiceDto> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -603,34 +625,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a invoice with the current user
-    * Returns an instance of created invoice.
-    * @param invoiceDto
-    * @return kotlin.collections.List<InvoiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a invoice with the current user
+     * Returns an instance of created invoice.
+     * @param invoiceDto
+     * @return kotlin.collections.List<InvoiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
+    suspend fun createTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>): kotlin.collections.List<InvoiceDto> {
         val localVariableConfig = createTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpInvoices
-    *
-    * @param invoiceDto
-    * @return RequestConfig
-    */
-    fun createTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
+     * To obtain the request config of the operation createTmpInvoices
+     *
+     * @param invoiceDto
+     * @return RequestConfig
+     */
+    fun createTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>): RequestConfig<kotlin.collections.List<InvoiceDto>> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -642,34 +666,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a message with the current user
-    * Returns an instance of created message.
-    * @param messageDto
-    * @return MessageDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a message with the current user
+     * Returns an instance of created message.
+     * @param messageDto
+     * @return MessageDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpMessage(messageDto: MessageDto) : MessageDto  {
+    suspend fun createTmpMessage(messageDto: MessageDto): MessageDto {
         val localVariableConfig = createTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpMessage
-    *
-    * @param messageDto
-    * @return RequestConfig
-    */
-    fun createTmpMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
+     * To obtain the request config of the operation createTmpMessage
+     *
+     * @param messageDto
+     * @return RequestConfig
+     */
+    fun createTmpMessageRequestConfig(messageDto: MessageDto): RequestConfig<MessageDto> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -681,34 +707,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a message with the current user
-    * Returns an instance of created message.
-    * @param messageDto
-    * @return kotlin.collections.List<MessageDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a message with the current user
+     * Returns an instance of created message.
+     * @param messageDto
+     * @return kotlin.collections.List<MessageDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>  {
+    suspend fun createTmpMessages(messageDto: kotlin.collections.List<MessageDto>): kotlin.collections.List<MessageDto> {
         val localVariableConfig = createTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpMessages
-    *
-    * @param messageDto
-    * @return RequestConfig
-    */
-    fun createTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>) : RequestConfig<kotlin.collections.List<MessageDto>> {
+     * To obtain the request config of the operation createTmpMessages
+     *
+     * @param messageDto
+     * @return RequestConfig
+     */
+    fun createTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>): RequestConfig<kotlin.collections.List<MessageDto>> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -720,34 +748,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a patient with the current user
-    * Returns an instance of created patient.
-    * @param patientDto
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a patient with the current user
+     * Returns an instance of created patient.
+     * @param patientDto
+     * @return PatientDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpPatient(patientDto: PatientDto) : PatientDto  {
+    suspend fun createTmpPatient(patientDto: PatientDto): PatientDto {
         val localVariableConfig = createTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpPatient
-    *
-    * @param patientDto
-    * @return RequestConfig
-    */
-    fun createTmpPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
+     * To obtain the request config of the operation createTmpPatient
+     *
+     * @param patientDto
+     * @return RequestConfig
+     */
+    fun createTmpPatientRequestConfig(patientDto: PatientDto): RequestConfig<PatientDto> {
         // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -759,34 +789,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a patient with the current user
-    * Returns an instance of created patient.
-    * @param patientDto
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a patient with the current user
+     * Returns an instance of created patient.
+     * @param patientDto
+     * @return kotlin.collections.List<PatientDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>  {
+    suspend fun createTmpPatients(patientDto: kotlin.collections.List<PatientDto>): kotlin.collections.List<PatientDto> {
         val localVariableConfig = createTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createTmpPatients
-    *
-    * @param patientDto
-    * @return RequestConfig
-    */
-    fun createTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
+     * To obtain the request config of the operation createTmpPatients
+     *
+     * @param patientDto
+     * @return RequestConfig
+     */
+    fun createTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>): RequestConfig<kotlin.collections.List<PatientDto>> {
         // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -798,34 +830,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Soft delete items.
-    * Response is a set containing the ID&#39;s of deleted items.
-    * @param requestBody
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Soft delete items.
+     * Response is a set containing the ID&#39;s of deleted items.
+     * @param requestBody
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteTmpItems(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteTmpItems
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun deleteTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation deleteTmpItems
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun deleteTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -837,32 +871,34 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/batch/delete",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Destroy tmp database for current user
-    * Nothing happens if the database does not exists
-    * @return kotlin.Any
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Destroy tmp database for current user
+     * Nothing happens if the database does not exists
+     * @return kotlin.Any
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun destroyTmpDatabase() : kotlin.Any  {
+    suspend fun destroyTmpDatabase(): kotlin.Any {
         val localVariableConfig = destroyTmpDatabaseRequestConfig()
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation destroyTmpDatabase
-    *
-    * @return RequestConfig
-    */
-    fun destroyTmpDatabaseRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation destroyTmpDatabase
+     *
+     * @return RequestConfig
+     */
+    fun destroyTmpDatabaseRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -874,34 +910,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a classification by id
-    * Returns an instance of classification.
-    * @param id
-    * @return ClassificationDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a classification by id
+     * Returns an instance of classification.
+     * @param id
+     * @return ClassificationDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpClassification(id: kotlin.String) : ClassificationDto  {
+    suspend fun getTmpClassification(id: kotlin.String): ClassificationDto {
         val localVariableConfig = getTmpClassificationRequestConfig(id = id)
 
         return request<Unit, ClassificationDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpClassification
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpClassificationRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpClassification
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpClassificationRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -910,37 +948,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/classification/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/classification/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get classifications by ids with the current user
-    * Returns an instance of created classification.
-    * @param requestBody
-    * @return kotlin.collections.List<ClassificationDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get classifications by ids with the current user
+     * Returns an instance of created classification.
+     * @param requestBody
+     * @return kotlin.collections.List<ClassificationDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ClassificationDto>  {
+    suspend fun getTmpClassifications(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<ClassificationDto> {
         val localVariableConfig = getTmpClassificationsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpClassifications
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpClassificationsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpClassifications
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpClassificationsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -952,34 +992,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a contact by id
-    * Returns an instance of contact.
-    * @param id
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a contact by id
+     * Returns an instance of contact.
+     * @param id
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpContact(id: kotlin.String) : ContactDto  {
+    suspend fun getTmpContact(id: kotlin.String): ContactDto {
         val localVariableConfig = getTmpContactRequestConfig(id = id)
 
         return request<Unit, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpContact
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpContactRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpContact
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpContactRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -988,37 +1030,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/contact/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/contact/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get contacts by ids with the current user
-    * Returns an instance of created contact.
-    * @param requestBody
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get contacts by ids with the current user
+     * Returns an instance of created contact.
+     * @param requestBody
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<ContactDto>  {
+    suspend fun getTmpContacts(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = getTmpContactsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpContacts
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpContactsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpContacts
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpContactsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1030,34 +1074,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a document by id
-    * Returns an instance of document.
-    * @param id
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a document by id
+     * Returns an instance of document.
+     * @param id
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpDocument(id: kotlin.String) : DocumentDto  {
+    suspend fun getTmpDocument(id: kotlin.String): DocumentDto {
         val localVariableConfig = getTmpDocumentRequestConfig(id = id)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpDocument
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpDocumentRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpDocument
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpDocumentRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1066,37 +1112,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/document/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/document/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get documents by ids with the current user
-    * Returns an instance of created document.
-    * @param requestBody
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get documents by ids with the current user
+     * Returns an instance of created document.
+     * @param requestBody
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocumentDto>  {
+    suspend fun getTmpDocuments(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = getTmpDocumentsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpDocuments
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpDocumentsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpDocuments
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpDocumentsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1108,34 +1156,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a entityTemplate by id
-    * Returns an instance of entityTemplate.
-    * @param id
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a entityTemplate by id
+     * Returns an instance of entityTemplate.
+     * @param id
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpEntityTemplate(id: kotlin.String) : EntityTemplateDto  {
+    suspend fun getTmpEntityTemplate(id: kotlin.String): EntityTemplateDto {
         val localVariableConfig = getTmpEntityTemplateRequestConfig(id = id)
 
         return request<Unit, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpEntityTemplate
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpEntityTemplateRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpEntityTemplate
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpEntityTemplateRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1144,37 +1194,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/entityTemplate/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/entityTemplate/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get entityTemplates by ids with the current user
-    * Returns an instance of created entityTemplate.
-    * @param requestBody
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get entityTemplates by ids with the current user
+     * Returns an instance of created entityTemplate.
+     * @param requestBody
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun getTmpEntityTemplates(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = getTmpEntityTemplatesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpEntityTemplates
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpEntityTemplatesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpEntityTemplates
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpEntityTemplatesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1186,34 +1238,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a form by id
-    * Returns an instance of form.
-    * @param id
-    * @return FormDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a form by id
+     * Returns an instance of form.
+     * @param id
+     * @return FormDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpForm(id: kotlin.String) : FormDto  {
+    suspend fun getTmpForm(id: kotlin.String): FormDto {
         val localVariableConfig = getTmpFormRequestConfig(id = id)
 
         return request<Unit, FormDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpForm
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpFormRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpForm
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpFormRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1222,37 +1276,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/form/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/form/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get forms by ids with the current user
-    * Returns an instance of created form.
-    * @param requestBody
-    * @return kotlin.collections.List<FormDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get forms by ids with the current user
+     * Returns an instance of created form.
+     * @param requestBody
+     * @return kotlin.collections.List<FormDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<FormDto>  {
+    suspend fun getTmpForms(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<FormDto> {
         val localVariableConfig = getTmpFormsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpForms
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpFormsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpForms
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpFormsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1264,34 +1320,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a healthElement by id
-    * Returns an instance of healthElement.
-    * @param id
-    * @return HealthElementDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a healthElement by id
+     * Returns an instance of healthElement.
+     * @param id
+     * @return HealthElementDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpHealthElement(id: kotlin.String) : HealthElementDto  {
+    suspend fun getTmpHealthElement(id: kotlin.String): HealthElementDto {
         val localVariableConfig = getTmpHealthElementRequestConfig(id = id)
 
         return request<Unit, HealthElementDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpHealthElement
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpHealthElementRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpHealthElement
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpHealthElementRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1300,37 +1358,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/healthElement/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/healthElement/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get healthElements by ids with the current user
-    * Returns an instance of created healthElement.
-    * @param requestBody
-    * @return kotlin.collections.List<HealthElementDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get healthElements by ids with the current user
+     * Returns an instance of created healthElement.
+     * @param requestBody
+     * @return kotlin.collections.List<HealthElementDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<HealthElementDto>  {
+    suspend fun getTmpHealthElements(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<HealthElementDto> {
         val localVariableConfig = getTmpHealthElementsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpHealthElements
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpHealthElementsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpHealthElements
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpHealthElementsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1342,34 +1402,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a invoice by id
-    * Returns an instance of invoice.
-    * @param id
-    * @return InvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a invoice by id
+     * Returns an instance of invoice.
+     * @param id
+     * @return InvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpInvoice(id: kotlin.String) : InvoiceDto  {
+    suspend fun getTmpInvoice(id: kotlin.String): InvoiceDto {
         val localVariableConfig = getTmpInvoiceRequestConfig(id = id)
 
         return request<Unit, InvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpInvoice
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpInvoiceRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpInvoice
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpInvoiceRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1378,37 +1440,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/invoice/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/invoice/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get invoices by ids with the current user
-    * Returns an instance of created invoice.
-    * @param requestBody
-    * @return kotlin.collections.List<InvoiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get invoices by ids with the current user
+     * Returns an instance of created invoice.
+     * @param requestBody
+     * @return kotlin.collections.List<InvoiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<InvoiceDto>  {
+    suspend fun getTmpInvoices(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<InvoiceDto> {
         val localVariableConfig = getTmpInvoicesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpInvoices
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpInvoicesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpInvoices
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpInvoicesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1420,34 +1484,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a message by id
-    * Returns an instance of message.
-    * @param id
-    * @return MessageDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a message by id
+     * Returns an instance of message.
+     * @param id
+     * @return MessageDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpMessage(id: kotlin.String) : MessageDto  {
+    suspend fun getTmpMessage(id: kotlin.String): MessageDto {
         val localVariableConfig = getTmpMessageRequestConfig(id = id)
 
         return request<Unit, MessageDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpMessage
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpMessageRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpMessage
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpMessageRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1456,37 +1522,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/message/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/message/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get messages by ids with the current user
-    * Returns an instance of created message.
-    * @param requestBody
-    * @return kotlin.collections.List<MessageDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get messages by ids with the current user
+     * Returns an instance of created message.
+     * @param requestBody
+     * @return kotlin.collections.List<MessageDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<MessageDto>  {
+    suspend fun getTmpMessages(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<MessageDto> {
         val localVariableConfig = getTmpMessagesRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpMessages
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpMessagesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpMessages
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpMessagesRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1498,34 +1566,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a patient by id
-    * Returns an instance of patient.
-    * @param id
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a patient by id
+     * Returns an instance of patient.
+     * @param id
+     * @return PatientDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpPatient(id: kotlin.String) : PatientDto  {
+    suspend fun getTmpPatient(id: kotlin.String): PatientDto {
         val localVariableConfig = getTmpPatientRequestConfig(id = id)
 
         return request<Unit, PatientDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpPatient
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun getTmpPatientRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTmpPatient
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun getTmpPatientRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -1534,37 +1604,39 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/tmp/patient/byId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/patient/byId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get patients by ids with the current user
-    * Returns an instance of created patient.
-    * @param requestBody
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get patients by ids with the current user
+     * Returns an instance of created patient.
+     * @param requestBody
+     * @return kotlin.collections.List<PatientDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<PatientDto>  {
+    suspend fun getTmpPatients(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<PatientDto> {
         val localVariableConfig = getTmpPatientsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTmpPatients
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun getTmpPatientsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation getTmpPatients
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun getTmpPatientsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1576,36 +1648,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient/get",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List classifications with the current user
-    * Returns paginated classifications.
-    * @param firstClassificationId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListClassificationDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List classifications with the current user
+     * Returns paginated classifications.
+     * @param firstClassificationId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListClassificationDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListClassificationDto  {
+    suspend fun listTmpClassifications(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListClassificationDto {
         val localVariableConfig = listTmpClassificationsRequestConfig(firstClassificationId = firstClassificationId, pageSize = pageSize)
 
         return request<Unit, PaginatedListClassificationDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpClassifications
-    *
-    * @param firstClassificationId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpClassificationsRequestConfig(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpClassifications
+     *
+     * @param firstClassificationId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpClassificationsRequestConfig(firstClassificationId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1625,36 +1699,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts with the current user
-    * Returns paginated contacts.
-    * @param firstContactId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListInvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts with the current user
+     * Returns paginated contacts.
+     * @param firstContactId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListInvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
+    suspend fun listTmpContacts(firstContactId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListInvoiceDto {
         val localVariableConfig = listTmpContactsRequestConfig(firstContactId = firstContactId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpContacts
-    *
-    * @param firstContactId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpContactsRequestConfig(firstContactId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpContacts
+     *
+     * @param firstContactId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpContactsRequestConfig(firstContactId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1674,36 +1750,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List documents with the current user
-    * Returns paginated documents.
-    * @param firstDocumentId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListDocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List documents with the current user
+     * Returns paginated documents.
+     * @param firstDocumentId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListDocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListDocumentDto  {
+    suspend fun listTmpDocuments(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListDocumentDto {
         val localVariableConfig = listTmpDocumentsRequestConfig(firstDocumentId = firstDocumentId, pageSize = pageSize)
 
         return request<Unit, PaginatedListDocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpDocuments
-    *
-    * @param firstDocumentId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpDocumentsRequestConfig(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpDocuments
+     *
+     * @param firstDocumentId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpDocumentsRequestConfig(firstDocumentId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1723,36 +1801,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List entityTemplates with the current user
-    * Returns paginated entityTemplates.
-    * @param firstEntityTemplateId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListEntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List entityTemplates with the current user
+     * Returns paginated entityTemplates.
+     * @param firstEntityTemplateId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListEntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListEntityTemplateDto  {
+    suspend fun listTmpEntityTemplates(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListEntityTemplateDto {
         val localVariableConfig = listTmpEntityTemplatesRequestConfig(firstEntityTemplateId = firstEntityTemplateId, pageSize = pageSize)
 
         return request<Unit, PaginatedListEntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpEntityTemplates
-    *
-    * @param firstEntityTemplateId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpEntityTemplatesRequestConfig(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpEntityTemplates
+     *
+     * @param firstEntityTemplateId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpEntityTemplatesRequestConfig(firstEntityTemplateId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1772,36 +1852,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List forms with the current user
-    * Returns paginated forms.
-    * @param firstFormId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListFormDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List forms with the current user
+     * Returns paginated forms.
+     * @param firstFormId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListFormDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListFormDto  {
+    suspend fun listTmpForms(firstFormId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListFormDto {
         val localVariableConfig = listTmpFormsRequestConfig(firstFormId = firstFormId, pageSize = pageSize)
 
         return request<Unit, PaginatedListFormDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpForms
-    *
-    * @param firstFormId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpFormsRequestConfig(firstFormId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpForms
+     *
+     * @param firstFormId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpFormsRequestConfig(firstFormId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1821,36 +1903,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List healthElements with the current user
-    * Returns paginated healthElements.
-    * @param firstHealthElementId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListHealthElementDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List healthElements with the current user
+     * Returns paginated healthElements.
+     * @param firstHealthElementId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListHealthElementDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListHealthElementDto  {
+    suspend fun listTmpHealthElements(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListHealthElementDto {
         val localVariableConfig = listTmpHealthElementsRequestConfig(firstHealthElementId = firstHealthElementId, pageSize = pageSize)
 
         return request<Unit, PaginatedListHealthElementDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpHealthElements
-    *
-    * @param firstHealthElementId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpHealthElementsRequestConfig(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpHealthElements
+     *
+     * @param firstHealthElementId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpHealthElementsRequestConfig(firstHealthElementId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1870,36 +1954,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List invoices with the current user
-    * Returns paginated invoices.
-    * @param firstInvoiceId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListInvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List invoices with the current user
+     * Returns paginated invoices.
+     * @param firstInvoiceId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListInvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
+    suspend fun listTmpInvoices(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListInvoiceDto {
         val localVariableConfig = listTmpInvoicesRequestConfig(firstInvoiceId = firstInvoiceId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpInvoices
-    *
-    * @param firstInvoiceId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpInvoicesRequestConfig(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpInvoices
+     *
+     * @param firstInvoiceId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpInvoicesRequestConfig(firstInvoiceId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1919,36 +2005,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List messages with the current user
-    * Returns paginated messages.
-    * @param firstMessageId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListInvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List messages with the current user
+     * Returns paginated messages.
+     * @param firstMessageId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListInvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListInvoiceDto  {
+    suspend fun listTmpMessages(firstMessageId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListInvoiceDto {
         val localVariableConfig = listTmpMessagesRequestConfig(firstMessageId = firstMessageId, pageSize = pageSize)
 
         return request<Unit, PaginatedListInvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpMessages
-    *
-    * @param firstMessageId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpMessagesRequestConfig(firstMessageId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpMessages
+     *
+     * @param firstMessageId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpMessagesRequestConfig(firstMessageId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1968,36 +2056,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List patients with the current user
-    * Returns paginated patients.
-    * @param firstPatientId  (optional)
-    * @param pageSize  (optional)
-    * @return PaginatedListPatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List patients with the current user
+     * Returns paginated patients.
+     * @param firstPatientId  (optional)
+     * @param pageSize  (optional)
+     * @return PaginatedListPatientDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : PaginatedListPatientDto  {
+    suspend fun listTmpPatients(firstPatientId: kotlin.String?, pageSize: kotlin.Int?): PaginatedListPatientDto {
         val localVariableConfig = listTmpPatientsRequestConfig(firstPatientId = firstPatientId, pageSize = pageSize)
 
         return request<Unit, PaginatedListPatientDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listTmpPatients
-    *
-    * @param firstPatientId  (optional)
-    * @param pageSize  (optional)
-    * @return RequestConfig
-    */
-    fun listTmpPatientsRequestConfig(firstPatientId: kotlin.String?, pageSize: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listTmpPatients
+     *
+     * @param firstPatientId  (optional)
+     * @param pageSize  (optional)
+     * @return RequestConfig
+     */
+    fun listTmpPatientsRequestConfig(firstPatientId: kotlin.String?, pageSize: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -2017,34 +2107,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient/list",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a classification
-    * Returns the modified classification.
-    * @param classificationDto
-    * @return ClassificationDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a classification
+     * Returns the modified classification.
+     * @param classificationDto
+     * @return ClassificationDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpClassification(classificationDto: ClassificationDto) : ClassificationDto  {
+    suspend fun modifyTmpClassification(classificationDto: ClassificationDto): ClassificationDto {
         val localVariableConfig = modifyTmpClassificationRequestConfig(classificationDto = classificationDto)
 
         return request<ClassificationDto, ClassificationDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpClassification
-    *
-    * @param classificationDto
-    * @return RequestConfig
-    */
-    fun modifyTmpClassificationRequestConfig(classificationDto: ClassificationDto) : RequestConfig<ClassificationDto> {
+     * To obtain the request config of the operation modifyTmpClassification
+     *
+     * @param classificationDto
+     * @return RequestConfig
+     */
+    fun modifyTmpClassificationRequestConfig(classificationDto: ClassificationDto): RequestConfig<ClassificationDto> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2056,34 +2148,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param classificationDto
-    * @return kotlin.collections.List<ClassificationDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param classificationDto
+     * @return kotlin.collections.List<ClassificationDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>) : kotlin.collections.List<ClassificationDto>  {
+    suspend fun modifyTmpClassifications(classificationDto: kotlin.collections.List<ClassificationDto>): kotlin.collections.List<ClassificationDto> {
         val localVariableConfig = modifyTmpClassificationsRequestConfig(classificationDto = classificationDto)
 
         return request<kotlin.collections.List<ClassificationDto>, kotlin.collections.List<ClassificationDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpClassifications
-    *
-    * @param classificationDto
-    * @return RequestConfig
-    */
-    fun modifyTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>) : RequestConfig<kotlin.collections.List<ClassificationDto>> {
+     * To obtain the request config of the operation modifyTmpClassifications
+     *
+     * @param classificationDto
+     * @return RequestConfig
+     */
+    fun modifyTmpClassificationsRequestConfig(classificationDto: kotlin.collections.List<ClassificationDto>): RequestConfig<kotlin.collections.List<ClassificationDto>> {
         // val localVariableBody = classificationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2095,34 +2189,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/classification/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a contact
-    * Returns the modified contact.
-    * @param contactDto
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a contact
+     * Returns the modified contact.
+     * @param contactDto
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpContact(contactDto: ContactDto) : ContactDto  {
+    suspend fun modifyTmpContact(contactDto: ContactDto): ContactDto {
         val localVariableConfig = modifyTmpContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpContact
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun modifyTmpContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
+     * To obtain the request config of the operation modifyTmpContact
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun modifyTmpContactRequestConfig(contactDto: ContactDto): RequestConfig<ContactDto> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2134,34 +2230,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param contactDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param contactDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun modifyTmpContacts(contactDto: kotlin.collections.List<ContactDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = modifyTmpContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpContacts
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun modifyTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
+     * To obtain the request config of the operation modifyTmpContacts
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun modifyTmpContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>): RequestConfig<kotlin.collections.List<ContactDto>> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2173,34 +2271,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a document
-    * Returns the modified document.
-    * @param documentDto
-    * @return DocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a document
+     * Returns the modified document.
+     * @param documentDto
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpDocument(documentDto: DocumentDto) : DocumentDto  {
+    suspend fun modifyTmpDocument(documentDto: DocumentDto): DocumentDto {
         val localVariableConfig = modifyTmpDocumentRequestConfig(documentDto = documentDto)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpDocument
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun modifyTmpDocumentRequestConfig(documentDto: DocumentDto) : RequestConfig<DocumentDto> {
+     * To obtain the request config of the operation modifyTmpDocument
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun modifyTmpDocumentRequestConfig(documentDto: DocumentDto): RequestConfig<DocumentDto> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2212,34 +2312,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param documentDto
-    * @return kotlin.collections.List<DocumentDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param documentDto
+     * @return kotlin.collections.List<DocumentDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>) : kotlin.collections.List<DocumentDto>  {
+    suspend fun modifyTmpDocuments(documentDto: kotlin.collections.List<DocumentDto>): kotlin.collections.List<DocumentDto> {
         val localVariableConfig = modifyTmpDocumentsRequestConfig(documentDto = documentDto)
 
         return request<kotlin.collections.List<DocumentDto>, kotlin.collections.List<DocumentDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpDocuments
-    *
-    * @param documentDto
-    * @return RequestConfig
-    */
-    fun modifyTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>) : RequestConfig<kotlin.collections.List<DocumentDto>> {
+     * To obtain the request config of the operation modifyTmpDocuments
+     *
+     * @param documentDto
+     * @return RequestConfig
+     */
+    fun modifyTmpDocumentsRequestConfig(documentDto: kotlin.collections.List<DocumentDto>): RequestConfig<kotlin.collections.List<DocumentDto>> {
         // val localVariableBody = documentDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2251,34 +2353,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/document/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a entityTemplate
-    * Returns the modified entityTemplate.
-    * @param entityTemplateDto
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a entityTemplate
+     * Returns the modified entityTemplate.
+     * @param entityTemplateDto
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
+    suspend fun modifyTmpEntityTemplate(entityTemplateDto: EntityTemplateDto): EntityTemplateDto {
         val localVariableConfig = modifyTmpEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpEntityTemplate
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun modifyTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+     * To obtain the request config of the operation modifyTmpEntityTemplate
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun modifyTmpEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto): RequestConfig<EntityTemplateDto> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2290,34 +2394,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param entityTemplateDto
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param entityTemplateDto
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun modifyTmpEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = modifyTmpEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpEntityTemplates
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun modifyTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+     * To obtain the request config of the operation modifyTmpEntityTemplates
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun modifyTmpEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2329,34 +2435,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/entityTemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a form
-    * Returns the modified form.
-    * @param formDto
-    * @return FormDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a form
+     * Returns the modified form.
+     * @param formDto
+     * @return FormDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpForm(formDto: FormDto) : FormDto  {
+    suspend fun modifyTmpForm(formDto: FormDto): FormDto {
         val localVariableConfig = modifyTmpFormRequestConfig(formDto = formDto)
 
         return request<FormDto, FormDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpForm
-    *
-    * @param formDto
-    * @return RequestConfig
-    */
-    fun modifyTmpFormRequestConfig(formDto: FormDto) : RequestConfig<FormDto> {
+     * To obtain the request config of the operation modifyTmpForm
+     *
+     * @param formDto
+     * @return RequestConfig
+     */
+    fun modifyTmpFormRequestConfig(formDto: FormDto): RequestConfig<FormDto> {
         // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2368,34 +2476,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param formDto
-    * @return kotlin.collections.List<FormDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param formDto
+     * @return kotlin.collections.List<FormDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>) : kotlin.collections.List<FormDto>  {
+    suspend fun modifyTmpForms(formDto: kotlin.collections.List<FormDto>): kotlin.collections.List<FormDto> {
         val localVariableConfig = modifyTmpFormsRequestConfig(formDto = formDto)
 
         return request<kotlin.collections.List<FormDto>, kotlin.collections.List<FormDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpForms
-    *
-    * @param formDto
-    * @return RequestConfig
-    */
-    fun modifyTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>) : RequestConfig<kotlin.collections.List<FormDto>> {
+     * To obtain the request config of the operation modifyTmpForms
+     *
+     * @param formDto
+     * @return RequestConfig
+     */
+    fun modifyTmpFormsRequestConfig(formDto: kotlin.collections.List<FormDto>): RequestConfig<kotlin.collections.List<FormDto>> {
         // val localVariableBody = formDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2407,34 +2517,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/form/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a healthElement
-    * Returns the modified healthElement.
-    * @param healthElementDto
-    * @return HealthElementDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a healthElement
+     * Returns the modified healthElement.
+     * @param healthElementDto
+     * @return HealthElementDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto) : HealthElementDto  {
+    suspend fun modifyTmpHealthElement(healthElementDto: HealthElementDto): HealthElementDto {
         val localVariableConfig = modifyTmpHealthElementRequestConfig(healthElementDto = healthElementDto)
 
         return request<HealthElementDto, HealthElementDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpHealthElement
-    *
-    * @param healthElementDto
-    * @return RequestConfig
-    */
-    fun modifyTmpHealthElementRequestConfig(healthElementDto: HealthElementDto) : RequestConfig<HealthElementDto> {
+     * To obtain the request config of the operation modifyTmpHealthElement
+     *
+     * @param healthElementDto
+     * @return RequestConfig
+     */
+    fun modifyTmpHealthElementRequestConfig(healthElementDto: HealthElementDto): RequestConfig<HealthElementDto> {
         // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2446,34 +2558,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param healthElementDto
-    * @return kotlin.collections.List<HealthElementDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param healthElementDto
+     * @return kotlin.collections.List<HealthElementDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>) : kotlin.collections.List<HealthElementDto>  {
+    suspend fun modifyTmpHealthElements(healthElementDto: kotlin.collections.List<HealthElementDto>): kotlin.collections.List<HealthElementDto> {
         val localVariableConfig = modifyTmpHealthElementsRequestConfig(healthElementDto = healthElementDto)
 
         return request<kotlin.collections.List<HealthElementDto>, kotlin.collections.List<HealthElementDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpHealthElements
-    *
-    * @param healthElementDto
-    * @return RequestConfig
-    */
-    fun modifyTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>) : RequestConfig<kotlin.collections.List<HealthElementDto>> {
+     * To obtain the request config of the operation modifyTmpHealthElements
+     *
+     * @param healthElementDto
+     * @return RequestConfig
+     */
+    fun modifyTmpHealthElementsRequestConfig(healthElementDto: kotlin.collections.List<HealthElementDto>): RequestConfig<kotlin.collections.List<HealthElementDto>> {
         // val localVariableBody = healthElementDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2485,34 +2599,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/healthElement/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a invoice
-    * Returns the modified invoice.
-    * @param invoiceDto
-    * @return InvoiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a invoice
+     * Returns the modified invoice.
+     * @param invoiceDto
+     * @return InvoiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto) : InvoiceDto  {
+    suspend fun modifyTmpInvoice(invoiceDto: InvoiceDto): InvoiceDto {
         val localVariableConfig = modifyTmpInvoiceRequestConfig(invoiceDto = invoiceDto)
 
         return request<InvoiceDto, InvoiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpInvoice
-    *
-    * @param invoiceDto
-    * @return RequestConfig
-    */
-    fun modifyTmpInvoiceRequestConfig(invoiceDto: InvoiceDto) : RequestConfig<InvoiceDto> {
+     * To obtain the request config of the operation modifyTmpInvoice
+     *
+     * @param invoiceDto
+     * @return RequestConfig
+     */
+    fun modifyTmpInvoiceRequestConfig(invoiceDto: InvoiceDto): RequestConfig<InvoiceDto> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2524,34 +2640,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param invoiceDto
-    * @return kotlin.collections.List<InvoiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param invoiceDto
+     * @return kotlin.collections.List<InvoiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>) : kotlin.collections.List<InvoiceDto>  {
+    suspend fun modifyTmpInvoices(invoiceDto: kotlin.collections.List<InvoiceDto>): kotlin.collections.List<InvoiceDto> {
         val localVariableConfig = modifyTmpInvoicesRequestConfig(invoiceDto = invoiceDto)
 
         return request<kotlin.collections.List<InvoiceDto>, kotlin.collections.List<InvoiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpInvoices
-    *
-    * @param invoiceDto
-    * @return RequestConfig
-    */
-    fun modifyTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>) : RequestConfig<kotlin.collections.List<InvoiceDto>> {
+     * To obtain the request config of the operation modifyTmpInvoices
+     *
+     * @param invoiceDto
+     * @return RequestConfig
+     */
+    fun modifyTmpInvoicesRequestConfig(invoiceDto: kotlin.collections.List<InvoiceDto>): RequestConfig<kotlin.collections.List<InvoiceDto>> {
         // val localVariableBody = invoiceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2563,34 +2681,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/invoice/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a message
-    * Returns the modified message.
-    * @param messageDto
-    * @return MessageDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a message
+     * Returns the modified message.
+     * @param messageDto
+     * @return MessageDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpMessage(messageDto: MessageDto) : MessageDto  {
+    suspend fun modifyTmpMessage(messageDto: MessageDto): MessageDto {
         val localVariableConfig = modifyTmpMessageRequestConfig(messageDto = messageDto)
 
         return request<MessageDto, MessageDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpMessage
-    *
-    * @param messageDto
-    * @return RequestConfig
-    */
-    fun modifyTmpMessageRequestConfig(messageDto: MessageDto) : RequestConfig<MessageDto> {
+     * To obtain the request config of the operation modifyTmpMessage
+     *
+     * @param messageDto
+     * @return RequestConfig
+     */
+    fun modifyTmpMessageRequestConfig(messageDto: MessageDto): RequestConfig<MessageDto> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2602,34 +2722,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param messageDto
-    * @return kotlin.collections.List<MessageDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param messageDto
+     * @return kotlin.collections.List<MessageDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>) : kotlin.collections.List<MessageDto>  {
+    suspend fun modifyTmpMessages(messageDto: kotlin.collections.List<MessageDto>): kotlin.collections.List<MessageDto> {
         val localVariableConfig = modifyTmpMessagesRequestConfig(messageDto = messageDto)
 
         return request<kotlin.collections.List<MessageDto>, kotlin.collections.List<MessageDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpMessages
-    *
-    * @param messageDto
-    * @return RequestConfig
-    */
-    fun modifyTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>) : RequestConfig<kotlin.collections.List<MessageDto>> {
+     * To obtain the request config of the operation modifyTmpMessages
+     *
+     * @param messageDto
+     * @return RequestConfig
+     */
+    fun modifyTmpMessagesRequestConfig(messageDto: kotlin.collections.List<MessageDto>): RequestConfig<kotlin.collections.List<MessageDto>> {
         // val localVariableBody = messageDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2641,34 +2763,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/message/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a patient
-    * Returns the modified patient.
-    * @param patientDto
-    * @return PatientDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a patient
+     * Returns the modified patient.
+     * @param patientDto
+     * @return PatientDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpPatient(patientDto: PatientDto) : PatientDto  {
+    suspend fun modifyTmpPatient(patientDto: PatientDto): PatientDto {
         val localVariableConfig = modifyTmpPatientRequestConfig(patientDto = patientDto)
 
         return request<PatientDto, PatientDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpPatient
-    *
-    * @param patientDto
-    * @return RequestConfig
-    */
-    fun modifyTmpPatientRequestConfig(patientDto: PatientDto) : RequestConfig<PatientDto> {
+     * To obtain the request config of the operation modifyTmpPatient
+     *
+     * @param patientDto
+     * @return RequestConfig
+     */
+    fun modifyTmpPatientRequestConfig(patientDto: PatientDto): RequestConfig<PatientDto> {
         // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2680,34 +2804,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of healthcare elements
-    * Returns the modified healthcare elements.
-    * @param patientDto
-    * @return kotlin.collections.List<PatientDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of healthcare elements
+     * Returns the modified healthcare elements.
+     * @param patientDto
+     * @return kotlin.collections.List<PatientDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>) : kotlin.collections.List<PatientDto>  {
+    suspend fun modifyTmpPatients(patientDto: kotlin.collections.List<PatientDto>): kotlin.collections.List<PatientDto> {
         val localVariableConfig = modifyTmpPatientsRequestConfig(patientDto = patientDto)
 
         return request<kotlin.collections.List<PatientDto>, kotlin.collections.List<PatientDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyTmpPatients
-    *
-    * @param patientDto
-    * @return RequestConfig
-    */
-    fun modifyTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>) : RequestConfig<kotlin.collections.List<PatientDto>> {
+     * To obtain the request config of the operation modifyTmpPatients
+     *
+     * @param patientDto
+     * @return RequestConfig
+     */
+    fun modifyTmpPatientsRequestConfig(patientDto: kotlin.collections.List<PatientDto>): RequestConfig<kotlin.collections.List<PatientDto>> {
         // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2719,34 +2845,36 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/patient/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Hard delete items.
-    * Response is a set containing the ID&#39;s of deleted items.
-    * @param requestBody
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Hard delete items.
+     * Response is a set containing the ID&#39;s of deleted items.
+     * @param requestBody
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun purgeTmpItems(requestBody: kotlin.collections.List<kotlin.String>): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = purgeTmpItemsRequestConfig(requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation purgeTmpItems
-    *
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun purgeTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation purgeTmpItems
+     *
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun purgeTmpItemsRequestConfig(requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2758,36 +2886,38 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
             path = "/rest/v2/tmp/batch/purge",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    *
-    *
-    * @param from
-    * @param requestBody
-    * @return ReplicatorDocumentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     *
+     *
+     * @param from
+     * @param requestBody
+     * @return ReplicatorDocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : ReplicatorDocumentDto  {
+    suspend fun replicateToTmpDatabase(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>): ReplicatorDocumentDto {
         val localVariableConfig = replicateToTmpDatabaseRequestConfig(from = from, requestBody = requestBody)
 
         return request<kotlin.collections.List<kotlin.String>, ReplicatorDocumentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation replicateToTmpDatabase
-    *
-    * @param from
-    * @param requestBody
-    * @return RequestConfig
-    */
-    fun replicateToTmpDatabaseRequestConfig(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>) : RequestConfig<kotlin.collections.List<kotlin.String>> {
+     * To obtain the request config of the operation replicateToTmpDatabase
+     *
+     * @param from
+     * @param requestBody
+     * @return RequestConfig
+     */
+    fun replicateToTmpDatabaseRequestConfig(from: kotlin.String, requestBody: kotlin.collections.List<kotlin.String>): RequestConfig<kotlin.collections.List<kotlin.String>> {
         // val localVariableBody = requestBody
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -2796,10 +2926,10 @@ class TmpApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = N
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/tmp/replicate/from/{from}".replace("{"+"from"+"}", "${URLEncoder.encode(from.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/tmp/replicate/from/{from}".replace("{" + "from" + "}", "${URLEncoder.encode(from.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

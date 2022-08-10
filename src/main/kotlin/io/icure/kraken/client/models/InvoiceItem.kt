@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.EIDItem
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -48,7 +45,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class InvoiceItem (
+data class InvoiceItem(
 
     @field:JsonProperty("codeNomenclature")
     val codeNomenclature: kotlin.Long = 0,
@@ -126,9 +123,14 @@ data class InvoiceItem (
      * Values: none,left,right
      */
     enum class SideCode(val value: kotlin.String) {
-        @JsonProperty(value = "None") none("None"),
-        @JsonProperty(value = "Left") left("Left"),
-        @JsonProperty(value = "Right") right("Right");
+        @JsonProperty(value = "None")
+        none("None"),
+
+        @JsonProperty(value = "Left")
+        left("Left"),
+
+        @JsonProperty(value = "Right")
+        right("Right");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -140,11 +142,20 @@ data class InvoiceItem (
      * Values: other,night,weekend,bankholiday,urgent
      */
     enum class TimeOfDay(val value: kotlin.String) {
-        @JsonProperty(value = "Other") other("Other"),
-        @JsonProperty(value = "Night") night("Night"),
-        @JsonProperty(value = "Weekend") weekend("Weekend"),
-        @JsonProperty(value = "Bankholiday") bankholiday("Bankholiday"),
-        @JsonProperty(value = "Urgent") urgent("Urgent");
+        @JsonProperty(value = "Other")
+        other("Other"),
+
+        @JsonProperty(value = "Night")
+        night("Night"),
+
+        @JsonProperty(value = "Weekend")
+        weekend("Weekend"),
+
+        @JsonProperty(value = "Bankholiday")
+        bankholiday("Bankholiday"),
+
+        @JsonProperty(value = "Urgent")
+        urgent("Urgent");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -156,11 +167,20 @@ data class InvoiceItem (
      * Values: other,derogationMaxNumber,otherPrescription,secondPrestationOfDay,thirdAndNextPrestationOfDay
      */
     enum class DerogationMaxNumber(val value: kotlin.String) {
-        @JsonProperty(value = "Other") other("Other"),
-        @JsonProperty(value = "DerogationMaxNumber") derogationMaxNumber("DerogationMaxNumber"),
-        @JsonProperty(value = "OtherPrescription") otherPrescription("OtherPrescription"),
-        @JsonProperty(value = "SecondPrestationOfDay") secondPrestationOfDay("SecondPrestationOfDay"),
-        @JsonProperty(value = "ThirdAndNextPrestationOfDay") thirdAndNextPrestationOfDay("ThirdAndNextPrestationOfDay");
+        @JsonProperty(value = "Other")
+        other("Other"),
+
+        @JsonProperty(value = "DerogationMaxNumber")
+        derogationMaxNumber("DerogationMaxNumber"),
+
+        @JsonProperty(value = "OtherPrescription")
+        otherPrescription("OtherPrescription"),
+
+        @JsonProperty(value = "SecondPrestationOfDay")
+        secondPrestationOfDay("SecondPrestationOfDay"),
+
+        @JsonProperty(value = "ThirdAndNextPrestationOfDay")
+        thirdAndNextPrestationOfDay("ThirdAndNextPrestationOfDay");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -172,11 +192,20 @@ data class InvoiceItem (
      * Values: none,onePrescriber,selfPrescriber,addedCode,manyPrescribers
      */
     enum class PrescriberNorm(val value: kotlin.String) {
-        @JsonProperty(value = "None") none("None"),
-        @JsonProperty(value = "OnePrescriber") onePrescriber("OnePrescriber"),
-        @JsonProperty(value = "SelfPrescriber") selfPrescriber("SelfPrescriber"),
-        @JsonProperty(value = "AddedCode") addedCode("AddedCode"),
-        @JsonProperty(value = "ManyPrescribers") manyPrescribers("ManyPrescribers");
+        @JsonProperty(value = "None")
+        none("None"),
+
+        @JsonProperty(value = "OnePrescriber")
+        onePrescriber("OnePrescriber"),
+
+        @JsonProperty(value = "SelfPrescriber")
+        selfPrescriber("SelfPrescriber"),
+
+        @JsonProperty(value = "AddedCode")
+        addedCode("AddedCode"),
+
+        @JsonProperty(value = "ManyPrescribers")
+        manyPrescribers("ManyPrescribers");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -188,14 +217,29 @@ data class InvoiceItem (
      * Values: none,surgicalAid1,surgicalAid2,reducedFee,ah1n1,halfPriceSecondAct,invoiceException,forInformation
      */
     enum class PercentNorm(val value: kotlin.String) {
-        @JsonProperty(value = "None") none("None"),
-        @JsonProperty(value = "SurgicalAid1") surgicalAid1("SurgicalAid1"),
-        @JsonProperty(value = "SurgicalAid2") surgicalAid2("SurgicalAid2"),
-        @JsonProperty(value = "ReducedFee") reducedFee("ReducedFee"),
-        @JsonProperty(value = "Ah1n1") ah1n1("Ah1n1"),
-        @JsonProperty(value = "HalfPriceSecondAct") halfPriceSecondAct("HalfPriceSecondAct"),
-        @JsonProperty(value = "InvoiceException") invoiceException("InvoiceException"),
-        @JsonProperty(value = "ForInformation") forInformation("ForInformation");
+        @JsonProperty(value = "None")
+        none("None"),
+
+        @JsonProperty(value = "SurgicalAid1")
+        surgicalAid1("SurgicalAid1"),
+
+        @JsonProperty(value = "SurgicalAid2")
+        surgicalAid2("SurgicalAid2"),
+
+        @JsonProperty(value = "ReducedFee")
+        reducedFee("ReducedFee"),
+
+        @JsonProperty(value = "Ah1n1")
+        ah1n1("Ah1n1"),
+
+        @JsonProperty(value = "HalfPriceSecondAct")
+        halfPriceSecondAct("HalfPriceSecondAct"),
+
+        @JsonProperty(value = "InvoiceException")
+        invoiceException("InvoiceException"),
+
+        @JsonProperty(value = "ForInformation")
+        forInformation("ForInformation");
     }
 
     /* ktlint-enable enum-entry-name-case */

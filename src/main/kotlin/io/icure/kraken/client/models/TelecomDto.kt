@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity represents available contact details of a user, reachable by telecom methods
@@ -29,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TelecomDto (
+data class TelecomDto(
 
     /* The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc. */
     @field:JsonProperty("telecomType")
@@ -55,20 +53,47 @@ data class TelecomDto (
      * Values: mobile,phone,email,fax,skype,im,medibridge,ehealthbox,apicrypt,web,print,disk,other,pager
      */
     enum class TelecomType(val value: kotlin.String) {
-        @JsonProperty(value = "mobile") mobile("mobile"),
-        @JsonProperty(value = "phone") phone("phone"),
-        @JsonProperty(value = "email") email("email"),
-        @JsonProperty(value = "fax") fax("fax"),
-        @JsonProperty(value = "skype") skype("skype"),
-        @JsonProperty(value = "im") im("im"),
-        @JsonProperty(value = "medibridge") medibridge("medibridge"),
-        @JsonProperty(value = "ehealthbox") ehealthbox("ehealthbox"),
-        @JsonProperty(value = "apicrypt") apicrypt("apicrypt"),
-        @JsonProperty(value = "web") web("web"),
-        @JsonProperty(value = "print") print("print"),
-        @JsonProperty(value = "disk") disk("disk"),
-        @JsonProperty(value = "other") other("other"),
-        @JsonProperty(value = "pager") pager("pager");
+        @JsonProperty(value = "mobile")
+        mobile("mobile"),
+
+        @JsonProperty(value = "phone")
+        phone("phone"),
+
+        @JsonProperty(value = "email")
+        email("email"),
+
+        @JsonProperty(value = "fax")
+        fax("fax"),
+
+        @JsonProperty(value = "skype")
+        skype("skype"),
+
+        @JsonProperty(value = "im")
+        im("im"),
+
+        @JsonProperty(value = "medibridge")
+        medibridge("medibridge"),
+
+        @JsonProperty(value = "ehealthbox")
+        ehealthbox("ehealthbox"),
+
+        @JsonProperty(value = "apicrypt")
+        apicrypt("apicrypt"),
+
+        @JsonProperty(value = "web")
+        web("web"),
+
+        @JsonProperty(value = "print")
+        print("print"),
+
+        @JsonProperty(value = "disk")
+        disk("disk"),
+
+        @JsonProperty(value = "other")
+        other("other"),
+
+        @JsonProperty(value = "pager")
+        pager("pager");
     }
 
     /* ktlint-enable enum-entry-name-case */

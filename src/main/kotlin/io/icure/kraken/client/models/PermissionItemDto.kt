@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Revoked permissions.
@@ -28,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PermissionItemDto (
+data class PermissionItemDto(
 
     @field:JsonProperty("itemType")
     val itemType: kotlin.String,
@@ -49,17 +47,38 @@ data class PermissionItemDto (
      * Values: aUTHENTICATE,aDMIN,pATIENTVIEW,pATIENTCREATE,pATIENTCHANGEDELETE,mEDICALDATAVIEW,mEDICALDATACREATE,mEDICALCHANGEDELETE,fINANCIALDATAVIEW,fINANCIALDATACREATE,fINANCIALCHANGEDELETE
      */
     enum class Type(val value: kotlin.String) {
-        @JsonProperty(value = "AUTHENTICATE") aUTHENTICATE("AUTHENTICATE"),
-        @JsonProperty(value = "ADMIN") aDMIN("ADMIN"),
-        @JsonProperty(value = "PATIENT_VIEW") pATIENTVIEW("PATIENT_VIEW"),
-        @JsonProperty(value = "PATIENT_CREATE") pATIENTCREATE("PATIENT_CREATE"),
-        @JsonProperty(value = "PATIENT_CHANGE_DELETE") pATIENTCHANGEDELETE("PATIENT_CHANGE_DELETE"),
-        @JsonProperty(value = "MEDICAL_DATA_VIEW") mEDICALDATAVIEW("MEDICAL_DATA_VIEW"),
-        @JsonProperty(value = "MEDICAL_DATA_CREATE") mEDICALDATACREATE("MEDICAL_DATA_CREATE"),
-        @JsonProperty(value = "MEDICAL_CHANGE_DELETE") mEDICALCHANGEDELETE("MEDICAL_CHANGE_DELETE"),
-        @JsonProperty(value = "FINANCIAL_DATA_VIEW") fINANCIALDATAVIEW("FINANCIAL_DATA_VIEW"),
-        @JsonProperty(value = "FINANCIAL_DATA_CREATE") fINANCIALDATACREATE("FINANCIAL_DATA_CREATE"),
-        @JsonProperty(value = "FINANCIAL_CHANGE_DELETE") fINANCIALCHANGEDELETE("FINANCIAL_CHANGE_DELETE");
+        @JsonProperty(value = "AUTHENTICATE")
+        aUTHENTICATE("AUTHENTICATE"),
+
+        @JsonProperty(value = "ADMIN")
+        aDMIN("ADMIN"),
+
+        @JsonProperty(value = "PATIENT_VIEW")
+        pATIENTVIEW("PATIENT_VIEW"),
+
+        @JsonProperty(value = "PATIENT_CREATE")
+        pATIENTCREATE("PATIENT_CREATE"),
+
+        @JsonProperty(value = "PATIENT_CHANGE_DELETE")
+        pATIENTCHANGEDELETE("PATIENT_CHANGE_DELETE"),
+
+        @JsonProperty(value = "MEDICAL_DATA_VIEW")
+        mEDICALDATAVIEW("MEDICAL_DATA_VIEW"),
+
+        @JsonProperty(value = "MEDICAL_DATA_CREATE")
+        mEDICALDATACREATE("MEDICAL_DATA_CREATE"),
+
+        @JsonProperty(value = "MEDICAL_CHANGE_DELETE")
+        mEDICALCHANGEDELETE("MEDICAL_CHANGE_DELETE"),
+
+        @JsonProperty(value = "FINANCIAL_DATA_VIEW")
+        fINANCIALDATAVIEW("FINANCIAL_DATA_VIEW"),
+
+        @JsonProperty(value = "FINANCIAL_DATA_CREATE")
+        fINANCIALDATACREATE("FINANCIAL_DATA_CREATE"),
+
+        @JsonProperty(value = "FINANCIAL_CHANGE_DELETE")
+        fINANCIALCHANGEDELETE("FINANCIAL_CHANGE_DELETE");
     }
 
     /* ktlint-enable enum-entry-name-case */

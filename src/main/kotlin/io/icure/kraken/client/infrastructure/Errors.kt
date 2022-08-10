@@ -1,4 +1,5 @@
 @file:Suppress("unused")
+
 package io.icure.kraken.client.infrastructure
 
 import java.lang.RuntimeException

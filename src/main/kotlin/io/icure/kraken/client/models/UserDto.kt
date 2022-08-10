@@ -12,14 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AuthenticationTokenDto
-import io.icure.kraken.client.models.PermissionDto
-import io.icure.kraken.client.models.PropertyStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity is a root level object. It represents an user that can log in to the iCure platform. It is serialized in JSON and saved in the underlying icure-base CouchDB database.
@@ -53,7 +48,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class UserDto (
+data class UserDto(
 
     /* the Id of the user. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -164,9 +159,14 @@ data class UserDto (
      * Values: database,ldap,token
      */
     enum class Type(val value: kotlin.String) {
-        @JsonProperty(value = "database") database("database"),
-        @JsonProperty(value = "ldap") ldap("ldap"),
-        @JsonProperty(value = "token") token("token");
+        @JsonProperty(value = "database")
+        database("database"),
+
+        @JsonProperty(value = "ldap")
+        ldap("ldap"),
+
+        @JsonProperty(value = "token")
+        token("token");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -178,9 +178,14 @@ data class UserDto (
      * Values: aCTIVE,dISABLED,rEGISTERING
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "ACTIVE") aCTIVE("ACTIVE"),
-        @JsonProperty(value = "DISABLED") dISABLED("DISABLED"),
-        @JsonProperty(value = "REGISTERING") rEGISTERING("REGISTERING");
+        @JsonProperty(value = "ACTIVE")
+        aCTIVE("ACTIVE"),
+
+        @JsonProperty(value = "DISABLED")
+        dISABLED("DISABLED"),
+
+        @JsonProperty(value = "REGISTERING")
+        rEGISTERING("REGISTERING");
     }
 
     /* ktlint-enable enum-entry-name-case */

@@ -95,7 +95,6 @@ dependencies {
     testImplementation(group = "io.kotest", name = "kotest-runner-junit5", version = "5.4.0")
 }
 
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_11
@@ -113,17 +112,17 @@ tasks.getByName("publish") {
 }
 
 tasks.register("apiGenerate", Jar::class) {
-    inputs.files(fileTree("openApiTemplates"), File("${rootDir}/icure-openapi-spec.json"))
+    inputs.files(fileTree("openApiTemplates"), File("$rootDir/icure-openapi-spec.json"))
         .withPropertyName("sourceFiles")
         .withPathSensitivity(PathSensitivity.RELATIVE)
     doLast {
         javaexec {
             main = "-jar"
             args = listOf(
-                "${rootDir}/openapi-generator-cli.jar",
+                "$rootDir/openapi-generator-cli.jar",
                 "generate",
                 "-i",
-                "${rootDir}/icure-openapi-spec.json",
+                "$rootDir/icure-openapi-spec.json",
                 "-g",
                 "kotlin",
                 "-o",
@@ -155,7 +154,7 @@ tasks.register("apiGenerate", Jar::class) {
 
 tasks.register("download-openapi-spec") {
     doLast {
-        val destFile = File("${rootDir}/icure-openapi-spec.json")
+        val destFile = File("$rootDir/icure-openapi-spec.json")
         val url = "${System.getProperty("API_URL") ?: "https://kraken.icure.dev"}/v3/api-docs/v2"
         ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
     }
@@ -211,9 +210,9 @@ tasks.register("apply-custom-fixes") {
 
         // in Folders
         val folders = listOf(
-            "${rootDir}/src/main/kotlin/io/icure/kraken/client/apis",
-            "${rootDir}/src/main/kotlin/io/icure/kraken/client/models",
-            "${rootDir}/src/test/kotlin/io/icure/kraken/client/apis"
+            "$rootDir/src/main/kotlin/io/icure/kraken/client/apis",
+            "$rootDir/src/main/kotlin/io/icure/kraken/client/models",
+            "$rootDir/src/test/kotlin/io/icure/kraken/client/apis"
         )
 
         for (folder in folders) {
@@ -258,7 +257,6 @@ tasks.create<Delete>("delete-unused-filter-files") {
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainDevice.kt"))
     delete(File("$rootDir/src/main/kotlin/io/icure/kraken/client/models/FilterChainMaintenanceTask.kt"))
 }
-
 
 tasks.create<Delete>("delete-unused-tests-files") {
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/AnonymousAccessApiTest.kt"))

@@ -14,53 +14,39 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
-import io.icure.kraken.client.models.CalendarItemDto
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.CalendarItemDto
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.IcureStubDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -82,7 +68,7 @@ class CalendarItemApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -92,23 +78,23 @@ class CalendarItemApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             CalendarItemDto::class.java -> it to objectMapper.convertValue(body, CalendarItemDto::class.java)
                             CalendarItemApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -122,7 +108,6 @@ class CalendarItemApiTest() {
         }
     }
 
-
     /**
      * Creates a calendarItem
      *
@@ -133,42 +118,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createCalendarItemTest(fileName: String) = runBlocking {
-
+    fun createCalendarItemTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createCalendarItem")) {
             assertTrue(true, "Test of createCalendarItem endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createCalendarItem")
                 val calendarItemDto: CalendarItemDto = TestUtils.getParameter<CalendarItemDto>(fileName, "createCalendarItem.calendarItemDto")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "createCalendarItem") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? CalendarItemDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createCalendarItem(calendarItemDto = calendarItemDto)
 
                 val testFileName = "CalendarItemApi.createCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("CalendarItemDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("CalendarItemDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<CalendarItemDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<CalendarItemDto>() {}
-                    })
+                    )
                     assertAreEquals("createCalendarItem", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -181,8 +167,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -199,42 +184,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteCalendarItemTest(fileName: String) = runBlocking {
-
+    fun deleteCalendarItemTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteCalendarItem")) {
             assertTrue(true, "Test of deleteCalendarItem endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteCalendarItem")
                 val calendarItemIds: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "deleteCalendarItem.calendarItemIds")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteCalendarItem") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteCalendarItem(calendarItemIds = calendarItemIds)
 
                 val testFileName = "CalendarItemApi.deleteCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                    })
+                    )
                     assertAreEquals("deleteCalendarItem", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -247,8 +233,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -265,42 +250,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteCalendarItemsTest(fileName: String) = runBlocking {
-
+    fun deleteCalendarItemsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteCalendarItems")) {
             assertTrue(true, "Test of deleteCalendarItems endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteCalendarItems")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteCalendarItems.listOfIdsDto")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteCalendarItems") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteCalendarItems(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CalendarItemApi.deleteCalendarItems"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                    })
+                    )
                     assertAreEquals("deleteCalendarItems", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -313,8 +299,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -331,49 +316,50 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findCalendarItemsByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun findCalendarItemsByHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findCalendarItemsByHCPartyPatientForeignKeys")) {
             assertTrue(true, "Test of findCalendarItemsByHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCalendarItemsByHCPartyPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.hcPartyId")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByHCPartyPatientForeignKeys.secretFKeys")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByHCPartyPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
+                val response = api(credentialsFile).findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
                 val testFileName = "CalendarItemApi.findCalendarItemsByHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("findCalendarItemsByHCPartyPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -386,8 +372,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -404,42 +389,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findCalendarItemsByRecurrenceIdTest(fileName: String) = runBlocking {
-
+    fun findCalendarItemsByRecurrenceIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findCalendarItemsByRecurrenceId")) {
             assertTrue(true, "Test of findCalendarItemsByRecurrenceId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findCalendarItemsByRecurrenceId")
                 val recurrenceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findCalendarItemsByRecurrenceId.recurrenceId")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "findCalendarItemsByRecurrenceId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).findCalendarItemsByRecurrenceId(recurrenceId = recurrenceId)
 
                 val testFileName = "CalendarItemApi.findCalendarItemsByRecurrenceId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("findCalendarItemsByRecurrenceId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -452,8 +438,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -470,42 +455,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getCalendarItemTest(fileName: String) = runBlocking {
-
+    fun getCalendarItemTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getCalendarItem")) {
             assertTrue(true, "Test of getCalendarItem endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItem")
                 val calendarItemId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarItem.calendarItemId")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItem") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getCalendarItem(calendarItemId = calendarItemId)
 
                 val testFileName = "CalendarItemApi.getCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("CalendarItemDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("CalendarItemDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<CalendarItemDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<CalendarItemDto>() {}
-                    })
+                    )
                     assertAreEquals("getCalendarItem", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -518,8 +504,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -536,12 +521,11 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getCalendarItemsTest(fileName: String) = runBlocking {
-
+    fun getCalendarItemsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getCalendarItems")) {
             assertTrue(true, "Test of getCalendarItems endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItems")
 
@@ -550,21 +534,23 @@ class CalendarItemApiTest() {
                 val testFileName = "CalendarItemApi.getCalendarItems"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("getCalendarItems", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -577,8 +563,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -595,56 +580,57 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getCalendarItemsByPeriodAndHcPartyIdTest(fileName: String) = runBlocking {
-
+    fun getCalendarItemsByPeriodAndHcPartyIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getCalendarItemsByPeriodAndHcPartyId")) {
             assertTrue(true, "Test of getCalendarItemsByPeriodAndHcPartyId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItemsByPeriodAndHcPartyId")
                 val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarItemsByPeriodAndHcPartyId.startDate")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val endDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarItemsByPeriodAndHcPartyId.endDate")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarItemsByPeriodAndHcPartyId.hcPartyId")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsByPeriodAndHcPartyId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).getCalendarItemsByPeriodAndHcPartyId(startDate = startDate,endDate = endDate,hcPartyId = hcPartyId)
+                val response = api(credentialsFile).getCalendarItemsByPeriodAndHcPartyId(startDate = startDate, endDate = endDate, hcPartyId = hcPartyId)
 
                 val testFileName = "CalendarItemApi.getCalendarItemsByPeriodAndHcPartyId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("getCalendarItemsByPeriodAndHcPartyId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -657,8 +643,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -675,42 +660,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getCalendarItemsWithIdsTest(fileName: String) = runBlocking {
-
+    fun getCalendarItemsWithIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getCalendarItemsWithIds")) {
             assertTrue(true, "Test of getCalendarItemsWithIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarItemsWithIds")
                 val listOfIdsDto: ListOfIdsDto? = TestUtils.getParameter<ListOfIdsDto>(fileName, "getCalendarItemsWithIds.listOfIdsDto")?.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarItemsWithIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getCalendarItemsWithIds(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "CalendarItemApi.getCalendarItemsWithIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("getCalendarItemsWithIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -723,8 +709,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -741,56 +726,57 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getCalendarsByPeriodAndAgendaIdTest(fileName: String) = runBlocking {
-
+    fun getCalendarsByPeriodAndAgendaIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getCalendarsByPeriodAndAgendaId")) {
             assertTrue(true, "Test of getCalendarsByPeriodAndAgendaId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getCalendarsByPeriodAndAgendaId")
                 val startDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarsByPeriodAndAgendaId.startDate")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val endDate: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getCalendarsByPeriodAndAgendaId.endDate")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val agendaId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getCalendarsByPeriodAndAgendaId.agendaId")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "getCalendarsByPeriodAndAgendaId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).getCalendarsByPeriodAndAgendaId(startDate = startDate,endDate = endDate,agendaId = agendaId)
+                val response = api(credentialsFile).getCalendarsByPeriodAndAgendaId(startDate = startDate, endDate = endDate, agendaId = agendaId)
 
                 val testFileName = "CalendarItemApi.getCalendarsByPeriodAndAgendaId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("getCalendarsByPeriodAndAgendaId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -803,8 +789,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -821,42 +806,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyCalendarItemTest(fileName: String) = runBlocking {
-
+    fun modifyCalendarItemTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyCalendarItem")) {
             assertTrue(true, "Test of modifyCalendarItem endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyCalendarItem")
                 val calendarItemDto: CalendarItemDto = TestUtils.getParameter<CalendarItemDto>(fileName, "modifyCalendarItem.calendarItemDto")!!.let {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyCalendarItem") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? CalendarItemDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyCalendarItem(calendarItemDto = calendarItemDto)
 
                 val testFileName = "CalendarItemApi.modifyCalendarItem"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("CalendarItemDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("CalendarItemDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<CalendarItemDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<CalendarItemDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyCalendarItem", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -869,8 +855,7 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -887,42 +872,43 @@ class CalendarItemApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun setCalendarItemsDelegationsTest(fileName: String) = runBlocking {
-
+    fun setCalendarItemsDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "setCalendarItemsDelegations")) {
             assertTrue(true, "Test of setCalendarItemsDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setCalendarItemsDelegations")
                 val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setCalendarItemsDelegations.icureStubDto")!!.map {
                     (it as? CalendarItemDto)?.takeIf { TestUtils.isAutoRev(fileName, "setCalendarItemsDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getCalendarItem(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<IcureStubDto>
+                } as kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).setCalendarItemsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "CalendarItemApi.setCalendarItemsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<CalendarItemDto>? != null) {
-                        if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<CalendarItemDto>? != null) {
+                            if ("kotlin.collections.List<CalendarItemDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<CalendarItemDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<CalendarItemDto>>() {}
+                            object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<CalendarItemDto>>() {}
-                    })
+                    )
                     assertAreEquals("setCalendarItemsDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -935,19 +921,17 @@ class CalendarItemApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -959,36 +943,39 @@ class CalendarItemApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

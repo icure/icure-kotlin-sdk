@@ -12,16 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.IdentityDocumentReaderDto
-import io.icure.kraken.client.models.InvoicingCodeDto
-import io.icure.kraken.client.models.PaymentDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity is a root level object. It represents an Invoice. It is serialized in JSON and saved in the underlying iCure CouchDB database.
@@ -100,7 +93,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class InvoiceDto (
+data class InvoiceDto(
 
     /* The Id of the Invoice. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -346,12 +339,23 @@ data class InvoiceDto (
      * Values: patient,mutualfund,payingagency,insurance,efact,other
      */
     enum class InvoiceType(val value: kotlin.String) {
-        @JsonProperty(value = "patient") patient("patient"),
-        @JsonProperty(value = "mutualfund") mutualfund("mutualfund"),
-        @JsonProperty(value = "payingagency") payingagency("payingagency"),
-        @JsonProperty(value = "insurance") insurance("insurance"),
-        @JsonProperty(value = "efact") efact("efact"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "patient")
+        patient("patient"),
+
+        @JsonProperty(value = "mutualfund")
+        mutualfund("mutualfund"),
+
+        @JsonProperty(value = "payingagency")
+        payingagency("payingagency"),
+
+        @JsonProperty(value = "insurance")
+        insurance("insurance"),
+
+        @JsonProperty(value = "efact")
+        efact("efact"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -363,13 +367,26 @@ data class InvoiceDto (
      * Values: cdrom,eattest,efact,email,mediprima,paper,stat
      */
     enum class SentMediumType(val value: kotlin.String) {
-        @JsonProperty(value = "cdrom") cdrom("cdrom"),
-        @JsonProperty(value = "eattest") eattest("eattest"),
-        @JsonProperty(value = "efact") efact("efact"),
-        @JsonProperty(value = "email") email("email"),
-        @JsonProperty(value = "mediprima") mediprima("mediprima"),
-        @JsonProperty(value = "paper") paper("paper"),
-        @JsonProperty(value = "stat") stat("stat");
+        @JsonProperty(value = "cdrom")
+        cdrom("cdrom"),
+
+        @JsonProperty(value = "eattest")
+        eattest("eattest"),
+
+        @JsonProperty(value = "efact")
+        efact("efact"),
+
+        @JsonProperty(value = "email")
+        email("email"),
+
+        @JsonProperty(value = "mediprima")
+        mediprima("mediprima"),
+
+        @JsonProperty(value = "paper")
+        paper("paper"),
+
+        @JsonProperty(value = "stat")
+        stat("stat");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -381,8 +398,11 @@ data class InvoiceDto (
      * Values: total,userfees
      */
     enum class InterventionType(val value: kotlin.String) {
-        @JsonProperty(value = "total") total("total"),
-        @JsonProperty(value = "userfees") userfees("userfees");
+        @JsonProperty(value = "total")
+        total("total"),
+
+        @JsonProperty(value = "userfees")
+        userfees("userfees");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -394,14 +414,29 @@ data class InvoiceDto (
      * Values: cash,wired,insurance,creditcard,debitcard,paypal,bitcoin,other
      */
     enum class PaymentType(val value: kotlin.String) {
-        @JsonProperty(value = "cash") cash("cash"),
-        @JsonProperty(value = "wired") wired("wired"),
-        @JsonProperty(value = "insurance") insurance("insurance"),
-        @JsonProperty(value = "creditcard") creditcard("creditcard"),
-        @JsonProperty(value = "debitcard") debitcard("debitcard"),
-        @JsonProperty(value = "paypal") paypal("paypal"),
-        @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "cash")
+        cash("cash"),
+
+        @JsonProperty(value = "wired")
+        wired("wired"),
+
+        @JsonProperty(value = "insurance")
+        insurance("insurance"),
+
+        @JsonProperty(value = "creditcard")
+        creditcard("creditcard"),
+
+        @JsonProperty(value = "debitcard")
+        debitcard("debitcard"),
+
+        @JsonProperty(value = "paypal")
+        paypal("paypal"),
+
+        @JsonProperty(value = "bitcoin")
+        bitcoin("bitcoin"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */

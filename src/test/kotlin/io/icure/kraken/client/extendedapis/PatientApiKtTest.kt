@@ -63,11 +63,18 @@ internal class PatientApiKtTest {
         // Before
         val user = userApi.getCurrentUser()
         val hcp = hcpartyApi.getCurrentHealthcareParty()
-        val cc = customPatientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
-            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
+        val cc = customPatientCryptoConfig(
+            ExtendedTestUtils.localCrypto(
+                iCureBackendUrl,
+                parentAuthorization,
+                parentPrivKey,
+                user,
+                hcp.toDataOwner()
+            )
+        )
 
         // When
-        val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch (e: Exception) { throw IllegalStateException(e) }
 
         // Then
         Assertions.assertNotNull(p1, "Patient should not be null")
@@ -80,11 +87,12 @@ internal class PatientApiKtTest {
         Assertions.assertNotNull(encryptedP1.encryptionKeys, "Patient encryptionKeys should be not null in db")
         Assertions.assertNotNull(encryptedP1.encryptedSelf, "Patient encryptedSelf should be not null in db")
 
-        val p2 = try { patientApi.getPatient(user, p1.id, cc) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p2 = try { patientApi.getPatient(user, p1.id, cc) } catch (e: Exception) { throw IllegalStateException(e) }
         Assertions.assertEquals(p2.note, "To be encrypted")
         Assertions.assertEquals(p2.firstName, "John")
         Assertions.assertEquals(p2.lastName, "Doe")
     }
+
     @FlowPreview
     @org.junit.jupiter.api.Test
     fun createPatientWithDefaultCryptoConfig() = runBlocking {
@@ -92,23 +100,29 @@ internal class PatientApiKtTest {
         val user = userApi.getCurrentUser()
         val hcp = hcpartyApi.getCurrentHealthcareParty()
 
-        val cc = patientCryptoConfig(ExtendedTestUtils.localCrypto(iCureBackendUrl,
-            parentAuthorization, parentPrivKey, user, hcp.toDataOwner()))
+        val cc = patientCryptoConfig(
+            ExtendedTestUtils.localCrypto(
+                iCureBackendUrl,
+                parentAuthorization,
+                parentPrivKey,
+                user,
+                hcp.toDataOwner()
+            )
+        )
 
         // When
-        val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p1 = try { patientApi.createPatient(user, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc) } catch (e: Exception) { throw IllegalStateException(e) }
 
         // Then
         Assertions.assertNotNull(p1, "Patient should not be null")
         Assertions.assertEquals(p1.note, "To be encrypted", "Patient note should not be null")
         Assertions.assertNull(patientApi.getPatient(p1.id).note, "Patient note should be null in db")
 
-        val p2 = try { patientApi.getPatient(user, p1.id, cc) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p2 = try { patientApi.getPatient(user, p1.id, cc) } catch (e: Exception) { throw IllegalStateException(e) }
         Assertions.assertEquals(p2.note, "To be encrypted")
         Assertions.assertEquals(p2.firstName, "John")
         Assertions.assertEquals(p2.lastName, "Doe")
     }
-
 
     @FlowPreview
     @org.junit.jupiter.api.Test
@@ -126,23 +140,29 @@ internal class PatientApiKtTest {
         Assertions.assertNotNull(hcp1.parentId, "Hcp must have a parent for this test")
         Assertions.assertNotNull(hcp2.parentId, "Hcp must have a parent for this test")
 
-        val cc1 = patientCryptoConfig(LocalCrypto(
-            DataOwnerResolver(child1HealthcarePartyApi, child1PatientApi, child1DeviceApi), mapOf(
-                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
-                user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
+        val cc1 = patientCryptoConfig(
+            LocalCrypto(
+                DataOwnerResolver(child1HealthcarePartyApi, child1PatientApi, child1DeviceApi),
+                mapOf(
+                    parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                    user1.healthcarePartyId!! to listOf(child1PrivKey to hcp1.publicKey!!.toPublicKey())
+                )
             )
-        ))
+        )
 
-        val cc2 = patientCryptoConfig(LocalCrypto(
-            DataOwnerResolver(child2HealthcarePartyApi, child2PatientApi, child2DeviceApi), mapOf(
-                parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
-                user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
+        val cc2 = patientCryptoConfig(
+            LocalCrypto(
+                DataOwnerResolver(child2HealthcarePartyApi, child2PatientApi, child2DeviceApi),
+                mapOf(
+                    parent.healthcarePartyId!! to listOf(parentPrivKey to parentHcp.publicKey!!.toPublicKey()),
+                    user2.healthcarePartyId!! to listOf(child2PrivKey to hcp2.publicKey!!.toPublicKey())
+                )
             )
-        ))
+        )
 
         // When
-        val p1 = try { child1PatientApi.createPatient(user1, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc1) } catch(e:Exception) { throw IllegalStateException(e) }
-        val p2 = try { child2PatientApi.getPatient(user2, p1.id, cc2) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p1 = try { child1PatientApi.createPatient(user1, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc1) } catch (e: Exception) { throw IllegalStateException(e) }
+        val p2 = try { child2PatientApi.getPatient(user2, p1.id, cc2) } catch (e: Exception) { throw IllegalStateException(e) }
 
         // Then
         Assertions.assertNotNull(p1, "Patient should not be null")
@@ -157,8 +177,9 @@ internal class PatientApiKtTest {
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
         val parentLocalCrypto = LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
-                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization),
+            mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey())
             ),
             maintenanceTaskApi
         )
@@ -193,34 +214,40 @@ internal class PatientApiKtTest {
 
         val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
         val newUserHcpApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}")
-        val cc1 = patientCryptoConfig(LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                iCureBackendUrl,
-                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
-            ), mapOf(
-                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
-                newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
+        val cc1 = patientCryptoConfig(
+            LocalCrypto(
+                ExtendedTestUtils.dataOwnerWrapperFor(
+                    iCureBackendUrl,
+                    "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
+                ),
+                mapOf(
+                    parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+                    newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
+                )
             )
-        ))
-        val cc2 = patientCryptoConfig(LocalCrypto(
-            ExtendedTestUtils.dataOwnerWrapperFor(
-                iCureBackendUrl,
-                "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
-            ), mapOf(
-                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
-                newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
+        )
+        val cc2 = patientCryptoConfig(
+            LocalCrypto(
+                ExtendedTestUtils.dataOwnerWrapperFor(
+                    iCureBackendUrl,
+                    "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:test".toByteArray(Charsets.UTF_8))}"
+                ),
+                mapOf(
+                    parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+                    newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
+                )
             )
-        ))
+        )
 
         // When
-        val p1 = try { newUserPatientApi.createPatient(newUser, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc1) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p1 = try { newUserPatientApi.createPatient(newUser, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), cc1) } catch (e: Exception) { throw IllegalStateException(e) }
 
         // Then
         Assertions.assertNotNull(p1, "Patient should not be null")
         Assertions.assertEquals(p1.note, "To be encrypted", "Patient note should not be null")
         Assertions.assertNull(newUserPatientApi.getPatient(p1.id).note, "Patient note should be null in db")
 
-        val p2 = try { newUserPatientApi.getPatient(newUser, p1.id, cc2) } catch(e:Exception) { throw IllegalStateException(e) }
+        val p2 = try { newUserPatientApi.getPatient(newUser, p1.id, cc2) } catch (e: Exception) { throw IllegalStateException(e) }
         Assertions.assertEquals(p2.note, "To be encrypted")
         Assertions.assertEquals(p2.firstName, "John")
         Assertions.assertEquals(p2.lastName, "Doe")
@@ -246,11 +273,12 @@ internal class PatientApiKtTest {
     private fun customPatientCryptoConfig(crypto: LocalCrypto) =
         CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
             crypto = crypto,
-            marshaller = { p -> PatientMapperFactory.instance.map(p)
-                .copy(
-                    lastName = null,
-                    firstName = null
-                ) to ApiClient.objectMapper.writeValueAsBytes(mapOf("lastName" to p.lastName, "firstName" to p.firstName))
+            marshaller = { p ->
+                PatientMapperFactory.instance.map(p)
+                    .copy(
+                        lastName = null,
+                        firstName = null
+                    ) to ApiClient.objectMapper.writeValueAsBytes(mapOf("lastName" to p.lastName, "firstName" to p.firstName))
             },
             unmarshaller = { p, c ->
                 PatientMapperFactory.instance.map(

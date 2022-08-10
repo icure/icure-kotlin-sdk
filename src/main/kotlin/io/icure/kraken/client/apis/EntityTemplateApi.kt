@@ -16,24 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.EntityTemplateDto
-import io.icure.kraken.client.models.ListOfIdsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.EntityTemplateDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +43,31 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
     }
 
     /**
-    * Create a EntityTemplate
-    * Type, EntityTemplate and Version are required.
-    * @param entityTemplateDto
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a EntityTemplate
+     * Type, EntityTemplate and Version are required.
+     * @param entityTemplateDto
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
+    suspend fun createEntityTemplate(entityTemplateDto: EntityTemplateDto): EntityTemplateDto {
         val localVariableConfig = createEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createEntityTemplate
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun createEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+     * To obtain the request config of the operation createEntityTemplate
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun createEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto): RequestConfig<EntityTemplateDto> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +79,36 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a batch of entityTemplates
-    * Returns the modified entityTemplates.
-    * @param entityTemplateDto
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a batch of entityTemplates
+     * Returns the modified entityTemplates.
+     * @param entityTemplateDto
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun createEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = createEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createEntityTemplates
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun createEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+     * To obtain the request config of the operation createEntityTemplates
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun createEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -122,34 +120,36 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete entity templates
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete entity templates
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteEntityTemplate(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteEntityTemplate(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteEntityTemplateRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteEntityTemplate
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteEntityTemplateRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteEntityTemplate
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteEntityTemplateRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -161,38 +161,40 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Finding entityTemplates by entityTemplate, type and version with pagination.
-    * Returns a list of entityTemplates matched with given input.
-    * @param type
-    * @param keyword
-    * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Finding entityTemplates by entityTemplate, type and version with pagination.
+     * Returns a list of entityTemplates matched with given input.
+     * @param type
+     * @param keyword
+     * @param includeEntities  (optional)
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun findAllEntityTemplatesByKeyword(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = findAllEntityTemplatesByKeywordRequestConfig(type = type, keyword = keyword, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation findAllEntityTemplatesByKeyword
-    *
-    * @param type
-    * @param keyword
-    * @param includeEntities  (optional)
-    * @return RequestConfig
-    */
-    fun findAllEntityTemplatesByKeywordRequestConfig(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation findAllEntityTemplatesByKeyword
+     *
+     * @param type
+     * @param keyword
+     * @param includeEntities  (optional)
+     * @return RequestConfig
+     */
+    fun findAllEntityTemplatesByKeywordRequestConfig(type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -206,37 +208,39 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/findAll/{type}/keyword/{keyword}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"keyword"+"}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entitytemplate/findAll/{type}/keyword/{keyword}".replace("{" + "type" + "}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{" + "keyword" + "}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a entityTemplate
-    * Get a entityTemplate based on ID or (entityTemplate,type,version) as query strings. (entityTemplate,type,version) is unique.
-    * @param entityTemplateId EntityTemplate id
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a entityTemplate
+     * Get a entityTemplate based on ID or (entityTemplate,type,version) as query strings. (entityTemplate,type,version) is unique.
+     * @param entityTemplateId EntityTemplate id
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getEntityTemplate(entityTemplateId: kotlin.String) : EntityTemplateDto  {
+    suspend fun getEntityTemplate(entityTemplateId: kotlin.String): EntityTemplateDto {
         val localVariableConfig = getEntityTemplateRequestConfig(entityTemplateId = entityTemplateId)
 
         return request<Unit, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getEntityTemplate
-    *
-    * @param entityTemplateId EntityTemplate id
-    * @return RequestConfig
-    */
-    fun getEntityTemplateRequestConfig(entityTemplateId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getEntityTemplate
+     *
+     * @param entityTemplateId EntityTemplate id
+     * @return RequestConfig
+     */
+    fun getEntityTemplateRequestConfig(entityTemplateId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -245,37 +249,39 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/{entityTemplateId}".replace("{"+"entityTemplateId"+"}", "${URLEncoder.encode(entityTemplateId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entitytemplate/{entityTemplateId}".replace("{" + "entityTemplateId" + "}", "${URLEncoder.encode(entityTemplateId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a list of entityTemplates by ids
-    * Keys must be delimited by coma
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a list of entityTemplates by ids
+     * Keys must be delimited by coma
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getEntityTemplates(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun getEntityTemplates(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = getEntityTemplatesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getEntityTemplates
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun getEntityTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getEntityTemplates
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun getEntityTemplatesRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -287,38 +293,40 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Finding entityTemplates by entityTemplate, type and version with pagination.
-    * Returns a list of entityTemplates matched with given input.
-    * @param type
-    * @param searchString  (optional)
-    * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Finding entityTemplates by entityTemplate, type and version with pagination.
+     * Returns a list of entityTemplates matched with given input.
+     * @param type
+     * @param searchString  (optional)
+     * @param includeEntities  (optional)
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listAllEntityTemplatesBy(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun listAllEntityTemplatesBy(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = listAllEntityTemplatesByRequestConfig(type = type, searchString = searchString, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listAllEntityTemplatesBy
-    *
-    * @param type
-    * @param searchString  (optional)
-    * @param includeEntities  (optional)
-    * @return RequestConfig
-    */
-    fun listAllEntityTemplatesByRequestConfig(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listAllEntityTemplatesBy
+     *
+     * @param type
+     * @param searchString  (optional)
+     * @param includeEntities  (optional)
+     * @return RequestConfig
+     */
+    fun listAllEntityTemplatesByRequestConfig(type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -335,43 +343,45 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/findAll/{type}".replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entitytemplate/findAll/{type}".replace("{" + "type" + "}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Finding entityTemplates by userId, entityTemplate, type and version with pagination.
-    * Returns a list of entityTemplates matched with given input.
-    * @param userId
-    * @param type
-    * @param searchString  (optional)
-    * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Finding entityTemplates by userId, entityTemplate, type and version with pagination.
+     * Returns a list of entityTemplates matched with given input.
+     * @param userId
+     * @param type
+     * @param searchString  (optional)
+     * @param includeEntities  (optional)
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listEntityTemplatesBy(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun listEntityTemplatesBy(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = listEntityTemplatesByRequestConfig(userId = userId, type = type, searchString = searchString, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listEntityTemplatesBy
-    *
-    * @param userId
-    * @param type
-    * @param searchString  (optional)
-    * @param includeEntities  (optional)
-    * @return RequestConfig
-    */
-    fun listEntityTemplatesByRequestConfig(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listEntityTemplatesBy
+     *
+     * @param userId
+     * @param type
+     * @param searchString  (optional)
+     * @param includeEntities  (optional)
+     * @return RequestConfig
+     */
+    fun listEntityTemplatesByRequestConfig(userId: kotlin.String, type: kotlin.String, searchString: kotlin.String?, includeEntities: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -388,43 +398,45 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/find/{userId}/{type}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entitytemplate/find/{userId}/{type}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{" + "type" + "}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Finding entityTemplates by userId, type and keyword.
-    * Returns a list of entityTemplates matched with given input.
-    * @param userId
-    * @param type
-    * @param keyword
-    * @param includeEntities  (optional)
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Finding entityTemplates by userId, type and keyword.
+     * Returns a list of entityTemplates matched with given input.
+     * @param userId
+     * @param type
+     * @param keyword
+     * @param includeEntities  (optional)
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun listEntityTemplatesByKeyword(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = listEntityTemplatesByKeywordRequestConfig(userId = userId, type = type, keyword = keyword, includeEntities = includeEntities)
 
         return request<Unit, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listEntityTemplatesByKeyword
-    *
-    * @param userId
-    * @param type
-    * @param keyword
-    * @param includeEntities  (optional)
-    * @return RequestConfig
-    */
-    fun listEntityTemplatesByKeywordRequestConfig(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listEntityTemplatesByKeyword
+     *
+     * @param userId
+     * @param type
+     * @param keyword
+     * @param includeEntities  (optional)
+     * @return RequestConfig
+     */
+    fun listEntityTemplatesByKeywordRequestConfig(userId: kotlin.String, type: kotlin.String, keyword: kotlin.String, includeEntities: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -438,37 +450,39 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/entitytemplate/find/{userId}/{type}/keyword/{keyword}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"type"+"}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{"+"keyword"+"}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/entitytemplate/find/{userId}/{type}/keyword/{keyword}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{" + "type" + "}", "${URLEncoder.encode(type.toString(), Charsets.UTF_8)}").replace("{" + "keyword" + "}", "${URLEncoder.encode(keyword.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a entityTemplate
-    * Modification of (type, entityTemplate, version) is not allowed.
-    * @param entityTemplateDto
-    * @return EntityTemplateDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a entityTemplate
+     * Modification of (type, entityTemplate, version) is not allowed.
+     * @param entityTemplateDto
+     * @return EntityTemplateDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto) : EntityTemplateDto  {
+    suspend fun modifyEntityTemplate(entityTemplateDto: EntityTemplateDto): EntityTemplateDto {
         val localVariableConfig = modifyEntityTemplateRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<EntityTemplateDto, EntityTemplateDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyEntityTemplate
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun modifyEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto) : RequestConfig<EntityTemplateDto> {
+     * To obtain the request config of the operation modifyEntityTemplate
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun modifyEntityTemplateRequestConfig(entityTemplateDto: EntityTemplateDto): RequestConfig<EntityTemplateDto> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -480,34 +494,36 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of entityTemplates
-    * Returns the modified entityTemplates.
-    * @param entityTemplateDto
-    * @return kotlin.collections.List<EntityTemplateDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of entityTemplates
+     * Returns the modified entityTemplates.
+     * @param entityTemplateDto
+     * @return kotlin.collections.List<EntityTemplateDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : kotlin.collections.List<EntityTemplateDto>  {
+    suspend fun modifyEntityTemplates(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): kotlin.collections.List<EntityTemplateDto> {
         val localVariableConfig = modifyEntityTemplatesRequestConfig(entityTemplateDto = entityTemplateDto)
 
         return request<kotlin.collections.List<EntityTemplateDto>, kotlin.collections.List<EntityTemplateDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyEntityTemplates
-    *
-    * @param entityTemplateDto
-    * @return RequestConfig
-    */
-    fun modifyEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>) : RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
+     * To obtain the request config of the operation modifyEntityTemplates
+     *
+     * @param entityTemplateDto
+     * @return RequestConfig
+     */
+    fun modifyEntityTemplatesRequestConfig(entityTemplateDto: kotlin.collections.List<EntityTemplateDto>): RequestConfig<kotlin.collections.List<EntityTemplateDto>> {
         // val localVariableBody = entityTemplateDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -519,7 +535,7 @@ class EntityTemplateApi(basePath: kotlin.String = defaultBasePath, webClient: We
             path = "/rest/v2/entitytemplate/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

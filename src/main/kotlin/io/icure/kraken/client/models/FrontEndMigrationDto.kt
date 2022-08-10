@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.PropertyStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -39,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FrontEndMigrationDto (
+data class FrontEndMigrationDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,
@@ -92,10 +89,17 @@ data class FrontEndMigrationDto (
      * Values: sTARTED,pAUSED,eRROR,sUCCESS
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "STARTED") sTARTED("STARTED"),
-        @JsonProperty(value = "PAUSED") pAUSED("PAUSED"),
-        @JsonProperty(value = "ERROR") eRROR("ERROR"),
-        @JsonProperty(value = "SUCCESS") sUCCESS("SUCCESS");
+        @JsonProperty(value = "STARTED")
+        sTARTED("STARTED"),
+
+        @JsonProperty(value = "PAUSED")
+        pAUSED("PAUSED"),
+
+        @JsonProperty(value = "ERROR")
+        eRROR("ERROR"),
+
+        @JsonProperty(value = "SUCCESS")
+        sUCCESS("SUCCESS");
     }
 
     /* ktlint-enable enum-entry-name-case */

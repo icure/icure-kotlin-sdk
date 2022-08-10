@@ -18,20 +18,22 @@ import java.security.interfaces.RSAPrivateKey
 @ExperimentalCoroutinesApi
 object ExtendedTestUtils {
 
-    fun localCrypto(basePath: String,
-                    authHeader: String,
-                    privKey: RSAPrivateKey,
-                    user: UserDto,
-                    dataOwner: DataOwner
-    ) : LocalCrypto {
+    fun localCrypto(
+        basePath: String,
+        authHeader: String,
+        privKey: RSAPrivateKey,
+        user: UserDto,
+        dataOwner: DataOwner
+    ): LocalCrypto {
         return LocalCrypto(
-            dataOwnerWrapperFor(basePath, authHeader), mapOf(
+            dataOwnerWrapperFor(basePath, authHeader),
+            mapOf(
                 user.dataOwnerId() to listOf(privKey to dataOwner.publicKey!!.toPublicKey())
             )
         )
     }
 
-    fun dataOwnerWrapperFor(basePath: String, authHeader: String) : DataOwnerResolver {
+    fun dataOwnerWrapperFor(basePath: String, authHeader: String): DataOwnerResolver {
         val hcPartyApi = HealthcarePartyApi(basePath = basePath, authHeader = authHeader)
         val patientApi = PatientApi(basePath = basePath, authHeader = authHeader)
         val deviceApi = DeviceApi(basePath = basePath, authHeader = authHeader)

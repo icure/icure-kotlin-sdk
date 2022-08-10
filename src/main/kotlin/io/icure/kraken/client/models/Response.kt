@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale
-import io.icure.kraken.client.models.RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageOutputStream
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -38,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Response (
+data class Response(
 
     @field:JsonProperty("status")
     val status: kotlin.Int? = null,

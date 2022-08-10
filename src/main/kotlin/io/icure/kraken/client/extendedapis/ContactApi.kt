@@ -20,32 +20,40 @@ import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
-import org.mapstruct.Mapping
-import org.mapstruct.Mappings
 import org.mapstruct.factory.Mappers
 import java.util.*
 
 suspend fun ContactDto.initDelegations(user: UserDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
-    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
         responsible = user.dataOwnerId(),
         author = user.id,
         delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
-                ),
-            ))
+            m + (
+                d to setOf(
+                    DelegationDto(
+                        emptyList(),
+                        user.dataOwnerId(),
+                        d,
+                        config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first
+                    )
+                )
+                )
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
-            m + (d to setOf(
-                DelegationDto(
-                    emptyList(), user.dataOwnerId(), d, config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
-                ),
-            ))
-        },
+            m + (
+                d to setOf(
+                    DelegationDto(
+                        emptyList(),
+                        user.dataOwnerId(),
+                        d,
+                        config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first
+                    )
+                )
+                )
+        }
     )
 }
 
@@ -62,9 +70,9 @@ suspend fun ContactApi.createContact(user: UserDto, contact: ContactDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
+suspend fun ContactApi.createContact(user: UserDto, patient: PatientDto, contact: ContactDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
     val key = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).firstOrNull() ?: throw IllegalArgumentException("No delegation for user")
-    val delegations =  (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     return this.createContact(
         config.encryptContact(
             user.dataOwnerId(),
@@ -74,15 +82,17 @@ suspend fun ContactApi.createContact(user: UserDto, patient:PatientDto, contact:
             ec.copy(
                 secretForeignKeys = listOf(key),
                 cryptedForeignKeys = (delegations + user.dataOwnerId()).fold(ec.cryptedForeignKeys) { m, d ->
-                    m + (d to setOf(
-                        DelegationDto(
-                            emptyList(),
-                            user.dataOwnerId(),
-                            d,
-                            config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first,
-                        ),
-                    ))
-                },
+                    m + (
+                        d to setOf(
+                            DelegationDto(
+                                emptyList(),
+                                user.dataOwnerId(),
+                                d,
+                                config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first
+                            )
+                        )
+                        )
+                }
             )
         }
     ).let { config.decryptContact(user.dataOwnerId(), it) }
@@ -101,29 +111,37 @@ suspend fun ContactApi.modifyContact(user: UserDto, contact: ContactDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.createContacts(user: UserDto, contactDto: List<ContactDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
-    return this.createContacts(contactDto.map { config.encryptContact(
-        user.dataOwnerId(),
-        (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-        it
-    ) }).map { config.decryptContact(user.dataOwnerId(), it) }
+suspend fun ContactApi.createContacts(user: UserDto, contactDto: List<ContactDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
+    return this.createContacts(
+        contactDto.map {
+            config.encryptContact(
+                user.dataOwnerId(),
+                (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+                it
+            )
+        }
+    ).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
-    return this.modifyContacts(contactDto.map { config.encryptContact(
-        user.dataOwnerId(),
-        (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
-        it
-    ) }).map { config.decryptContact(user.dataOwnerId(), it) }
+suspend fun ContactApi.modifyContacts(user: UserDto, contactDto: List<ContactDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
+    return this.modifyContacts(
+        contactDto.map {
+            config.encryptContact(
+                user.dataOwnerId(),
+                (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+                it
+            )
+        }
+    ).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
 suspend fun ContactApi.deleteServices(user: UserDto, patient: PatientDto, services: List<ServiceDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
     val currentTime = System.currentTimeMillis()
-    return this.createContact(user, patient, ContactDto(id= UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
+    return this.createContact(user, patient, ContactDto(id = UUID.randomUUID().toString(), services = services.map { ServiceDto(id = it.id, created = it.created, modified = currentTime, endOfLife = currentTime) }), config)
 }
 
 @ExperimentalCoroutinesApi
@@ -135,7 +153,7 @@ suspend fun ContactApi.updateServices(user: UserDto, patient: PatientDto, servic
     return this.getContacts(user, ListOfIdsDto(contactIds), config).map { contactDto ->
         val contactServiceIds = contactDto.services.map { service -> service.id }.intersect(serviceIds)
         val contactServices = services.filter { service -> service.id in contactServiceIds }
-        val subContacts = contactDto.subContacts.filter { subContact -> subContact.services.any{ serviceLink -> serviceLink.serviceId in contactServiceIds } }
+        val subContacts = contactDto.subContacts.filter { subContact -> subContact.services.any { serviceLink -> serviceLink.serviceId in contactServiceIds } }
 
         contactDto.copy(
             id = UUID.randomUUID().toString(),
@@ -150,7 +168,7 @@ suspend fun ContactApi.updateServices(user: UserDto, patient: PatientDto, servic
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>, startKey: String?, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
+suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>, startKey: String?, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): PaginatedListContactDto {
     return this.filterContactsBy(filterChainContact, startDocumentId, limit).let {
         PaginatedListContactDto(rows = it.rows.map { config.decryptContact(user.dataOwnerId(), it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
@@ -158,19 +176,19 @@ suspend fun ContactApi.filterContactsBy(user: UserDto, filterChainContact: Filte
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.getContact(user: UserDto, contactId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto {
+suspend fun ContactApi.getContact(user: UserDto, contactId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
     return this.getContact(contactId).let { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.getContacts(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.getContacts(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.getContacts(listOfIdsDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: String?, limit: Int?, crypto: Crypto) : io.icure.kraken.client.models.decrypted.PaginatedListServiceDto {
+suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: String?, limit: Int?, crypto: Crypto): io.icure.kraken.client.models.decrypted.PaginatedListServiceDto {
     return this.filterServicesBy(filterChainService, startDocumentId, limit).let {
         io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows.let { crypto.decryptServices(user.dataOwnerId(), null, it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
@@ -178,96 +196,95 @@ suspend fun ContactApi.filterServicesBy(user: UserDto, filterChainService: Filte
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findByHCPartyFormId(user: UserDto, hcPartyId: String, formId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findByHCPartyFormId(user: UserDto, hcPartyId: String, formId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.listContactsByHCPartyAndFormId(hcPartyId, formId).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findByHCPartyFormIds(user: UserDto, hcPartyId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findByHCPartyFormIds(user: UserDto, hcPartyId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.listContactsByHCPartyAndFormIds(hcPartyId, listOfIdsDto).map { config.decryptContact(user.dataOwnerId(), it) }
-
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, planOfActionsIds: String?, skipClosedContacts: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findByHCPartyPatient(user: UserDto, hcPartyId: String, patient: PatientDto, planOfActionsIds: String?, skipClosedContacts: Boolean?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).takeIf { it.isNotEmpty() } ?: throw IllegalArgumentException("No delegation for user")
     return this.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, keys.joinToString(","), planOfActionsIds, skipClosedContacts).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findByHCPartyServiceId(user: UserDto, hcPartyId: String, serviceId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findByHCPartyServiceId(user: UserDto, hcPartyId: String, serviceId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.listContactByHCPartyServiceId(hcPartyId, serviceId).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findContactsByExternalId(user: UserDto, externalId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findContactsByExternalId(user: UserDto, externalId: String, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.listContactsByExternalId(externalId).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.findContactsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.findContactsByHCPartyPatientForeignKeys(user: UserDto, hcPartyId: String, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.listContactsByHCPartyAndPatientForeignKeys(hcPartyId, listOfIdsDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listContactsByOpeningDate(user: UserDto, startKey: Long, endKey: Long, hcpartyid: String, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : PaginatedListContactDto {
+suspend fun ContactApi.listContactsByOpeningDate(user: UserDto, startKey: Long, endKey: Long, hcpartyid: String, startDocumentId: String?, limit: Int?, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): PaginatedListContactDto {
     return this.findContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit).let {
         PaginatedListContactDto(rows = it.rows.map { config.decryptContact(user.dataOwnerId(), it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
-
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, crypto: Crypto) : List<ServiceDto> {
+suspend fun ContactApi.listServices(user: UserDto, listOfIdsDto: ListOfIdsDto, crypto: Crypto): List<ServiceDto> {
     return this.getServices(listOfIdsDto).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId: String, crypto: Crypto) : List<ServiceDto> {
+suspend fun ContactApi.listServicesByAssociationId(user: UserDto, associationId: String, crypto: Crypto): List<ServiceDto> {
     return this.listServicesByAssociationId(associationId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
-
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, hcPartyId: String, crypto: Crypto) : List<ServiceDto> {
+suspend fun ContactApi.listServicesByHealthElementId(user: UserDto, healthElementId: String, hcPartyId: String, crypto: Crypto): List<ServiceDto> {
     return this.listServicesByHealthElementId(healthElementId, hcPartyId).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfIdsDto, linkType: String?, crypto: Crypto) : List<ServiceDto> {
+suspend fun ContactApi.listServicesLinkedTo(user: UserDto, listOfIdsDto: ListOfIdsDto, linkType: String?, crypto: Crypto): List<ServiceDto> {
     return this.getServicesLinkedTo(listOfIdsDto, linkType).let { crypto.decryptServices(user.dataOwnerId(), null, it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : ContactDto {
+suspend fun ContactApi.newContactDelegations(user: UserDto, contactId: String, delegationDto: DelegationDto, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): ContactDto {
     return this.newContactDelegations(contactId, delegationDto).let { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun ContactApi.setContactsDelegations(user: UserDto, icureStubDto: List<IcureStubDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>) : List<ContactDto> {
+suspend fun ContactApi.setContactsDelegations(user: UserDto, icureStubDto: List<IcureStubDto>, config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>): List<ContactDto> {
     return this.setContactsDelegations(icureStubDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
 suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.encryptContact(myId: String, delegations: Set<String>, contact: ContactDto): io.icure.kraken.client.models.ContactDto {
-    return if (contact.encryptionKeys.any { (_,s) -> s.isNotEmpty() }) {
+    return if (contact.encryptionKeys.any { (_, s) -> s.isNotEmpty() }) {
         contact
     } else {
         val secret = UUID.randomUUID().toString()
-        contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first)))
-        })
+        contact.copy(
+            encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
+                m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first)))
+            }
+        )
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
             "-",
@@ -298,11 +315,12 @@ suspend fun Crypto.encryptServices(myId: String, delegations: Set<String>, conta
             "-",
             ""
         )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
-        if (s.content.all { (_,c) ->
-                c.compoundValue != null && c.stringValue == null && c.documentId == null  && c.measureValue == null  && c.medicationValue == null  &&
-                        c.booleanValue == null && c.numberValue == null && c.instantValue == null  && c.fuzzyDateValue == null  && c.binaryValue == null
-            }) {
-            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_,c) -> ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
+        if (s.content.all { (_, c) ->
+            c.compoundValue != null && c.stringValue == null && c.documentId == null && c.measureValue == null && c.medicationValue == null &&
+                c.booleanValue == null && c.numberValue == null && c.instantValue == null && c.fuzzyDateValue == null && c.binaryValue == null
+        }
+        ) {
+            ServiceMapperFactory.instance.map(s).copy(content = s.content.mapValues { (_, c) -> ContentDto(compoundValue = c.compoundValue?.let { this.encryptServices(myId, delegations, contactKey, it) }) })
         } else {
             ServiceMapperFactory.instance.map(s.copy(content = mapOf(), encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = objectMapper.writeValueAsBytes(mapOf("content" to s.content)), key = key))))
         }
@@ -317,14 +335,14 @@ suspend fun Crypto.decryptServices(myId: String, contactKey: ByteArray?, service
 
         s.encryptedSelf?.let { es ->
             ServiceMapperFactory.instance.map(s).copy(content = objectMapper.readValue(decryptAES(data = Base64.getDecoder().decode(es), key = key), ContentWrapper::class.java).content)
-        } ?: ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_,c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }
-    }
-    catch (ex : IllegalArgumentException){
-        ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_,c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }
+        } ?: ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_, c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }
+    } catch (ex: IllegalArgumentException) {
+        ServiceMapperFactory.instance.map(s).let { ss -> ss.copy(content = ss.content.mapValues { (_, c) -> c.copy(compoundValue = c.compoundValue?.let { this.decryptServices(myId, contactKey, it.map { ServiceMapperFactory.instance.map(it) }) }) }) }
     }
 }
 
-data class ContentWrapper(val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
+data class ContentWrapper(
+    val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 
 @Mapper(uses = [ServiceMapper::class])
@@ -346,13 +364,13 @@ interface ServiceMapper {
     fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
     fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto
 
-    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>) : Map<String, Map<String, String>> {
+    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>): Map<String, Map<String, String>> {
         return qualifiedLinks
             .map { (key, value) -> key.value to value }
             .toMap()
     }
 
-    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>) : Map<ServiceDto.LinkQualification, Map<String, String>> {
+    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>): Map<ServiceDto.LinkQualification, Map<String, String>> {
         return qualifiedLinks
             .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
             .toMap()

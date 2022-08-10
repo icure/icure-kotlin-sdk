@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.ReimbursementDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -38,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class DmppDto (
+data class DmppDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String? = null,
@@ -86,10 +83,17 @@ data class DmppDto (
      * Values: p,a,h,r
      */
     enum class DeliveryEnvironment(val value: kotlin.String) {
-        @JsonProperty(value = "P") p("P"),
-        @JsonProperty(value = "A") a("A"),
-        @JsonProperty(value = "H") h("H"),
-        @JsonProperty(value = "R") r("R");
+        @JsonProperty(value = "P")
+        p("P"),
+
+        @JsonProperty(value = "A")
+        a("A"),
+
+        @JsonProperty(value = "H")
+        h("H"),
+
+        @JsonProperty(value = "R")
+        r("R");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -101,8 +105,11 @@ data class DmppDto (
      * Values: cNK,pSEUDO
      */
     enum class CodeType(val value: kotlin.String) {
-        @JsonProperty(value = "CNK") cNK("CNK"),
-        @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
+        @JsonProperty(value = "CNK")
+        cNK("CNK"),
+
+        @JsonProperty(value = "PSEUDO")
+        pSEUDO("PSEUDO");
     }
 
     /* ktlint-enable enum-entry-name-case */

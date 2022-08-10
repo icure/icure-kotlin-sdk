@@ -16,29 +16,22 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.infrastructure.ClientException
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.models.DocIdentifier
-
 import io.icure.kraken.client.models.PaginatedListUserDto
 import io.icure.kraken.client.models.PropertyStubDto
 import io.icure.kraken.client.models.TokenWithGroupDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.UserGroupDto
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -53,30 +46,31 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * Assign a healthcare party ID to current user
-    * UserDto gets returned.
-    * @param healthcarePartyId
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Assign a healthcare party ID to current user
+     * UserDto gets returned.
+     * @param healthcarePartyId
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun assignHealthcareParty(healthcarePartyId: kotlin.String) : UserDto  {
+    suspend fun assignHealthcareParty(healthcarePartyId: kotlin.String): UserDto {
         val localVariableConfig = assignHealthcarePartyRequestConfig(healthcarePartyId = healthcarePartyId)
 
         return request<Unit, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation assignHealthcareParty
-    *
-    * @param healthcarePartyId
-    * @return RequestConfig
-    */
-    fun assignHealthcarePartyRequestConfig(healthcarePartyId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation assignHealthcareParty
+     *
+     * @param healthcarePartyId
+     * @return RequestConfig
+     */
+    fun assignHealthcarePartyRequestConfig(healthcarePartyId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -85,37 +79,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/user/current/hcparty/{healthcarePartyId}".replace("{"+"healthcarePartyId"+"}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/current/hcparty/{healthcarePartyId}".replace("{" + "healthcarePartyId" + "}", "${URLEncoder.encode(healthcarePartyId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    *
-    *
-    * @param password
-    * @return kotlin.Boolean
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     *
+     *
+     * @param password
+     * @return kotlin.Boolean
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun checkPassword(password: kotlin.String) : kotlin.Boolean  {
+    suspend fun checkPassword(password: kotlin.String): kotlin.Boolean {
         val localVariableConfig = checkPasswordRequestConfig(password = password)
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation checkPassword
-    *
-    * @param password
-    * @return RequestConfig
-    */
-    fun checkPasswordRequestConfig(password: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation checkPassword
+     *
+     * @param password
+     * @return RequestConfig
+     */
+    fun checkPasswordRequestConfig(password: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -128,36 +124,38 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/checkPassword",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Check token validity
-    *
-    * @param userId
-    * @param token
-    * @return kotlin.Boolean
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Check token validity
+     *
+     * @param userId
+     * @param token
+     * @return kotlin.Boolean
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun checkTokenValidity(userId: kotlin.String, token: kotlin.String) : kotlin.Boolean  {
+    suspend fun checkTokenValidity(userId: kotlin.String, token: kotlin.String): kotlin.Boolean {
         val localVariableConfig = checkTokenValidityRequestConfig(userId = userId, token = token)
 
         return request<Unit, kotlin.Boolean>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation checkTokenValidity
-    *
-    * @param userId
-    * @param token
-    * @return RequestConfig
-    */
-    fun checkTokenValidityRequestConfig(userId: kotlin.String, token: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation checkTokenValidity
+     *
+     * @param userId
+     * @param token
+     * @return RequestConfig
+     */
+    fun checkTokenValidityRequestConfig(userId: kotlin.String, token: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -167,37 +165,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/token/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/token/{userId}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a user
-    * Create a user. HealthcareParty ID should be set. Email or Login have to be set. If login hasn&#39;t been set, Email will be used for Login instead.
-    * @param userDto
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a user
+     * Create a user. HealthcareParty ID should be set. Email or Login have to be set. If login hasn&#39;t been set, Email will be used for Login instead.
+     * @param userDto
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createUser(userDto: UserDto) : UserDto  {
+    suspend fun createUser(userDto: UserDto): UserDto {
         val localVariableConfig = createUserRequestConfig(userDto = userDto)
 
         return request<UserDto, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createUser
-    *
-    * @param userDto
-    * @return RequestConfig
-    */
-    fun createUserRequestConfig(userDto: UserDto) : RequestConfig<UserDto> {
+     * To obtain the request config of the operation createUser
+     *
+     * @param userDto
+     * @return RequestConfig
+     */
+    fun createUserRequestConfig(userDto: UserDto): RequestConfig<UserDto> {
         // val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -209,36 +209,38 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a user
-    * Create a user. HealthcareParty ID should be set. Email has to be set and the Login has to be null. On server-side, Email will be used for Login.
-    * @param groupId
-    * @param userDto
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a user
+     * Create a user. HealthcareParty ID should be set. Email has to be set and the Login has to be null. On server-side, Email will be used for Login.
+     * @param groupId
+     * @param userDto
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto  {
+    suspend fun createUserInGroup(groupId: kotlin.String, userDto: UserDto): UserDto {
         val localVariableConfig = createUserInGroupRequestConfig(groupId = groupId, userDto = userDto)
 
         return request<UserDto, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createUserInGroup
-    *
-    * @param groupId
-    * @param userDto
-    * @return RequestConfig
-    */
-    fun createUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto) : RequestConfig<UserDto> {
+     * To obtain the request config of the operation createUserInGroup
+     *
+     * @param groupId
+     * @param userDto
+     * @return RequestConfig
+     */
+    fun createUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto): RequestConfig<UserDto> {
         // val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -247,37 +249,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete a User based on his/her ID.
-    * Delete a User based on his/her ID. The return value is an array containing the ID of deleted user.
-    * @param userId
-    * @return DocIdentifier
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete a User based on his/her ID.
+     * Delete a User based on his/her ID. The return value is an array containing the ID of deleted user.
+     * @param userId
+     * @return DocIdentifier
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteUser(userId: kotlin.String) : DocIdentifier  {
+    suspend fun deleteUser(userId: kotlin.String): DocIdentifier {
         val localVariableConfig = deleteUserRequestConfig(userId = userId)
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteUser
-    *
-    * @param userId
-    * @return RequestConfig
-    */
-    fun deleteUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation deleteUser
+     *
+     * @param userId
+     * @return RequestConfig
+     */
+    fun deleteUserRequestConfig(userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -286,39 +290,41 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/user/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/{userId}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete a User based on his/her ID.
-    * Delete a User based on his/her ID. The return value is an array containing the ID of deleted user.
-    * @param groupId
-    * @param userId
-    * @return kotlin.Any
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete a User based on his/her ID.
+     * Delete a User based on his/her ID. The return value is an array containing the ID of deleted user.
+     * @param groupId
+     * @param userId
+     * @return kotlin.Any
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteUserInGroup(groupId: kotlin.String, userId: kotlin.String) : kotlin.Any  {
+    suspend fun deleteUserInGroup(groupId: kotlin.String, userId: kotlin.String): kotlin.Any {
         val localVariableConfig = deleteUserInGroupRequestConfig(groupId = groupId, userId = userId)
 
         return request<Unit, kotlin.Any>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteUserInGroup
-    *
-    * @param groupId
-    * @param userId
-    * @return RequestConfig
-    */
-    fun deleteUserInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation deleteUserInGroup
+     *
+     * @param groupId
+     * @param userId
+     * @return RequestConfig
+     */
+    fun deleteUserInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -327,37 +333,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/user/inGroup/{groupId}/{userId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inGroup/{groupId}/{userId}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    *
-    *
-    * @param password
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     *
+     *
+     * @param password
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun encodePassword(password: kotlin.String) : kotlin.String  {
+    suspend fun encodePassword(password: kotlin.String): kotlin.String {
         val localVariableConfig = encodePasswordRequestConfig(password = password)
 
         return request<Unit, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation encodePassword
-    *
-    * @param password
-    * @return RequestConfig
-    */
-    fun encodePasswordRequestConfig(password: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation encodePassword
+     *
+     * @param password
+     * @return RequestConfig
+     */
+    fun encodePasswordRequestConfig(password: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -370,38 +378,40 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/encodePassword",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Filter users for the current user (HcParty)
-    * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param filterChainUser
-    * @param startDocumentId A User document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListUserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Filter users for the current user (HcParty)
+     * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     * @param filterChainUser
+     * @param startDocumentId A User document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListUserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterUsersBy(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+    suspend fun filterUsersBy(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListUserDto {
         val localVariableConfig = filterUsersByRequestConfig(filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
 
         return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation filterUsersBy
-    *
-    * @param filterChainUser
-    * @param startDocumentId A User document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun filterUsersByRequestConfig(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
+     * To obtain the request config of the operation filterUsersBy
+     *
+     * @param filterChainUser
+     * @param startDocumentId A User document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun filterUsersByRequestConfig(filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
         // val localVariableBody = filterChainUser
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -421,40 +431,42 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Filter users for the current user (HcParty) for a provided groupId
-    * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param groupId
-    * @param filterChainUser
-    * @param startDocumentId A User document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListUserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Filter users for the current user (HcParty) for a provided groupId
+     * Returns a list of users along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     * @param groupId
+     * @param filterChainUser
+     * @param startDocumentId A User document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListUserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterUsersInGroupBy(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+    suspend fun filterUsersInGroupBy(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListUserDto {
         val localVariableConfig = filterUsersInGroupByRequestConfig(groupId = groupId, filterChainUser = filterChainUser, startDocumentId = startDocumentId, limit = limit)
 
         return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation filterUsersInGroupBy
-    *
-    * @param groupId
-    * @param filterChainUser
-    * @param startDocumentId A User document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun filterUsersInGroupByRequestConfig(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
+     * To obtain the request config of the operation filterUsersInGroupBy
+     *
+     * @param groupId
+     * @param filterChainUser
+     * @param startDocumentId A User document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun filterUsersInGroupByRequestConfig(groupId: kotlin.String, filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>> {
         // val localVariableBody = filterChainUser
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -471,37 +483,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/user/filter/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/filter/inGroup/{groupId}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get the list of users by healthcare party id
-    *
-    * @param id
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get the list of users by healthcare party id
+     *
+     * @param id
+     * @return kotlin.collections.List<kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByHcpartyId(id: kotlin.String) : kotlin.collections.List<kotlin.String>  {
+    suspend fun findByHcpartyId(id: kotlin.String): kotlin.collections.List<kotlin.String> {
         val localVariableConfig = findByHcpartyIdRequestConfig(id = id)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation findByHcpartyId
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun findByHcpartyIdRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation findByHcpartyId
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun findByHcpartyIdRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -510,37 +524,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/byHealthcarePartyId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/byHealthcarePartyId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get the list of users by patient id
-    *
-    * @param id
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get the list of users by patient id
+     *
+     * @param id
+     * @return kotlin.collections.List<kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findByPatientId(id: kotlin.String) : kotlin.collections.List<kotlin.String>  {
+    suspend fun findByPatientId(id: kotlin.String): kotlin.collections.List<kotlin.String> {
         val localVariableConfig = findByPatientIdRequestConfig(id = id)
 
         return request<Unit, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation findByPatientId
-    *
-    * @param id
-    * @return RequestConfig
-    */
-    fun findByPatientIdRequestConfig(id: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation findByPatientId
+     *
+     * @param id
+     * @return RequestConfig
+     */
+    fun findByPatientIdRequestConfig(id: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -549,35 +565,37 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/byPatientId/{id}".replace("{"+"id"+"}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/byPatientId/{id}".replace("{" + "id" + "}", "${URLEncoder.encode(id.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get Currently logged-in user session.
-    * Get current user.
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get Currently logged-in user session.
+     * Get current user.
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentSession() : kotlin.String  {
+    suspend fun getCurrentSession(): kotlin.String {
         val localVariableConfig = getCurrentSessionRequestConfig()
 
         return request<Unit, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getCurrentSession
-    *
-    * @return RequestConfig
-    */
-    fun getCurrentSessionRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getCurrentSession
+     *
+     * @return RequestConfig
+     */
+    fun getCurrentSessionRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -589,32 +607,34 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/session",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get presently logged-in user.
-    * Get current user.
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get presently logged-in user.
+     * Get current user.
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getCurrentUser() : UserDto  {
+    suspend fun getCurrentUser(): UserDto {
         val localVariableConfig = getCurrentUserRequestConfig()
 
         return request<Unit, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getCurrentUser
-    *
-    * @return RequestConfig
-    */
-    fun getCurrentUserRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getCurrentUser
+     *
+     * @return RequestConfig
+     */
+    fun getCurrentUserRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -626,32 +646,34 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/current",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get presently logged-in user.
-    * Get current user.
-    * @return kotlin.collections.List<UserGroupDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get presently logged-in user.
+     * Get current user.
+     * @return kotlin.collections.List<UserGroupDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMatchingUsers() : kotlin.collections.List<UserGroupDto>  {
+    suspend fun getMatchingUsers(): kotlin.collections.List<UserGroupDto> {
         val localVariableConfig = getMatchingUsersRequestConfig()
 
         return request<Unit, kotlin.collections.List<UserGroupDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getMatchingUsers
-    *
-    * @return RequestConfig
-    */
-    fun getMatchingUsersRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getMatchingUsers
+     *
+     * @return RequestConfig
+     */
+    fun getMatchingUsersRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -663,38 +685,40 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/matches",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Request a new temporary token for authentication
-    *
-    * @param userId
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Request a new temporary token for authentication
+     *
+     * @param userId
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getToken(userId: kotlin.String, key: kotlin.String, tokenValidity: kotlin.Long?) : kotlin.String  {
+    suspend fun getToken(userId: kotlin.String, key: kotlin.String, tokenValidity: kotlin.Long?): kotlin.String {
         val localVariableConfig = getTokenRequestConfig(userId = userId, key = key, tokenValidity = tokenValidity)
 
         return request<Unit, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getToken
-    *
-    * @param userId
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return RequestConfig
-    */
-    fun getTokenRequestConfig(userId: kotlin.String, key: kotlin.String, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getToken
+     *
+     * @param userId
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return RequestConfig
+     */
+    fun getTokenRequestConfig(userId: kotlin.String, key: kotlin.String, tokenValidity: kotlin.Long?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -708,43 +732,45 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/user/token/{userId}/{key}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/token/{userId}/{key}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{" + "key" + "}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Require a new temporary token for authentication inside all groups
-    *
-    * @param userIdentifier
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param token  (optional)
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return kotlin.collections.List<TokenWithGroupDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Require a new temporary token for authentication inside all groups
+     *
+     * @param userIdentifier
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param token  (optional)
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return kotlin.collections.List<TokenWithGroupDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTokenInAllGroups(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.collections.List<TokenWithGroupDto>  {
+    suspend fun getTokenInAllGroups(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?): kotlin.collections.List<TokenWithGroupDto> {
         val localVariableConfig = getTokenInAllGroupsRequestConfig(userIdentifier = userIdentifier, key = key, token = token, tokenValidity = tokenValidity)
 
         return request<Unit, kotlin.collections.List<TokenWithGroupDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTokenInAllGroups
-    *
-    * @param userIdentifier
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param token  (optional)
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return RequestConfig
-    */
-    fun getTokenInAllGroupsRequestConfig(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTokenInAllGroups
+     *
+     * @param userIdentifier
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param token  (optional)
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return RequestConfig
+     */
+    fun getTokenInAllGroupsRequestConfig(userIdentifier: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -759,45 +785,47 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/user/inAllGroups/token/{userIdentifier}/{key}".replace("{"+"userIdentifier"+"}", "${URLEncoder.encode(userIdentifier.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inAllGroups/token/{userIdentifier}/{key}".replace("{" + "userIdentifier" + "}", "${URLEncoder.encode(userIdentifier.toString(), Charsets.UTF_8)}").replace("{" + "key" + "}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Require a new temporary token for authentication inside provided group
-    *
-    * @param groupId
-    * @param userId
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param token  (optional)
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Require a new temporary token for authentication inside provided group
+     *
+     * @param groupId
+     * @param userId
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param token  (optional)
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTokenInGroup(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : kotlin.String  {
+    suspend fun getTokenInGroup(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?): kotlin.String {
         val localVariableConfig = getTokenInGroupRequestConfig(groupId = groupId, userId = userId, key = key, token = token, tokenValidity = tokenValidity)
 
         return request<Unit, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getTokenInGroup
-    *
-    * @param groupId
-    * @param userId
-    * @param key The token key. Only one instance of a token with a defined key can exist at the same time
-    * @param token  (optional)
-    * @param tokenValidity The token validity in seconds (optional)
-    * @return RequestConfig
-    */
-    fun getTokenInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getTokenInGroup
+     *
+     * @param groupId
+     * @param userId
+     * @param key The token key. Only one instance of a token with a defined key can exist at the same time
+     * @param token  (optional)
+     * @param tokenValidity The token validity in seconds (optional)
+     * @return RequestConfig
+     */
+    fun getTokenInGroupRequestConfig(groupId: kotlin.String, userId: kotlin.String, key: kotlin.String, token: kotlin.String?, tokenValidity: kotlin.Long?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -812,37 +840,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/user/inGroup/{groupId}/token/{userId}/{key}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{"+"key"+"}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inGroup/{groupId}/token/{userId}/{key}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}").replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}").replace("{" + "key" + "}", "${URLEncoder.encode(key.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a user by his ID
-    * General information about the user
-    * @param userId
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a user by his ID
+     * General information about the user
+     * @param userId
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getUser(userId: kotlin.String) : UserDto  {
+    suspend fun getUser(userId: kotlin.String): UserDto {
         val localVariableConfig = getUserRequestConfig(userId = userId)
 
         return request<Unit, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getUser
-    *
-    * @param userId
-    * @return RequestConfig
-    */
-    fun getUserRequestConfig(userId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getUser
+     *
+     * @param userId
+     * @return RequestConfig
+     */
+    fun getUserRequestConfig(userId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -851,37 +881,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/{userId}".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/{userId}".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a user by his Email/Login
-    * General information about the user
-    * @param email
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a user by his Email/Login
+     * General information about the user
+     * @param email
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getUserByEmail(email: kotlin.String) : UserDto  {
+    suspend fun getUserByEmail(email: kotlin.String): UserDto {
         val localVariableConfig = getUserByEmailRequestConfig(email = email)
 
         return request<Unit, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getUserByEmail
-    *
-    * @param email
-    * @return RequestConfig
-    */
-    fun getUserByEmailRequestConfig(email: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getUserByEmail
+     *
+     * @param email
+     * @return RequestConfig
+     */
+    fun getUserByEmailRequestConfig(email: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -890,43 +922,45 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/byEmail/{email}".replace("{"+"email"+"}", "${URLEncoder.encode(email.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/byEmail/{email}".replace("{" + "email" + "}", "${URLEncoder.encode(email.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List users with(out) pagination
-    * Returns a list of users.
-    * @param startKey An user email (optional)
-    * @param startDocumentId An user document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param skipPatients Filter out patient users (optional)
-    * @return PaginatedListUserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List users with(out) pagination
+     * Returns a list of users.
+     * @param startKey An user email (optional)
+     * @param startDocumentId An user document ID (optional)
+     * @param limit Number of rows (optional)
+     * @param skipPatients Filter out patient users (optional)
+     * @return PaginatedListUserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : PaginatedListUserDto  {
+    suspend fun listUsersBy(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?): PaginatedListUserDto {
         val localVariableConfig = listUsersByRequestConfig(startKey = startKey, startDocumentId = startDocumentId, limit = limit, skipPatients = skipPatients)
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listUsersBy
-    *
-    * @param startKey An user email (optional)
-    * @param startDocumentId An user document ID (optional)
-    * @param limit Number of rows (optional)
-    * @param skipPatients Filter out patient users (optional)
-    * @return RequestConfig
-    */
-    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listUsersBy
+     *
+     * @param startKey An user email (optional)
+     * @param startDocumentId An user document ID (optional)
+     * @param limit Number of rows (optional)
+     * @param skipPatients Filter out patient users (optional)
+     * @return RequestConfig
+     */
+    fun listUsersByRequestConfig(startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?, skipPatients: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -952,40 +986,42 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List users with(out) pagination
-    * Returns a list of users.
-    * @param groupId
-    * @param startKey An user login (optional)
-    * @param startDocumentId An user document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListUserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List users with(out) pagination
+     * Returns a list of users.
+     * @param groupId
+     * @param startKey An user login (optional)
+     * @param startDocumentId An user document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListUserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listUsersInGroup(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListUserDto  {
+    suspend fun listUsersInGroup(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListUserDto {
         val localVariableConfig = listUsersInGroupRequestConfig(groupId = groupId, startKey = startKey, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListUserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listUsersInGroup
-    *
-    * @param groupId
-    * @param startKey An user login (optional)
-    * @param startDocumentId An user document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun listUsersInGroupRequestConfig(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listUsersInGroup
+     *
+     * @param groupId
+     * @param startKey An user login (optional)
+     * @param startDocumentId An user document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun listUsersInGroupRequestConfig(groupId: kotlin.String, startKey: kotlin.String?, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1005,37 +1041,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get ids of healthcare party matching the provided filter for the current user (HcParty)
-    *
-    * @param abstractFilterDtoUser
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get ids of healthcare party matching the provided filter for the current user (HcParty)
+     *
+     * @param abstractFilterDtoUser
+     * @return kotlin.collections.List<kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchUsersBy(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchUsersBy(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>): kotlin.collections.List<kotlin.String> {
         val localVariableConfig = matchUsersByRequestConfig(abstractFilterDtoUser = abstractFilterDtoUser)
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation matchUsersBy
-    *
-    * @param abstractFilterDtoUser
-    * @return RequestConfig
-    */
-    fun matchUsersByRequestConfig(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>> {
+     * To obtain the request config of the operation matchUsersBy
+     *
+     * @param abstractFilterDtoUser
+     * @return RequestConfig
+     */
+    fun matchUsersByRequestConfig(abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>): RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>> {
         // val localVariableBody = abstractFilterDtoUser
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1047,36 +1085,38 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a User property
-    * Modify a User properties based on his/her ID. The return value is the modified user.
-    * @param userId
-    * @param propertyStubDto  (optional)
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a User property
+     * Modify a User properties based on his/her ID. The return value is the modified user.
+     * @param userId
+     * @param propertyStubDto  (optional)
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyProperties(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?) : UserDto  {
+    suspend fun modifyProperties(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?): UserDto {
         val localVariableConfig = modifyPropertiesRequestConfig(userId = userId, propertyStubDto = propertyStubDto)
 
         return request<kotlin.collections.List<PropertyStubDto>, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyProperties
-    *
-    * @param userId
-    * @param propertyStubDto  (optional)
-    * @return RequestConfig
-    */
-    fun modifyPropertiesRequestConfig(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?) : RequestConfig<kotlin.collections.List<PropertyStubDto>> {
+     * To obtain the request config of the operation modifyProperties
+     *
+     * @param userId
+     * @param propertyStubDto  (optional)
+     * @return RequestConfig
+     */
+    fun modifyPropertiesRequestConfig(userId: kotlin.String, propertyStubDto: kotlin.collections.List<PropertyStubDto>?): RequestConfig<kotlin.collections.List<PropertyStubDto>> {
         // val localVariableBody = propertyStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1085,37 +1125,39 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/user/{userId}/properties".replace("{"+"userId"+"}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/{userId}/properties".replace("{" + "userId" + "}", "${URLEncoder.encode(userId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a user.
-    * No particular return value. It&#39;s just a message.
-    * @param userDto
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a user.
+     * No particular return value. It&#39;s just a message.
+     * @param userDto
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUser(userDto: UserDto) : UserDto  {
+    suspend fun modifyUser(userDto: UserDto): UserDto {
         val localVariableConfig = modifyUserRequestConfig(userDto = userDto)
 
         return request<UserDto, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyUser
-    *
-    * @param userDto
-    * @return RequestConfig
-    */
-    fun modifyUserRequestConfig(userDto: UserDto) : RequestConfig<UserDto> {
+     * To obtain the request config of the operation modifyUser
+     *
+     * @param userDto
+     * @return RequestConfig
+     */
+    fun modifyUserRequestConfig(userDto: UserDto): RequestConfig<UserDto> {
         // val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1127,36 +1169,38 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/user",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a user.
-    * No particular return value. It&#39;s just a message.
-    * @param groupId
-    * @param userDto
-    * @return UserDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a user.
+     * No particular return value. It&#39;s just a message.
+     * @param groupId
+     * @param userDto
+     * @return UserDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyUserInGroup(groupId: kotlin.String, userDto: UserDto) : UserDto  {
+    suspend fun modifyUserInGroup(groupId: kotlin.String, userDto: UserDto): UserDto {
         val localVariableConfig = modifyUserInGroupRequestConfig(groupId = groupId, userDto = userDto)
 
         return request<UserDto, UserDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyUserInGroup
-    *
-    * @param groupId
-    * @param userDto
-    * @return RequestConfig
-    */
-    fun modifyUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto) : RequestConfig<UserDto> {
+     * To obtain the request config of the operation modifyUserInGroup
+     *
+     * @param groupId
+     * @param userDto
+     * @return RequestConfig
+     */
+    fun modifyUserInGroupRequestConfig(groupId: kotlin.String, userDto: UserDto): RequestConfig<UserDto> {
         // val localVariableBody = userDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1165,10 +1209,10 @@ class UserApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/user/inGroup/{groupId}".replace("{"+"groupId"+"}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/user/inGroup/{groupId}".replace("{" + "groupId" + "}", "${URLEncoder.encode(groupId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

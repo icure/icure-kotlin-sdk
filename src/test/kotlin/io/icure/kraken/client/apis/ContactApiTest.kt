@@ -14,61 +14,45 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.json.JsonReadFeature
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.icure.kraken.client.infrastructure.*
+import io.icure.kraken.client.infrastructure.TestUtils
+import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
+import io.icure.kraken.client.infrastructure.differences
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-
-
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.LabelledOccurenceDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
 import io.icure.kraken.client.models.ServiceDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
-import io.icure.kraken.client.infrastructure.TestUtils
-import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
-import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -90,7 +74,7 @@ class ContactApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -100,23 +84,23 @@ class ContactApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             ContactDto::class.java -> it to objectMapper.convertValue(body, ContactDto::class.java)
                             ContactApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -130,7 +114,6 @@ class ContactApiTest() {
         }
     }
 
-
     /**
      * Close contacts for Healthcare Party and secret foreign keys.
      *
@@ -141,49 +124,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun closeForHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun closeForHCPartyPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "closeForHCPartyPatientForeignKeys")) {
             assertTrue(true, "Test of closeForHCPartyPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "closeForHCPartyPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "closeForHCPartyPatientForeignKeys.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "closeForHCPartyPatientForeignKeys.secretFKeys")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "closeForHCPartyPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
+                val response = api(credentialsFile).closeForHCPartyPatientForeignKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
                 val testFileName = "ContactApi.closeForHCPartyPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("closeForHCPartyPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -196,8 +180,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -214,42 +197,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createContactTest(fileName: String) = runBlocking {
-
+    fun createContactTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createContact")) {
             assertTrue(true, "Test of createContact endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContact")
                 val contactDto: ContactDto = TestUtils.getParameter<ContactDto>(fileName, "createContact.contactDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "createContact") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ContactDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createContact(contactDto = contactDto)
 
                 val testFileName = "ContactApi.createContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("ContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<ContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ContactDto>() {}
-                    })
+                    )
                     assertAreEquals("createContact", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -262,8 +246,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -280,42 +263,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createContactsTest(fileName: String) = runBlocking {
-
+    fun createContactsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createContacts")) {
             assertTrue(true, "Test of createContacts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createContacts")
                 val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter<kotlin.collections.List<ContactDto>>(fileName, "createContacts.contactDto")!!.map {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "createContacts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<ContactDto>
+                } as kotlin.collections.List<ContactDto>
 
                 val response = api(credentialsFile).createContacts(contactDto = contactDto)
 
                 val testFileName = "ContactApi.createContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("createContacts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -328,8 +312,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -346,42 +329,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteContactsTest(fileName: String) = runBlocking {
-
+    fun deleteContactsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteContacts")) {
             assertTrue(true, "Test of deleteContacts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteContacts")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteContacts.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteContacts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteContacts(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.deleteContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                    })
+                    )
                     assertAreEquals("deleteContacts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -394,8 +378,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -412,56 +395,57 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun filterContactsByTest(fileName: String) = runBlocking {
-
+    fun filterContactsByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "filterContactsBy")) {
             assertTrue(true, "Test of filterContactsBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterContactsBy")
                 val filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>>(fileName, "filterContactsBy.filterChainContact")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterContactsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto> ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterContactsBy.startDocumentId")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterContactsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterContactsBy.limit")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterContactsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).filterContactsBy(filterChainContact = filterChainContact,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).filterContactsBy(filterChainContact = filterChainContact, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "ContactApi.filterContactsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListContactDto>? != null) {
-                        if ("PaginatedListContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListContactDto>? != null) {
+                            if ("PaginatedListContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListContactDto>>() {}
+                            object : TypeReference<PaginatedListContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListContactDto>() {}
-                    })
+                    )
                     assertAreEquals("filterContactsBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -474,8 +458,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -492,56 +475,57 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun filterServicesByTest(fileName: String) = runBlocking {
-
+    fun filterServicesByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "filterServicesBy")) {
             assertTrue(true, "Test of filterServicesBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterServicesBy")
                 val filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>>(fileName, "filterServicesBy.filterChainService")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterServicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto> ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterServicesBy.startDocumentId")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterServicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "filterServicesBy.limit")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterServicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).filterServicesBy(filterChainService = filterChainService,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).filterServicesBy(filterChainService = filterChainService, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "ContactApi.filterServicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListServiceDto>? != null) {
-                        if ("PaginatedListServiceDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListServiceDto>? != null) {
+                            if ("PaginatedListServiceDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListServiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListServiceDto>>() {}
+                            object : TypeReference<PaginatedListServiceDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListServiceDto>() {}
-                    })
+                    )
                     assertAreEquals("filterServicesBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -554,8 +538,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -572,70 +555,71 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findContactsByOpeningDateTest(fileName: String) = runBlocking {
-
+    fun findContactsByOpeningDateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findContactsByOpeningDate")) {
             assertTrue(true, "Test of findContactsByOpeningDate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findContactsByOpeningDate")
                 val startKey: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "findContactsByOpeningDate.startKey")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val endKey: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "findContactsByOpeningDate.endKey")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
                 val hcpartyid: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findContactsByOpeningDate.hcpartyid")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "findContactsByOpeningDate.startDocumentId")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val limit: kotlin.Int? = TestUtils.getParameter<kotlin.Int>(fileName, "findContactsByOpeningDate.limit")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "findContactsByOpeningDate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Int ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findContactsByOpeningDate(startKey = startKey,endKey = endKey,hcpartyid = hcpartyid,startDocumentId = startDocumentId,limit = limit)
+                val response = api(credentialsFile).findContactsByOpeningDate(startKey = startKey, endKey = endKey, hcpartyid = hcpartyid, startDocumentId = startDocumentId, limit = limit)
 
                 val testFileName = "ContactApi.findContactsByOpeningDate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<PaginatedListContactDto>? != null) {
-                        if ("PaginatedListContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<PaginatedListContactDto>? != null) {
+                            if ("PaginatedListContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<PaginatedListContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<PaginatedListContactDto>>() {}
+                            object : TypeReference<PaginatedListContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<PaginatedListContactDto>() {}
-                    })
+                    )
                     assertAreEquals("findContactsByOpeningDate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -648,8 +632,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -666,42 +649,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getContactTest(fileName: String) = runBlocking {
-
+    fun getContactTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getContact")) {
             assertTrue(true, "Test of getContact endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContact")
                 val contactId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getContact.contactId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContact") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getContact(contactId = contactId)
 
                 val testFileName = "ContactApi.getContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("ContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<ContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ContactDto>() {}
-                    })
+                    )
                     assertAreEquals("getContact", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -714,8 +698,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -732,42 +715,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getContactsTest(fileName: String) = runBlocking {
-
+    fun getContactsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getContacts")) {
             assertTrue(true, "Test of getContacts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContacts")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getContacts.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContacts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getContacts(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.getContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("getContacts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -780,8 +764,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -798,12 +781,11 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getEmptyContentTest(fileName: String) = runBlocking {
-
+    fun getEmptyContentTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getEmptyContent")) {
             assertTrue(true, "Test of getEmptyContent endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEmptyContent")
 
@@ -812,21 +794,23 @@ class ContactApiTest() {
                 val testFileName = "ContactApi.getEmptyContent"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContentDto>? != null) {
-                        if ("ContentDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContentDto>? != null) {
+                            if ("ContentDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContentDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContentDto>>() {}
+                            object : TypeReference<ContentDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ContentDto>() {}
-                    })
+                    )
                     assertAreEquals("getEmptyContent", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -839,8 +823,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -857,49 +840,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getServiceCodesOccurencesTest(fileName: String) = runBlocking {
-
+    fun getServiceCodesOccurencesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getServiceCodesOccurences")) {
             assertTrue(true, "Test of getServiceCodesOccurences endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServiceCodesOccurences")
                 val codeType: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getServiceCodesOccurences.codeType")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val minOccurences: kotlin.Long = TestUtils.getParameter<kotlin.Long>(fileName, "getServiceCodesOccurences.minOccurences")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getServiceCodesOccurences") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Long ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).getServiceCodesOccurences(codeType = codeType,minOccurences = minOccurences)
+                val response = api(credentialsFile).getServiceCodesOccurences(codeType = codeType, minOccurences = minOccurences)
 
                 val testFileName = "ContactApi.getServiceCodesOccurences"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<LabelledOccurenceDto>? != null) {
-                        if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<LabelledOccurenceDto>? != null) {
+                            if ("kotlin.collections.List<LabelledOccurenceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<LabelledOccurenceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<LabelledOccurenceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<LabelledOccurenceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<LabelledOccurenceDto>>() {}
-                    })
+                    )
                     assertAreEquals("getServiceCodesOccurences", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -912,8 +896,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -930,42 +913,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getServicesTest(fileName: String) = runBlocking {
-
+    fun getServicesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getServices")) {
             assertTrue(true, "Test of getServices endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServices")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getServices.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getServices") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getServices(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.getServices"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
-                        if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ServiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("getServices", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -978,8 +962,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -996,49 +979,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getServicesLinkedToTest(fileName: String) = runBlocking {
-
+    fun getServicesLinkedToTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getServicesLinkedTo")) {
             assertTrue(true, "Test of getServicesLinkedTo endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getServicesLinkedTo")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getServicesLinkedTo.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getServicesLinkedTo") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
                 val linkType: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "getServicesLinkedTo.linkType")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getServicesLinkedTo") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto = listOfIdsDto,linkType = linkType)
+                val response = api(credentialsFile).getServicesLinkedTo(listOfIdsDto = listOfIdsDto, linkType = linkType)
 
                 val testFileName = "ContactApi.getServicesLinkedTo"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
-                        if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ServiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("getServicesLinkedTo", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1051,8 +1035,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1069,49 +1052,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactByHCPartyServiceIdTest(fileName: String) = runBlocking {
-
+    fun listContactByHCPartyServiceIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactByHCPartyServiceId")) {
             assertTrue(true, "Test of listContactByHCPartyServiceId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactByHCPartyServiceId")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactByHCPartyServiceId.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val serviceId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactByHCPartyServiceId.serviceId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactByHCPartyServiceId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId = hcPartyId,serviceId = serviceId)
+                val response = api(credentialsFile).listContactByHCPartyServiceId(hcPartyId = hcPartyId, serviceId = serviceId)
 
                 val testFileName = "ContactApi.listContactByHCPartyServiceId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactByHCPartyServiceId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1124,8 +1108,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1142,42 +1125,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsByExternalIdTest(fileName: String) = runBlocking {
-
+    fun listContactsByExternalIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsByExternalId")) {
             assertTrue(true, "Test of listContactsByExternalId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByExternalId")
                 val externalId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByExternalId.externalId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByExternalId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listContactsByExternalId(externalId = externalId)
 
                 val testFileName = "ContactApi.listContactsByExternalId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsByExternalId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1190,8 +1174,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1208,49 +1191,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsByHCPartyAndFormIdTest(fileName: String) = runBlocking {
-
+    fun listContactsByHCPartyAndFormIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormId")) {
             assertTrue(true, "Test of listContactsByHCPartyAndFormId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormId")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndFormId.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val formId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndFormId.formId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId = hcPartyId,formId = formId)
+                val response = api(credentialsFile).listContactsByHCPartyAndFormId(hcPartyId = hcPartyId, formId = formId)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndFormId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsByHCPartyAndFormId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1263,8 +1247,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1281,49 +1264,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsByHCPartyAndFormIdsTest(fileName: String) = runBlocking {
-
+    fun listContactsByHCPartyAndFormIdsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndFormIds")) {
             assertTrue(true, "Test of listContactsByHCPartyAndFormIds endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndFormIds")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndFormIds.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "listContactsByHCPartyAndFormIds.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndFormIds") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId = hcPartyId,listOfIdsDto = listOfIdsDto)
+                val response = api(credentialsFile).listContactsByHCPartyAndFormIds(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndFormIds"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsByHCPartyAndFormIds", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1336,8 +1320,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1354,49 +1337,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun listContactsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientForeignKeys")) {
             assertTrue(true, "Test of listContactsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "listContactsByHCPartyAndPatientForeignKeys.listOfIdsDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,listOfIdsDto = listOfIdsDto)
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsByHCPartyAndPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1409,8 +1393,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1427,63 +1410,64 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsByHCPartyAndPatientSecretFKeysTest(fileName: String) = runBlocking {
-
+    fun listContactsByHCPartyAndPatientSecretFKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsByHCPartyAndPatientSecretFKeys")) {
             assertTrue(true, "Test of listContactsByHCPartyAndPatientSecretFKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsByHCPartyAndPatientSecretFKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndPatientSecretFKeys.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndPatientSecretFKeys.secretFKeys")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val planOfActionsIds: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listContactsByHCPartyAndPatientSecretFKeys.planOfActionsIds")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val skipClosedContacts: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listContactsByHCPartyAndPatientSecretFKeys.skipClosedContacts")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsByHCPartyAndPatientSecretFKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys,planOfActionsIds = planOfActionsIds,skipClosedContacts = skipClosedContacts)
+                val response = api(credentialsFile).listContactsByHCPartyAndPatientSecretFKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys, planOfActionsIds = planOfActionsIds, skipClosedContacts = skipClosedContacts)
 
                 val testFileName = "ContactApi.listContactsByHCPartyAndPatientSecretFKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsByHCPartyAndPatientSecretFKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1496,8 +1480,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1514,49 +1497,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
-
+    fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")) {
             assertTrue(true, "Test of listContactsDelegationsStubsByHCPartyAndPatientForeignKeys endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys")
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys.secretFKeys")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listContactsDelegationsStubsByHCPartyAndPatientForeignKeys") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
+                val response = api(credentialsFile).listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
                 val testFileName = "ContactApi.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<IcureStubDto>? != null) {
-                        if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<IcureStubDto>? != null) {
+                            if ("kotlin.collections.List<IcureStubDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<IcureStubDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<IcureStubDto>>() {}
+                            object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
-                    })
+                    )
                     assertAreEquals("listContactsDelegationsStubsByHCPartyAndPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1569,8 +1553,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1587,42 +1570,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listServicesByAssociationIdTest(fileName: String) = runBlocking {
-
+    fun listServicesByAssociationIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listServicesByAssociationId")) {
             assertTrue(true, "Test of listServicesByAssociationId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listServicesByAssociationId")
                 val associationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listServicesByAssociationId.associationId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listServicesByAssociationId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).listServicesByAssociationId(associationId = associationId)
 
                 val testFileName = "ContactApi.listServicesByAssociationId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
-                        if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ServiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listServicesByAssociationId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1635,8 +1619,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1653,49 +1636,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listServicesByHealthElementIdTest(fileName: String) = runBlocking {
-
+    fun listServicesByHealthElementIdTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listServicesByHealthElementId")) {
             assertTrue(true, "Test of listServicesByHealthElementId endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listServicesByHealthElementId")
                 val healthElementId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listServicesByHealthElementId.healthElementId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listServicesByHealthElementId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listServicesByHealthElementId.hcPartyId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "listServicesByHealthElementId") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listServicesByHealthElementId(healthElementId = healthElementId,hcPartyId = hcPartyId)
+                val response = api(credentialsFile).listServicesByHealthElementId(healthElementId = healthElementId, hcPartyId = hcPartyId)
 
                 val testFileName = "ContactApi.listServicesByHealthElementId"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ServiceDto>? != null) {
-                        if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ServiceDto>? != null) {
+                            if ("kotlin.collections.List<ServiceDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ServiceDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ServiceDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ServiceDto>>() {}
-                    })
+                    )
                     assertAreEquals("listServicesByHealthElementId", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1708,8 +1692,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1726,42 +1709,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun matchContactsByTest(fileName: String) = runBlocking {
-
+    fun matchContactsByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "matchContactsBy")) {
             assertTrue(true, "Test of matchContactsBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchContactsBy")
                 val abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>>(fileName, "matchContactsBy.abstractFilterDtoContact")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchContactsBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact = abstractFilterDtoContact)
 
                 val testFileName = "ContactApi.matchContactsBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
-                        if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<kotlin.String>? != null) {
+                            if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.String>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<kotlin.String>>() {}
+                            object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
-                    })
+                    )
                     assertAreEquals("matchContactsBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1774,8 +1758,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1792,42 +1775,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun matchServicesByTest(fileName: String) = runBlocking {
-
+    fun matchServicesByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "matchServicesBy")) {
             assertTrue(true, "Test of matchServicesBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchServicesBy")
                 val abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>>(fileName, "matchServicesBy.abstractFilterDtoService")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchServicesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto> ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).matchServicesBy(abstractFilterDtoService = abstractFilterDtoService)
 
                 val testFileName = "ContactApi.matchServicesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<kotlin.String>? != null) {
-                        if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<kotlin.String>? != null) {
+                            if ("kotlin.collections.List<kotlin.String>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<kotlin.String>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<kotlin.String>>() {}
+                            object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<kotlin.String>>() {}
-                    })
+                    )
                     assertAreEquals("matchServicesBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1840,8 +1824,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1858,42 +1841,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyContactTest(fileName: String) = runBlocking {
-
+    fun modifyContactTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyContact")) {
             assertTrue(true, "Test of modifyContact endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContact")
                 val contactDto: ContactDto = TestUtils.getParameter<ContactDto>(fileName, "modifyContact.contactDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyContact") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ContactDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyContact(contactDto = contactDto)
 
                 val testFileName = "ContactApi.modifyContact"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("ContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<ContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ContactDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyContact", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1906,8 +1890,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1924,42 +1907,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyContactsTest(fileName: String) = runBlocking {
-
+    fun modifyContactsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyContacts")) {
             assertTrue(true, "Test of modifyContacts endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContacts")
                 val contactDto: kotlin.collections.List<ContactDto> = TestUtils.getParameter<kotlin.collections.List<ContactDto>>(fileName, "modifyContacts.contactDto")!!.map {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyContacts") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<ContactDto>
+                } as kotlin.collections.List<ContactDto>
 
                 val response = api(credentialsFile).modifyContacts(contactDto = contactDto)
 
                 val testFileName = "ContactApi.modifyContacts"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("modifyContacts", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -1972,8 +1956,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -1990,42 +1973,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyContactsDelegationsTest(fileName: String) = runBlocking {
-
+    fun modifyContactsDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyContactsDelegations")) {
             assertTrue(true, "Test of modifyContactsDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyContactsDelegations")
                 val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "modifyContactsDelegations.icureStubDto")!!.map {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyContactsDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<IcureStubDto>
+                } as kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).modifyContactsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "ContactApi.modifyContactsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("modifyContactsDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2038,8 +2022,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2056,49 +2039,50 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun newContactDelegationsTest(fileName: String) = runBlocking {
-
+    fun newContactDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "newContactDelegations")) {
             assertTrue(true, "Test of newContactDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newContactDelegations")
                 val contactId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newContactDelegations.contactId")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "newContactDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val delegationDto: DelegationDto = TestUtils.getParameter<DelegationDto>(fileName, "newContactDelegations.delegationDto")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "newContactDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? DelegationDto ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).newContactDelegations(contactId = contactId,delegationDto = delegationDto)
+                val response = api(credentialsFile).newContactDelegations(contactId = contactId, delegationDto = delegationDto)
 
                 val testFileName = "ContactApi.newContactDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("ContactDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("ContactDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<ContactDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<ContactDto>() {}
-                    })
+                    )
                     assertAreEquals("newContactDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2111,8 +2095,7 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -2129,42 +2112,43 @@ class ContactApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun setContactsDelegationsTest(fileName: String) = runBlocking {
-
+    fun setContactsDelegationsTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "setContactsDelegations")) {
             assertTrue(true, "Test of setContactsDelegations endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setContactsDelegations")
                 val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setContactsDelegations.icureStubDto")!!.map {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "setContactsDelegations") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<IcureStubDto>
+                } as kotlin.collections.List<IcureStubDto>
 
                 val response = api(credentialsFile).setContactsDelegations(icureStubDto = icureStubDto)
 
                 val testFileName = "ContactApi.setContactsDelegations"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<ContactDto>? != null) {
-                        if ("kotlin.collections.List<ContactDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<ContactDto>? != null) {
+                            if ("kotlin.collections.List<ContactDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<ContactDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<ContactDto>>() {}
+                            object : TypeReference<kotlin.collections.List<ContactDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<ContactDto>>() {}
-                    })
+                    )
                     assertAreEquals("setContactsDelegations", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -2177,19 +2161,17 @@ class ContactApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -2201,36 +2183,39 @@ class ContactApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

@@ -7,7 +7,7 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class CodeIdsByTypeCodeVersionIntervalFilter (
+data class CodeIdsByTypeCodeVersionIntervalFilter(
     val startType: String? = null,
     val startCode: String? = null,
     val startVersion: String? = null,

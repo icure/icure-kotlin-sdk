@@ -29,7 +29,7 @@ suspend fun removeEntities(ids: List<String>, dbUser: String, dbPwd: String, dbU
             .build()
     )
 
-    val auth = "Basic ${java.util.Base64.getEncoder().encodeToString("${dbUser}:${dbPwd}".toByteArray())}"
+    val auth = "Basic ${java.util.Base64.getEncoder().encodeToString("$dbUser:$dbPwd".toByteArray())}"
     val client = HttpClient.create().headers { h ->
         h.set("Authorization", auth)
         h.set("Content-type", "application/json")
@@ -37,21 +37,20 @@ suspend fun removeEntities(ids: List<String>, dbUser: String, dbPwd: String, dbU
 
     ids.forEach { id ->
         client.get()
-            .uri("${dbUrl}/${dbPrefix}-base/${URLEncoder.encode(id, Charsets.UTF_8)}")
+            .uri("$dbUrl/$dbPrefix-base/${URLEncoder.encode(id, Charsets.UTF_8)}")
             .responseSingle { response, buffer ->
                 if (response.status().code() < 400) {
                     buffer.asString(StandardCharsets.UTF_8).mapNotNull {
                         objectMapper?.readValue(it, object : TypeReference<IdWithRev>() {})
                     }.flatMap {
                         it?.let {
-                            client.delete().uri("${dbUrl}/${dbPrefix}-base/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}").response()
+                            client.delete().uri("$dbUrl/$dbPrefix-base/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}").response()
                         } ?: Mono.empty()
                     }
                 } else Mono.empty()
             }.awaitFirstOrNull()
     }
 }
-
 
 class CodeBatchGenerator {
 
@@ -77,18 +76,22 @@ class CodeBatchGenerator {
                 version = version,
                 label = if (Random.nextInt(0, 4) == 0) mapOf(lang to generateRandomString(Random.nextInt(20, 100))) else mapOf(),
                 regions = if (Random.nextInt(0, 4) == 0) listOf(regions[Random.nextInt(0, regions.size)]) else listOf(),
-                qualifiedLinks = if (Random.nextInt(0, 4) == 0) mapOf(generateRandomString(10) to List(
-                    Random.nextInt(
-                        1,
-                        4
-                    )
-                ) { generateRandomString(10) }) else mapOf(),
-                searchTerms = if (Random.nextInt(0, 4) == 0) mapOf(generateRandomString(10) to List(
-                    Random.nextInt(
-                        1,
-                        4
-                    )
-                ) { generateRandomString(10) }.toSet()) else mapOf(),
+                qualifiedLinks = if (Random.nextInt(0, 4) == 0) mapOf(
+                    generateRandomString(10) to List(
+                        Random.nextInt(
+                            1,
+                            4
+                        )
+                    ) { generateRandomString(10) }
+                ) else mapOf(),
+                searchTerms = if (Random.nextInt(0, 4) == 0) mapOf(
+                    generateRandomString(10) to List(
+                        Random.nextInt(
+                            1,
+                            4
+                        )
+                    ) { generateRandomString(10) }.toSet()
+                ) else mapOf()
             )
         }
 }

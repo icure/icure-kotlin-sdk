@@ -16,24 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.InsuranceDto
-import io.icure.kraken.client.models.ListOfIdsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.InsuranceDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +43,31 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
     }
 
     /**
-    * Creates an insurance
-    *
-    * @param insuranceDto
-    * @return InsuranceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates an insurance
+     *
+     * @param insuranceDto
+     * @return InsuranceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
+    suspend fun createInsurance(insuranceDto: InsuranceDto): InsuranceDto {
         val localVariableConfig = createInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createInsurance
-    *
-    * @param insuranceDto
-    * @return RequestConfig
-    */
-    fun createInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
+     * To obtain the request config of the operation createInsurance
+     *
+     * @param insuranceDto
+     * @return RequestConfig
+     */
+    fun createInsuranceRequestConfig(insuranceDto: InsuranceDto): RequestConfig<InsuranceDto> {
         // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +79,36 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
             path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes an insurance
-    *
-    * @param insuranceId
-    * @return DocIdentifier
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes an insurance
+     *
+     * @param insuranceId
+     * @return DocIdentifier
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteInsurance(insuranceId: kotlin.String) : DocIdentifier  {
+    suspend fun deleteInsurance(insuranceId: kotlin.String): DocIdentifier {
         val localVariableConfig = deleteInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, DocIdentifier>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteInsurance
-    *
-    * @param insuranceId
-    * @return RequestConfig
-    */
-    fun deleteInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation deleteInsurance
+     *
+     * @param insuranceId
+     * @return RequestConfig
+     */
+    fun deleteInsuranceRequestConfig(insuranceId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -119,37 +117,39 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{" + "insuranceId" + "}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets an insurance
-    *
-    * @param insuranceId
-    * @return InsuranceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets an insurance
+     *
+     * @param insuranceId
+     * @return InsuranceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurance(insuranceId: kotlin.String) : InsuranceDto  {
+    suspend fun getInsurance(insuranceId: kotlin.String): InsuranceDto {
         val localVariableConfig = getInsuranceRequestConfig(insuranceId = insuranceId)
 
         return request<Unit, InsuranceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getInsurance
-    *
-    * @param insuranceId
-    * @return RequestConfig
-    */
-    fun getInsuranceRequestConfig(insuranceId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getInsurance
+     *
+     * @param insuranceId
+     * @return RequestConfig
+     */
+    fun getInsuranceRequestConfig(insuranceId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -158,37 +158,39 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/{insuranceId}".replace("{"+"insuranceId"+"}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/insurance/{insuranceId}".replace("{" + "insuranceId" + "}", "${URLEncoder.encode(insuranceId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets insurances by id
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<InsuranceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets insurances by id
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<InsuranceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<InsuranceDto>  {
+    suspend fun getInsurances(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<InsuranceDto> {
         val localVariableConfig = getInsurancesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getInsurances
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun getInsurancesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getInsurances
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun getInsurancesRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -200,34 +202,36 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
             path = "/rest/v2/insurance/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets an insurance
-    *
-    * @param insuranceCode
-    * @return kotlin.collections.List<InsuranceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets an insurance
+     *
+     * @param insuranceCode
+     * @return kotlin.collections.List<InsuranceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByCode(insuranceCode: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
+    suspend fun listInsurancesByCode(insuranceCode: kotlin.String): kotlin.collections.List<InsuranceDto> {
         val localVariableConfig = listInsurancesByCodeRequestConfig(insuranceCode = insuranceCode)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listInsurancesByCode
-    *
-    * @param insuranceCode
-    * @return RequestConfig
-    */
-    fun listInsurancesByCodeRequestConfig(insuranceCode: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listInsurancesByCode
+     *
+     * @param insuranceCode
+     * @return RequestConfig
+     */
+    fun listInsurancesByCodeRequestConfig(insuranceCode: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -236,37 +240,39 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{"+"insuranceCode"+"}", "${URLEncoder.encode(insuranceCode.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/insurance/byCode/{insuranceCode}".replace("{" + "insuranceCode" + "}", "${URLEncoder.encode(insuranceCode.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets an insurance
-    *
-    * @param insuranceName
-    * @return kotlin.collections.List<InsuranceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets an insurance
+     *
+     * @param insuranceName
+     * @return kotlin.collections.List<InsuranceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listInsurancesByName(insuranceName: kotlin.String) : kotlin.collections.List<InsuranceDto>  {
+    suspend fun listInsurancesByName(insuranceName: kotlin.String): kotlin.collections.List<InsuranceDto> {
         val localVariableConfig = listInsurancesByNameRequestConfig(insuranceName = insuranceName)
 
         return request<Unit, kotlin.collections.List<InsuranceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listInsurancesByName
-    *
-    * @param insuranceName
-    * @return RequestConfig
-    */
-    fun listInsurancesByNameRequestConfig(insuranceName: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listInsurancesByName
+     *
+     * @param insuranceName
+     * @return RequestConfig
+     */
+    fun listInsurancesByNameRequestConfig(insuranceName: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -275,37 +281,39 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{"+"insuranceName"+"}", "${URLEncoder.encode(insuranceName.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/insurance/byName/{insuranceName}".replace("{" + "insuranceName" + "}", "${URLEncoder.encode(insuranceName.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modifies an insurance
-    *
-    * @param insuranceDto
-    * @return InsuranceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modifies an insurance
+     *
+     * @param insuranceDto
+     * @return InsuranceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyInsurance(insuranceDto: InsuranceDto) : InsuranceDto  {
+    suspend fun modifyInsurance(insuranceDto: InsuranceDto): InsuranceDto {
         val localVariableConfig = modifyInsuranceRequestConfig(insuranceDto = insuranceDto)
 
         return request<InsuranceDto, InsuranceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyInsurance
-    *
-    * @param insuranceDto
-    * @return RequestConfig
-    */
-    fun modifyInsuranceRequestConfig(insuranceDto: InsuranceDto) : RequestConfig<InsuranceDto> {
+     * To obtain the request config of the operation modifyInsurance
+     *
+     * @param insuranceDto
+     * @return RequestConfig
+     */
+    fun modifyInsuranceRequestConfig(insuranceDto: InsuranceDto): RequestConfig<InsuranceDto> {
         // val localVariableBody = insuranceDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -317,7 +325,7 @@ class InsuranceApi(basePath: kotlin.String = defaultBasePath, webClient: WebClie
             path = "/rest/v2/insurance",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

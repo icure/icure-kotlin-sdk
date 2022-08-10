@@ -92,10 +92,15 @@ internal class MaintenanceTaskApiKtTest {
         val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1), config = hcp1cc)
 
         // When
-        val identifierToAdd = IdentifierDto(id = "SYSTEM-TEST|VALUE-TEST", system = "SYSTEM-TEST", value = "VALUE-TEST",)
-        val modifiedTask = hcp1MaintenanceTaskApi.modifyMaintenanceTask(hcp1User, createdTask.copy(
-            identifier = listOf(identifierToAdd), status = MaintenanceTaskDto.Status.ongoing
-        ), hcp1cc)
+        val identifierToAdd = IdentifierDto(id = "SYSTEM-TEST|VALUE-TEST", system = "SYSTEM-TEST", value = "VALUE-TEST")
+        val modifiedTask = hcp1MaintenanceTaskApi.modifyMaintenanceTask(
+            hcp1User,
+            createdTask.copy(
+                identifier = listOf(identifierToAdd),
+                status = MaintenanceTaskDto.Status.ongoing
+            ),
+            hcp1cc
+        )
 
         // Then
         assert(modifiedTask.id == createdTask.id)
@@ -139,7 +144,8 @@ internal class MaintenanceTaskApiKtTest {
         val foundTasks = hcp1MaintenanceTaskApi.filterMaintenanceTasksBy(
             hcp1User,
             FilterChain(MaintenanceTaskByIdsFilter(ids = setOf(createdTask.id))),
-            config = hcp1cc).rows
+            config = hcp1cc
+        ).rows
 
         // Then
         assert(foundTasks.first() == createdTask)
@@ -154,14 +160,19 @@ internal class MaintenanceTaskApiKtTest {
 
         val identifierUuid = UUID.randomUUID().toString()
         val taskIdentifier = IdentifierDto(id = "SYSTEM-TEST|$identifierUuid", system = "SYSTEM-TEST", value = identifierUuid)
-        val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1)
-            .copy(identifier = listOf(taskIdentifier)), config = hcp1cc)
+        val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(
+            hcp1User,
+            maintenanceTaskDto(delegatedTo = hcp1)
+                .copy(identifier = listOf(taskIdentifier)),
+            config = hcp1cc
+        )
 
         // When
         val foundTasks = hcp1MaintenanceTaskApi.filterMaintenanceTasksBy(
             hcp1User,
             FilterChain(MaintenanceTaskByHcPartyAndIdentifiersFilter(healthcarePartyId = hcp1.id, identifiers = listOf(taskIdentifier))),
-            config = hcp1cc).rows
+            config = hcp1cc
+        ).rows
 
         // Then
         assert(foundTasks.first() == createdTask)
@@ -174,59 +185,72 @@ internal class MaintenanceTaskApiKtTest {
         val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
         val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
-        val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1)
-            .copy(created = Instant.now().plusSeconds(60 * 5).toEpochMilli()), config = hcp1cc)
+        val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(
+            hcp1User,
+            maintenanceTaskDto(delegatedTo = hcp1)
+                .copy(created = Instant.now().plusSeconds(60 * 5).toEpochMilli()),
+            config = hcp1cc
+        )
 
         // When
         val foundTasks = hcp1MaintenanceTaskApi.filterMaintenanceTasksBy(
             hcp1User,
             FilterChain(MaintenanceTaskAfterDateFilter(date = Instant.now().plusSeconds(60 * 4).toEpochMilli())),
-            config = hcp1cc).rows
+            config = hcp1cc
+        ).rows
 
         // Then
-        assert(foundTasks.first() == createdTask )
+        assert(foundTasks.first() == createdTask)
     }
 
     @Test
     fun test_FilterMaintenanceTaskByType_Success() = runBlocking {
-            // Given
-            val hcp1User = hcp1UserApi.getCurrentUser()
-            val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
-            val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
+        // Given
+        val hcp1User = hcp1UserApi.getCurrentUser()
+        val hcp1 = hcp1HcPartyApi.getCurrentHealthcareParty()
+        val hcp1cc = cryptoConfigFor(hcp1User, hcp1, hcp1Authorization, hcp1PrivKey)
 
-            val taskTypeUuid = UUID.randomUUID().toString()
-            val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(hcp1User, maintenanceTaskDto(delegatedTo = hcp1)
-                .copy(taskType = taskTypeUuid), config = hcp1cc)
+        val taskTypeUuid = UUID.randomUUID().toString()
+        val createdTask = hcp1MaintenanceTaskApi.createMaintenanceTask(
+            hcp1User,
+            maintenanceTaskDto(delegatedTo = hcp1)
+                .copy(taskType = taskTypeUuid),
+            config = hcp1cc
+        )
 
-            // When
-            val foundTasks = hcp1MaintenanceTaskApi.filterMaintenanceTasksBy(
-                hcp1User,
-                FilterChain(MaintenanceTaskByHcPartyAndTypeFilter(type = taskTypeUuid, healthcarePartyId = hcp1.id)),
-                config = hcp1cc).rows
+        // When
+        val foundTasks = hcp1MaintenanceTaskApi.filterMaintenanceTasksBy(
+            hcp1User,
+            FilterChain(MaintenanceTaskByHcPartyAndTypeFilter(type = taskTypeUuid, healthcarePartyId = hcp1.id)),
+            config = hcp1cc
+        ).rows
 
-            // Then
-            assert(foundTasks.first() == createdTask)
-        }
+        // Then
+        assert(foundTasks.first() == createdTask)
+    }
 
-    private fun cryptoConfigFor(user: UserDto,
-                                hcp: HealthcarePartyDto,
-                                authHeader: String,
-                                hcpPrivKey: RSAPrivateKey,
-                                additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
+    private fun cryptoConfigFor(
+        user: UserDto,
+        hcp: HealthcarePartyDto,
+        authHeader: String,
+        hcpPrivKey: RSAPrivateKey,
+        additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()
+    ): CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
         return maintenanceTaskCryptoConfig(
             LocalCrypto(
                 ExtendedTestUtils.dataOwnerWrapperFor(
                     iCureBackendUrl,
                     authHeader
-                ), mapOf(rsaKeyPairFor(hcp, hcpPrivKey)) + additionalRsaKeyPairs
-            ), user
+                ),
+                mapOf(rsaKeyPairFor(hcp, hcpPrivKey)) + additionalRsaKeyPairs
+            ),
+            user
         )
     }
 
     private fun rsaKeyPairFor(hcp: HealthcarePartyDto, hcpPrivKey: RSAPrivateKey): Pair<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> {
         return hcp.id to listOf(hcpPrivKey to hcp.publicKey!!.toPublicKey())
     }
-
 
     private fun maintenanceTaskDto(delegatedTo: HealthcarePartyDto) = MaintenanceTaskDto(
         id = UUID.randomUUID().toString(),
@@ -251,5 +275,4 @@ internal class MaintenanceTaskApiKtTest {
             )
         )
     )
-
 }

@@ -63,12 +63,13 @@ internal class HealthcarePartyApiKtTest {
                 firstName = "Jimmy",
                 lastName = "Materazzi",
                 parentId = parent.id
-            ).initHcParty().addNewKeyPair(parentUser, localCrypto, kp.public))
+            ).initHcParty().addNewKeyPair(parentUser, localCrypto, kp.public)
+        )
 
         val newUser = createUserForHcp(newHcp, parent, newUserPwd)
 
-        //val keyPath = "src/test/resources/io/icure/kraken/client/extendedapis/keys/${newHcp.id}-icc-priv.2048.key"
-        //Path.of(keyPath).absolute().createFile().appendText(kp.privateKeyAsString(), Charsets.UTF_8)
+        // val keyPath = "src/test/resources/io/icure/kraken/client/extendedapis/keys/${newHcp.id}-icc-priv.2048.key"
+        // Path.of(keyPath).absolute().createFile().appendText(kp.privateKeyAsString(), Charsets.UTF_8)
 
         Assertions.assertNotNull(newUser.login)
         Assertions.assertTrue(newHcp.aesExchangeKeys.containsKey(kp.publicKeyAsString()))
@@ -82,8 +83,10 @@ internal class HealthcarePartyApiKtTest {
         // Before
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
-        val parentLocalCrypto = LocalCrypto(ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
-                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+        val parentLocalCrypto = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization),
+            mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey())
             ),
             maintenanceTaskApi
         )
@@ -96,7 +99,7 @@ internal class HealthcarePartyApiKtTest {
 
         delay(5000) // User not active yet when trying to create data afterwards
 
-        //Then at first, only its own key is part of the aesExchangeKeys
+        // Then at first, only its own key is part of the aesExchangeKeys
         Assertions.assertTrue(newHcp.hcPartyKeys.isEmpty())
         Assertions.assertTrue(newHcp.aesExchangeKeys.isNotEmpty())
         Assertions.assertEquals(newHcp.aesExchangeKeys.keys.size, 1)
@@ -112,9 +115,11 @@ internal class HealthcarePartyApiKtTest {
             ExtendedTestUtils.dataOwnerWrapperFor(
                 iCureBackendUrl,
                 "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
-            ), mapOf(
+            ),
+            mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
-            ), newUserMaintenanceTaskApi
+            ),
+            newUserMaintenanceTaskApi
         )
 
         // When HCP creates data
@@ -133,9 +138,11 @@ internal class HealthcarePartyApiKtTest {
             "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}"
         )
         val newHcpLocalCrypto2 = LocalCrypto(
-            newHcpKp2DoResolver, mapOf(
+            newHcpKp2DoResolver,
+            mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
-            ), newUserMaintenanceTaskApi
+            ),
+            newUserMaintenanceTaskApi
         )
 
         // When HCP lost his keyPair and decides to use a new one
@@ -160,13 +167,18 @@ internal class HealthcarePartyApiKtTest {
         newHcpKp2DoResolver.clearCacheFor(newHcpUpdated.id)
 
         // When parent gets its maintenanceTasks to check if any task requires its action
-        val parentTasksToDo = maintenanceTaskApi.filterMaintenanceTasksBy(parentUser,
-            FilterChain(MaintenanceTaskByHcPartyAndTypeFilter(
-                parent.id,
-                "updateAesExchangeKey"
-            )),
-            null, null,
-            maintenanceTaskCryptoConfig(parentLocalCrypto, parentUser)).rows
+        val parentTasksToDo = maintenanceTaskApi.filterMaintenanceTasksBy(
+            parentUser,
+            FilterChain(
+                MaintenanceTaskByHcPartyAndTypeFilter(
+                    parent.id,
+                    "updateAesExchangeKey"
+                )
+            ),
+            null,
+            null,
+            maintenanceTaskCryptoConfig(parentLocalCrypto, parentUser)
+        ).rows
 
         // Then
         assert(parentTasksToDo.any { task -> task.properties.any { it.typedValue?.stringValue == newHcp.id } })
@@ -178,7 +190,7 @@ internal class HealthcarePartyApiKtTest {
         // Then He can't, because its key is not authorized for it
         assert(notDecryptedPatient.note == null)
 
-        //TODO Add giveAccessTo in order to add delegation back with new key
+        // TODO Add giveAccessTo in order to add delegation back with new key
     }
 
     @FlowPreview
@@ -187,8 +199,10 @@ internal class HealthcarePartyApiKtTest {
         // Before
         val parentUser = userApi.getCurrentUser()
         val parent = hcpartyApi.getCurrentHealthcareParty()
-        val parentLocalCrypto = LocalCrypto(ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization), mapOf(
-                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey()),
+        val parentLocalCrypto = LocalCrypto(
+            ExtendedTestUtils.dataOwnerWrapperFor(iCureBackendUrl, parentAuthorization),
+            mapOf(
+                parent.id to listOf(parentPrivKey to parent.publicKey!!.toPublicKey())
             ),
             maintenanceTaskApi
         )
@@ -209,9 +223,11 @@ internal class HealthcarePartyApiKtTest {
         val newUserPatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
         val newUserMaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = "Basic ${Base64.getEncoder().encodeToString("${newUser.login}:$newUserPwd".toByteArray(Charsets.UTF_8))}")
         val newHcpLocalCrypto1 = LocalCrypto(
-            dataOwnerResolver, mapOf(
+            dataOwnerResolver,
+            mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp1.private as RSAPrivateKey to newHcpKp1.public as RSAPublicKey)
-            ), newUserMaintenanceTaskApi
+            ),
+            newUserMaintenanceTaskApi
         )
 
         // When
@@ -220,9 +236,11 @@ internal class HealthcarePartyApiKtTest {
         // Given
         val newHcpKp2 = CryptoUtils.generateKeyPairRSA()
         val newHcpLocalCrypto2 = LocalCrypto(
-            dataOwnerResolver, mapOf(
+            dataOwnerResolver,
+            mapOf(
                 newUser.dataOwnerId() to listOf(newHcpKp2.private as RSAPrivateKey to newHcpKp2.public as RSAPublicKey)
-            ), newUserMaintenanceTaskApi
+            ),
+            newUserMaintenanceTaskApi
         )
 
         newHcp = newUserHcpApi.getCurrentHealthcareParty()
@@ -232,7 +250,6 @@ internal class HealthcarePartyApiKtTest {
         dataOwnerResolver.clearCacheFor(newHcp.id)
 
         delay(5000)
-
 
         // When HCP creates data
         val patientCreatedWithKey2 = newUserPatientApi.createPatient(newUser, PatientDto(id = UUID.randomUUID().toString(), firstName = "John", lastName = "Doe", note = "To be encrypted"), patientCryptoConfig(newHcpLocalCrypto2))

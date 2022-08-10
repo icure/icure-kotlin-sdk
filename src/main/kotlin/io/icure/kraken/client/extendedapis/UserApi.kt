@@ -1,7 +1,9 @@
+/* ktlint-disable filename */
 package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.models.UserDto
 
 fun UserDto.dataOwnerId() =
     this.healthcarePartyId ?: this.patientId ?: this.deviceId
-    ?: throw IllegalAccessException("User is not a data owner")
+        ?: throw IllegalAccessException("User is not a data owner")
+/* ktlint-enable filename */

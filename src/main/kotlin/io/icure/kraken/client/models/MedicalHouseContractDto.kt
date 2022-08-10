@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Contracts between the patient and the healthcare entity.
@@ -58,7 +56,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MedicalHouseContractDto (
+data class MedicalHouseContractDto(
 
     @field:JsonProperty("kine")
     val kine: kotlin.Boolean = false,
@@ -170,10 +168,17 @@ data class MedicalHouseContractDto (
      * Values: inscriptionStart,inscriptionEnd,suspension,coverageChange
      */
     enum class ChangeType(val value: kotlin.String) {
-        @JsonProperty(value = "inscriptionStart") inscriptionStart("inscriptionStart"),
-        @JsonProperty(value = "inscriptionEnd") inscriptionEnd("inscriptionEnd"),
-        @JsonProperty(value = "suspension") suspension("suspension"),
-        @JsonProperty(value = "coverageChange") coverageChange("coverageChange");
+        @JsonProperty(value = "inscriptionStart")
+        inscriptionStart("inscriptionStart"),
+
+        @JsonProperty(value = "inscriptionEnd")
+        inscriptionEnd("inscriptionEnd"),
+
+        @JsonProperty(value = "suspension")
+        suspension("suspension"),
+
+        @JsonProperty(value = "coverageChange")
+        coverageChange("coverageChange");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -185,11 +190,20 @@ data class MedicalHouseContractDto (
      * Values: notInsured,noReasonGiven,isHospitalized,outsideOfCountry,changeOfMutuality
      */
     enum class SuspensionReason(val value: kotlin.String) {
-        @JsonProperty(value = "notInsured") notInsured("notInsured"),
-        @JsonProperty(value = "noReasonGiven") noReasonGiven("noReasonGiven"),
-        @JsonProperty(value = "isHospitalized") isHospitalized("isHospitalized"),
-        @JsonProperty(value = "outsideOfCountry") outsideOfCountry("outsideOfCountry"),
-        @JsonProperty(value = "changeOfMutuality") changeOfMutuality("changeOfMutuality");
+        @JsonProperty(value = "notInsured")
+        notInsured("notInsured"),
+
+        @JsonProperty(value = "noReasonGiven")
+        noReasonGiven("noReasonGiven"),
+
+        @JsonProperty(value = "isHospitalized")
+        isHospitalized("isHospitalized"),
+
+        @JsonProperty(value = "outsideOfCountry")
+        outsideOfCountry("outsideOfCountry"),
+
+        @JsonProperty(value = "changeOfMutuality")
+        changeOfMutuality("changeOfMutuality");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -201,10 +215,17 @@ data class MedicalHouseContractDto (
      * Values: holderEid,holderPaper,legalrepresentativeEid,legalrepresentativePaper
      */
     enum class SignatureType(val value: kotlin.String) {
-        @JsonProperty(value = "holderEid") holderEid("holderEid"),
-        @JsonProperty(value = "holderPaper") holderPaper("holderPaper"),
-        @JsonProperty(value = "legalrepresentativeEid") legalrepresentativeEid("legalrepresentativeEid"),
-        @JsonProperty(value = "legalrepresentativePaper") legalrepresentativePaper("legalrepresentativePaper");
+        @JsonProperty(value = "holderEid")
+        holderEid("holderEid"),
+
+        @JsonProperty(value = "holderPaper")
+        holderPaper("holderPaper"),
+
+        @JsonProperty(value = "legalrepresentativeEid")
+        legalrepresentativeEid("legalrepresentativeEid"),
+
+        @JsonProperty(value = "legalrepresentativePaper")
+        legalrepresentativePaper("legalrepresentativePaper");
     }
 
     /* ktlint-enable enum-entry-name-case */

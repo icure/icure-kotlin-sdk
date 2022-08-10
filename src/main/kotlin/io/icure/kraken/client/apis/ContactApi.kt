@@ -16,35 +16,26 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-
-
+import io.icure.kraken.client.infrastructure.ApiClient
+import io.icure.kraken.client.infrastructure.ClientException
+import io.icure.kraken.client.infrastructure.MultiValueMap
+import io.icure.kraken.client.infrastructure.RequestConfig
+import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.models.ContactDto
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-
-
 import io.icure.kraken.client.models.IcureStubDto
 import io.icure.kraken.client.models.LabelledOccurenceDto
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
 import io.icure.kraken.client.models.ServiceDto
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
-import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
-import io.icure.kraken.client.infrastructure.MultiValueMap
-import io.icure.kraken.client.infrastructure.RequestConfig
-import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -59,32 +50,33 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Close contacts for Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Close contacts for Healthcare Party and secret foreign keys.
+     * Keys must be delimited by coma
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun closeForHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<ContactDto>  {
+    suspend fun closeForHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String): kotlin.collections.List<ContactDto> {
         val localVariableConfig = closeForHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation closeForHCPartyPatientForeignKeys
-    *
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return RequestConfig
-    */
-    fun closeForHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation closeForHCPartyPatientForeignKeys
+     *
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return RequestConfig
+     */
+    fun closeForHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -100,34 +92,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartySecretForeignKeys/close",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a contact with the current user
-    * Returns an instance of created contact.
-    * @param contactDto
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a contact with the current user
+     * Returns an instance of created contact.
+     * @param contactDto
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createContact(contactDto: ContactDto) : ContactDto  {
+    suspend fun createContact(contactDto: ContactDto): ContactDto {
         val localVariableConfig = createContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createContact
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun createContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
+     * To obtain the request config of the operation createContact
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun createContactRequestConfig(contactDto: ContactDto): RequestConfig<ContactDto> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -139,34 +133,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Create a batch of contacts
-    * Returns the modified contacts.
-    * @param contactDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Create a batch of contacts
+     * Returns the modified contacts.
+     * @param contactDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun createContacts(contactDto: kotlin.collections.List<ContactDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = createContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createContacts
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun createContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
+     * To obtain the request config of the operation createContacts
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun createContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>): RequestConfig<kotlin.collections.List<ContactDto>> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -178,34 +174,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete contacts.
-    * Response is a set containing the ID&#39;s of deleted contacts.
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete contacts.
+     * Response is a set containing the ID&#39;s of deleted contacts.
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteContacts(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteContacts(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteContactsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteContacts
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteContacts
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteContactsRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -217,38 +215,40 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts for the current user (HcParty) or the given hcparty in the filter
-    * Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param filterChainContact
-    * @param startDocumentId A Contact document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts for the current user (HcParty) or the given hcparty in the filter
+     * Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     * @param filterChainContact
+     * @param startDocumentId A Contact document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterContactsBy(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto  {
+    suspend fun filterContactsBy(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListContactDto {
         val localVariableConfig = filterContactsByRequestConfig(filterChainContact = filterChainContact, startDocumentId = startDocumentId, limit = limit)
 
         return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, PaginatedListContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation filterContactsBy
-    *
-    * @param filterChainContact
-    * @param startDocumentId A Contact document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun filterContactsByRequestConfig(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>> {
+     * To obtain the request config of the operation filterContactsBy
+     *
+     * @param filterChainContact
+     * @param startDocumentId A Contact document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun filterContactsByRequestConfig(filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>> {
         // val localVariableBody = filterChainContact
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -268,38 +268,40 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List services for the current user (HcParty) or the given hcparty in the filter
-    * Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param filterChainService
-    * @param startDocumentId A Contact document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListServiceDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List services for the current user (HcParty) or the given hcparty in the filter
+     * Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     * @param filterChainService
+     * @param startDocumentId A Contact document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListServiceDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterServicesBy(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListServiceDto  {
+    suspend fun filterServicesBy(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListServiceDto {
         val localVariableConfig = filterServicesByRequestConfig(filterChainService = filterChainService, startDocumentId = startDocumentId, limit = limit)
 
         return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, PaginatedListServiceDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation filterServicesBy
-    *
-    * @param filterChainService
-    * @param startDocumentId A Contact document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun filterServicesByRequestConfig(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>> {
+     * To obtain the request config of the operation filterServicesBy
+     *
+     * @param filterChainService
+     * @param startDocumentId A Contact document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun filterServicesByRequestConfig(filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>> {
         // val localVariableBody = filterChainService
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -319,42 +321,44 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts by opening date parties with(out) pagination
-    * Returns a list of contacts.
-    * @param startKey The contact openingDate
-    * @param endKey The contact max openingDate
-    * @param hcpartyid hcpartyid
-    * @param startDocumentId A contact party document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts by opening date parties with(out) pagination
+     * Returns a list of contacts.
+     * @param startKey The contact openingDate
+     * @param endKey The contact max openingDate
+     * @param hcpartyid hcpartyid
+     * @param startDocumentId A contact party document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findContactsByOpeningDate(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListContactDto  {
+    suspend fun findContactsByOpeningDate(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListContactDto {
         val localVariableConfig = findContactsByOpeningDateRequestConfig(startKey = startKey, endKey = endKey, hcpartyid = hcpartyid, startDocumentId = startDocumentId, limit = limit)
 
         return request<Unit, PaginatedListContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation findContactsByOpeningDate
-    *
-    * @param startKey The contact openingDate
-    * @param endKey The contact max openingDate
-    * @param hcpartyid hcpartyid
-    * @param startDocumentId A contact party document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun findContactsByOpeningDateRequestConfig(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation findContactsByOpeningDate
+     *
+     * @param startKey The contact openingDate
+     * @param endKey The contact max openingDate
+     * @param hcpartyid hcpartyid
+     * @param startDocumentId A contact party document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun findContactsByOpeningDateRequestConfig(startKey: kotlin.Long, endKey: kotlin.Long, hcpartyid: kotlin.String, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -377,34 +381,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byOpeningDate",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get a contact
-    *
-    * @param contactId
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get a contact
+     *
+     * @param contactId
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getContact(contactId: kotlin.String) : ContactDto  {
+    suspend fun getContact(contactId: kotlin.String): ContactDto {
         val localVariableConfig = getContactRequestConfig(contactId = contactId)
 
         return request<Unit, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getContact
-    *
-    * @param contactId
-    * @return RequestConfig
-    */
-    fun getContactRequestConfig(contactId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getContact
+     *
+     * @param contactId
+     * @return RequestConfig
+     */
+    fun getContactRequestConfig(contactId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -413,37 +419,39 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/contact/{contactId}".replace("{"+"contactId"+"}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/contact/{contactId}".replace("{" + "contactId" + "}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get contacts
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get contacts
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getContacts(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>  {
+    suspend fun getContacts(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<ContactDto> {
         val localVariableConfig = getContactsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getContacts
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun getContactsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getContacts
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun getContactsRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -455,32 +463,34 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get an empty content
-    *
-    * @return ContentDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get an empty content
+     *
+     * @return ContentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getEmptyContent() : ContentDto  {
+    suspend fun getEmptyContent(): ContentDto {
         val localVariableConfig = getEmptyContentRequestConfig()
 
         return request<Unit, ContentDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getEmptyContent
-    *
-    * @return RequestConfig
-    */
-    fun getEmptyContentRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getEmptyContent
+     *
+     * @return RequestConfig
+     */
+    fun getEmptyContentRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -492,36 +502,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service/content/empty",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get the list of all used codes frequencies in services
-    *
-    * @param codeType
-    * @param minOccurences
-    * @return kotlin.collections.List<LabelledOccurenceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get the list of all used codes frequencies in services
+     *
+     * @param codeType
+     * @param minOccurences
+     * @return kotlin.collections.List<LabelledOccurenceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getServiceCodesOccurences(codeType: kotlin.String, minOccurences: kotlin.Long) : kotlin.collections.List<LabelledOccurenceDto>  {
+    suspend fun getServiceCodesOccurences(codeType: kotlin.String, minOccurences: kotlin.Long): kotlin.collections.List<LabelledOccurenceDto> {
         val localVariableConfig = getServiceCodesOccurencesRequestConfig(codeType = codeType, minOccurences = minOccurences)
 
         return request<Unit, kotlin.collections.List<LabelledOccurenceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getServiceCodesOccurences
-    *
-    * @param codeType
-    * @param minOccurences
-    * @return RequestConfig
-    */
-    fun getServiceCodesOccurencesRequestConfig(codeType: kotlin.String, minOccurences: kotlin.Long) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getServiceCodesOccurences
+     *
+     * @param codeType
+     * @param minOccurences
+     * @return RequestConfig
+     */
+    fun getServiceCodesOccurencesRequestConfig(codeType: kotlin.String, minOccurences: kotlin.Long): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -530,37 +542,39 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/contact/service/codes/{codeType}/{minOccurences}".replace("{"+"codeType"+"}", "${URLEncoder.encode(codeType.toString(), Charsets.UTF_8)}").replace("{"+"minOccurences"+"}", "${URLEncoder.encode(minOccurences.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/contact/service/codes/{codeType}/{minOccurences}".replace("{" + "codeType" + "}", "${URLEncoder.encode(codeType.toString(), Charsets.UTF_8)}").replace("{" + "minOccurences" + "}", "${URLEncoder.encode(minOccurences.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List services with provided ids
-    * Returns a list of services
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<ServiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List services with provided ids
+     * Returns a list of services
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<ServiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getServices(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ServiceDto>  {
+    suspend fun getServices(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<ServiceDto> {
         val localVariableConfig = getServicesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getServices
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun getServicesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getServices
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun getServicesRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -572,36 +586,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List services linked to provided ids
-    * Returns a list of services
-    * @param listOfIdsDto
-    * @param linkType The type of the link (optional)
-    * @return kotlin.collections.List<ServiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List services linked to provided ids
+     * Returns a list of services
+     * @param listOfIdsDto
+     * @param linkType The type of the link (optional)
+     * @return kotlin.collections.List<ServiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getServicesLinkedTo(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?) : kotlin.collections.List<ServiceDto>  {
+    suspend fun getServicesLinkedTo(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?): kotlin.collections.List<ServiceDto> {
         val localVariableConfig = getServicesLinkedToRequestConfig(listOfIdsDto = listOfIdsDto, linkType = linkType)
 
         return request<ListOfIdsDto, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getServicesLinkedTo
-    *
-    * @param listOfIdsDto
-    * @param linkType The type of the link (optional)
-    * @return RequestConfig
-    */
-    fun getServicesLinkedToRequestConfig(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation getServicesLinkedTo
+     *
+     * @param listOfIdsDto
+     * @param linkType The type of the link (optional)
+     * @return RequestConfig
+     */
+    fun getServicesLinkedToRequestConfig(listOfIdsDto: ListOfIdsDto, linkType: kotlin.String?): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -618,36 +634,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service/linkedTo",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and service Id.
-    *
-    * @param hcPartyId
-    * @param serviceId
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and service Id.
+     *
+     * @param hcPartyId
+     * @param serviceId
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactByHCPartyServiceId(hcPartyId: kotlin.String, serviceId: kotlin.String) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactByHCPartyServiceId(hcPartyId: kotlin.String, serviceId: kotlin.String): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactByHCPartyServiceIdRequestConfig(hcPartyId = hcPartyId, serviceId = serviceId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactByHCPartyServiceId
-    *
-    * @param hcPartyId
-    * @param serviceId
-    * @return RequestConfig
-    */
-    fun listContactByHCPartyServiceIdRequestConfig(hcPartyId: kotlin.String, serviceId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listContactByHCPartyServiceId
+     *
+     * @param hcPartyId
+     * @param serviceId
+     * @return RequestConfig
+     */
+    fun listContactByHCPartyServiceIdRequestConfig(hcPartyId: kotlin.String, serviceId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -663,34 +681,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartyServiceId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By externalId.
-    *
-    * @param externalId
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By externalId.
+     *
+     * @param externalId
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsByExternalId(externalId: kotlin.String) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactsByExternalId(externalId: kotlin.String): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactsByExternalIdRequestConfig(externalId = externalId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsByExternalId
-    *
-    * @param externalId
-    * @return RequestConfig
-    */
-    fun listContactsByExternalIdRequestConfig(externalId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listContactsByExternalId
+     *
+     * @param externalId
+     * @return RequestConfig
+     */
+    fun listContactsByExternalIdRequestConfig(externalId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -705,36 +725,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byExternalId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and form Id.
-    *
-    * @param hcPartyId
-    * @param formId
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and form Id.
+     *
+     * @param hcPartyId
+     * @param formId
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsByHCPartyAndFormId(hcPartyId: kotlin.String, formId: kotlin.String) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactsByHCPartyAndFormId(hcPartyId: kotlin.String, formId: kotlin.String): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactsByHCPartyAndFormIdRequestConfig(hcPartyId = hcPartyId, formId = formId)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsByHCPartyAndFormId
-    *
-    * @param hcPartyId
-    * @param formId
-    * @return RequestConfig
-    */
-    fun listContactsByHCPartyAndFormIdRequestConfig(hcPartyId: kotlin.String, formId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listContactsByHCPartyAndFormId
+     *
+     * @param hcPartyId
+     * @param formId
+     * @return RequestConfig
+     */
+    fun listContactsByHCPartyAndFormIdRequestConfig(hcPartyId: kotlin.String, formId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -750,36 +772,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartyFormId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and form Id.
-    *
-    * @param hcPartyId
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and form Id.
+     *
+     * @param hcPartyId
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsByHCPartyAndFormIds(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactsByHCPartyAndFormIds(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactsByHCPartyAndFormIdsRequestConfig(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsByHCPartyAndFormIds
-    *
-    * @param hcPartyId
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun listContactsByHCPartyAndFormIdsRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation listContactsByHCPartyAndFormIds
+     *
+     * @param hcPartyId
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun listContactsByHCPartyAndFormIdsRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -794,36 +818,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartyFormIds",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and Patient foreign keys.
-    *
-    * @param hcPartyId
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and Patient foreign keys.
+     *
+     * @param hcPartyId
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsByHCPartyAndPatientForeignKeys
-    *
-    * @param hcPartyId
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun listContactsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation listContactsByHCPartyAndPatientForeignKeys
+     *
+     * @param hcPartyId
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun listContactsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -838,40 +864,42 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartyPatientForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId
-    * @param secretFKeys
-    * @param planOfActionsIds  (optional)
-    * @param skipClosedContacts  (optional)
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and secret foreign keys.
+     * Keys must be delimited by coma
+     * @param hcPartyId
+     * @param secretFKeys
+     * @param planOfActionsIds  (optional)
+     * @param skipClosedContacts  (optional)
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsByHCPartyAndPatientSecretFKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?) : kotlin.collections.List<ContactDto>  {
+    suspend fun listContactsByHCPartyAndPatientSecretFKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?): kotlin.collections.List<ContactDto> {
         val localVariableConfig = listContactsByHCPartyAndPatientSecretFKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys, planOfActionsIds = planOfActionsIds, skipClosedContacts = skipClosedContacts)
 
         return request<Unit, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsByHCPartyAndPatientSecretFKeys
-    *
-    * @param hcPartyId
-    * @param secretFKeys
-    * @param planOfActionsIds  (optional)
-    * @param skipClosedContacts  (optional)
-    * @return RequestConfig
-    */
-    fun listContactsByHCPartyAndPatientSecretFKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listContactsByHCPartyAndPatientSecretFKeys
+     *
+     * @param hcPartyId
+     * @param secretFKeys
+     * @param planOfActionsIds  (optional)
+     * @param skipClosedContacts  (optional)
+     * @return RequestConfig
+     */
+    fun listContactsByHCPartyAndPatientSecretFKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String, planOfActionsIds: kotlin.String?, skipClosedContacts: kotlin.Boolean?): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -893,36 +921,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartySecretForeignKeys",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List contacts found By Healthcare Party and secret foreign keys.
-    * Keys must be delimited by coma
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return kotlin.collections.List<IcureStubDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List contacts found By Healthcare Party and secret foreign keys.
+     * Keys must be delimited by coma
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return kotlin.collections.List<IcureStubDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<IcureStubDto>  {
+    suspend fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String): kotlin.collections.List<IcureStubDto> {
         val localVariableConfig = listContactsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
         return request<Unit, kotlin.collections.List<IcureStubDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listContactsDelegationsStubsByHCPartyAndPatientForeignKeys
-    *
-    * @param hcPartyId
-    * @param secretFKeys
-    * @return RequestConfig
-    */
-    fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listContactsDelegationsStubsByHCPartyAndPatientForeignKeys
+     *
+     * @param hcPartyId
+     * @param secretFKeys
+     * @return RequestConfig
+     */
+    fun listContactsDelegationsStubsByHCPartyAndPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -938,34 +968,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/byHcPartySecretForeignKeys/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List services by related association id
-    * Returns a list of services
-    * @param associationId
-    * @return kotlin.collections.List<ServiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List services by related association id
+     * Returns a list of services
+     * @param associationId
+     * @return kotlin.collections.List<ServiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listServicesByAssociationId(associationId: kotlin.String) : kotlin.collections.List<ServiceDto>  {
+    suspend fun listServicesByAssociationId(associationId: kotlin.String): kotlin.collections.List<ServiceDto> {
         val localVariableConfig = listServicesByAssociationIdRequestConfig(associationId = associationId)
 
         return request<Unit, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listServicesByAssociationId
-    *
-    * @param associationId
-    * @return RequestConfig
-    */
-    fun listServicesByAssociationIdRequestConfig(associationId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listServicesByAssociationId
+     *
+     * @param associationId
+     * @return RequestConfig
+     */
+    fun listServicesByAssociationIdRequestConfig(associationId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -980,36 +1012,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service/associationId",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * List services linked to a health element
-    * Returns the list of services linked to the provided health element id
-    * @param healthElementId
-    * @param hcPartyId hcPartyId
-    * @return kotlin.collections.List<ServiceDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * List services linked to a health element
+     * Returns the list of services linked to the provided health element id
+     * @param healthElementId
+     * @param hcPartyId hcPartyId
+     * @return kotlin.collections.List<ServiceDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listServicesByHealthElementId(healthElementId: kotlin.String, hcPartyId: kotlin.String) : kotlin.collections.List<ServiceDto>  {
+    suspend fun listServicesByHealthElementId(healthElementId: kotlin.String, hcPartyId: kotlin.String): kotlin.collections.List<ServiceDto> {
         val localVariableConfig = listServicesByHealthElementIdRequestConfig(healthElementId = healthElementId, hcPartyId = hcPartyId)
 
         return request<Unit, kotlin.collections.List<ServiceDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listServicesByHealthElementId
-    *
-    * @param healthElementId
-    * @param hcPartyId hcPartyId
-    * @return RequestConfig
-    */
-    fun listServicesByHealthElementIdRequestConfig(healthElementId: kotlin.String, hcPartyId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listServicesByHealthElementId
+     *
+     * @param healthElementId
+     * @param hcPartyId hcPartyId
+     * @return RequestConfig
+     */
+    fun listServicesByHealthElementIdRequestConfig(healthElementId: kotlin.String, hcPartyId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -1021,37 +1055,39 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/contact/service/healthElementId/{healthElementId}".replace("{"+"healthElementId"+"}", "${URLEncoder.encode(healthElementId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/contact/service/healthElementId/{healthElementId}".replace("{" + "healthElementId" + "}", "${URLEncoder.encode(healthElementId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get ids of contacts matching the provided filter for the current user (HcParty)
-    *
-    * @param abstractFilterDtoContact
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get ids of contacts matching the provided filter for the current user (HcParty)
+     *
+     * @param abstractFilterDtoContact
+     * @return kotlin.collections.List<kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchContactsBy(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchContactsBy(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>): kotlin.collections.List<kotlin.String> {
         val localVariableConfig = matchContactsByRequestConfig(abstractFilterDtoContact = abstractFilterDtoContact)
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation matchContactsBy
-    *
-    * @param abstractFilterDtoContact
-    * @return RequestConfig
-    */
-    fun matchContactsByRequestConfig(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>> {
+     * To obtain the request config of the operation matchContactsBy
+     *
+     * @param abstractFilterDtoContact
+     * @return RequestConfig
+     */
+    fun matchContactsByRequestConfig(abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>): RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>> {
         // val localVariableBody = abstractFilterDtoContact
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1063,34 +1099,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get ids of services matching the provided filter for the current user
-    *
-    * @param abstractFilterDtoService
-    * @return kotlin.collections.List<kotlin.String>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get ids of services matching the provided filter for the current user
+     *
+     * @param abstractFilterDtoService
+     * @return kotlin.collections.List<kotlin.String>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun matchServicesBy(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>) : kotlin.collections.List<kotlin.String>  {
+    suspend fun matchServicesBy(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>): kotlin.collections.List<kotlin.String> {
         val localVariableConfig = matchServicesByRequestConfig(abstractFilterDtoService = abstractFilterDtoService)
 
         return request<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>, kotlin.collections.List<kotlin.String>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation matchServicesBy
-    *
-    * @param abstractFilterDtoService
-    * @return RequestConfig
-    */
-    fun matchServicesByRequestConfig(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>) : RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>> {
+     * To obtain the request config of the operation matchServicesBy
+     *
+     * @param abstractFilterDtoService
+     * @return RequestConfig
+     */
+    fun matchServicesByRequestConfig(abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>): RequestConfig<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>> {
         // val localVariableBody = abstractFilterDtoService
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1102,34 +1140,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/service/match",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a contact
-    * Returns the modified contact.
-    * @param contactDto
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a contact
+     * Returns the modified contact.
+     * @param contactDto
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyContact(contactDto: ContactDto) : ContactDto  {
+    suspend fun modifyContact(contactDto: ContactDto): ContactDto {
         val localVariableConfig = modifyContactRequestConfig(contactDto = contactDto)
 
         return request<ContactDto, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyContact
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun modifyContactRequestConfig(contactDto: ContactDto) : RequestConfig<ContactDto> {
+     * To obtain the request config of the operation modifyContact
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun modifyContactRequestConfig(contactDto: ContactDto): RequestConfig<ContactDto> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1141,34 +1181,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modify a batch of contacts
-    * Returns the modified contacts.
-    * @param contactDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modify a batch of contacts
+     * Returns the modified contacts.
+     * @param contactDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyContacts(contactDto: kotlin.collections.List<ContactDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun modifyContacts(contactDto: kotlin.collections.List<ContactDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = modifyContactsRequestConfig(contactDto = contactDto)
 
         return request<kotlin.collections.List<ContactDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyContacts
-    *
-    * @param contactDto
-    * @return RequestConfig
-    */
-    fun modifyContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>) : RequestConfig<kotlin.collections.List<ContactDto>> {
+     * To obtain the request config of the operation modifyContacts
+     *
+     * @param contactDto
+     * @return RequestConfig
+     */
+    fun modifyContactsRequestConfig(contactDto: kotlin.collections.List<ContactDto>): RequestConfig<kotlin.collections.List<ContactDto>> {
         // val localVariableBody = contactDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1180,34 +1222,36 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Update delegations in healthElements.
-    * Keys must be delimited by coma
-    * @param icureStubDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Update delegations in healthElements.
+     * Keys must be delimited by coma
+     * @param icureStubDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun modifyContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = modifyContactsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyContactsDelegations
-    *
-    * @param icureStubDto
-    * @return RequestConfig
-    */
-    fun modifyContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
+     * To obtain the request config of the operation modifyContactsDelegations
+     *
+     * @param icureStubDto
+     * @return RequestConfig
+     */
+    fun modifyContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>): RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1219,36 +1263,38 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delegates a contact to a healthcare party
-    * It delegates a contact to a healthcare party (By current healthcare party). Returns the contact with new delegations.
-    * @param contactId
-    * @param delegationDto
-    * @return ContactDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delegates a contact to a healthcare party
+     * It delegates a contact to a healthcare party (By current healthcare party). Returns the contact with new delegations.
+     * @param contactId
+     * @param delegationDto
+     * @return ContactDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun newContactDelegations(contactId: kotlin.String, delegationDto: DelegationDto) : ContactDto  {
+    suspend fun newContactDelegations(contactId: kotlin.String, delegationDto: DelegationDto): ContactDto {
         val localVariableConfig = newContactDelegationsRequestConfig(contactId = contactId, delegationDto = delegationDto)
 
         return request<DelegationDto, ContactDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation newContactDelegations
-    *
-    * @param contactId
-    * @param delegationDto
-    * @return RequestConfig
-    */
-    fun newContactDelegationsRequestConfig(contactId: kotlin.String, delegationDto: DelegationDto) : RequestConfig<DelegationDto> {
+     * To obtain the request config of the operation newContactDelegations
+     *
+     * @param contactId
+     * @param delegationDto
+     * @return RequestConfig
+     */
+    fun newContactDelegationsRequestConfig(contactId: kotlin.String, delegationDto: DelegationDto): RequestConfig<DelegationDto> {
         // val localVariableBody = delegationDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1257,37 +1303,39 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/contact/{contactId}/delegate".replace("{"+"contactId"+"}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/contact/{contactId}/delegate".replace("{" + "contactId" + "}", "${URLEncoder.encode(contactId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Update delegations in healthElements.
-    * Keys must be delimited by coma
-    * @param icureStubDto
-    * @return kotlin.collections.List<ContactDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Update delegations in healthElements.
+     * Keys must be delimited by coma
+     * @param icureStubDto
+     * @return kotlin.collections.List<ContactDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>) : kotlin.collections.List<ContactDto>  {
+    suspend fun setContactsDelegations(icureStubDto: kotlin.collections.List<IcureStubDto>): kotlin.collections.List<ContactDto> {
         val localVariableConfig = setContactsDelegationsRequestConfig(icureStubDto = icureStubDto)
 
         return request<kotlin.collections.List<IcureStubDto>, kotlin.collections.List<ContactDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setContactsDelegations
-    *
-    * @param icureStubDto
-    * @return RequestConfig
-    */
-    fun setContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>) : RequestConfig<kotlin.collections.List<IcureStubDto>> {
+     * To obtain the request config of the operation setContactsDelegations
+     *
+     * @param icureStubDto
+     * @return RequestConfig
+     */
+    fun setContactsDelegationsRequestConfig(icureStubDto: kotlin.collections.List<IcureStubDto>): RequestConfig<kotlin.collections.List<IcureStubDto>> {
         // val localVariableBody = icureStubDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -1299,7 +1347,7 @@ class ContactApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/contact/delegations",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

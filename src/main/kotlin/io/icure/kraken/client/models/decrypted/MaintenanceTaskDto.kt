@@ -12,10 +12,9 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.IdentifierDto
@@ -48,8 +47,7 @@ import io.icure.kraken.client.models.PropertyStubDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-
-data class MaintenanceTaskDto (
+data class MaintenanceTaskDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,
@@ -126,6 +124,7 @@ data class MaintenanceTaskDto (
     val encryptedSelf: kotlin.String? = null
 
 ) {
+    /* ktlint-disable enum-entry-name-case */
 
     /**
      *
@@ -133,9 +132,18 @@ data class MaintenanceTaskDto (
      * Values: pending,ongoing,cancelled,completed
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "pending") pending("pending"),
-        @JsonProperty(value = "ongoing") ongoing("ongoing"),
-        @JsonProperty(value = "cancelled") cancelled("cancelled"),
-        @JsonProperty(value = "completed") completed("completed");
+        @JsonProperty(value = "pending")
+        pending("pending"),
+
+        @JsonProperty(value = "ongoing")
+        ongoing("ongoing"),
+
+        @JsonProperty(value = "cancelled")
+        cancelled("cancelled"),
+
+        @JsonProperty(value = "completed")
+        completed("completed");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -16,24 +16,21 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.ListOfIdsDto
-import io.icure.kraken.client.models.ReceiptDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.ReceiptDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import java.net.URLEncoder
 import java.nio.ByteBuffer
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +45,31 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Creates a receipt
-    *
-    * @param receiptDto
-    * @return ReceiptDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a receipt
+     *
+     * @param receiptDto
+     * @return ReceiptDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createReceipt(receiptDto: ReceiptDto) : ReceiptDto  {
+    suspend fun createReceipt(receiptDto: ReceiptDto): ReceiptDto {
         val localVariableConfig = createReceiptRequestConfig(receiptDto = receiptDto)
 
         return request<ReceiptDto, ReceiptDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createReceipt
-    *
-    * @param receiptDto
-    * @return RequestConfig
-    */
-    fun createReceiptRequestConfig(receiptDto: ReceiptDto) : RequestConfig<ReceiptDto> {
+     * To obtain the request config of the operation createReceipt
+     *
+     * @param receiptDto
+     * @return RequestConfig
+     */
+    fun createReceiptRequestConfig(receiptDto: ReceiptDto): RequestConfig<ReceiptDto> {
         // val localVariableBody = receiptDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +81,36 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/receipt",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes receipts
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes receipts
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteReceipts(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteReceipts(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteReceiptsRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteReceipts
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteReceiptsRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteReceipts
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteReceiptsRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -122,34 +122,36 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/receipt/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a receipt
-    *
-    * @param receiptId
-    * @return ReceiptDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a receipt
+     *
+     * @param receiptId
+     * @return ReceiptDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReceipt(receiptId: kotlin.String) : ReceiptDto  {
+    suspend fun getReceipt(receiptId: kotlin.String): ReceiptDto {
         val localVariableConfig = getReceiptRequestConfig(receiptId = receiptId)
 
         return request<Unit, ReceiptDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getReceipt
-    *
-    * @param receiptId
-    * @return RequestConfig
-    */
-    fun getReceiptRequestConfig(receiptId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getReceipt
+     *
+     * @param receiptId
+     * @return RequestConfig
+     */
+    fun getReceiptRequestConfig(receiptId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -158,41 +160,43 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/{receiptId}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/receipt/{receiptId}".replace("{" + "receiptId" + "}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Get an attachment
-    *
-    * @param receiptId
-    * @param attachmentId
-    * @param enckeys
-    * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Get an attachment
+     *
+     * @param receiptId
+     * @param attachmentId
+     * @param enckeys
+     * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>  {
+    suspend fun getReceiptAttachment(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String): kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> {
         val localVariableConfig = getReceiptAttachmentRequestConfig(receiptId = receiptId, attachmentId = attachmentId, enckeys = enckeys)
 
         return request<Unit, kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getReceiptAttachment
-    *
-    * @param receiptId
-    * @param attachmentId
-    * @param enckeys
-    * @return RequestConfig
-    */
-    fun getReceiptAttachmentRequestConfig(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getReceiptAttachment
+     *
+     * @param receiptId
+     * @param attachmentId
+     * @param enckeys
+     * @return RequestConfig
+     */
+    fun getReceiptAttachmentRequestConfig(receiptId: kotlin.String, attachmentId: kotlin.String, enckeys: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -204,37 +208,39 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/{receiptId}/attachment/{attachmentId}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{"+"attachmentId"+"}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/receipt/{receiptId}/attachment/{attachmentId}".replace("{" + "receiptId" + "}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{" + "attachmentId" + "}", "${URLEncoder.encode(attachmentId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a receipt
-    *
-    * @param ref
-    * @return kotlin.collections.List<ReceiptDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a receipt
+     *
+     * @param ref
+     * @return kotlin.collections.List<ReceiptDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listByReference(ref: kotlin.String) : kotlin.collections.List<ReceiptDto>  {
+    suspend fun listByReference(ref: kotlin.String): kotlin.collections.List<ReceiptDto> {
         val localVariableConfig = listByReferenceRequestConfig(ref = ref)
 
         return request<Unit, kotlin.collections.List<ReceiptDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation listByReference
-    *
-    * @param ref
-    * @return RequestConfig
-    */
-    fun listByReferenceRequestConfig(ref: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation listByReference
+     *
+     * @param ref
+     * @return RequestConfig
+     */
+    fun listByReferenceRequestConfig(ref: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -243,37 +249,39 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/receipt/byRef/{ref}".replace("{"+"ref"+"}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/receipt/byRef/{ref}".replace("{" + "ref" + "}", "${URLEncoder.encode(ref.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Updates a receipt
-    *
-    * @param receiptDto
-    * @return ReceiptDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Updates a receipt
+     *
+     * @param receiptDto
+     * @return ReceiptDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyReceipt(receiptDto: ReceiptDto) : ReceiptDto  {
+    suspend fun modifyReceipt(receiptDto: ReceiptDto): ReceiptDto {
         val localVariableConfig = modifyReceiptRequestConfig(receiptDto = receiptDto)
 
         return request<ReceiptDto, ReceiptDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyReceipt
-    *
-    * @param receiptDto
-    * @return RequestConfig
-    */
-    fun modifyReceiptRequestConfig(receiptDto: ReceiptDto) : RequestConfig<ReceiptDto> {
+     * To obtain the request config of the operation modifyReceipt
+     *
+     * @param receiptDto
+     * @return RequestConfig
+     */
+    fun modifyReceiptRequestConfig(receiptDto: ReceiptDto): RequestConfig<ReceiptDto> {
         // val localVariableBody = receiptDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -285,40 +293,42 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/receipt",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Creates a receipt&#39;s attachment
-    *
-    * @param receiptId
-    * @param blobType
-    * @param body
-    * @param enckeys  (optional)
-    * @return ReceiptDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a receipt&#39;s attachment
+     *
+     * @param receiptId
+     * @param blobType
+     * @param body
+     * @param enckeys  (optional)
+     * @return ReceiptDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : ReceiptDto  {
+    suspend fun setReceiptAttachment(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): ReceiptDto {
         val localVariableConfig = setReceiptAttachmentRequestConfig(receiptId = receiptId, blobType = blobType, body = body, enckeys = enckeys)
 
         return request<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, ReceiptDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation setReceiptAttachment
-    *
-    * @param receiptId
-    * @param blobType
-    * @param body
-    * @param enckeys  (optional)
-    * @return RequestConfig
-    */
-    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?) : RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
+     * To obtain the request config of the operation setReceiptAttachment
+     *
+     * @param receiptId
+     * @param blobType
+     * @param body
+     * @param enckeys  (optional)
+     * @return RequestConfig
+     */
+    fun setReceiptAttachmentRequestConfig(receiptId: kotlin.String, blobType: kotlin.String, body: kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>, enckeys: kotlin.String?): RequestConfig<kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>> {
         // val localVariableBody = body
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -332,10 +342,10 @@ class ReceiptApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.PUT,
-            path = "/rest/v2/receipt/{receiptId}/attachment/{blobType}".replace("{"+"receiptId"+"}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{"+"blobType"+"}", "${URLEncoder.encode(blobType.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/receipt/{receiptId}/attachment/{blobType}".replace("{" + "receiptId" + "}", "${URLEncoder.encode(receiptId.toString(), Charsets.UTF_8)}").replace("{" + "blobType" + "}", "${URLEncoder.encode(blobType.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Members of the careteam involved in this approach
@@ -30,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class CareTeamMembershipDto (
+data class CareTeamMembershipDto(
 
     @field:JsonProperty("startDate")
     val startDate: kotlin.Long? = null,
@@ -58,11 +56,20 @@ data class CareTeamMembershipDto (
      * Values: doctor,mutuality,patient,specialist,other
      */
     enum class MembershipType(val value: kotlin.String) {
-        @JsonProperty(value = "doctor") doctor("doctor"),
-        @JsonProperty(value = "mutuality") mutuality("mutuality"),
-        @JsonProperty(value = "patient") patient("patient"),
-        @JsonProperty(value = "specialist") specialist("specialist"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "doctor")
+        doctor("doctor"),
+
+        @JsonProperty(value = "mutuality")
+        mutuality("mutuality"),
+
+        @JsonProperty(value = "patient")
+        patient("patient"),
+
+        @JsonProperty(value = "specialist")
+        specialist("specialist"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */

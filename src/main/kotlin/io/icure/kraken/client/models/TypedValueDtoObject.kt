@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -32,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TypedValueDtoObject (
+data class TypedValueDtoObject(
 
     @field:JsonProperty("type")
     val type: TypedValueDtoObject.Type? = null,
@@ -66,13 +64,26 @@ data class TypedValueDtoObject (
      * Values: bOOLEAN,iNTEGER,dOUBLE,sTRING,dATE,cLOB,jSON
      */
     enum class Type(val value: kotlin.String) {
-        @JsonProperty(value = "BOOLEAN") bOOLEAN("BOOLEAN"),
-        @JsonProperty(value = "INTEGER") iNTEGER("INTEGER"),
-        @JsonProperty(value = "DOUBLE") dOUBLE("DOUBLE"),
-        @JsonProperty(value = "STRING") sTRING("STRING"),
-        @JsonProperty(value = "DATE") dATE("DATE"),
-        @JsonProperty(value = "CLOB") cLOB("CLOB"),
-        @JsonProperty(value = "JSON") jSON("JSON");
+        @JsonProperty(value = "BOOLEAN")
+        bOOLEAN("BOOLEAN"),
+
+        @JsonProperty(value = "INTEGER")
+        iNTEGER("INTEGER"),
+
+        @JsonProperty(value = "DOUBLE")
+        dOUBLE("DOUBLE"),
+
+        @JsonProperty(value = "STRING")
+        sTRING("STRING"),
+
+        @JsonProperty(value = "DATE")
+        dATE("DATE"),
+
+        @JsonProperty(value = "CLOB")
+        cLOB("CLOB"),
+
+        @JsonProperty(value = "JSON")
+        jSON("JSON");
     }
 
     /* ktlint-enable enum-entry-name-case */

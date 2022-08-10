@@ -11,6 +11,6 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class MaintenanceTaskByIdsFilter(
-	override val desc: String? = null,
-	val ids: Set<String>
+    override val desc: String? = null,
+    val ids: Set<String>
 ) : AbstractFilterDto<MaintenanceTaskDto>

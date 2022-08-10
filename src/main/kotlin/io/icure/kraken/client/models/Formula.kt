@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -27,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class Formula (
+data class Formula(
 
     @field:JsonProperty("value")
     val `value`: kotlin.String? = null,
@@ -45,12 +43,23 @@ data class Formula (
      * Values: onCreate,onLoad,onChange,onSave,onDestroy,onLoadPropertiesEditor
      */
     enum class Lifecycle(val value: kotlin.String) {
-        @JsonProperty(value = "OnCreate") onCreate("OnCreate"),
-        @JsonProperty(value = "OnLoad") onLoad("OnLoad"),
-        @JsonProperty(value = "OnChange") onChange("OnChange"),
-        @JsonProperty(value = "OnSave") onSave("OnSave"),
-        @JsonProperty(value = "OnDestroy") onDestroy("OnDestroy"),
-        @JsonProperty(value = "OnLoadPropertiesEditor") onLoadPropertiesEditor("OnLoadPropertiesEditor");
+        @JsonProperty(value = "OnCreate")
+        onCreate("OnCreate"),
+
+        @JsonProperty(value = "OnLoad")
+        onLoad("OnLoad"),
+
+        @JsonProperty(value = "OnChange")
+        onChange("OnChange"),
+
+        @JsonProperty(value = "OnSave")
+        onSave("OnSave"),
+
+        @JsonProperty(value = "OnDestroy")
+        onDestroy("OnDestroy"),
+
+        @JsonProperty(value = "OnLoadPropertiesEditor")
+        onLoadPropertiesEditor("OnLoadPropertiesEditor");
     }
 
     /* ktlint-enable enum-entry-name-case */

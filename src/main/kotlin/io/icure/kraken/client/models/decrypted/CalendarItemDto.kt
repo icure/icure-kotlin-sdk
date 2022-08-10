@@ -21,7 +21,6 @@ import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.FlowItemDto
 
-
 /**
  *
  *
@@ -67,7 +66,7 @@ import io.icure.kraken.client.models.FlowItemDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class CalendarItemDto (
+data class CalendarItemDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,

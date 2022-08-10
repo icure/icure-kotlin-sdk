@@ -12,15 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.IngredientDto
-import io.icure.kraken.client.models.PharmaceuticalFormStubDto
-import io.icure.kraken.client.models.RouteOfAdministrationDto
-import io.icure.kraken.client.models.SamTextDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -44,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AmpComponentDto (
+data class AmpComponentDto(
 
     @field:JsonProperty("from")
     val from: kotlin.Long? = null,
@@ -101,9 +95,14 @@ data class AmpComponentDto (
      * Values: y,n,x
      */
     enum class Crushable(val value: kotlin.String) {
-        @JsonProperty(value = "Y") y("Y"),
-        @JsonProperty(value = "N") n("N"),
-        @JsonProperty(value = "X") x("X");
+        @JsonProperty(value = "Y")
+        y("Y"),
+
+        @JsonProperty(value = "N")
+        n("N"),
+
+        @JsonProperty(value = "X")
+        x("X");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -115,9 +114,14 @@ data class AmpComponentDto (
      * Values: y,n,x
      */
     enum class ContainsAlcohol(val value: kotlin.String) {
-        @JsonProperty(value = "Y") y("Y"),
-        @JsonProperty(value = "N") n("N"),
-        @JsonProperty(value = "X") x("X");
+        @JsonProperty(value = "Y")
+        y("Y"),
+
+        @JsonProperty(value = "N")
+        n("N"),
+
+        @JsonProperty(value = "X")
+        x("X");
     }
 
     /* ktlint-enable enum-entry-name-case */

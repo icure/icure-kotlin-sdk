@@ -13,13 +13,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class DataOwnerApi(val healthcarePartyApi: HealthcarePartyApi, val patientApi: PatientApi, val deviceApi: DeviceApi) {
     suspend inline fun <reified T> getDataOwner(dataOwnerId: String): T? {
         return try {
-            when(T::class){
+            when (T::class) {
                 HealthcarePartyDto::class -> healthcarePartyApi.getHealthcareParty(dataOwnerId) as? T?
                 PatientDto::class -> patientApi.getPatient(dataOwnerId) as? T?
                 DeviceDto::class -> deviceApi.getDevice(dataOwnerId) as? T?
                 else -> null
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             null
         }
     }

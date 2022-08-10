@@ -12,14 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CopaymentDto
-import io.icure.kraken.client.models.PricingDto
-import io.icure.kraken.client.models.ReimbursementCriterionDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -45,7 +40,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ReimbursementDto (
+data class ReimbursementDto(
 
     @field:JsonProperty("from")
     val from: kotlin.Long? = null,
@@ -108,10 +103,17 @@ data class ReimbursementDto (
      * Values: p,a,h,r
      */
     enum class DeliveryEnvironment(val value: kotlin.String) {
-        @JsonProperty(value = "P") p("P"),
-        @JsonProperty(value = "A") a("A"),
-        @JsonProperty(value = "H") h("H"),
-        @JsonProperty(value = "R") r("R");
+        @JsonProperty(value = "P")
+        p("P"),
+
+        @JsonProperty(value = "A")
+        a("A"),
+
+        @JsonProperty(value = "H")
+        h("H"),
+
+        @JsonProperty(value = "R")
+        r("R");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -123,8 +125,11 @@ data class ReimbursementDto (
      * Values: cNK,pSEUDO
      */
     enum class CodeType(val value: kotlin.String) {
-        @JsonProperty(value = "CNK") cNK("CNK"),
-        @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
+        @JsonProperty(value = "CNK")
+        cNK("CNK"),
+
+        @JsonProperty(value = "PSEUDO")
+        pSEUDO("PSEUDO");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -136,8 +141,11 @@ data class ReimbursementDto (
      * Values: m,v
      */
     enum class Multiple(val value: kotlin.String) {
-        @JsonProperty(value = "M") m("M"),
-        @JsonProperty(value = "V") v("V");
+        @JsonProperty(value = "M")
+        m("M"),
+
+        @JsonProperty(value = "V")
+        v("V");
     }
 
     /* ktlint-enable enum-entry-name-case */

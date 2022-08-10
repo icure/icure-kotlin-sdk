@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 
-
 /**
  *
  *
@@ -45,7 +44,7 @@ import io.icure.kraken.client.models.DelegationDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ClassificationDto (
+data class ClassificationDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,

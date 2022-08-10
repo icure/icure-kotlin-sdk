@@ -12,13 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.InvoiceItem
-import io.icure.kraken.client.models.PatientDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -40,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class EfactInvoice (
+data class EfactInvoice(
 
     @field:JsonProperty("items")
     val items: kotlin.collections.List<InvoiceItem> = listOf(),
@@ -91,11 +87,20 @@ data class EfactInvoice (
      * Values: chimiotherapy,professionalDisease,workAccident,accident,other
      */
     enum class Reason(val value: kotlin.String) {
-        @JsonProperty(value = "Chimiotherapy") chimiotherapy("Chimiotherapy"),
-        @JsonProperty(value = "ProfessionalDisease") professionalDisease("ProfessionalDisease"),
-        @JsonProperty(value = "WorkAccident") workAccident("WorkAccident"),
-        @JsonProperty(value = "Accident") accident("Accident"),
-        @JsonProperty(value = "Other") other("Other");
+        @JsonProperty(value = "Chimiotherapy")
+        chimiotherapy("Chimiotherapy"),
+
+        @JsonProperty(value = "ProfessionalDisease")
+        professionalDisease("ProfessionalDisease"),
+
+        @JsonProperty(value = "WorkAccident")
+        workAccident("WorkAccident"),
+
+        @JsonProperty(value = "Accident")
+        accident("Accident"),
+
+        @JsonProperty(value = "Other")
+        other("Other");
     }
 
     /* ktlint-enable enum-entry-name-case */

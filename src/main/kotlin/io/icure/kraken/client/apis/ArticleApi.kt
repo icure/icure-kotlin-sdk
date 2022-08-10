@@ -16,24 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.ArticleDto
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.ListOfIdsDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.ArticleDto
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.ListOfIdsDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -48,30 +43,31 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
     }
 
     /**
-    * Creates a article
-    *
-    * @param articleDto
-    * @return ArticleDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a article
+     *
+     * @param articleDto
+     * @return ArticleDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createArticle(articleDto: ArticleDto) : ArticleDto  {
+    suspend fun createArticle(articleDto: ArticleDto): ArticleDto {
         val localVariableConfig = createArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createArticle
-    *
-    * @param articleDto
-    * @return RequestConfig
-    */
-    fun createArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
+     * To obtain the request config of the operation createArticle
+     *
+     * @param articleDto
+     * @return RequestConfig
+     */
+    fun createArticleRequestConfig(articleDto: ArticleDto): RequestConfig<ArticleDto> {
         // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -83,34 +79,36 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Deletes articles
-    *
-    * @param listOfIdsDto
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Deletes articles
+     *
+     * @param listOfIdsDto
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteArticles(listOfIdsDto: ListOfIdsDto) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteArticles(listOfIdsDto: ListOfIdsDto): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteArticlesRequestConfig(listOfIdsDto = listOfIdsDto)
 
         return request<ListOfIdsDto, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteArticles
-    *
-    * @param listOfIdsDto
-    * @return RequestConfig
-    */
-    fun deleteArticlesRequestConfig(listOfIdsDto: ListOfIdsDto) : RequestConfig<ListOfIdsDto> {
+     * To obtain the request config of the operation deleteArticles
+     *
+     * @param listOfIdsDto
+     * @return RequestConfig
+     */
+    fun deleteArticlesRequestConfig(listOfIdsDto: ListOfIdsDto): RequestConfig<ListOfIdsDto> {
         // val localVariableBody = listOfIdsDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -122,34 +120,36 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/article/delete/batch",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets an article
-    *
-    * @param articleId
-    * @return ArticleDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets an article
+     *
+     * @param articleId
+     * @return ArticleDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticle(articleId: kotlin.String) : ArticleDto  {
+    suspend fun getArticle(articleId: kotlin.String): ArticleDto {
         val localVariableConfig = getArticleRequestConfig(articleId = articleId)
 
         return request<Unit, ArticleDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getArticle
-    *
-    * @param articleId
-    * @return RequestConfig
-    */
-    fun getArticleRequestConfig(articleId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getArticle
+     *
+     * @param articleId
+     * @return RequestConfig
+     */
+    fun getArticleRequestConfig(articleId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -158,35 +158,37 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/article/{articleId}".replace("{"+"articleId"+"}", "${URLEncoder.encode(articleId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/article/{articleId}".replace("{" + "articleId" + "}", "${URLEncoder.encode(articleId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets all articles
-    *
-    * @return kotlin.collections.List<ArticleDto>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets all articles
+     *
+     * @return kotlin.collections.List<ArticleDto>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getArticles() : kotlin.collections.List<ArticleDto>  {
+    suspend fun getArticles(): kotlin.collections.List<ArticleDto> {
         val localVariableConfig = getArticlesRequestConfig()
 
         return request<Unit, kotlin.collections.List<ArticleDto>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getArticles
-    *
-    * @return RequestConfig
-    */
-    fun getArticlesRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation getArticles
+     *
+     * @return RequestConfig
+     */
+    fun getArticlesRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -198,34 +200,36 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Modifies an article
-    *
-    * @param articleDto
-    * @return ArticleDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Modifies an article
+     *
+     * @param articleDto
+     * @return ArticleDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyArticle(articleDto: ArticleDto) : ArticleDto  {
+    suspend fun modifyArticle(articleDto: ArticleDto): ArticleDto {
         val localVariableConfig = modifyArticleRequestConfig(articleDto = articleDto)
 
         return request<ArticleDto, ArticleDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyArticle
-    *
-    * @param articleDto
-    * @return RequestConfig
-    */
-    fun modifyArticleRequestConfig(articleDto: ArticleDto) : RequestConfig<ArticleDto> {
+     * To obtain the request config of the operation modifyArticle
+     *
+     * @param articleDto
+     * @return RequestConfig
+     */
+    fun modifyArticleRequestConfig(articleDto: ArticleDto): RequestConfig<ArticleDto> {
         // val localVariableBody = articleDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -237,7 +241,7 @@ class ArticleApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient
             path = "/rest/v2/article",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

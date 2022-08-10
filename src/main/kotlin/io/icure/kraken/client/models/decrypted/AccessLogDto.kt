@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 
-
 /**
  * This entity represents Access Log.
  *
@@ -48,7 +47,7 @@ import io.icure.kraken.client.models.DelegationDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AccessLogDto (
+data class AccessLogDto(
 
     /* The Id of the Access log. We encourage using either a v4 UUID or a HL7 Id */
     @field:JsonProperty("id")

@@ -11,9 +11,9 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class InvoiceByHcPartyCodeDateFilter(
-        override val desc: String? = null,
-        val healthcarePartyId: String? = null,
-        val code: String? = null,
-        val startInvoiceDate: Long? = null,
-        val endInvoiceDate: Long? = null
+    override val desc: String? = null,
+    val healthcarePartyId: String? = null,
+    val code: String? = null,
+    val startInvoiceDate: Long? = null,
+    val endInvoiceDate: Long? = null
 ) : AbstractFilterDto<InvoiceDto>

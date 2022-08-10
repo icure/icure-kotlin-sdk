@@ -16,23 +16,18 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.AuthenticationResponse
-import io.icure.kraken.client.models.LoginCredentials
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.AuthenticationResponse
+import io.icure.kraken.client.models.LoginCredentials
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -47,30 +42,31 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     }
 
     /**
-    * login
-    * Login using username and password
-    * @param loginCredentials
-    * @return AuthenticationResponse
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * login
+     * Login using username and password
+     * @param loginCredentials
+     * @return AuthenticationResponse
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun login(loginCredentials: LoginCredentials) : AuthenticationResponse  {
+    suspend fun login(loginCredentials: LoginCredentials): AuthenticationResponse {
         val localVariableConfig = loginRequestConfig(loginCredentials = loginCredentials)
 
         return request<LoginCredentials, AuthenticationResponse>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation login
-    *
-    * @param loginCredentials
-    * @return RequestConfig
-    */
-    fun loginRequestConfig(loginCredentials: LoginCredentials) : RequestConfig<LoginCredentials> {
+     * To obtain the request config of the operation login
+     *
+     * @param loginCredentials
+     * @return RequestConfig
+     */
+    fun loginRequestConfig(loginCredentials: LoginCredentials): RequestConfig<LoginCredentials> {
         // val localVariableBody = loginCredentials
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -82,32 +78,34 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/auth/login",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * logout
-    * Logout
-    * @return AuthenticationResponse
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * logout
+     * Logout
+     * @return AuthenticationResponse
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logout() : AuthenticationResponse  {
+    suspend fun logout(): AuthenticationResponse {
         val localVariableConfig = logoutRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation logout
-    *
-    * @return RequestConfig
-    */
-    fun logoutRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation logout
+     *
+     * @return RequestConfig
+     */
+    fun logoutRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -119,32 +117,34 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * logout
-    * Logout
-    * @return AuthenticationResponse
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * logout
+     * Logout
+     * @return AuthenticationResponse
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun logoutPost() : AuthenticationResponse  {
+    suspend fun logoutPost(): AuthenticationResponse {
         val localVariableConfig = logoutPostRequestConfig()
 
         return request<Unit, AuthenticationResponse>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation logoutPost
-    *
-    * @return RequestConfig
-    */
-    fun logoutPostRequestConfig() : RequestConfig<Unit> {
+     * To obtain the request config of the operation logoutPost
+     *
+     * @return RequestConfig
+     */
+    fun logoutPostRequestConfig(): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -156,36 +156,38 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             path = "/rest/v2/auth/logout",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * token
-    * Get token for subsequent operation
-    * @param method
-    * @param path
-    * @return kotlin.String
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * token
+     * Get token for subsequent operation
+     * @param method
+     * @param path
+     * @return kotlin.String
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String  {
+    suspend fun token(method: kotlin.String, path: kotlin.String): kotlin.String {
         val localVariableConfig = tokenRequestConfig(method = method, path = path)
 
         return request<Unit, kotlin.String>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation token
-    *
-    * @param method
-    * @param path
-    * @return RequestConfig
-    */
-    fun tokenRequestConfig(method: kotlin.String, path: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation token
+     *
+     * @param method
+     * @param path
+     * @return RequestConfig
+     */
+    fun tokenRequestConfig(method: kotlin.String, path: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -194,10 +196,10 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/auth/token/{method}/{path}".replace("{"+"method"+"}", "${URLEncoder.encode(method.toString(), Charsets.UTF_8)}").replace("{"+"path"+"}", "${URLEncoder.encode(path.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/auth/token/{method}/{path}".replace("{" + "method" + "}", "${URLEncoder.encode(method.toString(), Charsets.UTF_8)}").replace("{" + "path" + "}", "${URLEncoder.encode(path.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

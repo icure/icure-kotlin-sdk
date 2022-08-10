@@ -12,12 +12,11 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.MeasureDto
-import io.icure.kraken.client.models.MedicationDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.icure.kraken.client.models.MeasureDto
+import io.icure.kraken.client.models.MedicationDto
 import io.icure.kraken.client.models.TimeSeriesDto
 
 /**
@@ -40,7 +39,7 @@ import io.icure.kraken.client.models.TimeSeriesDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ContentDto (
+data class ContentDto(
 
     @field:JsonProperty("stringValue")
     val stringValue: kotlin.String? = null,

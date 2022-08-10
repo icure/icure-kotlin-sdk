@@ -12,16 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AmpComponentDto
-import io.icure.kraken.client.models.AmppDto
-import io.icure.kraken.client.models.CompanyDto
-import io.icure.kraken.client.models.SamTextDto
-import io.icure.kraken.client.models.VmpStubDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -48,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AmpDto (
+data class AmpDto(
 
     @field:JsonProperty("id")
     val id: kotlin.String,
@@ -115,9 +108,14 @@ data class AmpDto (
      * Values: aUTHORIZED,sUSPENDED,rEVOKED
      */
     enum class Status(val value: kotlin.String) {
-        @JsonProperty(value = "AUTHORIZED") aUTHORIZED("AUTHORIZED"),
-        @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
-        @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
+        @JsonProperty(value = "AUTHORIZED")
+        aUTHORIZED("AUTHORIZED"),
+
+        @JsonProperty(value = "SUSPENDED")
+        sUSPENDED("SUSPENDED"),
+
+        @JsonProperty(value = "REVOKED")
+        rEVOKED("REVOKED");
     }
 
     /* ktlint-enable enum-entry-name-case */
@@ -129,8 +127,11 @@ data class AmpDto (
      * Values: aLLOPATHIC,hOMEOPATHIC
      */
     enum class MedicineType(val value: kotlin.String) {
-        @JsonProperty(value = "ALLOPATHIC") aLLOPATHIC("ALLOPATHIC"),
-        @JsonProperty(value = "HOMEOPATHIC") hOMEOPATHIC("HOMEOPATHIC");
+        @JsonProperty(value = "ALLOPATHIC")
+        aLLOPATHIC("ALLOPATHIC"),
+
+        @JsonProperty(value = "HOMEOPATHIC")
+        hOMEOPATHIC("HOMEOPATHIC");
     }
 
     /* ktlint-enable enum-entry-name-case */

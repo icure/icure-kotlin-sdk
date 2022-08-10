@@ -14,52 +14,38 @@
 package io.icure.kraken.client.apis
 
 /* ktlint-disable no-wildcard-imports */
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.EntityTemplateDto
-import io.icure.kraken.client.models.ListOfIdsDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
-import java.io.*
-
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.json.JsonReadFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
-
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import io.icure.kraken.client.models.filter.AbstractFilterDto
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.full.memberFunctions
-import kotlin.reflect.full.memberProperties
-
-import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.EntityTemplateDto
+import io.icure.kraken.client.models.ListOfIdsDto
+import io.icure.kraken.client.models.filter.AbstractFilterDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
-import java.nio.ByteBuffer
-import kotlin.reflect.full.callSuspendBy
-import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
+import java.io.*
+import java.nio.ByteBuffer
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
+import kotlin.reflect.full.callSuspendBy
+import kotlin.reflect.full.memberFunctions
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.javaType
 /* ktlint-enable no-wildcard-imports */
 
 /**
@@ -81,7 +67,7 @@ class EntityTemplateApiTest() {
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
-        .registerModule(object:SimpleModule() {
+        .registerModule(object : SimpleModule() {
             override fun setupModule(context: SetupContext?) {
                 addDeserializer(AbstractFilterDto::class.java, FilterDeserializer())
                 addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())
@@ -91,23 +77,23 @@ class EntityTemplateApiTest() {
         })
         .registerModule(JavaTimeModule())
         .apply {
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
-        configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-    }
+            setSerializationInclusion(JsonInclude.Include.NON_NULL)
+            configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true)
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+        }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
-            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
+            TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let { bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
                 val deleteFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
-                bodies.forEach {body ->
-                    //deleteFunction?.call(api, body?.id)
+                bodies.forEach { body ->
+                    // deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
-                        when(it.type.javaType) {
+                        when (it.type.javaType) {
                             EntityTemplateDto::class.java -> it to objectMapper.convertValue(body, EntityTemplateDto::class.java)
                             EntityTemplateApi::class.java -> it to api(credentialsFile)
                             else -> null
@@ -121,7 +107,6 @@ class EntityTemplateApiTest() {
         }
     }
 
-
     /**
      * Create a EntityTemplate
      *
@@ -132,42 +117,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createEntityTemplateTest(fileName: String) = runBlocking {
-
+    fun createEntityTemplateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createEntityTemplate")) {
             assertTrue(true, "Test of createEntityTemplate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createEntityTemplate")
                 val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter<EntityTemplateDto>(fileName, "createEntityTemplate.entityTemplateDto")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createEntityTemplate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? EntityTemplateDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).createEntityTemplate(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.createEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("EntityTemplateDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("EntityTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<EntityTemplateDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<EntityTemplateDto>() {}
-                    })
+                    )
                     assertAreEquals("createEntityTemplate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -180,8 +166,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -198,42 +183,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun createEntityTemplatesTest(fileName: String) = runBlocking {
-
+    fun createEntityTemplatesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "createEntityTemplates")) {
             assertTrue(true, "Test of createEntityTemplates endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createEntityTemplates")
                 val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter<kotlin.collections.List<EntityTemplateDto>>(fileName, "createEntityTemplates.entityTemplateDto")!!.map {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "createEntityTemplates") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<EntityTemplateDto>
+                } as kotlin.collections.List<EntityTemplateDto>
 
                 val response = api(credentialsFile).createEntityTemplates(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.createEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("createEntityTemplates", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -246,8 +232,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -264,42 +249,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun deleteEntityTemplateTest(fileName: String) = runBlocking {
-
+    fun deleteEntityTemplateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "deleteEntityTemplate")) {
             assertTrue(true, "Test of deleteEntityTemplate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "deleteEntityTemplate")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "deleteEntityTemplate.listOfIdsDto")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "deleteEntityTemplate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).deleteEntityTemplate(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "EntityTemplateApi.deleteEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<DocIdentifier>? != null) {
-                        if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<DocIdentifier>? != null) {
+                            if ("kotlin.collections.List<DocIdentifier>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<DocIdentifier>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<DocIdentifier>>() {}
+                            object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
-                    })
+                    )
                     assertAreEquals("deleteEntityTemplate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -312,8 +298,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -330,56 +315,57 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun findAllEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
-
+    fun findAllEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "findAllEntityTemplatesByKeyword")) {
             assertTrue(true, "Test of findAllEntityTemplatesByKeyword endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findAllEntityTemplatesByKeyword")
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAllEntityTemplatesByKeyword.type")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val keyword: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findAllEntityTemplatesByKeyword.keyword")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "findAllEntityTemplatesByKeyword.includeEntities")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "findAllEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).findAllEntityTemplatesByKeyword(type = type,keyword = keyword,includeEntities = includeEntities)
+                val response = api(credentialsFile).findAllEntityTemplatesByKeyword(type = type, keyword = keyword, includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.findAllEntityTemplatesByKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("findAllEntityTemplatesByKeyword", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -392,8 +378,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -410,42 +395,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getEntityTemplateTest(fileName: String) = runBlocking {
-
+    fun getEntityTemplateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getEntityTemplate")) {
             assertTrue(true, "Test of getEntityTemplate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEntityTemplate")
                 val entityTemplateId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getEntityTemplate.entityTemplateId")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getEntityTemplate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getEntityTemplate(entityTemplateId = entityTemplateId)
 
                 val testFileName = "EntityTemplateApi.getEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("EntityTemplateDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("EntityTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<EntityTemplateDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<EntityTemplateDto>() {}
-                    })
+                    )
                     assertAreEquals("getEntityTemplate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -458,8 +444,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -476,42 +461,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun getEntityTemplatesTest(fileName: String) = runBlocking {
-
+    fun getEntityTemplatesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "getEntityTemplates")) {
             assertTrue(true, "Test of getEntityTemplates endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getEntityTemplates")
                 val listOfIdsDto: ListOfIdsDto = TestUtils.getParameter<ListOfIdsDto>(fileName, "getEntityTemplates.listOfIdsDto")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "getEntityTemplates") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? ListOfIdsDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).getEntityTemplates(listOfIdsDto = listOfIdsDto)
 
                 val testFileName = "EntityTemplateApi.getEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("getEntityTemplates", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -524,8 +510,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -542,56 +527,57 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listAllEntityTemplatesByTest(fileName: String) = runBlocking {
-
+    fun listAllEntityTemplatesByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listAllEntityTemplatesBy")) {
             assertTrue(true, "Test of listAllEntityTemplatesBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listAllEntityTemplatesBy")
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listAllEntityTemplatesBy.type")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val searchString: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listAllEntityTemplatesBy.searchString")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listAllEntityTemplatesBy.includeEntities")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listAllEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listAllEntityTemplatesBy(type = type,searchString = searchString,includeEntities = includeEntities)
+                val response = api(credentialsFile).listAllEntityTemplatesBy(type = type, searchString = searchString, includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listAllEntityTemplatesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("listAllEntityTemplatesBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -604,8 +590,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -622,63 +607,64 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listEntityTemplatesByTest(fileName: String) = runBlocking {
-
+    fun listEntityTemplatesByTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listEntityTemplatesBy")) {
             assertTrue(true, "Test of listEntityTemplatesBy endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listEntityTemplatesBy")
                 val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.userId")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.type")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val searchString: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesBy.searchString")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listEntityTemplatesBy.includeEntities")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesBy") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listEntityTemplatesBy(userId = userId,type = type,searchString = searchString,includeEntities = includeEntities)
+                val response = api(credentialsFile).listEntityTemplatesBy(userId = userId, type = type, searchString = searchString, includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listEntityTemplatesBy"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("listEntityTemplatesBy", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -691,8 +677,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -709,63 +694,64 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun listEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
-
+    fun listEntityTemplatesByKeywordTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "listEntityTemplatesByKeyword")) {
             assertTrue(true, "Test of listEntityTemplatesByKeyword endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "listEntityTemplatesByKeyword")
                 val userId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.userId")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val type: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.type")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val keyword: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "listEntityTemplatesByKeyword.keyword")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
-                    }
+                }
                 val includeEntities: kotlin.Boolean? = TestUtils.getParameter<kotlin.Boolean>(fileName, "listEntityTemplatesByKeyword.includeEntities")?.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "listEntityTemplatesByKeyword") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? kotlin.Boolean ?: it
-                    }
+                }
 
-                val response = api(credentialsFile).listEntityTemplatesByKeyword(userId = userId,type = type,keyword = keyword,includeEntities = includeEntities)
+                val response = api(credentialsFile).listEntityTemplatesByKeyword(userId = userId, type = type, keyword = keyword, includeEntities = includeEntities)
 
                 val testFileName = "EntityTemplateApi.listEntityTemplatesByKeyword"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("listEntityTemplatesByKeyword", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -778,8 +764,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -796,42 +781,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyEntityTemplateTest(fileName: String) = runBlocking {
-
+    fun modifyEntityTemplateTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyEntityTemplate")) {
             assertTrue(true, "Test of modifyEntityTemplate endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyEntityTemplate")
                 val entityTemplateDto: EntityTemplateDto = TestUtils.getParameter<EntityTemplateDto>(fileName, "modifyEntityTemplate.entityTemplateDto")!!.let {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyEntityTemplate") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } as? EntityTemplateDto ?: it
-                    }
+                }
 
                 val response = api(credentialsFile).modifyEntityTemplate(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.modifyEntityTemplate"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("EntityTemplateDto".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("EntityTemplateDto".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<EntityTemplateDto>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<EntityTemplateDto>() {}
-                    })
+                    )
                     assertAreEquals("modifyEntityTemplate", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -844,8 +830,7 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
@@ -862,42 +847,43 @@ class EntityTemplateApiTest() {
      */
     @ParameterizedTest
     @MethodSource("fileNames") // six numbers
-	fun modifyEntityTemplatesTest(fileName: String) = runBlocking {
-
+    fun modifyEntityTemplatesTest(fileName: String) = runBlocking {
         if (TestUtils.skipEndpoint(fileName, "modifyEntityTemplates")) {
             assertTrue(true, "Test of modifyEntityTemplates endpoint has been skipped")
         } else {
-            try{
+            try {
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "modifyEntityTemplates")
                 val entityTemplateDto: kotlin.collections.List<EntityTemplateDto> = TestUtils.getParameter<kotlin.collections.List<EntityTemplateDto>>(fileName, "modifyEntityTemplates.entityTemplateDto")!!.map {
                     (it as? EntityTemplateDto)?.takeIf { TestUtils.isAutoRev(fileName, "modifyEntityTemplates") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
+                        val id = it::class.memberProperties.first { it.name == "id" }
+                        val currentRev = api(credentialsFile).getEntityTemplate(id.getter.call(it) as String).rev
+                        it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<EntityTemplateDto>
+                } as kotlin.collections.List<EntityTemplateDto>
 
                 val response = api(credentialsFile).modifyEntityTemplates(entityTemplateDto = entityTemplateDto)
 
                 val testFileName = "EntityTemplateApi.modifyEntityTemplates"
                 val file = File(workingFolder + File.separator + this::class.simpleName + File.separator + fileName, "$testFileName.json")
                 try {
-                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(file,  if (response as? List<EntityTemplateDto>? != null) {
-                        if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
-                            object : TypeReference<List<String>>() {}
+                    val objectFromFile = (response as? Flow<ByteBuffer>)?.let { file.readAsFlow() } ?: objectMapper.readValue(
+                        file,
+                        if (response as? List<EntityTemplateDto>? != null) {
+                            if ("kotlin.collections.List<EntityTemplateDto>".contains("String>")) {
+                                object : TypeReference<List<String>>() {}
+                            } else {
+                                object : TypeReference<List<EntityTemplateDto>>() {}
+                            }
+                        } else if (response as? kotlin.collections.Map<String, String>? != null) {
+                            object : TypeReference<Map<String, String>>() {}
                         } else {
-                            object : TypeReference<List<EntityTemplateDto>>() {}
+                            object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
                         }
-                    } else if(response as? kotlin.collections.Map<String, String>? != null){
-                        object : TypeReference<Map<String,String>>() {}
-                    } else {
-                        object : TypeReference<kotlin.collections.List<EntityTemplateDto>>() {}
-                    })
+                    )
                     assertAreEquals("modifyEntityTemplates", objectFromFile, response)
                     println("Comparison successful")
-                }
-                catch (e: Exception) {
+                } catch (e: Exception) {
                     when (e) {
                         is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
                             file.parentFile.mkdirs()
@@ -910,19 +896,17 @@ class EntityTemplateApiTest() {
                         }
                     }
                 }
-            }
-            finally {
+            } finally {
                 TestUtils.deleteAfterElements(fileName)
                 alreadyCreatedObjects.remove(fileName)
             }
         }
     }
 
-
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -934,36 +918,39 @@ class EntityTemplateApiTest() {
 
                 val diffs = objectFromFile
                     .takeUnless { (it as ArrayList<Any>).size != (response as ArrayList<Any>).size }
-                    ?.let { objectFromFile
-                        .zip(response as Iterable<Any>)
-                        .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
-                        .flatten()
-                        .toList()
+                    ?.let {
+                        objectFromFile
+                            .zip(response as Iterable<Any>)
+                            .map { pair -> filterDiffs(pair.first, pair.second, pair.first.differences(pair.second), toSkip) }
+                            .flatten()
+                            .toList()
                     }
                     ?: listOf(Diff("Lists are of different sizes ${(objectFromFile as ArrayList<Any>).size} <-> ${(response as ArrayList<Any>).size}", PropertyType.ListItem, emptyList(), objectFromFile, response))
                 assertTrue(diffs.isEmpty(), diffs.joinToString { it.toString() })
             }
             objectFromFile as? Flow<ByteBuffer> != null -> {
-                assertTrue(objectFromFile.toList().let {
-                    it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
-                        val siz = b.remaining()
-                        (pos + siz) to a.also {
-                            b.get(a, pos, siz)
-                        }
-                    }.second
-                }.contentEquals(
-                    (response as Flow<ByteBuffer>).toList().let {
+                assertTrue(
+                    objectFromFile.toList().let {
                         it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
                             val siz = b.remaining()
                             (pos + siz) to a.also {
                                 b.get(a, pos, siz)
                             }
                         }.second
-                    }
+                    }.contentEquals(
+                        (response as Flow<ByteBuffer>).toList().let {
+                            it.fold(0 to ByteArray(it.sumOf { it.remaining() })) { (pos, a), b ->
+                                val siz = b.remaining()
+                                (pos + siz) to a.also {
+                                    b.get(a, pos, siz)
+                                }
+                            }.second
+                        }
+                    )
                 )
-                )}
+            }
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip: kotlin.collections.List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

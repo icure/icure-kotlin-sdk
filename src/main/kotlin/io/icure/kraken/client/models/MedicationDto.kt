@@ -12,19 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DurationDto
-import io.icure.kraken.client.models.MedicinalproductDto
-import io.icure.kraken.client.models.ParagraphAgreementDto
-import io.icure.kraken.client.models.RegimenItemDto
-import io.icure.kraken.client.models.RenewalDto
-import io.icure.kraken.client.models.SubstanceproductDto
-import io.icure.kraken.client.models.SuspensionDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * The details of prescribed or suggested medication
@@ -74,7 +64,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MedicationDto (
+data class MedicationDto(
 
     @field:JsonProperty("compoundPrescription")
     val compoundPrescription: kotlin.String? = null,

@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * A high frequency time-series containing the ts in ms from the start (double) and the values
@@ -32,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class TimeSeriesDto (
+data class TimeSeriesDto(
 
     @field:JsonProperty("fields")
     val fields: kotlin.collections.List<kotlin.String> = listOf(),

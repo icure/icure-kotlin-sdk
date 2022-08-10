@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.TelecomDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * This entity represents an Address
@@ -38,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class AddressDto (
+data class AddressDto(
 
     /* List of other contact details available through telecom services, ex: email, phone number, fax, etc. */
     @field:JsonProperty("telecoms")
@@ -98,18 +95,41 @@ data class AddressDto (
      * Values: home,work,vacation,hospital,clinic,hq,other,temporary,postal,diplomatic,reference,careaddress
      */
     enum class AddressType(val value: kotlin.String) {
-        @JsonProperty(value = "home") home("home"),
-        @JsonProperty(value = "work") work("work"),
-        @JsonProperty(value = "vacation") vacation("vacation"),
-        @JsonProperty(value = "hospital") hospital("hospital"),
-        @JsonProperty(value = "clinic") clinic("clinic"),
-        @JsonProperty(value = "hq") hq("hq"),
-        @JsonProperty(value = "other") other("other"),
-        @JsonProperty(value = "temporary") temporary("temporary"),
-        @JsonProperty(value = "postal") postal("postal"),
-        @JsonProperty(value = "diplomatic") diplomatic("diplomatic"),
-        @JsonProperty(value = "reference") reference("reference"),
-        @JsonProperty(value = "careaddress") careaddress("careaddress");
+        @JsonProperty(value = "home")
+        home("home"),
+
+        @JsonProperty(value = "work")
+        work("work"),
+
+        @JsonProperty(value = "vacation")
+        vacation("vacation"),
+
+        @JsonProperty(value = "hospital")
+        hospital("hospital"),
+
+        @JsonProperty(value = "clinic")
+        clinic("clinic"),
+
+        @JsonProperty(value = "hq")
+        hq("hq"),
+
+        @JsonProperty(value = "other")
+        other("other"),
+
+        @JsonProperty(value = "temporary")
+        temporary("temporary"),
+
+        @JsonProperty(value = "postal")
+        postal("postal"),
+
+        @JsonProperty(value = "diplomatic")
+        diplomatic("diplomatic"),
+
+        @JsonProperty(value = "reference")
+        reference("reference"),
+
+        @JsonProperty(value = "careaddress")
+        careaddress("careaddress");
     }
 
     /* ktlint-enable enum-entry-name-case */

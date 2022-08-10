@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Financial information (Bank, bank account) used to reimburse the patient.
@@ -33,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FinancialInstitutionInformationDto (
+data class FinancialInstitutionInformationDto(
 
     @field:JsonProperty("preferredFiiForPartners")
     val preferredFiiForPartners: kotlin.collections.List<kotlin.String> = listOf(),

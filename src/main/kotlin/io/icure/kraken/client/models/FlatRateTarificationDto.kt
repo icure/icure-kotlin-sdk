@@ -12,12 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.ValorisationDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  *
@@ -31,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FlatRateTarificationDto (
+data class FlatRateTarificationDto(
 
     @field:JsonProperty("valorisations")
     val valorisations: kotlin.collections.List<ValorisationDto> = listOf(),
@@ -59,10 +56,17 @@ data class FlatRateTarificationDto (
      * Values: physician,physiotherapist,nurse,ptd
      */
     enum class FlatRateType(val value: kotlin.String) {
-        @JsonProperty(value = "physician") physician("physician"),
-        @JsonProperty(value = "physiotherapist") physiotherapist("physiotherapist"),
-        @JsonProperty(value = "nurse") nurse("nurse"),
-        @JsonProperty(value = "ptd") ptd("ptd");
+        @JsonProperty(value = "physician")
+        physician("physician"),
+
+        @JsonProperty(value = "physiotherapist")
+        physiotherapist("physiotherapist"),
+
+        @JsonProperty(value = "nurse")
+        nurse("nurse"),
+
+        @JsonProperty(value = "ptd")
+        ptd("ptd");
     }
 
     /* ktlint-enable enum-entry-name-case */

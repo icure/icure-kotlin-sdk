@@ -16,25 +16,19 @@ package io.icure.kraken.client.apis
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.DocIdentifier
-
-import io.icure.kraken.client.models.MaintenanceTaskDto
-import io.icure.kraken.client.models.PaginatedListMaintenanceTaskDto
-
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.infrastructure.ClientException
-import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
-import kotlinx.coroutines.flow.flowOf
-import java.nio.ByteBuffer
+import io.icure.kraken.client.infrastructure.ServerException
+import io.icure.kraken.client.models.DocIdentifier
+import io.icure.kraken.client.models.MaintenanceTaskDto
+import io.icure.kraken.client.models.PaginatedListMaintenanceTaskDto
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.net.URLEncoder
 import java.util.*
 import javax.inject.Named
-import kotlinx.coroutines.flow.Flow
-import java.net.URLEncoder
 /* ktlint-enable no-wildcard-imports */
 
 @Named
@@ -49,30 +43,31 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
     }
 
     /**
-    * Creates a maintenanceTask
-    *
-    * @param maintenanceTaskDto
-    * @return MaintenanceTaskDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Creates a maintenanceTask
+     *
+     * @param maintenanceTaskDto
+     * @return MaintenanceTaskDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createMaintenanceTask(maintenanceTaskDto: MaintenanceTaskDto) : MaintenanceTaskDto  {
+    suspend fun createMaintenanceTask(maintenanceTaskDto: MaintenanceTaskDto): MaintenanceTaskDto {
         val localVariableConfig = createMaintenanceTaskRequestConfig(maintenanceTaskDto = maintenanceTaskDto)
 
         return request<MaintenanceTaskDto, MaintenanceTaskDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation createMaintenanceTask
-    *
-    * @param maintenanceTaskDto
-    * @return RequestConfig
-    */
-    fun createMaintenanceTaskRequestConfig(maintenanceTaskDto: MaintenanceTaskDto) : RequestConfig<MaintenanceTaskDto> {
+     * To obtain the request config of the operation createMaintenanceTask
+     *
+     * @param maintenanceTaskDto
+     * @return RequestConfig
+     */
+    fun createMaintenanceTaskRequestConfig(maintenanceTaskDto: MaintenanceTaskDto): RequestConfig<MaintenanceTaskDto> {
         // val localVariableBody = maintenanceTaskDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -84,34 +79,36 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
             path = "/rest/v2/maintenancetask",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Delete maintenanceTasks
-    *
-    * @param maintenanceTaskIds
-    * @return kotlin.collections.List<DocIdentifier>
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Delete maintenanceTasks
+     *
+     * @param maintenanceTaskIds
+     * @return kotlin.collections.List<DocIdentifier>
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteMaintenanceTask(maintenanceTaskIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteMaintenanceTask(maintenanceTaskIds: kotlin.String): kotlin.collections.List<DocIdentifier> {
         val localVariableConfig = deleteMaintenanceTaskRequestConfig(maintenanceTaskIds = maintenanceTaskIds)
 
         return request<Unit, kotlin.collections.List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation deleteMaintenanceTask
-    *
-    * @param maintenanceTaskIds
-    * @return RequestConfig
-    */
-    fun deleteMaintenanceTaskRequestConfig(maintenanceTaskIds: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation deleteMaintenanceTask
+     *
+     * @param maintenanceTaskIds
+     * @return RequestConfig
+     */
+    fun deleteMaintenanceTaskRequestConfig(maintenanceTaskIds: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -120,41 +117,43 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.DELETE,
-            path = "/rest/v2/maintenancetask/{maintenanceTaskIds}".replace("{"+"maintenanceTaskIds"+"}", "${URLEncoder.encode(maintenanceTaskIds.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/maintenancetask/{maintenanceTaskIds}".replace("{" + "maintenanceTaskIds" + "}", "${URLEncoder.encode(maintenanceTaskIds.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Filter maintenanceTasks for the current user (HcParty)
-    * Returns a list of maintenanceTasks along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
-    * @param filterChainMaintenanceTask
-    * @param startDocumentId A maintenanceTask document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return PaginatedListMaintenanceTaskDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Filter maintenanceTasks for the current user (HcParty)
+     * Returns a list of maintenanceTasks along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
+     * @param filterChainMaintenanceTask
+     * @param startDocumentId A maintenanceTask document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return PaginatedListMaintenanceTaskDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun filterMaintenanceTasksBy(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : PaginatedListMaintenanceTaskDto  {
+    suspend fun filterMaintenanceTasksBy(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): PaginatedListMaintenanceTaskDto {
         val localVariableConfig = filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask = filterChainMaintenanceTask, startDocumentId = startDocumentId, limit = limit)
 
         return request<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, PaginatedListMaintenanceTaskDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation filterMaintenanceTasksBy
-    *
-    * @param filterChainMaintenanceTask
-    * @param startDocumentId A maintenanceTask document ID (optional)
-    * @param limit Number of rows (optional)
-    * @return RequestConfig
-    */
-    fun filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?) : RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>> {
+     * To obtain the request config of the operation filterMaintenanceTasksBy
+     *
+     * @param filterChainMaintenanceTask
+     * @param startDocumentId A maintenanceTask document ID (optional)
+     * @param limit Number of rows (optional)
+     * @return RequestConfig
+     */
+    fun filterMaintenanceTasksByRequestConfig(filterChainMaintenanceTask: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>, startDocumentId: kotlin.String?, limit: kotlin.Int?): RequestConfig<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>> {
         // val localVariableBody = filterChainMaintenanceTask
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
             .apply {
@@ -174,34 +173,36 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
             path = "/rest/v2/maintenancetask/filter",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Gets a maintenanceTask
-    *
-    * @param maintenanceTaskId
-    * @return MaintenanceTaskDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Gets a maintenanceTask
+     *
+     * @param maintenanceTaskId
+     * @return MaintenanceTaskDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMaintenanceTask(maintenanceTaskId: kotlin.String) : MaintenanceTaskDto  {
+    suspend fun getMaintenanceTask(maintenanceTaskId: kotlin.String): MaintenanceTaskDto {
         val localVariableConfig = getMaintenanceTaskRequestConfig(maintenanceTaskId = maintenanceTaskId)
 
         return request<Unit, MaintenanceTaskDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation getMaintenanceTask
-    *
-    * @param maintenanceTaskId
-    * @return RequestConfig
-    */
-    fun getMaintenanceTaskRequestConfig(maintenanceTaskId: kotlin.String) : RequestConfig<Unit> {
+     * To obtain the request config of the operation getMaintenanceTask
+     *
+     * @param maintenanceTaskId
+     * @return RequestConfig
+     */
+    fun getMaintenanceTaskRequestConfig(maintenanceTaskId: kotlin.String): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -210,37 +211,39 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/maintenancetask/{maintenanceTaskId}".replace("{"+"maintenanceTaskId"+"}", "${URLEncoder.encode(maintenanceTaskId.toString(), Charsets.UTF_8)}"),
+            path = "/rest/v2/maintenancetask/{maintenanceTaskId}".replace("{" + "maintenanceTaskId" + "}", "${URLEncoder.encode(maintenanceTaskId.toString(), Charsets.UTF_8)}"),
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
 
     /**
-    * Updates a maintenanceTask
-    *
-    * @param maintenanceTaskDto
-    * @return MaintenanceTaskDto
-    * @throws UnsupportedOperationException If the API returns an informational or redirection response
-    * @throws ClientException If the API returns a client error response
-    * @throws ServerException If the API returns a server error response
-    */
+     * Updates a maintenanceTask
+     *
+     * @param maintenanceTaskDto
+     * @return MaintenanceTaskDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun modifyMaintenanceTask(maintenanceTaskDto: MaintenanceTaskDto) : MaintenanceTaskDto  {
+    suspend fun modifyMaintenanceTask(maintenanceTaskDto: MaintenanceTaskDto): MaintenanceTaskDto {
         val localVariableConfig = modifyMaintenanceTaskRequestConfig(maintenanceTaskDto = maintenanceTaskDto)
 
         return request<MaintenanceTaskDto, MaintenanceTaskDto>(
             localVariableConfig
         )!!
     }
+
     /**
-    * To obtain the request config of the operation modifyMaintenanceTask
-    *
-    * @param maintenanceTaskDto
-    * @return RequestConfig
-    */
-    fun modifyMaintenanceTaskRequestConfig(maintenanceTaskDto: MaintenanceTaskDto) : RequestConfig<MaintenanceTaskDto> {
+     * To obtain the request config of the operation modifyMaintenanceTask
+     *
+     * @param maintenanceTaskDto
+     * @return RequestConfig
+     */
+    fun modifyMaintenanceTaskRequestConfig(maintenanceTaskDto: MaintenanceTaskDto): RequestConfig<MaintenanceTaskDto> {
         // val localVariableBody = maintenanceTaskDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
@@ -252,7 +255,7 @@ class MaintenanceTaskApi(basePath: kotlin.String = defaultBasePath, webClient: W
             path = "/rest/v2/maintenancetask",
             query = localVariableQuery,
             headers = localVariableHeaders,
-            body = localVariableBody        )
+            body = localVariableBody
+        )
     }
-
 }

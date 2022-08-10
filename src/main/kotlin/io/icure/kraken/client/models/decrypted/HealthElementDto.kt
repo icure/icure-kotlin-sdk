@@ -12,17 +12,15 @@
  */
 package io.icure.kraken.client.models.decrypted
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.icure.kraken.client.models.CareTeamMemberDto
 import io.icure.kraken.client.models.CodeStubDto
 import io.icure.kraken.client.models.DelegationDto
 import io.icure.kraken.client.models.EpisodeDto
-import io.icure.kraken.client.models.PlanOfActionDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonInclude
 import io.icure.kraken.client.models.IdentifierDto
-
+import io.icure.kraken.client.models.PlanOfActionDto
 
 /**
  * This entity is a root level object. It represents a healthcare element. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -62,7 +60,7 @@ import io.icure.kraken.client.models.IdentifierDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class HealthElementDto (
+data class HealthElementDto(
 
     /* The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
@@ -192,6 +190,7 @@ data class HealthElementDto (
     val encryptedSelf: kotlin.String? = null
 
 ) {
+    /* ktlint-disable enum-entry-name-case */
 
     /**
      * Left or Right dominance/preference.
@@ -199,7 +198,12 @@ data class HealthElementDto (
      * Values: left,right
      */
     enum class Laterality(val value: kotlin.String) {
-        @JsonProperty(value = "left") left("left"),
-        @JsonProperty(value = "right") right("right");
+        @JsonProperty(value = "left")
+        left("left"),
+
+        @JsonProperty(value = "right")
+        right("right");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

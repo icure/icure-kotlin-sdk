@@ -12,11 +12,9 @@
  */
 package io.icure.kraken.client.models
 
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * Non preferred name information of a person
@@ -33,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PersonNameDto (
+data class PersonNameDto(
 
     /* Given names (not always 'first'). Includes middle names. This repeating element order: Given Names appear in the correct order for presenting the name */
     @field:JsonProperty("firstNames")
@@ -77,14 +75,29 @@ data class PersonNameDto (
      * Values: usual,official,temp,nickname,anonymous,maiden,old,other
      */
     enum class Use(val value: kotlin.String) {
-        @JsonProperty(value = "usual") usual("usual"),
-        @JsonProperty(value = "official") official("official"),
-        @JsonProperty(value = "temp") temp("temp"),
-        @JsonProperty(value = "nickname") nickname("nickname"),
-        @JsonProperty(value = "anonymous") anonymous("anonymous"),
-        @JsonProperty(value = "maiden") maiden("maiden"),
-        @JsonProperty(value = "old") old("old"),
-        @JsonProperty(value = "other") other("other");
+        @JsonProperty(value = "usual")
+        usual("usual"),
+
+        @JsonProperty(value = "official")
+        official("official"),
+
+        @JsonProperty(value = "temp")
+        temp("temp"),
+
+        @JsonProperty(value = "nickname")
+        nickname("nickname"),
+
+        @JsonProperty(value = "anonymous")
+        anonymous("anonymous"),
+
+        @JsonProperty(value = "maiden")
+        maiden("maiden"),
+
+        @JsonProperty(value = "old")
+        old("old"),
+
+        @JsonProperty(value = "other")
+        other("other");
     }
 
     /* ktlint-enable enum-entry-name-case */

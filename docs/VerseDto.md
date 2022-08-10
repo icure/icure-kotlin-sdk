@@ -4,8 +4,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**addedDocuments** | [**kotlin.collections.List&lt;AddedDocumentDto&gt;**](AddedDocumentDto.md) |  | 
+**id** | **kotlin.String** |  |
+**addedDocuments** | [**kotlin.collections.List&lt;AddedDocumentDto&gt;**](AddedDocumentDto.md) |  |
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **chapterName** | **kotlin.String** |  |  [optional]
@@ -47,6 +47,3 @@ Name | Type | Description | Notes
 **maximumAgeAuthorizedUnit** | **kotlin.String** |  |  [optional]
 **modificationStatus** | **kotlin.String** |  |  [optional]
 **children** | [**kotlin.collections.List&lt;VerseDto&gt;**](VerseDto.md) |  |  [optional]
-
-
-

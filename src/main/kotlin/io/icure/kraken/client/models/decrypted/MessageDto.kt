@@ -207,4 +207,3 @@ data class MessageDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

@@ -37,4 +37,3 @@ data class Remote (
     val auth: Authentication? = null
 
 )
-

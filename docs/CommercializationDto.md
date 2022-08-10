@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **endOfComercialization** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **impact** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **additionalInformation** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-
-
-

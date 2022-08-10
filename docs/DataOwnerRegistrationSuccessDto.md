@@ -4,9 +4,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**userLogin** | **kotlin.String** |  | 
-**userId** | **kotlin.String** |  | 
-**token** | **kotlin.String** |  | 
-
-
-
+**userLogin** | **kotlin.String** |  |
+**userId** | **kotlin.String** |  |
+**token** | **kotlin.String** |  |

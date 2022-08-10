@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**isSpecialist** | **kotlin.Boolean** |  | 
+**isSpecialist** | **kotlin.Boolean** |  |
 **nihii** | **kotlin.Long** |  |  [optional]
 **bic** | **kotlin.String** |  |  [optional]
 **iban** | **kotlin.String** |  |  [optional]
@@ -14,6 +14,3 @@ Name | Type | Description | Notes
 **firstName** | **kotlin.String** |  |  [optional]
 **phoneNumber** | **kotlin.Long** |  |  [optional]
 **conventionCode** | **kotlin.Int** |  |  [optional]
-
-
-

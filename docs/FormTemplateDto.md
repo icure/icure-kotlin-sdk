@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**reports** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
-**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
+**id** | **kotlin.String** |  |
+**reports** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  |
+**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  |
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **layout** | [**FormLayout**](FormLayout.md) |  |  [optional]
@@ -25,6 +25,3 @@ Name | Type | Description | Notes
 **longReport** | **kotlin.String** |  |  [optional]
 **layoutAttachmentId** | **kotlin.String** |  |  [optional]
 **templateLayoutAttachmentId** | **kotlin.String** |  |  [optional]
-
-
-

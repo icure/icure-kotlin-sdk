@@ -96,5 +96,3 @@ suspend fun CryptoConfig<ArticleDto, io.icure.kraken.client.models.ArticleDto>.d
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(article, decryptAES(data = Base64.getDecoder().decode(article.encryptedSelf), key = key))
 }
-
-

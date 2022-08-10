@@ -42,12 +42,12 @@
   },
   "filterCodesBy": {
     "skipEndpoint": true,
-    "startKey": null, 
+    "startKey": null,
     "startDocumentId": null,
     "limit": 10,
-    "skip": null, 
-    "sort": null, 
-    "desc": null, 
+    "skip": null,
+    "sort": null,
+    "desc": null,
     "filterChainCode":{
       "filter": {
         "$type": "CodeByRegionTypeLabelLanguageFilter",
@@ -75,16 +75,16 @@
     "types": "CD-HCPARTY",
     "language": "fr",
     "label": "pers",
-    "startKey": null, 
-    "startDocumentId": null, 
+    "startKey": null,
+    "startDocumentId": null,
     "limit": 100
   },
   "findCodesByLink": {
     "skipEndpoint": true,
     "linkType": "L",
-    "linkedId": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
+    "linkedId": null,
+    "startKey": null,
+    "startDocumentId": null,
     "limit": null
   },
   "listTagTypesBy": {

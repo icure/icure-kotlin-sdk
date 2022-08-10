@@ -61,7 +61,7 @@
     "skipEndpoint": true,
     "body": null
   },
-  
+
   "fallback": {
   }
 }

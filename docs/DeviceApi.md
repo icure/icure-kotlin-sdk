@@ -11,12 +11,12 @@ Method | HTTP request | Description
 [**deleteDevice**](DeviceApi.md#deleteDevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
 [**deleteDevices**](DeviceApi.md#deleteDevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
 [**deleteDevicesInGroup**](DeviceApi.md#deleteDevicesInGroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
-[**filterDevicesBy**](DeviceApi.md#filterDevicesBy) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
+[**filterDevicesBy**](DeviceApi.md#filterDevicesBy) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty)
 [**getDevice**](DeviceApi.md#getDevice) | **GET** /rest/v2/device/{deviceId} | Get Device
 [**getDeviceAesExchangeKeysForDelegate**](DeviceApi.md#getDeviceAesExchangeKeysForDelegate) | **GET** /rest/v2/device/{deviceId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getDevices**](DeviceApi.md#getDevices) | **POST** /rest/v2/device/byIds | Get devices by id
 [**getDevicesInGroup**](DeviceApi.md#getDevicesInGroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
-[**matchDevicesBy**](DeviceApi.md#matchDevicesBy) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
+[**matchDevicesBy**](DeviceApi.md#matchDevicesBy) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty)
 [**modifyDeviceInGroup**](DeviceApi.md#modifyDeviceInGroup) | **PUT** /rest/v2/device/inGroup/{groupId} | Modify a Device.
 [**updateDevice**](DeviceApi.md#updateDevice) | **PUT** /rest/v2/device | Modify a device
 [**updateDevices**](DeviceApi.md#updateDevices) | **PUT** /rest/v2/device/batch | Modify devices in bulk
@@ -38,7 +38,7 @@ Name, last name, date of birth, and gender are required. After creation of the d
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : DeviceDto =  // DeviceDto | 
+val deviceDto : DeviceDto =  // DeviceDto |
 try {
     val result : DeviceDto = apiInstance.createDevice(deviceDto)
     println(result)
@@ -85,8 +85,8 @@ One of Name or Last name+First name, Nihii, and Public key are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val deviceDto : DeviceDto =  // DeviceDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val deviceDto : DeviceDto =  // DeviceDto |
 try {
     val result : DeviceDto = apiInstance.createDeviceInGroup(groupId, deviceDto)
     println(result)
@@ -134,7 +134,7 @@ Returns the id and _rev of created devices
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> | 
+val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.createDevices(deviceDto)
     println(result)
@@ -181,7 +181,7 @@ Returns the id and _rev of created devices
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> | 
+val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.createDevices1(deviceDto)
     println(result)
@@ -228,7 +228,7 @@ Response contains the id/rev of deleted device.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceId : kotlin.String = deviceId_example // kotlin.String | 
+val deviceId : kotlin.String = deviceId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteDevice(deviceId)
     println(result)
@@ -275,7 +275,7 @@ Response is an array containing the id/rev of deleted devices.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDevices(listOfIdsDto)
     println(result)
@@ -322,8 +322,8 @@ Deleting a device. Response is an array containing the id of deleted device.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val deviceIds : kotlin.String = deviceIds_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val deviceIds : kotlin.String = deviceIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDevicesInGroup(groupId, deviceIds)
     println(result)
@@ -360,7 +360,7 @@ No authorization required
 # **filterDevicesBy**
 > PaginatedListDeviceDto filterDevicesBy(filterChainDevice, startDocumentId, limit)
 
-Filter devices for the current user (HcParty) 
+Filter devices for the current user (HcParty)
 
 Returns a list of devices along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -371,7 +371,7 @@ Returns a list of devices along with next start keys and Document ID. If the nex
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val filterChainDevice : FilterChainDevice =  // FilterChainDevice | 
+val filterChainDevice : FilterChainDevice =  // FilterChainDevice |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A device document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -422,7 +422,7 @@ It gets device administrative data.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceId : kotlin.String = deviceId_example // kotlin.String | 
+val deviceId : kotlin.String = deviceId_example // kotlin.String |
 try {
     val result : DeviceDto = apiInstance.getDevice(deviceId)
     println(result)
@@ -469,7 +469,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceId : kotlin.String = deviceId_example // kotlin.String | 
+val deviceId : kotlin.String = deviceId_example // kotlin.String |
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getDeviceAesExchangeKeysForDelegate(deviceId)
     println(result)
@@ -516,7 +516,7 @@ It gets device administrative data.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DeviceDto> = apiInstance.getDevices(listOfIdsDto)
     println(result)
@@ -563,8 +563,8 @@ General information about the device
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DeviceDto> = apiInstance.getDevicesInGroup(groupId, listOfIdsDto)
     println(result)
@@ -601,7 +601,7 @@ No authorization required
 # **matchDevicesBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchDevicesBy(abstractFilterDtoDevice)
 
-Get ids of devices matching the provided filter for the current user (HcParty) 
+Get ids of devices matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -610,7 +610,7 @@ Get ids of devices matching the provided filter for the current user (HcParty)
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val abstractFilterDtoDevice : AbstractFilterDtoDevice =  // AbstractFilterDtoDevice | 
+val abstractFilterDtoDevice : AbstractFilterDtoDevice =  // AbstractFilterDtoDevice |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchDevicesBy(abstractFilterDtoDevice)
     println(result)
@@ -657,8 +657,8 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val deviceDto : DeviceDto =  // DeviceDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val deviceDto : DeviceDto =  // DeviceDto |
 try {
     val result : DeviceDto = apiInstance.modifyDeviceInGroup(groupId, deviceDto)
     println(result)
@@ -706,7 +706,7 @@ Returns the updated device
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : DeviceDto =  // DeviceDto | 
+val deviceDto : DeviceDto =  // DeviceDto |
 try {
     val result : DeviceDto = apiInstance.updateDevice(deviceDto)
     println(result)
@@ -753,7 +753,7 @@ Returns the id and _rev of modified devices
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> | 
+val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.updateDevices(deviceDto)
     println(result)
@@ -800,7 +800,7 @@ Returns the id and _rev of modified devices
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DeviceApi()
-val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> | 
+val deviceDto : kotlin.collections.List<DeviceDto> =  // kotlin.collections.List<DeviceDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.updateDevices1(deviceDto)
     println(result)
@@ -831,4 +831,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

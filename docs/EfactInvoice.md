@@ -4,10 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**items** | [**kotlin.collections.List&lt;InvoiceItem&gt;**](InvoiceItem.md) |  | 
-**ignorePrescriptionDate** | **kotlin.Boolean** |  | 
-**hospitalisedPatient** | **kotlin.Boolean** |  | 
-**creditNote** | **kotlin.Boolean** |  | 
+**items** | [**kotlin.collections.List&lt;InvoiceItem&gt;**](InvoiceItem.md) |  |
+**ignorePrescriptionDate** | **kotlin.Boolean** |  |
+**hospitalisedPatient** | **kotlin.Boolean** |  |
+**creditNote** | **kotlin.Boolean** |  |
 **patient** | [**PatientDto**](PatientDto.md) |  |  [optional]
 **ioCode** | **kotlin.String** |  |  [optional]
 **reason** | [**inline**](#ReasonEnum) |  |  [optional]
@@ -24,6 +24,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 reason | Chimiotherapy, ProfessionalDisease, WorkAccident, Accident, Other
-
-
-

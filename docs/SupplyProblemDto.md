@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **expectedEndOn** | **kotlin.Long** |  |  [optional]
 **impact** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **additionalInformation** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-
-
-

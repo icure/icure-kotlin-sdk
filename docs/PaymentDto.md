@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**paymentDate** | **kotlin.Long** |  | 
+**paymentDate** | **kotlin.Long** |  |
 **paymentType** | [**inline**](#PaymentTypeEnum) |  |  [optional]
 **paid** | **kotlin.Double** |  |  [optional]
 
@@ -14,6 +14,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 paymentType | cash, wired, insurance, creditcard, debitcard, paypal, bitcoin, other
-
-
-

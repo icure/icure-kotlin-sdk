@@ -203,4 +203,3 @@ data class HealthElementDto (
         @JsonProperty(value = "right") right("right");
     }
 }
-

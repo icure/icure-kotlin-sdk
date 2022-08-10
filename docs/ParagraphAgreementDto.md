@@ -26,6 +26,3 @@ Name | Type | Description | Notes
 **strengthUnit** | **kotlin.String** |  |  [optional]
 **agreementAppendices** | [**kotlin.collections.List&lt;AgreementAppendixDto&gt;**](AgreementAppendixDto.md) |  |  [optional]
 **documentId** | **kotlin.String** |  |  [optional]
-
-
-

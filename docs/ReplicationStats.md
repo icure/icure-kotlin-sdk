@@ -13,6 +13,3 @@ Name | Type | Description | Notes
 **checkpointedSourceSeq** | **kotlin.String** |  |  [optional]
 **startTime** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) |  |  [optional]
 **error** | **kotlin.String** |  |  [optional]
-
-
-

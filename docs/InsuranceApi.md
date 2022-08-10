@@ -26,7 +26,7 @@ Creates an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceDto : InsuranceDto =  // InsuranceDto | 
+val insuranceDto : InsuranceDto =  // InsuranceDto |
 try {
     val result : InsuranceDto = apiInstance.createInsurance(insuranceDto)
     println(result)
@@ -71,7 +71,7 @@ Deletes an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
+val insuranceId : kotlin.String = insuranceId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteInsurance(insuranceId)
     println(result)
@@ -116,7 +116,7 @@ Gets an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
+val insuranceId : kotlin.String = insuranceId_example // kotlin.String |
 try {
     val result : InsuranceDto = apiInstance.getInsurance(insuranceId)
     println(result)
@@ -161,7 +161,7 @@ Gets insurances by id
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<InsuranceDto> = apiInstance.getInsurances(listOfIdsDto)
     println(result)
@@ -206,7 +206,7 @@ Gets an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceCode : kotlin.String = insuranceCode_example // kotlin.String | 
+val insuranceCode : kotlin.String = insuranceCode_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InsuranceDto> = apiInstance.listInsurancesByCode(insuranceCode)
     println(result)
@@ -251,7 +251,7 @@ Gets an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceName : kotlin.String = insuranceName_example // kotlin.String | 
+val insuranceName : kotlin.String = insuranceName_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InsuranceDto> = apiInstance.listInsurancesByName(insuranceName)
     println(result)
@@ -296,7 +296,7 @@ Modifies an insurance
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InsuranceApi()
-val insuranceDto : InsuranceDto =  // InsuranceDto | 
+val insuranceDto : InsuranceDto =  // InsuranceDto |
 try {
     val result : InsuranceDto = apiInstance.modifyInsurance(insuranceDto)
     println(result)
@@ -327,4 +327,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

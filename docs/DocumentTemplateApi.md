@@ -34,7 +34,7 @@ Returns an instance of created document template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto | 
+val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto |
 try {
     val result : DocumentTemplateDto = apiInstance.createDocumentTemplate(documentTemplateDto)
     println(result)
@@ -79,7 +79,7 @@ Deletes document templates
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocumentTemplates(listOfIdsDto)
     println(result)
@@ -124,8 +124,8 @@ Download a the document template attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getAttachmentText(documentTemplateId, attachmentId)
     println(result)
@@ -171,7 +171,7 @@ Gets a document template
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
 try {
     val result : DocumentTemplateDto = apiInstance.getDocumentTemplate(documentTemplateId)
     println(result)
@@ -216,8 +216,8 @@ Download a the document template attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentTemplateAttachment(documentTemplateId, attachmentId)
     println(result)
@@ -345,7 +345,7 @@ Gets all document templates by Type
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesByDocumentType(documentTypeCode)
     println(result)
@@ -390,7 +390,7 @@ Gets all document templates by Type For currentUser
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesByDocumentTypeForCurrentUser(documentTypeCode)
     println(result)
@@ -435,7 +435,7 @@ Gets all document templates
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentTemplateDto> = apiInstance.listDocumentTemplatesBySpeciality(specialityCode)
     println(result)
@@ -482,8 +482,8 @@ Returns an instance of created document template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
+val documentTemplateDto : DocumentTemplateDto =  // DocumentTemplateDto |
 try {
     val result : DocumentTemplateDto = apiInstance.modifyDocumentTemplate(documentTemplateId, documentTemplateDto)
     println(result)
@@ -529,8 +529,8 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> |
 try {
     val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachment(documentTemplateId, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
@@ -576,8 +576,8 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentTemplateApi()
-val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String | 
-val byteArrayDto : ByteArrayDto =  // ByteArrayDto | 
+val documentTemplateId : kotlin.String = documentTemplateId_example // kotlin.String |
+val byteArrayDto : ByteArrayDto =  // ByteArrayDto |
 try {
     val result : DocumentTemplateDto = apiInstance.setDocumentTemplateAttachmentJson(documentTemplateId, byteArrayDto)
     println(result)
@@ -609,4 +609,3 @@ No authorization required
 
  - **Content-Type**: application/octet-stream
  - **Accept**: */*
-

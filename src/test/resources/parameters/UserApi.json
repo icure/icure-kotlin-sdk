@@ -32,7 +32,7 @@
   },
   "forgottenPassword": {
     "skipEndpoint" : true,
-    "email": null, 
+    "email": null,
     "body": null
   },
   "getCurrentSession": {"skipEndpoint" : true},
@@ -53,7 +53,7 @@
   "listUsers": {
     "skipEndpoint": true,
     "startKey": "ab@taktik.com",
-    "startDocumentId": null, 
+    "startDocumentId": null,
     "limit": null
   },
   "modifyProperties": {

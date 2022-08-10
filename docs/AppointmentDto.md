@@ -17,6 +17,3 @@ Name | Type | Description | Notes
 **amount** | **kotlin.Double** |  |  [optional]
 **startTime** | **kotlin.Long** |  |  [optional]
 **endTime** | **kotlin.Long** |  |  [optional]
-
-
-

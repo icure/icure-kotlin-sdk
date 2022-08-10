@@ -10,8 +10,8 @@
     "date": null
   },
   "appointmentsByPatient": {
-    "patientId": null, 
-    "from": null, 
+    "patientId": null,
+    "from": null,
     "from2": null
   },
   "createAppointmentTypes": {
@@ -21,18 +21,18 @@
     "body": null
   },
   "notify": {
-    "appointmentId": null, 
+    "appointmentId": null,
     "action": null
   },
   "register": {
-    "userId": null, 
+    "userId": null,
     "body": null
   },
   "sendMessage": {
     "body": null
   },
   "setUserCredentials": {
-    "userId": null, 
+    "userId": null,
     "body": null
   },
   "fallback": {

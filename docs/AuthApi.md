@@ -25,7 +25,7 @@ Login using username and password
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
-val loginCredentials : LoginCredentials =  // LoginCredentials | 
+val loginCredentials : LoginCredentials =  // LoginCredentials |
 try {
     val result : AuthenticationResponse = apiInstance.login(loginCredentials)
     println(result)
@@ -158,8 +158,8 @@ Get token for subsequent operation
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AuthApi()
-val method : kotlin.String = method_example // kotlin.String | 
-val path : kotlin.String = path_example // kotlin.String | 
+val method : kotlin.String = method_example // kotlin.String |
+val path : kotlin.String = path_example // kotlin.String |
 try {
     val result : kotlin.String = apiInstance.token(method, path)
     println(result)
@@ -191,4 +191,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

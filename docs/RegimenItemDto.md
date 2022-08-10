@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **dayPeriod** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
 **timeOfDay** | **kotlin.Long** |  |  [optional]
 **administratedQuantity** | [**AdministrationQuantity**](AdministrationQuantity.md) |  |  [optional]
-
-
-

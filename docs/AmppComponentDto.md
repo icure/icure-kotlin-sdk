@@ -18,6 +18,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 contentType | ACTIVE_COMPONENT, SOLVENT, DEVICE, EXCIPIENT
-
-
-

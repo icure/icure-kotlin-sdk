@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
+**id** | **kotlin.String** |  |
 **careTeamMemberType** | [**inline**](#CareTeamMemberTypeEnum) |  |  [optional]
 **healthcarePartyId** | **kotlin.String** |  |  [optional]
 **quality** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
@@ -16,6 +16,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 careTeamMemberType | physician, specialist, other
-
-
-

@@ -32,7 +32,7 @@
   "listEntityTemplatesBy": {
     "userId": "6a827943-68ed-474c-8279-4368ed774c2d",
     "type": "org.taktik.icure.entities.embed.Medication",
-    "searchString": null, 
+    "searchString": null,
     "includeEntities": true
   },
   "listAllEntityTemplatesBy": {

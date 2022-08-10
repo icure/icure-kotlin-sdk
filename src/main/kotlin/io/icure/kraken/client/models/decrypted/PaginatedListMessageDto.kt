@@ -44,4 +44,3 @@ data class PaginatedListMessageDto (
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
-

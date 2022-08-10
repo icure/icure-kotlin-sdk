@@ -12,6 +12,3 @@ Name | Type | Description | Notes
 **float** | **kotlin.Float** |  |  [optional]
 **double** | **kotlin.Double** |  |  [optional]
 **readOnly** | **kotlin.Boolean** |  |  [optional]
-
-
-

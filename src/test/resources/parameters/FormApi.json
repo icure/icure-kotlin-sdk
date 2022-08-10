@@ -37,10 +37,10 @@
   },
   "findByHCPartyPatientSecretFKeys": {
     "skipEndpoint": true,
-    "hcPartyId": null, 
-    "secretFKeys": null, 
-    "healthElementId": null, 
-    "planOfActionId": null, 
+    "hcPartyId": null,
+    "secretFKeys": null,
+    "healthElementId": null,
+    "planOfActionId": null,
     "formTemplateId": null
   },
   "findDelegationsStubsByHCPartyPatientSecretFKeys": {
@@ -59,7 +59,7 @@
   },
   "getChildren": {
     "skipEndpoint": true,
-    "formId": null, 
+    "formId": null,
     "hcPartyId": null
   },
   "getChildrenForms": {
@@ -109,12 +109,12 @@
   },
   "newDelegations": {
     "skipEndpoint": true,
-    "formId": null, 
+    "formId": null,
     "body": null
   },
   "setAttachmentMulti": {
     "skipEndpoint": true,
-    "formTemplateId": null, 
+    "formTemplateId": null,
     "attachment": null
   },
   "setFormsDelegations": {
@@ -123,7 +123,7 @@
   },
   "updateFormTemplate": {
     "skipEndpoint": true,
-    "formTemplateId": null, 
+    "formTemplateId": null,
     "body": null
   },
   "getFormsByLogicalUuid": {

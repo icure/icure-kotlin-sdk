@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **time** | **kotlin.Long** |  |  [optional]
 **status** | **kotlin.Boolean** |  |  [optional]
 **userId** | **kotlin.String** |  |  [optional]
-
-
-

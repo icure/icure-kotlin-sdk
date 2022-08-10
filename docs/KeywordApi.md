@@ -27,7 +27,7 @@ Returns an instance of created keyword.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val keywordDto : KeywordDto =  // KeywordDto | 
+val keywordDto : KeywordDto =  // KeywordDto |
 try {
     val result : KeywordDto = apiInstance.createKeyword(keywordDto)
     println(result)
@@ -74,7 +74,7 @@ Response is a set containing the ID&#39;s of deleted keywords.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteKeywords(listOfIdsDto)
     println(result)
@@ -119,7 +119,7 @@ Get a keyword
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val keywordId : kotlin.String = keywordId_example // kotlin.String | 
+val keywordId : kotlin.String = keywordId_example // kotlin.String |
 try {
     val result : KeywordDto = apiInstance.getKeyword(keywordId)
     println(result)
@@ -205,7 +205,7 @@ Get keywords by user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<KeywordDto> = apiInstance.getKeywordsByUser(userId)
     println(result)
@@ -252,7 +252,7 @@ Returns the modified keyword.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KeywordApi()
-val keywordDto : KeywordDto =  // KeywordDto | 
+val keywordDto : KeywordDto =  // KeywordDto |
 try {
     val result : KeywordDto = apiInstance.modifyKeyword(keywordDto)
     println(result)
@@ -283,4 +283,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

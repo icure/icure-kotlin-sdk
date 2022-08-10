@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **verseSeq** | **kotlin.Int** |  |  [optional]
 **documentId** | **kotlin.String** |  |  [optional]
 **path** | **kotlin.String** |  |  [optional]
-
-
-

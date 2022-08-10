@@ -4,8 +4,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**properties** | [**kotlin.collections.Set&lt;PropertyStubDto&gt;**](PropertyStubDto.md) | Extra properties for the fem. Those properties are typed (see class Property) | 
+**id** | **kotlin.String** |  |
+**properties** | [**kotlin.collections.Set&lt;PropertyStubDto&gt;**](PropertyStubDto.md) | Extra properties for the fem. Those properties are typed (see class Property) |
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **name** | **kotlin.String** |  |  [optional]
@@ -24,6 +24,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 status | STARTED, PAUSED, ERROR, SUCCESS
-
-
-

@@ -4,10 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**userId** | **kotlin.String** |  | 
-**entity** | **kotlin.collections.List&lt;kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;&gt;** |  | 
-**javaType** | **kotlin.String** |  | 
+**id** | **kotlin.String** |  |
+**userId** | **kotlin.String** |  |
+**entity** | **kotlin.collections.List&lt;kotlin.collections.Map&lt;kotlin.String, kotlin.Any&gt;&gt;** |  |
+**javaType** | **kotlin.String** |  |
 **rev** | **kotlin.String** |  |  [optional]
 **deleted** | **kotlin.Long** |  |  [optional]
 **descr** | **kotlin.String** |  |  [optional]
@@ -19,6 +19,3 @@ Name | Type | Description | Notes
 **revsInfo** | [**kotlin.collections.List&lt;RevisionInfo&gt;**](RevisionInfo.md) |  |  [optional]
 **conflicts** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
 **revHistory** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
-
-
-

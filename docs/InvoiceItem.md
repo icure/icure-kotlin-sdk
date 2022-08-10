@@ -4,11 +4,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**codeNomenclature** | **kotlin.Long** |  | 
-**units** | **kotlin.Int** |  | 
-**reimbursedAmount** | **kotlin.Long** |  | 
-**patientFee** | **kotlin.Long** |  | 
-**doctorSupplement** | **kotlin.Long** |  | 
+**codeNomenclature** | **kotlin.Long** |  |
+**units** | **kotlin.Int** |  |
+**reimbursedAmount** | **kotlin.Long** |  |
+**patientFee** | **kotlin.Long** |  |
+**doctorSupplement** | **kotlin.Long** |  |
 **dateCode** | **kotlin.Long** |  |  [optional]
 **relatedCode** | **kotlin.Long** |  |  [optional]
 **eidItem** | [**EIDItem**](EIDItem.md) |  |  [optional]
@@ -61,6 +61,3 @@ prescriberNorm | None, OnePrescriber, SelfPrescriber, AddedCode, ManyPrescribers
 Name | Value
 ---- | -----
 percentNorm | None, SurgicalAid1, SurgicalAid2, ReducedFee, Ah1n1, HalfPriceSecondAct, InvoiceException, ForInformation
-
-
-

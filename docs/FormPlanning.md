@@ -12,6 +12,3 @@ Name | Type | Description | Notes
 **repetitions** | **kotlin.Int** |  |  [optional]
 **repetitionsUnit** | **kotlin.Int** |  |  [optional]
 **descr** | **kotlin.String** |  |  [optional]
-
-
-

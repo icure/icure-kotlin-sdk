@@ -5,15 +5,15 @@ This paper is made to keep track of different advancement about tests and explai
 Last update : 04/01/2022
 
 ## How to generate tests ?
-To generate tests, you have to execute the `apiGenerate` gradle task. 
+To generate tests, you have to execute the `apiGenerate` gradle task.
 
-This command will execute the `icure-openapi-generator-cli.jar`, which will generate : 
+This command will execute the `icure-openapi-generator-cli.jar`, which will generate :
 - The API classes;
-- The DTO classes;  
+- The DTO classes;
 - The test classes (not the extended APIs ones !);
 
 This jar is able to do those generation based on the iCure API Specification file () and using the
-Mustache OpenAPITemplates in folder **openApiTemplates**. 
+Mustache OpenAPITemplates in folder **openApiTemplates**.
 
 If you would like to edit test files, you then need to edit the corresponding mustache template.
 
@@ -24,17 +24,17 @@ If you would like to edit test files, you then need to edit the corresponding mu
 
 ## How to run tests on your local machine ?
 ### Limitations
-For now, tests can only be run under certain conditions which are : 
-- With user `abdemotst2` corresponding to hcp `782f1bcd-9f3f-408a-af1b-cd9f3f908a98`, as this is the 
+For now, tests can only be run under certain conditions which are :
+- With user `abdemotst2` corresponding to hcp `782f1bcd-9f3f-408a-af1b-cd9f3f908a98`, as this is the
 key used to encrypt saved data;
-- In the svcacc environment;  
+- In the svcacc environment;
 
 ### First-Time Procedure
-Here is the procedure to follow the first time you're starting tests. 
-Following the environment you would like to query, the following parameters could change a bit. Be careful about the content of it. 
+Here is the procedure to follow the first time you're starting tests.
+Following the environment you would like to query, the following parameters could change a bit. Be careful about the content of it.
 
 - Start icure-backend on locale machine, pointing on ACCEPTANCE DB.
-- At icure-java-client project root, add files `.credentialsReadWrite` and `.credentialsReadOnly` containing credentials of 
+- At icure-java-client project root, add files `.credentialsReadWrite` and `.credentialsReadOnly` containing credentials of
   iCure user `abdemotst2`. The content of the file should look like this :
 ```
 {
@@ -43,10 +43,10 @@ Following the environment you would like to query, the following parameters coul
 }
 ```
 
-- Add file `.credentialsCouchDb` containing credentials of your CouchDB user. This one must be able 
-to access the DB `icure-test-2-tz-dev-team`. 
-  If you don't have any dedicated user in CouchDB, ask a colleague to explain you how to get one. It can differ 
-  following the environment you would like to use, the security to consider, ... 
+- Add file `.credentialsCouchDb` containing credentials of your CouchDB user. This one must be able
+to access the DB `icure-test-2-tz-dev-team`.
+  If you don't have any dedicated user in CouchDB, ask a colleague to explain you how to get one. It can differ
+  following the environment you would like to use, the security to consider, ...
 
 - When launching your tests, add VM parameter `-ea -DAPI_URL=http://127.0.0.1:16043`
 
@@ -132,4 +132,3 @@ Tests are automatically generated alongside with infrastructure files :
 * `TestUtils.kt`
 * `DiffUtils.kt`
 * `FilterDeserializer.kt`
-

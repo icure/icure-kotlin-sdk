@@ -230,4 +230,3 @@ data class ServiceDto (
         @JsonProperty("resultInterpreter") resultInterpreter("resultInterpreter");
     }
 }
-

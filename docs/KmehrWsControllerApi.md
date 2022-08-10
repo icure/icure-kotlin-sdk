@@ -4,118 +4,118 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**generateDiaryNote10**](KmehrWsControllerApi.md#generateDiaryNote10) | **PUT** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote11**](KmehrWsControllerApi.md#generateDiaryNote11) | **HEAD** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote12**](KmehrWsControllerApi.md#generateDiaryNote12) | **GET** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote13**](KmehrWsControllerApi.md#generateDiaryNote13) | **PATCH** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote14**](KmehrWsControllerApi.md#generateDiaryNote14) | **OPTIONS** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote15**](KmehrWsControllerApi.md#generateDiaryNote15) | **DELETE** /ws/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote2**](KmehrWsControllerApi.md#generateDiaryNote2) | **POST** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote3**](KmehrWsControllerApi.md#generateDiaryNote3) | **PUT** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote4**](KmehrWsControllerApi.md#generateDiaryNote4) | **HEAD** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote5**](KmehrWsControllerApi.md#generateDiaryNote5) | **GET** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote6**](KmehrWsControllerApi.md#generateDiaryNote6) | **PATCH** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote7**](KmehrWsControllerApi.md#generateDiaryNote7) | **OPTIONS** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote8**](KmehrWsControllerApi.md#generateDiaryNote8) | **DELETE** /ws/v2/be_kmehr/generateDiaryNote | 
-[**generateDiaryNote9**](KmehrWsControllerApi.md#generateDiaryNote9) | **POST** /ws/be_kmehr/generateDiaryNote | 
-[**generateMedicationSchemeExport10**](KmehrWsControllerApi.md#generateMedicationSchemeExport10) | **PUT** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport11**](KmehrWsControllerApi.md#generateMedicationSchemeExport11) | **HEAD** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport12**](KmehrWsControllerApi.md#generateMedicationSchemeExport12) | **GET** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport13**](KmehrWsControllerApi.md#generateMedicationSchemeExport13) | **PATCH** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport14**](KmehrWsControllerApi.md#generateMedicationSchemeExport14) | **OPTIONS** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport15**](KmehrWsControllerApi.md#generateMedicationSchemeExport15) | **DELETE** /ws/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport2**](KmehrWsControllerApi.md#generateMedicationSchemeExport2) | **POST** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport3**](KmehrWsControllerApi.md#generateMedicationSchemeExport3) | **PUT** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport4**](KmehrWsControllerApi.md#generateMedicationSchemeExport4) | **HEAD** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport5**](KmehrWsControllerApi.md#generateMedicationSchemeExport5) | **GET** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport6**](KmehrWsControllerApi.md#generateMedicationSchemeExport6) | **PATCH** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport7**](KmehrWsControllerApi.md#generateMedicationSchemeExport7) | **OPTIONS** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport8**](KmehrWsControllerApi.md#generateMedicationSchemeExport8) | **DELETE** /ws/v2/be_kmehr/generateMedicationScheme | 
-[**generateMedicationSchemeExport9**](KmehrWsControllerApi.md#generateMedicationSchemeExport9) | **POST** /ws/be_kmehr/generateMedicationScheme | 
-[**generateSmfExport10**](KmehrWsControllerApi.md#generateSmfExport10) | **PUT** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport11**](KmehrWsControllerApi.md#generateSmfExport11) | **HEAD** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport12**](KmehrWsControllerApi.md#generateSmfExport12) | **GET** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport13**](KmehrWsControllerApi.md#generateSmfExport13) | **PATCH** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport14**](KmehrWsControllerApi.md#generateSmfExport14) | **OPTIONS** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport15**](KmehrWsControllerApi.md#generateSmfExport15) | **DELETE** /ws/be_kmehr/generateSmf | 
-[**generateSmfExport2**](KmehrWsControllerApi.md#generateSmfExport2) | **POST** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport3**](KmehrWsControllerApi.md#generateSmfExport3) | **PUT** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport4**](KmehrWsControllerApi.md#generateSmfExport4) | **HEAD** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport5**](KmehrWsControllerApi.md#generateSmfExport5) | **GET** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport6**](KmehrWsControllerApi.md#generateSmfExport6) | **PATCH** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport7**](KmehrWsControllerApi.md#generateSmfExport7) | **OPTIONS** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport8**](KmehrWsControllerApi.md#generateSmfExport8) | **DELETE** /ws/v2/be_kmehr/generateSmf | 
-[**generateSmfExport9**](KmehrWsControllerApi.md#generateSmfExport9) | **POST** /ws/be_kmehr/generateSmf | 
-[**generateSumehr10**](KmehrWsControllerApi.md#generateSumehr10) | **PUT** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr11**](KmehrWsControllerApi.md#generateSumehr11) | **HEAD** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr12**](KmehrWsControllerApi.md#generateSumehr12) | **GET** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr13**](KmehrWsControllerApi.md#generateSumehr13) | **PATCH** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr14**](KmehrWsControllerApi.md#generateSumehr14) | **OPTIONS** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr15**](KmehrWsControllerApi.md#generateSumehr15) | **DELETE** /ws/be_kmehr/generateSumehr | 
-[**generateSumehr2**](KmehrWsControllerApi.md#generateSumehr2) | **POST** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr3**](KmehrWsControllerApi.md#generateSumehr3) | **PUT** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr4**](KmehrWsControllerApi.md#generateSumehr4) | **HEAD** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr5**](KmehrWsControllerApi.md#generateSumehr5) | **GET** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr6**](KmehrWsControllerApi.md#generateSumehr6) | **PATCH** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr7**](KmehrWsControllerApi.md#generateSumehr7) | **OPTIONS** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr8**](KmehrWsControllerApi.md#generateSumehr8) | **DELETE** /ws/v2/be_kmehr/generateSumehr | 
-[**generateSumehr9**](KmehrWsControllerApi.md#generateSumehr9) | **POST** /ws/be_kmehr/generateSumehr | 
-[**generateSumehrV210**](KmehrWsControllerApi.md#generateSumehrV210) | **PUT** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV211**](KmehrWsControllerApi.md#generateSumehrV211) | **HEAD** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV212**](KmehrWsControllerApi.md#generateSumehrV212) | **GET** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV213**](KmehrWsControllerApi.md#generateSumehrV213) | **PATCH** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV214**](KmehrWsControllerApi.md#generateSumehrV214) | **OPTIONS** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV215**](KmehrWsControllerApi.md#generateSumehrV215) | **DELETE** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV22**](KmehrWsControllerApi.md#generateSumehrV22) | **POST** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV23**](KmehrWsControllerApi.md#generateSumehrV23) | **PUT** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV24**](KmehrWsControllerApi.md#generateSumehrV24) | **HEAD** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV25**](KmehrWsControllerApi.md#generateSumehrV25) | **GET** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV26**](KmehrWsControllerApi.md#generateSumehrV26) | **PATCH** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV27**](KmehrWsControllerApi.md#generateSumehrV27) | **OPTIONS** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV28**](KmehrWsControllerApi.md#generateSumehrV28) | **DELETE** /ws/v2/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV29**](KmehrWsControllerApi.md#generateSumehrV29) | **POST** /ws/be_kmehr/generateSumehrV2 | 
-[**generateSumehrV2JSON**](KmehrWsControllerApi.md#generateSumehrV2JSON) | **POST** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON1**](KmehrWsControllerApi.md#generateSumehrV2JSON1) | **PUT** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON10**](KmehrWsControllerApi.md#generateSumehrV2JSON10) | **GET** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON11**](KmehrWsControllerApi.md#generateSumehrV2JSON11) | **PATCH** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON12**](KmehrWsControllerApi.md#generateSumehrV2JSON12) | **OPTIONS** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON13**](KmehrWsControllerApi.md#generateSumehrV2JSON13) | **DELETE** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON2**](KmehrWsControllerApi.md#generateSumehrV2JSON2) | **HEAD** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON3**](KmehrWsControllerApi.md#generateSumehrV2JSON3) | **GET** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON4**](KmehrWsControllerApi.md#generateSumehrV2JSON4) | **PATCH** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON5**](KmehrWsControllerApi.md#generateSumehrV2JSON5) | **OPTIONS** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON6**](KmehrWsControllerApi.md#generateSumehrV2JSON6) | **DELETE** /ws/v2/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON7**](KmehrWsControllerApi.md#generateSumehrV2JSON7) | **POST** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON8**](KmehrWsControllerApi.md#generateSumehrV2JSON8) | **PUT** /ws/be_kmehr/generateSumehrV2JSON | 
-[**generateSumehrV2JSON9**](KmehrWsControllerApi.md#generateSumehrV2JSON9) | **HEAD** /ws/be_kmehr/generateSumehrV2JSON | 
-[**validateSumehr10**](KmehrWsControllerApi.md#validateSumehr10) | **PUT** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr11**](KmehrWsControllerApi.md#validateSumehr11) | **HEAD** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr12**](KmehrWsControllerApi.md#validateSumehr12) | **GET** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr13**](KmehrWsControllerApi.md#validateSumehr13) | **PATCH** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr14**](KmehrWsControllerApi.md#validateSumehr14) | **OPTIONS** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr15**](KmehrWsControllerApi.md#validateSumehr15) | **DELETE** /ws/be_kmehr/validateSumehr | 
-[**validateSumehr2**](KmehrWsControllerApi.md#validateSumehr2) | **POST** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr3**](KmehrWsControllerApi.md#validateSumehr3) | **PUT** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr4**](KmehrWsControllerApi.md#validateSumehr4) | **HEAD** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr5**](KmehrWsControllerApi.md#validateSumehr5) | **GET** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr6**](KmehrWsControllerApi.md#validateSumehr6) | **PATCH** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr7**](KmehrWsControllerApi.md#validateSumehr7) | **OPTIONS** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr8**](KmehrWsControllerApi.md#validateSumehr8) | **DELETE** /ws/v2/be_kmehr/validateSumehr | 
-[**validateSumehr9**](KmehrWsControllerApi.md#validateSumehr9) | **POST** /ws/be_kmehr/validateSumehr | 
-[**validateSumehrV210**](KmehrWsControllerApi.md#validateSumehrV210) | **PUT** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV211**](KmehrWsControllerApi.md#validateSumehrV211) | **HEAD** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV212**](KmehrWsControllerApi.md#validateSumehrV212) | **GET** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV213**](KmehrWsControllerApi.md#validateSumehrV213) | **PATCH** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV214**](KmehrWsControllerApi.md#validateSumehrV214) | **OPTIONS** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV215**](KmehrWsControllerApi.md#validateSumehrV215) | **DELETE** /ws/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV22**](KmehrWsControllerApi.md#validateSumehrV22) | **POST** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV23**](KmehrWsControllerApi.md#validateSumehrV23) | **PUT** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV24**](KmehrWsControllerApi.md#validateSumehrV24) | **HEAD** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV25**](KmehrWsControllerApi.md#validateSumehrV25) | **GET** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV26**](KmehrWsControllerApi.md#validateSumehrV26) | **PATCH** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV27**](KmehrWsControllerApi.md#validateSumehrV27) | **OPTIONS** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV28**](KmehrWsControllerApi.md#validateSumehrV28) | **DELETE** /ws/v2/be_kmehr/validateSumehrV2 | 
-[**validateSumehrV29**](KmehrWsControllerApi.md#validateSumehrV29) | **POST** /ws/be_kmehr/validateSumehrV2 | 
+[**generateDiaryNote10**](KmehrWsControllerApi.md#generateDiaryNote10) | **PUT** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote11**](KmehrWsControllerApi.md#generateDiaryNote11) | **HEAD** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote12**](KmehrWsControllerApi.md#generateDiaryNote12) | **GET** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote13**](KmehrWsControllerApi.md#generateDiaryNote13) | **PATCH** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote14**](KmehrWsControllerApi.md#generateDiaryNote14) | **OPTIONS** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote15**](KmehrWsControllerApi.md#generateDiaryNote15) | **DELETE** /ws/be_kmehr/generateDiaryNote |
+[**generateDiaryNote2**](KmehrWsControllerApi.md#generateDiaryNote2) | **POST** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote3**](KmehrWsControllerApi.md#generateDiaryNote3) | **PUT** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote4**](KmehrWsControllerApi.md#generateDiaryNote4) | **HEAD** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote5**](KmehrWsControllerApi.md#generateDiaryNote5) | **GET** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote6**](KmehrWsControllerApi.md#generateDiaryNote6) | **PATCH** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote7**](KmehrWsControllerApi.md#generateDiaryNote7) | **OPTIONS** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote8**](KmehrWsControllerApi.md#generateDiaryNote8) | **DELETE** /ws/v2/be_kmehr/generateDiaryNote |
+[**generateDiaryNote9**](KmehrWsControllerApi.md#generateDiaryNote9) | **POST** /ws/be_kmehr/generateDiaryNote |
+[**generateMedicationSchemeExport10**](KmehrWsControllerApi.md#generateMedicationSchemeExport10) | **PUT** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport11**](KmehrWsControllerApi.md#generateMedicationSchemeExport11) | **HEAD** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport12**](KmehrWsControllerApi.md#generateMedicationSchemeExport12) | **GET** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport13**](KmehrWsControllerApi.md#generateMedicationSchemeExport13) | **PATCH** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport14**](KmehrWsControllerApi.md#generateMedicationSchemeExport14) | **OPTIONS** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport15**](KmehrWsControllerApi.md#generateMedicationSchemeExport15) | **DELETE** /ws/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport2**](KmehrWsControllerApi.md#generateMedicationSchemeExport2) | **POST** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport3**](KmehrWsControllerApi.md#generateMedicationSchemeExport3) | **PUT** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport4**](KmehrWsControllerApi.md#generateMedicationSchemeExport4) | **HEAD** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport5**](KmehrWsControllerApi.md#generateMedicationSchemeExport5) | **GET** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport6**](KmehrWsControllerApi.md#generateMedicationSchemeExport6) | **PATCH** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport7**](KmehrWsControllerApi.md#generateMedicationSchemeExport7) | **OPTIONS** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport8**](KmehrWsControllerApi.md#generateMedicationSchemeExport8) | **DELETE** /ws/v2/be_kmehr/generateMedicationScheme |
+[**generateMedicationSchemeExport9**](KmehrWsControllerApi.md#generateMedicationSchemeExport9) | **POST** /ws/be_kmehr/generateMedicationScheme |
+[**generateSmfExport10**](KmehrWsControllerApi.md#generateSmfExport10) | **PUT** /ws/be_kmehr/generateSmf |
+[**generateSmfExport11**](KmehrWsControllerApi.md#generateSmfExport11) | **HEAD** /ws/be_kmehr/generateSmf |
+[**generateSmfExport12**](KmehrWsControllerApi.md#generateSmfExport12) | **GET** /ws/be_kmehr/generateSmf |
+[**generateSmfExport13**](KmehrWsControllerApi.md#generateSmfExport13) | **PATCH** /ws/be_kmehr/generateSmf |
+[**generateSmfExport14**](KmehrWsControllerApi.md#generateSmfExport14) | **OPTIONS** /ws/be_kmehr/generateSmf |
+[**generateSmfExport15**](KmehrWsControllerApi.md#generateSmfExport15) | **DELETE** /ws/be_kmehr/generateSmf |
+[**generateSmfExport2**](KmehrWsControllerApi.md#generateSmfExport2) | **POST** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport3**](KmehrWsControllerApi.md#generateSmfExport3) | **PUT** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport4**](KmehrWsControllerApi.md#generateSmfExport4) | **HEAD** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport5**](KmehrWsControllerApi.md#generateSmfExport5) | **GET** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport6**](KmehrWsControllerApi.md#generateSmfExport6) | **PATCH** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport7**](KmehrWsControllerApi.md#generateSmfExport7) | **OPTIONS** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport8**](KmehrWsControllerApi.md#generateSmfExport8) | **DELETE** /ws/v2/be_kmehr/generateSmf |
+[**generateSmfExport9**](KmehrWsControllerApi.md#generateSmfExport9) | **POST** /ws/be_kmehr/generateSmf |
+[**generateSumehr10**](KmehrWsControllerApi.md#generateSumehr10) | **PUT** /ws/be_kmehr/generateSumehr |
+[**generateSumehr11**](KmehrWsControllerApi.md#generateSumehr11) | **HEAD** /ws/be_kmehr/generateSumehr |
+[**generateSumehr12**](KmehrWsControllerApi.md#generateSumehr12) | **GET** /ws/be_kmehr/generateSumehr |
+[**generateSumehr13**](KmehrWsControllerApi.md#generateSumehr13) | **PATCH** /ws/be_kmehr/generateSumehr |
+[**generateSumehr14**](KmehrWsControllerApi.md#generateSumehr14) | **OPTIONS** /ws/be_kmehr/generateSumehr |
+[**generateSumehr15**](KmehrWsControllerApi.md#generateSumehr15) | **DELETE** /ws/be_kmehr/generateSumehr |
+[**generateSumehr2**](KmehrWsControllerApi.md#generateSumehr2) | **POST** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr3**](KmehrWsControllerApi.md#generateSumehr3) | **PUT** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr4**](KmehrWsControllerApi.md#generateSumehr4) | **HEAD** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr5**](KmehrWsControllerApi.md#generateSumehr5) | **GET** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr6**](KmehrWsControllerApi.md#generateSumehr6) | **PATCH** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr7**](KmehrWsControllerApi.md#generateSumehr7) | **OPTIONS** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr8**](KmehrWsControllerApi.md#generateSumehr8) | **DELETE** /ws/v2/be_kmehr/generateSumehr |
+[**generateSumehr9**](KmehrWsControllerApi.md#generateSumehr9) | **POST** /ws/be_kmehr/generateSumehr |
+[**generateSumehrV210**](KmehrWsControllerApi.md#generateSumehrV210) | **PUT** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV211**](KmehrWsControllerApi.md#generateSumehrV211) | **HEAD** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV212**](KmehrWsControllerApi.md#generateSumehrV212) | **GET** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV213**](KmehrWsControllerApi.md#generateSumehrV213) | **PATCH** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV214**](KmehrWsControllerApi.md#generateSumehrV214) | **OPTIONS** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV215**](KmehrWsControllerApi.md#generateSumehrV215) | **DELETE** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV22**](KmehrWsControllerApi.md#generateSumehrV22) | **POST** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV23**](KmehrWsControllerApi.md#generateSumehrV23) | **PUT** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV24**](KmehrWsControllerApi.md#generateSumehrV24) | **HEAD** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV25**](KmehrWsControllerApi.md#generateSumehrV25) | **GET** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV26**](KmehrWsControllerApi.md#generateSumehrV26) | **PATCH** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV27**](KmehrWsControllerApi.md#generateSumehrV27) | **OPTIONS** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV28**](KmehrWsControllerApi.md#generateSumehrV28) | **DELETE** /ws/v2/be_kmehr/generateSumehrV2 |
+[**generateSumehrV29**](KmehrWsControllerApi.md#generateSumehrV29) | **POST** /ws/be_kmehr/generateSumehrV2 |
+[**generateSumehrV2JSON**](KmehrWsControllerApi.md#generateSumehrV2JSON) | **POST** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON1**](KmehrWsControllerApi.md#generateSumehrV2JSON1) | **PUT** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON10**](KmehrWsControllerApi.md#generateSumehrV2JSON10) | **GET** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON11**](KmehrWsControllerApi.md#generateSumehrV2JSON11) | **PATCH** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON12**](KmehrWsControllerApi.md#generateSumehrV2JSON12) | **OPTIONS** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON13**](KmehrWsControllerApi.md#generateSumehrV2JSON13) | **DELETE** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON2**](KmehrWsControllerApi.md#generateSumehrV2JSON2) | **HEAD** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON3**](KmehrWsControllerApi.md#generateSumehrV2JSON3) | **GET** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON4**](KmehrWsControllerApi.md#generateSumehrV2JSON4) | **PATCH** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON5**](KmehrWsControllerApi.md#generateSumehrV2JSON5) | **OPTIONS** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON6**](KmehrWsControllerApi.md#generateSumehrV2JSON6) | **DELETE** /ws/v2/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON7**](KmehrWsControllerApi.md#generateSumehrV2JSON7) | **POST** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON8**](KmehrWsControllerApi.md#generateSumehrV2JSON8) | **PUT** /ws/be_kmehr/generateSumehrV2JSON |
+[**generateSumehrV2JSON9**](KmehrWsControllerApi.md#generateSumehrV2JSON9) | **HEAD** /ws/be_kmehr/generateSumehrV2JSON |
+[**validateSumehr10**](KmehrWsControllerApi.md#validateSumehr10) | **PUT** /ws/be_kmehr/validateSumehr |
+[**validateSumehr11**](KmehrWsControllerApi.md#validateSumehr11) | **HEAD** /ws/be_kmehr/validateSumehr |
+[**validateSumehr12**](KmehrWsControllerApi.md#validateSumehr12) | **GET** /ws/be_kmehr/validateSumehr |
+[**validateSumehr13**](KmehrWsControllerApi.md#validateSumehr13) | **PATCH** /ws/be_kmehr/validateSumehr |
+[**validateSumehr14**](KmehrWsControllerApi.md#validateSumehr14) | **OPTIONS** /ws/be_kmehr/validateSumehr |
+[**validateSumehr15**](KmehrWsControllerApi.md#validateSumehr15) | **DELETE** /ws/be_kmehr/validateSumehr |
+[**validateSumehr2**](KmehrWsControllerApi.md#validateSumehr2) | **POST** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr3**](KmehrWsControllerApi.md#validateSumehr3) | **PUT** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr4**](KmehrWsControllerApi.md#validateSumehr4) | **HEAD** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr5**](KmehrWsControllerApi.md#validateSumehr5) | **GET** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr6**](KmehrWsControllerApi.md#validateSumehr6) | **PATCH** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr7**](KmehrWsControllerApi.md#validateSumehr7) | **OPTIONS** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr8**](KmehrWsControllerApi.md#validateSumehr8) | **DELETE** /ws/v2/be_kmehr/validateSumehr |
+[**validateSumehr9**](KmehrWsControllerApi.md#validateSumehr9) | **POST** /ws/be_kmehr/validateSumehr |
+[**validateSumehrV210**](KmehrWsControllerApi.md#validateSumehrV210) | **PUT** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV211**](KmehrWsControllerApi.md#validateSumehrV211) | **HEAD** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV212**](KmehrWsControllerApi.md#validateSumehrV212) | **GET** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV213**](KmehrWsControllerApi.md#validateSumehrV213) | **PATCH** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV214**](KmehrWsControllerApi.md#validateSumehrV214) | **OPTIONS** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV215**](KmehrWsControllerApi.md#validateSumehrV215) | **DELETE** /ws/be_kmehr/validateSumehrV2 |
+[**validateSumehrV22**](KmehrWsControllerApi.md#validateSumehrV22) | **POST** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV23**](KmehrWsControllerApi.md#validateSumehrV23) | **PUT** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV24**](KmehrWsControllerApi.md#validateSumehrV24) | **HEAD** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV25**](KmehrWsControllerApi.md#validateSumehrV25) | **GET** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV26**](KmehrWsControllerApi.md#validateSumehrV26) | **PATCH** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV27**](KmehrWsControllerApi.md#validateSumehrV27) | **OPTIONS** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV28**](KmehrWsControllerApi.md#validateSumehrV28) | **DELETE** /ws/v2/be_kmehr/validateSumehrV2 |
+[**validateSumehrV29**](KmehrWsControllerApi.md#validateSumehrV29) | **POST** /ws/be_kmehr/validateSumehrV2 |
 
 
 <a name="generateDiaryNote10"></a>
@@ -131,8 +131,8 @@ Method | HTTP request | Description
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject94 : InlineObject94 =  // InlineObject94 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject94 : InlineObject94 =  // InlineObject94 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote10(UNKNOWN_PARAMETER_NAME, inlineObject94)
     println(result)
@@ -178,8 +178,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject95 : InlineObject95 =  // InlineObject95 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject95 : InlineObject95 =  // InlineObject95 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote11(UNKNOWN_PARAMETER_NAME, inlineObject95)
     println(result)
@@ -225,10 +225,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote12(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -276,8 +276,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject98 : InlineObject98 =  // InlineObject98 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject98 : InlineObject98 =  // InlineObject98 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote13(UNKNOWN_PARAMETER_NAME, inlineObject98)
     println(result)
@@ -323,8 +323,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject99 : InlineObject99 =  // InlineObject99 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject99 : InlineObject99 =  // InlineObject99 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote14(UNKNOWN_PARAMETER_NAME, inlineObject99)
     println(result)
@@ -370,8 +370,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject97 : InlineObject97 =  // InlineObject97 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject97 : InlineObject97 =  // InlineObject97 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote15(UNKNOWN_PARAMETER_NAME, inlineObject97)
     println(result)
@@ -417,8 +417,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject48 : InlineObject48 =  // InlineObject48 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject48 : InlineObject48 =  // InlineObject48 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote2(UNKNOWN_PARAMETER_NAME, inlineObject48)
     println(result)
@@ -464,8 +464,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject46 : InlineObject46 =  // InlineObject46 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject46 : InlineObject46 =  // InlineObject46 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote3(UNKNOWN_PARAMETER_NAME, inlineObject46)
     println(result)
@@ -511,8 +511,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject47 : InlineObject47 =  // InlineObject47 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject47 : InlineObject47 =  // InlineObject47 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote4(UNKNOWN_PARAMETER_NAME, inlineObject47)
     println(result)
@@ -558,10 +558,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote5(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -609,8 +609,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject50 : InlineObject50 =  // InlineObject50 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject50 : InlineObject50 =  // InlineObject50 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote6(UNKNOWN_PARAMETER_NAME, inlineObject50)
     println(result)
@@ -656,8 +656,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject51 : InlineObject51 =  // InlineObject51 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject51 : InlineObject51 =  // InlineObject51 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote7(UNKNOWN_PARAMETER_NAME, inlineObject51)
     println(result)
@@ -703,8 +703,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject49 : InlineObject49 =  // InlineObject49 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject49 : InlineObject49 =  // InlineObject49 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote8(UNKNOWN_PARAMETER_NAME, inlineObject49)
     println(result)
@@ -750,8 +750,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject96 : InlineObject96 =  // InlineObject96 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject96 : InlineObject96 =  // InlineObject96 |
 try {
     val result : kotlin.Any = apiInstance.generateDiaryNote9(UNKNOWN_PARAMETER_NAME, inlineObject96)
     println(result)
@@ -797,9 +797,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject88 : InlineObject88 =  // InlineObject88 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject88 : InlineObject88 =  // InlineObject88 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport10(version, UNKNOWN_PARAMETER_NAME, inlineObject88)
     println(result)
@@ -846,9 +846,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject89 : InlineObject89 =  // InlineObject89 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject89 : InlineObject89 =  // InlineObject89 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport11(version, UNKNOWN_PARAMETER_NAME, inlineObject89)
     println(result)
@@ -895,12 +895,12 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
-val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String | 
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto |
+val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String |
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport12(patientId, language, info, recipientSafe, version, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -950,9 +950,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject92 : InlineObject92 =  // InlineObject92 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject92 : InlineObject92 =  // InlineObject92 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport13(version, UNKNOWN_PARAMETER_NAME, inlineObject92)
     println(result)
@@ -999,9 +999,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject93 : InlineObject93 =  // InlineObject93 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject93 : InlineObject93 =  // InlineObject93 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport14(version, UNKNOWN_PARAMETER_NAME, inlineObject93)
     println(result)
@@ -1048,9 +1048,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject91 : InlineObject91 =  // InlineObject91 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject91 : InlineObject91 =  // InlineObject91 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport15(version, UNKNOWN_PARAMETER_NAME, inlineObject91)
     println(result)
@@ -1097,9 +1097,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject42 : InlineObject42 =  // InlineObject42 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject42 : InlineObject42 =  // InlineObject42 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport2(version, UNKNOWN_PARAMETER_NAME, inlineObject42)
     println(result)
@@ -1146,9 +1146,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject40 : InlineObject40 =  // InlineObject40 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject40 : InlineObject40 =  // InlineObject40 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport3(version, UNKNOWN_PARAMETER_NAME, inlineObject40)
     println(result)
@@ -1195,9 +1195,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject41 : InlineObject41 =  // InlineObject41 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject41 : InlineObject41 =  // InlineObject41 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport4(version, UNKNOWN_PARAMETER_NAME, inlineObject41)
     println(result)
@@ -1244,12 +1244,12 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
-val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String | 
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto |
+val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String |
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport5(patientId, language, info, recipientSafe, version, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -1299,9 +1299,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject44 : InlineObject44 =  // InlineObject44 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject44 : InlineObject44 =  // InlineObject44 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport6(version, UNKNOWN_PARAMETER_NAME, inlineObject44)
     println(result)
@@ -1348,9 +1348,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject45 : InlineObject45 =  // InlineObject45 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject45 : InlineObject45 =  // InlineObject45 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport7(version, UNKNOWN_PARAMETER_NAME, inlineObject45)
     println(result)
@@ -1397,9 +1397,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject43 : InlineObject43 =  // InlineObject43 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject43 : InlineObject43 =  // InlineObject43 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport8(version, UNKNOWN_PARAMETER_NAME, inlineObject43)
     println(result)
@@ -1446,9 +1446,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val version : kotlin.Int = 56 // kotlin.Int | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject90 : InlineObject90 =  // InlineObject90 | 
+val version : kotlin.Int = 56 // kotlin.Int |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject90 : InlineObject90 =  // InlineObject90 |
 try {
     val result : kotlin.Any = apiInstance.generateMedicationSchemeExport9(version, UNKNOWN_PARAMETER_NAME, inlineObject90)
     println(result)
@@ -1495,8 +1495,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject82 : InlineObject82 =  // InlineObject82 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject82 : InlineObject82 =  // InlineObject82 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport10(UNKNOWN_PARAMETER_NAME, inlineObject82)
     println(result)
@@ -1542,8 +1542,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject83 : InlineObject83 =  // InlineObject83 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject83 : InlineObject83 =  // InlineObject83 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport11(UNKNOWN_PARAMETER_NAME, inlineObject83)
     println(result)
@@ -1589,10 +1589,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport12(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -1640,8 +1640,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject86 : InlineObject86 =  // InlineObject86 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject86 : InlineObject86 =  // InlineObject86 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport13(UNKNOWN_PARAMETER_NAME, inlineObject86)
     println(result)
@@ -1687,8 +1687,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject87 : InlineObject87 =  // InlineObject87 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject87 : InlineObject87 =  // InlineObject87 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport14(UNKNOWN_PARAMETER_NAME, inlineObject87)
     println(result)
@@ -1734,8 +1734,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject85 : InlineObject85 =  // InlineObject85 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject85 : InlineObject85 =  // InlineObject85 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport15(UNKNOWN_PARAMETER_NAME, inlineObject85)
     println(result)
@@ -1781,8 +1781,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject36 : InlineObject36 =  // InlineObject36 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject36 : InlineObject36 =  // InlineObject36 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport2(UNKNOWN_PARAMETER_NAME, inlineObject36)
     println(result)
@@ -1828,8 +1828,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject34 : InlineObject34 =  // InlineObject34 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject34 : InlineObject34 =  // InlineObject34 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport3(UNKNOWN_PARAMETER_NAME, inlineObject34)
     println(result)
@@ -1875,8 +1875,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject35 : InlineObject35 =  // InlineObject35 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject35 : InlineObject35 =  // InlineObject35 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport4(UNKNOWN_PARAMETER_NAME, inlineObject35)
     println(result)
@@ -1922,10 +1922,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport5(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -1973,8 +1973,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject38 : InlineObject38 =  // InlineObject38 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject38 : InlineObject38 =  // InlineObject38 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport6(UNKNOWN_PARAMETER_NAME, inlineObject38)
     println(result)
@@ -2020,8 +2020,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject39 : InlineObject39 =  // InlineObject39 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject39 : InlineObject39 =  // InlineObject39 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport7(UNKNOWN_PARAMETER_NAME, inlineObject39)
     println(result)
@@ -2067,8 +2067,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject37 : InlineObject37 =  // InlineObject37 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject37 : InlineObject37 =  // InlineObject37 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport8(UNKNOWN_PARAMETER_NAME, inlineObject37)
     println(result)
@@ -2114,8 +2114,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject84 : InlineObject84 =  // InlineObject84 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject84 : InlineObject84 =  // InlineObject84 |
 try {
     val result : kotlin.Any = apiInstance.generateSmfExport9(UNKNOWN_PARAMETER_NAME, inlineObject84)
     println(result)
@@ -2161,8 +2161,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject64 : InlineObject64 =  // InlineObject64 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject64 : InlineObject64 =  // InlineObject64 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr10(UNKNOWN_PARAMETER_NAME, inlineObject64)
     println(result)
@@ -2208,8 +2208,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject65 : InlineObject65 =  // InlineObject65 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject65 : InlineObject65 =  // InlineObject65 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr11(UNKNOWN_PARAMETER_NAME, inlineObject65)
     println(result)
@@ -2255,10 +2255,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr12(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -2306,8 +2306,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject68 : InlineObject68 =  // InlineObject68 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject68 : InlineObject68 =  // InlineObject68 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr13(UNKNOWN_PARAMETER_NAME, inlineObject68)
     println(result)
@@ -2353,8 +2353,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject69 : InlineObject69 =  // InlineObject69 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject69 : InlineObject69 =  // InlineObject69 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr14(UNKNOWN_PARAMETER_NAME, inlineObject69)
     println(result)
@@ -2400,8 +2400,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject67 : InlineObject67 =  // InlineObject67 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject67 : InlineObject67 =  // InlineObject67 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr15(UNKNOWN_PARAMETER_NAME, inlineObject67)
     println(result)
@@ -2447,8 +2447,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject18 : InlineObject18 =  // InlineObject18 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject18 : InlineObject18 =  // InlineObject18 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr2(UNKNOWN_PARAMETER_NAME, inlineObject18)
     println(result)
@@ -2494,8 +2494,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject16 : InlineObject16 =  // InlineObject16 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject16 : InlineObject16 =  // InlineObject16 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr3(UNKNOWN_PARAMETER_NAME, inlineObject16)
     println(result)
@@ -2541,8 +2541,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject17 : InlineObject17 =  // InlineObject17 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject17 : InlineObject17 =  // InlineObject17 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr4(UNKNOWN_PARAMETER_NAME, inlineObject17)
     println(result)
@@ -2588,10 +2588,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr5(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -2639,8 +2639,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject20 : InlineObject20 =  // InlineObject20 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject20 : InlineObject20 =  // InlineObject20 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr6(UNKNOWN_PARAMETER_NAME, inlineObject20)
     println(result)
@@ -2686,8 +2686,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject21 : InlineObject21 =  // InlineObject21 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject21 : InlineObject21 =  // InlineObject21 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr7(UNKNOWN_PARAMETER_NAME, inlineObject21)
     println(result)
@@ -2733,8 +2733,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject19 : InlineObject19 =  // InlineObject19 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject19 : InlineObject19 =  // InlineObject19 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr8(UNKNOWN_PARAMETER_NAME, inlineObject19)
     println(result)
@@ -2780,8 +2780,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject66 : InlineObject66 =  // InlineObject66 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject66 : InlineObject66 =  // InlineObject66 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehr9(UNKNOWN_PARAMETER_NAME, inlineObject66)
     println(result)
@@ -2827,8 +2827,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject70 : InlineObject70 =  // InlineObject70 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject70 : InlineObject70 =  // InlineObject70 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV210(UNKNOWN_PARAMETER_NAME, inlineObject70)
     println(result)
@@ -2874,8 +2874,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject71 : InlineObject71 =  // InlineObject71 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject71 : InlineObject71 =  // InlineObject71 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV211(UNKNOWN_PARAMETER_NAME, inlineObject71)
     println(result)
@@ -2921,10 +2921,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV212(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -2972,8 +2972,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject74 : InlineObject74 =  // InlineObject74 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject74 : InlineObject74 =  // InlineObject74 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV213(UNKNOWN_PARAMETER_NAME, inlineObject74)
     println(result)
@@ -3019,8 +3019,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject75 : InlineObject75 =  // InlineObject75 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject75 : InlineObject75 =  // InlineObject75 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV214(UNKNOWN_PARAMETER_NAME, inlineObject75)
     println(result)
@@ -3066,8 +3066,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject73 : InlineObject73 =  // InlineObject73 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject73 : InlineObject73 =  // InlineObject73 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV215(UNKNOWN_PARAMETER_NAME, inlineObject73)
     println(result)
@@ -3113,8 +3113,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject24 : InlineObject24 =  // InlineObject24 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject24 : InlineObject24 =  // InlineObject24 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV22(UNKNOWN_PARAMETER_NAME, inlineObject24)
     println(result)
@@ -3160,8 +3160,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject22 : InlineObject22 =  // InlineObject22 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject22 : InlineObject22 =  // InlineObject22 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV23(UNKNOWN_PARAMETER_NAME, inlineObject22)
     println(result)
@@ -3207,8 +3207,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject23 : InlineObject23 =  // InlineObject23 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject23 : InlineObject23 =  // InlineObject23 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV24(UNKNOWN_PARAMETER_NAME, inlineObject23)
     println(result)
@@ -3254,10 +3254,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV25(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -3305,8 +3305,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject26 : InlineObject26 =  // InlineObject26 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject26 : InlineObject26 =  // InlineObject26 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV26(UNKNOWN_PARAMETER_NAME, inlineObject26)
     println(result)
@@ -3352,8 +3352,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject27 : InlineObject27 =  // InlineObject27 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject27 : InlineObject27 =  // InlineObject27 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV27(UNKNOWN_PARAMETER_NAME, inlineObject27)
     println(result)
@@ -3399,8 +3399,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject25 : InlineObject25 =  // InlineObject25 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject25 : InlineObject25 =  // InlineObject25 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV28(UNKNOWN_PARAMETER_NAME, inlineObject25)
     println(result)
@@ -3446,8 +3446,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject72 : InlineObject72 =  // InlineObject72 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject72 : InlineObject72 =  // InlineObject72 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV29(UNKNOWN_PARAMETER_NAME, inlineObject72)
     println(result)
@@ -3493,9 +3493,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject30 : InlineObject30 =  // InlineObject30 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject30 : InlineObject30 =  // InlineObject30 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON(UNKNOWN_PARAMETER_NAME, asJson, inlineObject30)
     println(result)
@@ -3542,9 +3542,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject28 : InlineObject28 =  // InlineObject28 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject28 : InlineObject28 =  // InlineObject28 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON1(UNKNOWN_PARAMETER_NAME, asJson, inlineObject28)
     println(result)
@@ -3591,11 +3591,11 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON10(patientId, language, info, UNKNOWN_PARAMETER_NAME, asJson)
     println(result)
@@ -3644,9 +3644,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject80 : InlineObject80 =  // InlineObject80 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject80 : InlineObject80 =  // InlineObject80 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON11(UNKNOWN_PARAMETER_NAME, asJson, inlineObject80)
     println(result)
@@ -3693,9 +3693,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject81 : InlineObject81 =  // InlineObject81 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject81 : InlineObject81 =  // InlineObject81 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON12(UNKNOWN_PARAMETER_NAME, asJson, inlineObject81)
     println(result)
@@ -3742,9 +3742,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject79 : InlineObject79 =  // InlineObject79 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject79 : InlineObject79 =  // InlineObject79 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON13(UNKNOWN_PARAMETER_NAME, asJson, inlineObject79)
     println(result)
@@ -3791,9 +3791,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject29 : InlineObject29 =  // InlineObject29 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject29 : InlineObject29 =  // InlineObject29 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON2(UNKNOWN_PARAMETER_NAME, asJson, inlineObject29)
     println(result)
@@ -3840,11 +3840,11 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON3(patientId, language, info, UNKNOWN_PARAMETER_NAME, asJson)
     println(result)
@@ -3893,9 +3893,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject32 : InlineObject32 =  // InlineObject32 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject32 : InlineObject32 =  // InlineObject32 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON4(UNKNOWN_PARAMETER_NAME, asJson, inlineObject32)
     println(result)
@@ -3942,9 +3942,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject33 : InlineObject33 =  // InlineObject33 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject33 : InlineObject33 =  // InlineObject33 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON5(UNKNOWN_PARAMETER_NAME, asJson, inlineObject33)
     println(result)
@@ -3991,9 +3991,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject31 : InlineObject31 =  // InlineObject31 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject31 : InlineObject31 =  // InlineObject31 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON6(UNKNOWN_PARAMETER_NAME, asJson, inlineObject31)
     println(result)
@@ -4040,9 +4040,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject78 : InlineObject78 =  // InlineObject78 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject78 : InlineObject78 =  // InlineObject78 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON7(UNKNOWN_PARAMETER_NAME, asJson, inlineObject78)
     println(result)
@@ -4089,9 +4089,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject76 : InlineObject76 =  // InlineObject76 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject76 : InlineObject76 =  // InlineObject76 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON8(UNKNOWN_PARAMETER_NAME, asJson, inlineObject76)
     println(result)
@@ -4138,9 +4138,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val asJson : kotlin.Boolean = true // kotlin.Boolean | 
-val inlineObject77 : InlineObject77 =  // InlineObject77 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val asJson : kotlin.Boolean = true // kotlin.Boolean |
+val inlineObject77 : InlineObject77 =  // InlineObject77 |
 try {
     val result : kotlin.Any = apiInstance.generateSumehrV2JSON9(UNKNOWN_PARAMETER_NAME, asJson, inlineObject77)
     println(result)
@@ -4187,8 +4187,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject52 : InlineObject52 =  // InlineObject52 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject52 : InlineObject52 =  // InlineObject52 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr10(UNKNOWN_PARAMETER_NAME, inlineObject52)
     println(result)
@@ -4234,8 +4234,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject53 : InlineObject53 =  // InlineObject53 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject53 : InlineObject53 =  // InlineObject53 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr11(UNKNOWN_PARAMETER_NAME, inlineObject53)
     println(result)
@@ -4281,10 +4281,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr12(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -4332,8 +4332,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject56 : InlineObject56 =  // InlineObject56 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject56 : InlineObject56 =  // InlineObject56 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr13(UNKNOWN_PARAMETER_NAME, inlineObject56)
     println(result)
@@ -4379,8 +4379,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject57 : InlineObject57 =  // InlineObject57 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject57 : InlineObject57 =  // InlineObject57 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr14(UNKNOWN_PARAMETER_NAME, inlineObject57)
     println(result)
@@ -4426,8 +4426,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject55 : InlineObject55 =  // InlineObject55 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject55 : InlineObject55 =  // InlineObject55 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr15(UNKNOWN_PARAMETER_NAME, inlineObject55)
     println(result)
@@ -4473,8 +4473,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject6 : InlineObject6 =  // InlineObject6 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject6 : InlineObject6 =  // InlineObject6 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr2(UNKNOWN_PARAMETER_NAME, inlineObject6)
     println(result)
@@ -4520,8 +4520,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject4 : InlineObject4 =  // InlineObject4 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject4 : InlineObject4 =  // InlineObject4 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr3(UNKNOWN_PARAMETER_NAME, inlineObject4)
     println(result)
@@ -4567,8 +4567,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject5 : InlineObject5 =  // InlineObject5 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject5 : InlineObject5 =  // InlineObject5 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr4(UNKNOWN_PARAMETER_NAME, inlineObject5)
     println(result)
@@ -4614,10 +4614,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr5(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -4665,8 +4665,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject8 : InlineObject8 =  // InlineObject8 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject8 : InlineObject8 =  // InlineObject8 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr6(UNKNOWN_PARAMETER_NAME, inlineObject8)
     println(result)
@@ -4712,8 +4712,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject9 : InlineObject9 =  // InlineObject9 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject9 : InlineObject9 =  // InlineObject9 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr7(UNKNOWN_PARAMETER_NAME, inlineObject9)
     println(result)
@@ -4759,8 +4759,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject7 : InlineObject7 =  // InlineObject7 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject7 : InlineObject7 =  // InlineObject7 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr8(UNKNOWN_PARAMETER_NAME, inlineObject7)
     println(result)
@@ -4806,8 +4806,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject54 : InlineObject54 =  // InlineObject54 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject54 : InlineObject54 =  // InlineObject54 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehr9(UNKNOWN_PARAMETER_NAME, inlineObject54)
     println(result)
@@ -4853,8 +4853,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject58 : InlineObject58 =  // InlineObject58 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject58 : InlineObject58 =  // InlineObject58 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV210(UNKNOWN_PARAMETER_NAME, inlineObject58)
     println(result)
@@ -4900,8 +4900,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject59 : InlineObject59 =  // InlineObject59 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject59 : InlineObject59 =  // InlineObject59 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV211(UNKNOWN_PARAMETER_NAME, inlineObject59)
     println(result)
@@ -4947,10 +4947,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV212(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -4998,8 +4998,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject62 : InlineObject62 =  // InlineObject62 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject62 : InlineObject62 =  // InlineObject62 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV213(UNKNOWN_PARAMETER_NAME, inlineObject62)
     println(result)
@@ -5045,8 +5045,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject63 : InlineObject63 =  // InlineObject63 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject63 : InlineObject63 =  // InlineObject63 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV214(UNKNOWN_PARAMETER_NAME, inlineObject63)
     println(result)
@@ -5092,8 +5092,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject61 : InlineObject61 =  // InlineObject61 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject61 : InlineObject61 =  // InlineObject61 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV215(UNKNOWN_PARAMETER_NAME, inlineObject61)
     println(result)
@@ -5139,8 +5139,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject12 : InlineObject12 =  // InlineObject12 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject12 : InlineObject12 =  // InlineObject12 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV22(UNKNOWN_PARAMETER_NAME, inlineObject12)
     println(result)
@@ -5186,8 +5186,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject10 : InlineObject10 =  // InlineObject10 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject10 : InlineObject10 =  // InlineObject10 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV23(UNKNOWN_PARAMETER_NAME, inlineObject10)
     println(result)
@@ -5233,8 +5233,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject11 : InlineObject11 =  // InlineObject11 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject11 : InlineObject11 =  // InlineObject11 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV24(UNKNOWN_PARAMETER_NAME, inlineObject11)
     println(result)
@@ -5280,10 +5280,10 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val info : SumehrExportInfoDto =  // SumehrExportInfoDto | 
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val info : SumehrExportInfoDto =  // SumehrExportInfoDto |
+val UNKNOWN_PARAMETER_NAME :  =  //  |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV25(patientId, language, info, UNKNOWN_PARAMETER_NAME)
     println(result)
@@ -5331,8 +5331,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject14 : InlineObject14 =  // InlineObject14 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject14 : InlineObject14 =  // InlineObject14 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV26(UNKNOWN_PARAMETER_NAME, inlineObject14)
     println(result)
@@ -5378,8 +5378,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject15 : InlineObject15 =  // InlineObject15 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject15 : InlineObject15 =  // InlineObject15 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV27(UNKNOWN_PARAMETER_NAME, inlineObject15)
     println(result)
@@ -5425,8 +5425,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject13 : InlineObject13 =  // InlineObject13 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject13 : InlineObject13 =  // InlineObject13 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV28(UNKNOWN_PARAMETER_NAME, inlineObject13)
     println(result)
@@ -5472,8 +5472,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = KmehrWsControllerApi()
-val UNKNOWN_PARAMETER_NAME :  =  //  | 
-val inlineObject60 : InlineObject60 =  // InlineObject60 | 
+val UNKNOWN_PARAMETER_NAME :  =  //  |
+val inlineObject60 : InlineObject60 =  // InlineObject60 |
 try {
     val result : kotlin.Any = apiInstance.validateSumehrV29(UNKNOWN_PARAMETER_NAME, inlineObject60)
     println(result)
@@ -5505,4 +5505,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

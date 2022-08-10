@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createMaintenanceTask**](MaintenanceTaskApi.md#createMaintenanceTask) | **POST** /rest/v2/maintenancetask | Creates a maintenanceTask
 [**deleteMaintenanceTask**](MaintenanceTaskApi.md#deleteMaintenanceTask) | **DELETE** /rest/v2/maintenancetask/{maintenanceTaskIds} | Delete maintenanceTasks
-[**filterMaintenanceTasksBy**](MaintenanceTaskApi.md#filterMaintenanceTasksBy) | **POST** /rest/v2/maintenancetask/filter | Filter maintenanceTasks for the current user (HcParty) 
+[**filterMaintenanceTasksBy**](MaintenanceTaskApi.md#filterMaintenanceTasksBy) | **POST** /rest/v2/maintenancetask/filter | Filter maintenanceTasks for the current user (HcParty)
 [**getMaintenanceTask**](MaintenanceTaskApi.md#getMaintenanceTask) | **GET** /rest/v2/maintenancetask/{maintenanceTaskId} | Gets a maintenanceTask
 [**modifyMaintenanceTask**](MaintenanceTaskApi.md#modifyMaintenanceTask) | **PUT** /rest/v2/maintenancetask | Updates a maintenanceTask
 
@@ -24,7 +24,7 @@ Creates a maintenanceTask
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MaintenanceTaskApi()
-val maintenanceTaskDto : MaintenanceTaskDto =  // MaintenanceTaskDto | 
+val maintenanceTaskDto : MaintenanceTaskDto =  // MaintenanceTaskDto |
 try {
     val result : MaintenanceTaskDto = apiInstance.createMaintenanceTask(maintenanceTaskDto)
     println(result)
@@ -69,7 +69,7 @@ Delete maintenanceTasks
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MaintenanceTaskApi()
-val maintenanceTaskIds : kotlin.String = maintenanceTaskIds_example // kotlin.String | 
+val maintenanceTaskIds : kotlin.String = maintenanceTaskIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMaintenanceTask(maintenanceTaskIds)
     println(result)
@@ -105,7 +105,7 @@ No authorization required
 # **filterMaintenanceTasksBy**
 > PaginatedListMaintenanceTaskDto filterMaintenanceTasksBy(filterChainMaintenanceTask, startDocumentId, limit)
 
-Filter maintenanceTasks for the current user (HcParty) 
+Filter maintenanceTasks for the current user (HcParty)
 
 Returns a list of maintenanceTasks along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -116,7 +116,7 @@ Returns a list of maintenanceTasks along with next start keys and Document ID. I
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MaintenanceTaskApi()
-val filterChainMaintenanceTask : FilterChainMaintenanceTask =  // FilterChainMaintenanceTask | 
+val filterChainMaintenanceTask : FilterChainMaintenanceTask =  // FilterChainMaintenanceTask |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A maintenanceTask document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -165,7 +165,7 @@ Gets a maintenanceTask
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MaintenanceTaskApi()
-val maintenanceTaskId : kotlin.String = maintenanceTaskId_example // kotlin.String | 
+val maintenanceTaskId : kotlin.String = maintenanceTaskId_example // kotlin.String |
 try {
     val result : MaintenanceTaskDto = apiInstance.getMaintenanceTask(maintenanceTaskId)
     println(result)
@@ -210,7 +210,7 @@ Updates a maintenanceTask
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MaintenanceTaskApi()
-val maintenanceTaskDto : MaintenanceTaskDto =  // MaintenanceTaskDto | 
+val maintenanceTaskDto : MaintenanceTaskDto =  // MaintenanceTaskDto |
 try {
     val result : MaintenanceTaskDto = apiInstance.modifyMaintenanceTask(maintenanceTaskDto)
     println(result)
@@ -241,4 +241,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

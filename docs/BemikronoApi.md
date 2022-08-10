@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**appointmentsByDate**](BemikronoApi.md#appointmentsByDate) | **GET** /rest/v1/be_mikrono/appointments/byDate/{calendarDate} | Get appointments for patient
 [**appointmentsByPatient**](BemikronoApi.md#appointmentsByPatient) | **GET** /rest/v1/be_mikrono/appointments/byPatient/{patientId} | Get appointments for patient
-[**createAppointmentTypes**](BemikronoApi.md#createAppointmentTypes) | **POST** /rest/v1/be_mikrono/appointmentTypes | 
+[**createAppointmentTypes**](BemikronoApi.md#createAppointmentTypes) | **POST** /rest/v1/be_mikrono/appointmentTypes |
 [**createAppointments**](BemikronoApi.md#createAppointments) | **POST** /rest/v1/be_mikrono/appointments | Create appointments for owner
 [**notify**](BemikronoApi.md#notify) | **GET** /rest/v1/be_mikrono/notify/{appointmentId}/{action} | Notify of an appointment change
 [**register**](BemikronoApi.md#register) | **PUT** /rest/v1/be_mikrono/user/{userId}/register | Set credentials for provided user
@@ -27,7 +27,7 @@ Get appointments for patient
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val calendarDate : kotlin.Long = 789 // kotlin.Long | 
+val calendarDate : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<AppointmentDto> = apiInstance.appointmentsByDate(calendarDate)
     println(result)
@@ -72,9 +72,9 @@ Get appointments for patient
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val from : kotlin.Long = 789 // kotlin.Long | 
-val to : kotlin.Long = 789 // kotlin.Long | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val from : kotlin.Long = 789 // kotlin.Long |
+val to : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<AppointmentDto> = apiInstance.appointmentsByPatient(patientId, from, to)
     println(result)
@@ -121,7 +121,7 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val mikronoAppointmentTypeRestDto : kotlin.collections.List<MikronoAppointmentTypeRestDto> =  // kotlin.collections.List<MikronoAppointmentTypeRestDto> | 
+val mikronoAppointmentTypeRestDto : kotlin.collections.List<MikronoAppointmentTypeRestDto> =  // kotlin.collections.List<MikronoAppointmentTypeRestDto> |
 try {
     val result : kotlin.collections.List<MikronoAppointmentTypeRestDto> = apiInstance.createAppointmentTypes(mikronoAppointmentTypeRestDto)
     println(result)
@@ -166,7 +166,7 @@ Create appointments for owner
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val appointmentImportDto : kotlin.collections.List<AppointmentImportDto> =  // kotlin.collections.List<AppointmentImportDto> | 
+val appointmentImportDto : kotlin.collections.List<AppointmentImportDto> =  // kotlin.collections.List<AppointmentImportDto> |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.createAppointments(appointmentImportDto)
     println(result)
@@ -211,8 +211,8 @@ Notify of an appointment change
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val appointmentId : kotlin.String = appointmentId_example // kotlin.String | 
-val action : kotlin.String = action_example // kotlin.String | 
+val appointmentId : kotlin.String = appointmentId_example // kotlin.String |
+val action : kotlin.String = action_example // kotlin.String |
 try {
     apiInstance.notify(appointmentId, action)
 } catch (e: ClientException) {
@@ -257,8 +257,8 @@ Set credentials for provided user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto |
 try {
     val result : UserDto = apiInstance.register(userId, mikronoCredentialsDto)
     println(result)
@@ -304,7 +304,7 @@ Send message using mikrono from logged user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val emailOrSmsMessageDto : EmailOrSmsMessageDto =  // EmailOrSmsMessageDto | 
+val emailOrSmsMessageDto : EmailOrSmsMessageDto =  // EmailOrSmsMessageDto |
 try {
     val result : kotlin.Any = apiInstance.sendMessage(emailOrSmsMessageDto)
     println(result)
@@ -349,8 +349,8 @@ Set credentials for provided user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BemikronoApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val mikronoCredentialsDto : MikronoCredentialsDto =  // MikronoCredentialsDto |
 try {
     val result : UserDto = apiInstance.setUserCredentials(userId, mikronoCredentialsDto)
     println(result)
@@ -382,4 +382,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -20,7 +20,7 @@ Generate a Medex XML String
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MedexApi()
-val medexInfoDto : MedexInfoDto =  // MedexInfoDto | 
+val medexInfoDto : MedexInfoDto =  // MedexInfoDto |
 try {
     val result : kotlin.String = apiInstance.generateMedex(medexInfoDto)
     println(result)
@@ -51,4 +51,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/xml
-

@@ -42,7 +42,7 @@
     "body": ["the money is under my desk"],
     "skipEndpoint": true
   },
-  
+
   "fallback": {
   },
   "beforeElements": {

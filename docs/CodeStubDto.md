@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **code** | **kotlin.String** |  |  [optional]
 **version** | **kotlin.String** |  |  [optional]
 **label** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
-
-
-

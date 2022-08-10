@@ -16,7 +16,7 @@
     "insuranceId": "insuranceId",
     "secretFKeys": "secretFkeyTest",
     "invoiceId": "invoiceId",
-    "gracePriod": null, 
+    "gracePriod": null,
     "invoicingCodeDto": [{"accepted": true, "cancelPatientInterventionReason": 0, "canceled": true, "code": "moncode", "contactId": "string", "contract": "string", "contractDate": 0, "conventionAmount": 0, "dateCode": 0, "derogationMaxNumber": 0, "doctorSupplement": 0, "eidReadingHour": 0, "eidReadingValue": "string", "error": "string", "id": "string", "insuranceJustification": 0, "label": "string", "locationCdHcParty": "string", "locationNihii": "string", "logicalId": "string", "lost": true, "override3rdPayerCode": 0, "override3rdPayerReason": "string", "paid": 0, "patientIntervention": 0, "paymentType": "wired", "pending": true, "percentNorm": 0, "prescriberCdHcParty": "string", "prescriberFirstName": "string", "prescriberLastName": "string", "prescriberNihii": "string", "prescriberNorm": 0, "prescriberSsin": "string", "prescriptionDate": 0, "reimbursement": 0, "relatedCode": "string", "resent": true, "serviceId": "string", "side": 0, "status": 0, "tarificationId": "string", "timeOfDay": 0, "totalAmount": 0, "units": 0, "vat": 0}]
   },
   "createInvoice": {
@@ -33,10 +33,10 @@
   },
   "findInvoicesByAuthor": {
     "hcPartyId": "6c108832-11d2-43b8-b22c-1f5e9618e902",
-    "fromDate": null, 
-    "toDate": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
+    "fromDate": null,
+    "toDate": null,
+    "startKey": null,
+    "startDocumentId": null,
     "limit": null
   },
   "listInvoicesByHCPartyAndPatientForeignKeys": {
@@ -64,8 +64,8 @@
   },
   "listAllHcpsByStatus": {
     "status": "pending",
-    "from": null, 
-    "to": null, 
+    "from": null,
+    "to": null,
     "listOfIdsDto": {"ids": ["90904230-9161-4e16-9d27-0eade38f05ef"]}
   },
   "listInvoicesByContactIds": {
@@ -84,14 +84,14 @@
     "sentMediumType": "eattest",
     "invoiceType": "patient",
     "sent": false,
-    "from": null, 
+    "from": null,
     "to": null
   },
   "listInvoicesByHcpartySendingModeStatusDate": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
     "sendingMode": "EATTEST",
     "status": "pending",
-    "from": null, 
+    "from": null,
     "to": null
   },
   "listInvoicesByIds": {
@@ -140,9 +140,9 @@
   },
   "removeCodes": {
     "skipEndpoint": true,
-    "userId": null, 
-    "serviceId": null, 
-    "secretFKeys": null, 
+    "userId": null,
+    "serviceId": null,
+    "secretFKeys": null,
     "body": null
   },
   "setInvoicesDelegations": {

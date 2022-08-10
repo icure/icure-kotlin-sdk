@@ -29,7 +29,7 @@ Returns an instance of created classification Template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val classificationDto : ClassificationDto =  // ClassificationDto | 
+val classificationDto : ClassificationDto =  // ClassificationDto |
 try {
     val result : ClassificationDto = apiInstance.createClassification(classificationDto)
     println(result)
@@ -76,7 +76,7 @@ Response is a set containing the ID&#39;s of deleted classification Templates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteClassifications(listOfIdsDto)
     println(result)
@@ -123,8 +123,8 @@ Keys hast to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ClassificationDto> = apiInstance.findClassificationsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -170,7 +170,7 @@ Get a classification Template
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val classificationId : kotlin.String = classificationId_example // kotlin.String | 
+val classificationId : kotlin.String = classificationId_example // kotlin.String |
 try {
     val result : ClassificationDto = apiInstance.getClassification(classificationId)
     println(result)
@@ -217,7 +217,7 @@ Ids are seperated by a coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val ids : kotlin.String = ids_example // kotlin.String | 
+val ids : kotlin.String = ids_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ClassificationDto> = apiInstance.getClassificationByHcPartyId(ids)
     println(result)
@@ -264,7 +264,7 @@ Returns the modified classification Template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val classificationDto : ClassificationDto =  // ClassificationDto | 
+val classificationDto : ClassificationDto =  // ClassificationDto |
 try {
     val result : ClassificationDto = apiInstance.modifyClassification(classificationDto)
     println(result)
@@ -311,8 +311,8 @@ It delegates a classification to a healthcare party (By current healthcare party
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val classificationId : kotlin.String = classificationId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val classificationId : kotlin.String = classificationId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : ClassificationDto = apiInstance.newClassificationDelegations(classificationId, delegationDto)
     println(result)
@@ -360,7 +360,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ClassificationApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.setClassificationsDelegations(icureStubDto)
     println(result)
@@ -391,4 +391,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

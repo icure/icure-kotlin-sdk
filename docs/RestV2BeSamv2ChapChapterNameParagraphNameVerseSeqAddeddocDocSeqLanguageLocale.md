@@ -18,6 +18,3 @@ Name | Type | Description | Notes
 **displayCountry** | **kotlin.String** |  |  [optional]
 **displayVariant** | **kotlin.String** |  |  [optional]
 **displayName** | **kotlin.String** |  |  [optional]
-
-
-

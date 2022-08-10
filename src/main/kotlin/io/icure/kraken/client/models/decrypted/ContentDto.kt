@@ -84,4 +84,3 @@ data class ContentDto (
     val range: kotlin.collections.List<MeasureDto>? = null
 
 )
-

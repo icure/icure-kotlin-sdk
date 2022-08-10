@@ -15,6 +15,3 @@ Name | Type | Description | Notes
 **bufferSize** | **kotlin.Int** |  |  [optional]
 **committed** | **kotlin.Boolean** |  |  [optional]
 **locale** | [**RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale**](RestV2BeSamv2ChapChapterNameParagraphNameVerseSeqAddeddocDocSeqLanguageLocale.md) |  |  [optional]
-
-
-

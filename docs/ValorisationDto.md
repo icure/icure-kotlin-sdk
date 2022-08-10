@@ -14,6 +14,3 @@ Name | Type | Description | Notes
 **vat** | **kotlin.Double** |  |  [optional]
 **label** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
-
-
-

@@ -11,6 +11,3 @@ Name | Type | Description | Notes
 **docIds** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
 **otherInfos** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
 **subjectByLanguage** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
-
-
-

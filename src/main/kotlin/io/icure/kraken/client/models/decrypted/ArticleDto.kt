@@ -120,4 +120,3 @@ data class ArticleDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

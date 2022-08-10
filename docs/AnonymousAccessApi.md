@@ -24,15 +24,15 @@ The start of the slot is returned in YYYYDDMMHHmmss format and only slots belong
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AnonymousAccessApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val userId : kotlin.String = userId_example // kotlin.String | 
-val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String | 
-val isNewPatient : kotlin.Boolean = true // kotlin.Boolean | 
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
-val placeId : kotlin.String = placeId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val userId : kotlin.String = userId_example // kotlin.String |
+val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String |
+val isNewPatient : kotlin.Boolean = true // kotlin.Boolean |
+val startDate : kotlin.Long = 789 // kotlin.Long |
+val endDate : kotlin.Long = 789 // kotlin.Long |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
+val placeId : kotlin.String = placeId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<kotlin.Long> = apiInstance.getAvailabilitiesByPeriodAndCalendarItemTypeId(groupId, userId, calendarItemTypeId, isNewPatient, startDate, endDate, hcpId, placeId, limit)
     println(result)
@@ -89,8 +89,8 @@ Returns a list of Calendar Item types. In order to be returned, the Calendar Ite
 val apiInstance = AnonymousAccessApi()
 val groupId : kotlin.String = groupId_example // kotlin.String | Healthcare parties group id
 val userId : kotlin.String = userId_example // kotlin.String | Healthcare party user id
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
+val startDate : kotlin.Long = 789 // kotlin.Long |
+val endDate : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<AppointmentTypeAndPlaceDto> = apiInstance.listAppointmentTypesForUser(groupId, userId, startDate, endDate)
     println(result)
@@ -171,4 +171,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

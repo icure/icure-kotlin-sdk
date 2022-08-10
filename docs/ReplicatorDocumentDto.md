@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
+**id** | **kotlin.String** |  |
 **rev** | **kotlin.String** |  |  [optional]
 **source** | [**RemoteDto**](RemoteDto.md) |  |  [optional]
 **target** | [**RemoteDto**](RemoteDto.md) |  |  [optional]
@@ -18,6 +18,3 @@ Name | Type | Description | Notes
 **errorCount** | **kotlin.Int** |  |  [optional]
 **revsInfo** | **kotlin.collections.List&lt;kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;** |  |  [optional]
 **revHistory** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |  [optional]
-
-
-

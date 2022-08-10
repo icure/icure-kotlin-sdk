@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **endDate** | **kotlin.Long** |  |  [optional]
 **school** | **kotlin.String** |  |  [optional]
 **typeOfEducation** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
-
-
-

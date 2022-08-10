@@ -44,4 +44,3 @@ data class PaginatedListContactDto (
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
-

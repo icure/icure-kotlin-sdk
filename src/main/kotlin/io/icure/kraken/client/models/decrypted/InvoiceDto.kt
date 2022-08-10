@@ -387,4 +387,3 @@ data class InvoiceDto (
         @JsonProperty(value = "other") other("other");
     }
 }
-

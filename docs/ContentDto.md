@@ -17,6 +17,3 @@ Name | Type | Description | Notes
 **compoundValue** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) |  |  [optional]
 **ratio** | [**kotlin.collections.List&lt;MeasureDto&gt;**](MeasureDto.md) |  |  [optional]
 **range** | [**kotlin.collections.List&lt;MeasureDto&gt;**](MeasureDto.md) |  |  [optional]
-
-
-

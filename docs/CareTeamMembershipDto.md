@@ -16,6 +16,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 membershipType | doctor, mutuality, patient, specialist, other
-
-
-

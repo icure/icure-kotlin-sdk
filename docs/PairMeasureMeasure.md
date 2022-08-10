@@ -4,8 +4,5 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**first** | [**Measure**](Measure.md) |  | 
-**second** | [**Measure**](Measure.md) |  | 
-
-
-
+**first** | [**Measure**](Measure.md) |  |
+**second** | [**Measure**](Measure.md) |  |

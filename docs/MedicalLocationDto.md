@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**agendaIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
-**options** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
+**id** | **kotlin.String** |  |
+**agendaIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  |
+**options** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **name** | **kotlin.String** |  |  [optional]
@@ -19,6 +19,3 @@ Name | Type | Description | Notes
 **nihii** | **kotlin.String** |  |  [optional]
 **ssin** | **kotlin.String** |  |  [optional]
 **address** | [**AddressDto**](AddressDto.md) |  |  [optional]
-
-
-

@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
+**id** | **kotlin.String** |  |
 **updateSeq** | **kotlin.String** |  |  [optional]
 **fileSize** | **kotlin.Long** |  |  [optional]
 **externalSize** | **kotlin.Long** |  |  [optional]
@@ -14,6 +14,3 @@ Name | Type | Description | Notes
 **n** | **kotlin.Int** |  |  [optional]
 **w** | **kotlin.Int** |  |  [optional]
 **r** | **kotlin.Int** |  |  [optional]
-
-
-

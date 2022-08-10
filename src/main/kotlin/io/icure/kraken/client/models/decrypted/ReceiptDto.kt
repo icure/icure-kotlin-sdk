@@ -128,4 +128,3 @@ data class ReceiptDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

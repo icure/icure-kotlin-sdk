@@ -11,6 +11,3 @@ Name | Type | Description | Notes
 **started** | **kotlin.Boolean** |  |  [optional]
 **expired** | **kotlin.Boolean** |  |  [optional]
 **maxIdleTime** | [**WebSessionMaxIdleTime**](WebSessionMaxIdleTime.md) |  |  [optional]
-
-
-

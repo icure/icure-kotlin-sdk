@@ -46,4 +46,3 @@ fun HealthcarePartyDto.hasName(nameUse: PersonNameDto.Use) : Boolean {
 fun HealthcarePartyDto.findName(nameUse: PersonNameDto.Use) : PersonNameDto? {
     return this.names.find { it.use == nameUse }
 }
-

@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sumehrValid** | [**inline**](#SumehrValidEnum) |  | 
+**sumehrValid** | [**inline**](#SumehrValidEnum) |  |
 
 
 <a name="SumehrValidEnum"></a>
@@ -12,6 +12,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 sumehrValid | absent, uptodate, outdated
-
-
-

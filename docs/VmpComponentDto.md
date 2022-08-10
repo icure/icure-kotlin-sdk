@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **name** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **phaseNumber** | **kotlin.Int** |  |  [optional]
 **virtualIngredients** | [**kotlin.collections.List&lt;VirtualIngredientDto&gt;**](VirtualIngredientDto.md) |  |  [optional]
-
-
-

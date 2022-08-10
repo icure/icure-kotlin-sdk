@@ -119,4 +119,3 @@ data class ClassificationDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

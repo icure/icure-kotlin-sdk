@@ -4,10 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**blackTriangle** | **kotlin.Boolean** |  | 
-**ampps** | [**kotlin.collections.List&lt;AmppDto&gt;**](AmppDto.md) |  | 
-**components** | [**kotlin.collections.List&lt;AmpComponentDto&gt;**](AmpComponentDto.md) |  | 
+**id** | **kotlin.String** |  |
+**blackTriangle** | **kotlin.Boolean** |  |
+**ampps** | [**kotlin.collections.List&lt;AmppDto&gt;**](AmppDto.md) |  |
+**components** | [**kotlin.collections.List&lt;AmpComponentDto&gt;**](AmpComponentDto.md) |  |
 **rev** | **kotlin.String** |  |  [optional]
 **deletionDate** | **kotlin.Long** | hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. |  [optional]
 **from** | **kotlin.Long** |  |  [optional]
@@ -36,6 +36,3 @@ status | AUTHORIZED, SUSPENDED, REVOKED
 Name | Value
 ---- | -----
 medicineType | ALLOPATHIC, HOMEOPATHIC
-
-
-

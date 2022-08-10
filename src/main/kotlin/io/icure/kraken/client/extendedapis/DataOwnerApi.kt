@@ -47,4 +47,3 @@ class DataOwnerApi(val healthcarePartyApi: HealthcarePartyApi, val patientApi: P
         return deviceApi.updateDevice(dataOwner)
     }
 }
-

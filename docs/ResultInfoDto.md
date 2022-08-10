@@ -4,8 +4,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  | 
-**services** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) |  | 
+**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) |  |
+**services** | [**kotlin.collections.List&lt;ServiceDto&gt;**](ServiceDto.md) |  |
 **ssin** | **kotlin.String** |  |  [optional]
 **lastName** | **kotlin.String** |  |  [optional]
 **firstName** | **kotlin.String** |  |  [optional]
@@ -17,6 +17,3 @@ Name | Type | Description | Notes
 **demandDate** | **kotlin.Long** |  |  [optional]
 **labo** | **kotlin.String** |  |  [optional]
 **engine** | **kotlin.String** |  |  [optional]
-
-
-

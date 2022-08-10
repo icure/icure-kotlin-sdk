@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **endMoment** | **kotlin.Long** |  |  [optional]
 **suspensionReason** | **kotlin.String** |  |  [optional]
 **lifecycle** | **kotlin.String** |  |  [optional]
-
-
-

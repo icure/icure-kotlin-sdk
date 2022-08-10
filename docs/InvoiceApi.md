@@ -50,14 +50,14 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val sentMediumType : kotlin.String = sentMediumType_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-val invoicingCodeDto : kotlin.collections.List<InvoicingCodeDto> =  // kotlin.collections.List<InvoicingCodeDto> | 
-val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
-val gracePeriod : kotlin.Int = 56 // kotlin.Int | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val type : kotlin.String = type_example // kotlin.String |
+val sentMediumType : kotlin.String = sentMediumType_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
+val invoicingCodeDto : kotlin.collections.List<InvoicingCodeDto> =  // kotlin.collections.List<InvoicingCodeDto> |
+val insuranceId : kotlin.String = insuranceId_example // kotlin.String |
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
+val gracePeriod : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.appendCodes(userId, type, sentMediumType, secretFKeys, invoicingCodeDto, insuranceId, invoiceId, gracePeriod)
     println(result)
@@ -109,7 +109,7 @@ Creates an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceDto : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto |
 try {
     val result : InvoiceDto = apiInstance.createInvoice(invoiceDto)
     println(result)
@@ -156,7 +156,7 @@ Returns the created invoices.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.createInvoices(invoiceDto)
     println(result)
@@ -201,7 +201,7 @@ Deletes an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteInvoice(invoiceId)
     println(result)
@@ -248,7 +248,7 @@ Returns a list of invoices along with next start keys and Document ID. If the ne
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val filterChainInvoice : FilterChainInvoice =  // FilterChainInvoice | 
+val filterChainInvoice : FilterChainInvoice =  // FilterChainInvoice |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.filterInvoicesBy(filterChainInvoice)
     println(result)
@@ -293,9 +293,9 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val fromDate : kotlin.Long = 789 // kotlin.Long | 
-val toDate : kotlin.Long = 789 // kotlin.Long | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val fromDate : kotlin.Long = 789 // kotlin.Long |
+val toDate : kotlin.Long = 789 // kotlin.Long |
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -348,7 +348,7 @@ Gets an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
 try {
     val result : InvoiceDto = apiInstance.getInvoice(invoiceId)
     println(result)
@@ -393,7 +393,7 @@ Gets an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.getInvoices(listOfIdsDto)
     println(result)
@@ -438,7 +438,7 @@ Get the list of all used tarifications frequencies in invoices
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val minOccurences : kotlin.Long = 789 // kotlin.Long | 
+val minOccurences : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<LabelledOccurenceDto> = apiInstance.getTarificationsCodesOccurences(minOccurences)
     println(result)
@@ -483,10 +483,10 @@ Gets all invoices per status
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val status : kotlin.String = status_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
-val from : kotlin.Long = 789 // kotlin.Long | 
-val to : kotlin.Long = 789 // kotlin.Long | 
+val status : kotlin.String = status_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
+val from : kotlin.Long = 789 // kotlin.Long |
+val to : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listAllHcpsByStatus(status, listOfIdsDto, from, to)
     println(result)
@@ -534,7 +534,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByContactIds(listOfIdsDto)
     println(result)
@@ -581,8 +581,8 @@ Keys have to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -630,8 +630,8 @@ Keys have to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val groupId : kotlin.String = groupId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val groupId : kotlin.String = groupId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId)
     println(result)
@@ -679,12 +679,12 @@ Keys have to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val sentMediumType : kotlin.String = sentMediumType_example // kotlin.String | 
-val invoiceType : kotlin.String = invoiceType_example // kotlin.String | 
-val sent : kotlin.Boolean = true // kotlin.Boolean | 
-val from : kotlin.Long = 789 // kotlin.Long | 
-val to : kotlin.Long = 789 // kotlin.Long | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val sentMediumType : kotlin.String = sentMediumType_example // kotlin.String |
+val invoiceType : kotlin.String = invoiceType_example // kotlin.String |
+val sent : kotlin.Boolean = true // kotlin.Boolean |
+val from : kotlin.Long = 789 // kotlin.Long |
+val to : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
     println(result)
@@ -734,11 +734,11 @@ Get all invoices by author, by sending mode, by status and by date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val sendingMode : kotlin.String = sendingMode_example // kotlin.String | 
-val status : kotlin.String = status_example // kotlin.String | 
-val from : kotlin.Long = 789 // kotlin.Long | 
-val to : kotlin.Long = 789 // kotlin.Long | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val sendingMode : kotlin.String = sendingMode_example // kotlin.String |
+val status : kotlin.String = status_example // kotlin.String |
+val from : kotlin.Long = 789 // kotlin.Long |
+val to : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByHcpartySendingModeStatusDate(hcPartyId, sendingMode, status, from, to)
     println(result)
@@ -787,7 +787,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceIds : kotlin.String = invoiceIds_example // kotlin.String | 
+val invoiceIds : kotlin.String = invoiceIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByIds(invoiceIds)
     println(result)
@@ -832,7 +832,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val recipientIds : kotlin.String = recipientIds_example // kotlin.String | 
+val recipientIds : kotlin.String = recipientIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByRecipientsIds(recipientIds)
     println(result)
@@ -877,7 +877,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val serviceIds : kotlin.String = serviceIds_example // kotlin.String | 
+val serviceIds : kotlin.String = serviceIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listInvoicesByServiceIds(serviceIds)
     println(result)
@@ -924,8 +924,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.listInvoicesDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -971,7 +971,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val userIds : kotlin.String = userIds_example // kotlin.String | 
+val userIds : kotlin.String = userIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToInsurances(userIds)
     println(result)
@@ -1016,7 +1016,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val userIds : kotlin.String = userIds_example // kotlin.String | 
+val userIds : kotlin.String = userIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToInsurancesUnsent(userIds)
     println(result)
@@ -1061,7 +1061,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToPatients(hcPartyId)
     println(result)
@@ -1106,7 +1106,7 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.listToPatientsUnsent(hcPartyId)
     println(result)
@@ -1151,8 +1151,8 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : InvoiceDto = apiInstance.mergeTo(invoiceId, listOfIdsDto)
     println(result)
@@ -1198,7 +1198,7 @@ Modifies an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceDto : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto |
 try {
     val result : InvoiceDto = apiInstance.modifyInvoice(invoiceDto)
     println(result)
@@ -1245,7 +1245,7 @@ Returns the modified invoices.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.modifyInvoices(invoiceDto)
     println(result)
@@ -1290,8 +1290,8 @@ Adds a delegation to a invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : InvoiceDto = apiInstance.newInvoiceDelegations(invoiceId, delegationDto)
     println(result)
@@ -1337,7 +1337,7 @@ Modifies an invoice
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceDto : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto |
 try {
     val result : InvoiceDto = apiInstance.reassignInvoice(invoiceDto)
     println(result)
@@ -1382,10 +1382,10 @@ Remove an invoice of an user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val serviceId : kotlin.String = serviceId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val serviceId : kotlin.String = serviceId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.removeCodes(userId, serviceId, secretFKeys, requestBody)
     println(result)
@@ -1435,7 +1435,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.setInvoicesDelegations(icureStubDto)
     println(result)
@@ -1480,9 +1480,9 @@ Gets all invoices for author at date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = InvoiceApi()
-val invoiceId : kotlin.String = invoiceId_example // kotlin.String | 
-val scheme : kotlin.String = scheme_example // kotlin.String | 
-val forcedValue : kotlin.String = forcedValue_example // kotlin.String | 
+val invoiceId : kotlin.String = invoiceId_example // kotlin.String |
+val scheme : kotlin.String = scheme_example // kotlin.String |
+val forcedValue : kotlin.String = forcedValue_example // kotlin.String |
 try {
     val result : InvoiceDto = apiInstance.validate(invoiceId, scheme, forcedValue)
     println(result)
@@ -1515,4 +1515,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

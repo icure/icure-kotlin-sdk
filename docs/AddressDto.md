@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**telecoms** | [**kotlin.collections.List&lt;TelecomDto&gt;**](TelecomDto.md) | List of other contact details available through telecom services, ex: email, phone number, fax, etc. | 
+**telecoms** | [**kotlin.collections.List&lt;TelecomDto&gt;**](TelecomDto.md) | List of other contact details available through telecom services, ex: email, phone number, fax, etc. |
 **addressType** | [**inline**](#AddressTypeEnum) | The type of place the address represents, ex: home, office, hospital, clinic, etc.  |  [optional]
 **descr** | **kotlin.String** | Descriptive notes about the address |  [optional]
 **street** | **kotlin.String** | Street name |  [optional]
@@ -23,6 +23,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 addressType | home, work, vacation, hospital, clinic, hq, other, temporary, postal, diplomatic, reference, careaddress
-
-
-

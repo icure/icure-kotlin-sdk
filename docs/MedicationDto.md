@@ -45,6 +45,3 @@ Name | Type | Description | Notes
 **suspension** | [**kotlin.collections.List&lt;SuspensionDto&gt;**](SuspensionDto.md) |  |  [optional]
 **prescriptionRID** | **kotlin.String** |  |  [optional]
 **status** | **kotlin.Int** |  |  [optional]
-
-
-

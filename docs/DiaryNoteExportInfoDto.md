@@ -4,10 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**secretForeignKeys** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
-**excludedIds** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
-**tags** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
-**contexts** | **kotlin.collections.List&lt;kotlin.String&gt;** |  | 
+**secretForeignKeys** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |
+**excludedIds** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |
+**tags** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |
+**contexts** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |
 **recipient** | [**HealthcarePartyDto**](HealthcarePartyDto.md) |  |  [optional]
 **softwareName** | **kotlin.String** |  |  [optional]
 **softwareVersion** | **kotlin.String** |  |  [optional]
@@ -15,6 +15,3 @@ Name | Type | Description | Notes
 **documentId** | **kotlin.String** |  |  [optional]
 **attachmentId** | **kotlin.String** |  |  [optional]
 **note** | **kotlin.String** |  |  [optional]
-
-
-

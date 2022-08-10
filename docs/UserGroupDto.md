@@ -14,6 +14,3 @@ Name | Type | Description | Notes
 **patientId** | **kotlin.String** |  |  [optional]
 **healthcarePartyId** | **kotlin.String** |  |  [optional]
 **deviceId** | **kotlin.String** |  |  [optional]
-
-
-

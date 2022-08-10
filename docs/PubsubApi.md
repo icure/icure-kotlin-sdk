@@ -25,8 +25,8 @@ Offer auth data on previously agreed on secret bucket, data should be encrypted
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val bucket : kotlin.String = bucket_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val bucket : kotlin.String = bucket_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.offerAuth(bucket, body)
     println(result)
@@ -74,8 +74,8 @@ Publish value with key
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val key : kotlin.String = key_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val key : kotlin.String = key_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.Boolean> = apiInstance.pub(key, body)
     println(result)
@@ -123,7 +123,7 @@ Recover auth data from bucket, data should be encrypted
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val bucket : kotlin.String = bucket_example // kotlin.String | 
+val bucket : kotlin.String = bucket_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.recoverAuth(bucket)
     println(result)
@@ -170,7 +170,7 @@ Try to get published data
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PubsubApi()
-val key : kotlin.String = key_example // kotlin.String | 
+val key : kotlin.String = key_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.sub(key)
     println(result)
@@ -201,4 +201,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/octet-stream
-

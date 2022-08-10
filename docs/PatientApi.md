@@ -4,28 +4,28 @@ All URIs are relative to *https://kraken.icure.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**countOfPatients**](PatientApi.md#countOfPatients) | **GET** /rest/v2/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty 
+[**countOfPatients**](PatientApi.md#countOfPatients) | **GET** /rest/v2/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty
 [**createPatient**](PatientApi.md#createPatient) | **POST** /rest/v2/patient | Create a patient
 [**createPatients**](PatientApi.md#createPatients) | **POST** /rest/v2/patient/batch | Create patients in bulk
 [**deletePatients**](PatientApi.md#deletePatients) | **POST** /rest/v2/patient/delete/batch | Delete patients.
-[**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty) 
+[**filterPatientsBy**](PatientApi.md#filterPatientsBy) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty)
 [**findDeletedPatients**](PatientApi.md#findDeletedPatients) | **GET** /rest/v2/patient/deleted/byDate | Find deleted patients
 [**findDuplicatesByName**](PatientApi.md#findDuplicatesByName) | **POST** /rest/v2/patient/duplicates/name | Provides a paginated list of patients with duplicate name for an hecparty
 [**findDuplicatesBySsin**](PatientApi.md#findDuplicatesBySsin) | **POST** /rest/v2/patient/duplicates/ssin | Provides a paginated list of patients with duplicate ssin for an hecparty
 [**findPatientsByAccessLogUserAfterDate**](PatientApi.md#findPatientsByAccessLogUserAfterDate) | **GET** /rest/v2/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
 [**findPatientsByHealthcareParty**](PatientApi.md#findPatientsByHealthcareParty) | **GET** /rest/v2/patient | List patients for a specific HcParty
-[**findPatientsByNameBirthSsinAuto**](PatientApi.md#findPatientsByNameBirthSsinAuto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
+[**findPatientsByNameBirthSsinAuto**](PatientApi.md#findPatientsByNameBirthSsinAuto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty)
 [**findPatientsIdsByHealthcareParty**](PatientApi.md#findPatientsIdsByHealthcareParty) | **GET** /rest/v2/patient/byHcPartyId | List patients by pages for a specific HcParty
 [**findPatientsModifiedAfter**](PatientApi.md#findPatientsModifiedAfter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
-[**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
+[**fuzzySearch**](PatientApi.md#fuzzySearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty)
 [**getPatient**](PatientApi.md#getPatient) | **GET** /rest/v2/patient/{patientId} | Get patient
 [**getPatientAesExchangeKeysForDelegate**](PatientApi.md#getPatientAesExchangeKeysForDelegate) | **GET** /rest/v2/patient/{patientId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 [**getPatientByExternalId**](PatientApi.md#getPatientByExternalId) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 [**getPatientByHealthcarepartyAndIdentifier**](PatientApi.md#getPatientByHealthcarepartyAndIdentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
 [**getPatients**](PatientApi.md#getPatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 [**listDeletedPatientsByName**](PatientApi.md#listDeletedPatientsByName) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
-[**listOfMergesAfter**](PatientApi.md#listOfMergesAfter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 
-[**matchPatientsBy**](PatientApi.md#matchPatientsBy) | **POST** /rest/v2/patient/match | Get ids of patients matching the provided filter for the current user (HcParty) 
+[**listOfMergesAfter**](PatientApi.md#listOfMergesAfter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient
+[**matchPatientsBy**](PatientApi.md#matchPatientsBy) | **POST** /rest/v2/patient/match | Get ids of patients matching the provided filter for the current user (HcParty)
 [**mergeInto**](PatientApi.md#mergeInto) | **PUT** /rest/v2/patient/mergeInto/{toId}/from/{fromIds} | Merge a series of patients into another patient
 [**modifyPatient**](PatientApi.md#modifyPatient) | **PUT** /rest/v2/patient | Modify a patient
 [**modifyPatientReferral**](PatientApi.md#modifyPatientReferral) | **PUT** /rest/v2/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
@@ -39,7 +39,7 @@ Method | HTTP request | Description
 # **countOfPatients**
 > ContentDto countOfPatients(hcPartyId)
 
-Get count of patients for a specific HcParty or for the current HcParty 
+Get count of patients for a specific HcParty or for the current HcParty
 
 Returns the count of patients
 
@@ -97,7 +97,7 @@ Name, last name, date of birth, and gender are required. After creation of the p
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientDto : PatientDto =  // PatientDto | 
+val patientDto : PatientDto =  // PatientDto |
 try {
     val result : PatientDto = apiInstance.createPatient(patientDto)
     println(result)
@@ -144,7 +144,7 @@ Returns the id and _rev of created patients
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.createPatients(patientDto)
     println(result)
@@ -191,7 +191,7 @@ Response is an array containing the ID of deleted patient..
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePatients(listOfIdsDto)
     println(result)
@@ -227,7 +227,7 @@ No authorization required
 # **filterPatientsBy**
 > PaginatedListPatientDto filterPatientsBy(filterChainPatient, startKey, startDocumentId, limit, skip, sort, desc)
 
-Filter patients for the current user (HcParty) 
+Filter patients for the current user (HcParty)
 
 Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -238,7 +238,7 @@ Returns a list of patients along with next start keys and Document ID. If the ne
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val filterChainPatient : FilterChainPatient =  // FilterChainPatient | 
+val filterChainPatient : FilterChainPatient =  // FilterChainPatient |
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination, depends on the filters used
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -555,7 +555,7 @@ No authorization required
 # **findPatientsByNameBirthSsinAuto**
 > PaginatedListPatientDto findPatientsByNameBirthSsinAuto(healthcarePartyId, filterValue, startKey, startDocumentId, limit, sortDirection)
 
-Find patients for the current user (HcParty) 
+Find patients for the current user (HcParty)
 
 Returns a list of patients along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -676,7 +676,7 @@ Returns a list of patients that have been modified after the provided date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val date : kotlin.Long = 789 // kotlin.Long | 
+val date : kotlin.Long = 789 // kotlin.Long |
 val startKey : kotlin.Long = 789 // kotlin.Long | The start key for pagination the date of the first element of the new page
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A patient document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -718,7 +718,7 @@ No authorization required
 # **fuzzySearch**
 > kotlin.collections.List&lt;PatientDto&gt; fuzzySearch(firstName, lastName, dateOfBirth)
 
-Filter patients for the current user (HcParty) 
+Filter patients for the current user (HcParty)
 
 Returns a list of patients
 
@@ -780,7 +780,7 @@ It gets patient administrative data.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
 try {
     val result : PatientDto = apiInstance.getPatient(patientId)
     println(result)
@@ -827,7 +827,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getPatientAesExchangeKeysForDelegate(patientId)
     println(result)
@@ -919,9 +919,9 @@ It gets patient administrative data based on the identifier (root &amp; extensio
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val system : kotlin.String = system_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val system : kotlin.String = system_example // kotlin.String |
 try {
     val result : PatientDto = apiInstance.getPatientByHealthcarepartyAndIdentifier(hcPartyId, id, system)
     println(result)
@@ -970,7 +970,7 @@ It gets patient administrative data.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.getPatients(listOfIdsDto)
     println(result)
@@ -1055,7 +1055,7 @@ No authorization required
 # **listOfMergesAfter**
 > kotlin.collections.List&lt;PatientDto&gt; listOfMergesAfter(date)
 
-List patients that have been merged towards another patient 
+List patients that have been merged towards another patient
 
 Returns a list of patients that have been merged after the provided date
 
@@ -1066,7 +1066,7 @@ Returns a list of patients that have been merged after the provided date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val date : kotlin.Long = 789 // kotlin.Long | 
+val date : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.listOfMergesAfter(date)
     println(result)
@@ -1102,7 +1102,7 @@ No authorization required
 # **matchPatientsBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchPatientsBy(abstractFilterDtoPatient)
 
-Get ids of patients matching the provided filter for the current user (HcParty) 
+Get ids of patients matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -1111,7 +1111,7 @@ Get ids of patients matching the provided filter for the current user (HcParty)
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val abstractFilterDtoPatient : AbstractFilterDtoPatient =  // AbstractFilterDtoPatient | 
+val abstractFilterDtoPatient : AbstractFilterDtoPatient =  // AbstractFilterDtoPatient |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchPatientsBy(abstractFilterDtoPatient)
     println(result)
@@ -1156,8 +1156,8 @@ Merge a series of patients into another patient
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val toId : kotlin.String = toId_example // kotlin.String | 
-val fromIds : kotlin.String = fromIds_example // kotlin.String | 
+val toId : kotlin.String = toId_example // kotlin.String |
+val fromIds : kotlin.String = fromIds_example // kotlin.String |
 try {
     val result : PatientDto = apiInstance.mergeInto(toId, fromIds)
     println(result)
@@ -1205,7 +1205,7 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientDto : PatientDto =  // PatientDto | 
+val patientDto : PatientDto =  // PatientDto |
 try {
     val result : PatientDto = apiInstance.modifyPatient(patientDto)
     println(result)
@@ -1250,7 +1250,7 @@ Set a patient referral doctor
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
 val referralId : kotlin.String = referralId_example // kotlin.String | The referal id. Accepts 'none' for referral removal.
 val start : kotlin.Long = 789 // kotlin.Long | Optional value for start of referral
 val end : kotlin.Long = 789 // kotlin.Long | Optional value for end of referral
@@ -1303,7 +1303,7 @@ Returns the id and _rev of modified patients
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> |
 try {
     val result : kotlin.collections.List<IdWithRevDto> = apiInstance.modifyPatients(patientDto)
     println(result)
@@ -1350,8 +1350,8 @@ It delegates a patient to a healthcare party (By current healthcare party). A mo
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : PatientDto = apiInstance.newPatientDelegations(patientId, delegationDto)
     println(result)
@@ -1399,11 +1399,11 @@ Register a new patient into the system
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val patientDto : PatientDto =  // PatientDto | 
-val token : kotlin.String = token_example // kotlin.String | 
-val useShortToken : kotlin.Boolean = true // kotlin.Boolean | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val patientDto : PatientDto =  // PatientDto |
+val token : kotlin.String = token_example // kotlin.String |
+val useShortToken : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : DataOwnerRegistrationSuccessDto = apiInstance.registerPatient(hcPartyId, groupId, patientDto, token, useShortToken)
     println(result)
@@ -1454,7 +1454,7 @@ Response is an array containing the ID of undeleted patient..
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PatientApi()
-val patientIds : kotlin.String = patientIds_example // kotlin.String | 
+val patientIds : kotlin.String = patientIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.undeletePatient(patientIds)
     println(result)
@@ -1485,4 +1485,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

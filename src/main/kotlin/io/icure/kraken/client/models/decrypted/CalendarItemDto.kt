@@ -199,4 +199,3 @@ data class CalendarItemDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

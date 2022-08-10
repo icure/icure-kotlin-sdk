@@ -7,11 +7,11 @@
     "deleteIds": null
   },
   "deleteDoc": {
-    "className": null, 
+    "className": null,
     "ids": null
   },
   "getDoc": {
-    "className": null, 
+    "className": null,
     "id": null
   },
   "listDocs": {

@@ -25,7 +25,7 @@ Creates a front end migration
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FrontEndMigrationApi()
-val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
+val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto |
 try {
     val result : FrontEndMigrationDto = apiInstance.createFrontEndMigration(frontEndMigrationDto)
     println(result)
@@ -70,7 +70,7 @@ Deletes a front end migration
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FrontEndMigrationApi()
-val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
+val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteFrontEndMigration(frontEndMigrationId)
     println(result)
@@ -115,7 +115,7 @@ Gets a front end migration
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FrontEndMigrationApi()
-val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String | 
+val frontEndMigrationId : kotlin.String = frontEndMigrationId_example // kotlin.String |
 try {
     val result : FrontEndMigrationDto = apiInstance.getFrontEndMigration(frontEndMigrationId)
     println(result)
@@ -160,7 +160,7 @@ Gets an front end migration
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FrontEndMigrationApi()
-val frontEndMigrationName : kotlin.String = frontEndMigrationName_example // kotlin.String | 
+val frontEndMigrationName : kotlin.String = frontEndMigrationName_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FrontEndMigrationDto> = apiInstance.getFrontEndMigrationByName(frontEndMigrationName)
     println(result)
@@ -246,7 +246,7 @@ Modifies a front end migration
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FrontEndMigrationApi()
-val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto | 
+val frontEndMigrationDto : FrontEndMigrationDto =  // FrontEndMigrationDto |
 try {
     val result : FrontEndMigrationDto = apiInstance.modifyFrontEndMigration(frontEndMigrationDto)
     println(result)
@@ -277,4 +277,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

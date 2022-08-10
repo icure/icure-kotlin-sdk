@@ -18,13 +18,13 @@ Method | HTTP request | Description
 [**findPaginatedVmpsByGroupId**](Besamv2Api.md#findPaginatedVmpsByGroupId) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
 [**findPaginatedVmpsByLabel**](Besamv2Api.md#findPaginatedVmpsByLabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
 [**findPaginatedVmpsByVmpCode**](Besamv2Api.md#findPaginatedVmpsByVmpCode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-[**findParagraphs**](Besamv2Api.md#findParagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} | 
-[**findParagraphsWithCnk**](Besamv2Api.md#findParagraphsWithCnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} | 
-[**getAddedDocument**](Besamv2Api.md#getAddedDocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} | 
-[**getAmpsForParagraph**](Besamv2Api.md#getAmpsForParagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} | 
+[**findParagraphs**](Besamv2Api.md#findParagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} |
+[**findParagraphsWithCnk**](Besamv2Api.md#findParagraphsWithCnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} |
+[**getAddedDocument**](Besamv2Api.md#getAddedDocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} |
+[**getAmpsForParagraph**](Besamv2Api.md#getAmpsForParagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} |
 [**getSamVersion**](Besamv2Api.md#getSamVersion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-[**getVersesHierarchy**](Besamv2Api.md#getVersesHierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} | 
-[**getVtmNamesForParagraph**](Besamv2Api.md#getVtmNamesForParagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} | 
+[**getVersesHierarchy**](Besamv2Api.md#getVersesHierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} |
+[**getVtmNamesForParagraph**](Besamv2Api.md#getVtmNamesForParagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} |
 [**listAmpsByDmppCodes**](Besamv2Api.md#listAmpsByDmppCodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
 [**listAmpsByGroupCodes**](Besamv2Api.md#listAmpsByGroupCodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
 [**listAmpsByGroupIds**](Besamv2Api.md#listAmpsByGroupIds) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
@@ -795,8 +795,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val searchString : kotlin.String = searchString_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
+val searchString : kotlin.String = searchString_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ParagraphDto> = apiInstance.findParagraphs(searchString, language)
     println(result)
@@ -842,8 +842,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val cnk : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
+val cnk : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ParagraphDto> = apiInstance.findParagraphsWithCnk(cnk, language)
     println(result)
@@ -889,12 +889,12 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val chapterName : kotlin.String = chapterName_example // kotlin.String | 
-val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
-val verseSeq : kotlin.Long = 789 // kotlin.Long | 
-val docSeq : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val response : Response =  // Response | 
+val chapterName : kotlin.String = chapterName_example // kotlin.String |
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String |
+val verseSeq : kotlin.Long = 789 // kotlin.Long |
+val docSeq : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val response : Response =  // Response |
 try {
     val result : kotlin.collections.List<InlineResponse200> = apiInstance.getAddedDocument(chapterName, paragraphName, verseSeq, docSeq, language, response)
     println(result)
@@ -944,8 +944,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val chapterName : kotlin.String = chapterName_example // kotlin.String | 
-val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+val chapterName : kotlin.String = chapterName_example // kotlin.String |
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.getAmpsForParagraph(chapterName, paragraphName)
     println(result)
@@ -1034,8 +1034,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val chapterName : kotlin.String = chapterName_example // kotlin.String | 
-val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
+val chapterName : kotlin.String = chapterName_example // kotlin.String |
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String |
 try {
     val result : VerseDto = apiInstance.getVersesHierarchy(chapterName, paragraphName)
     println(result)
@@ -1081,9 +1081,9 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val chapterName : kotlin.String = chapterName_example // kotlin.String | 
-val paragraphName : kotlin.String = paragraphName_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
+val chapterName : kotlin.String = chapterName_example // kotlin.String |
+val paragraphName : kotlin.String = paragraphName_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.getVtmNamesForParagraph(chapterName, paragraphName, language)
     println(result)
@@ -1132,7 +1132,7 @@ Returns a list of amps matched with given input. If several types are provided, 
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByDmppCodes(listOfIdsDto)
     println(result)
@@ -1179,7 +1179,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByGroupCodes(listOfIdsDto)
     println(result)
@@ -1226,7 +1226,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByGroupIds(listOfIdsDto)
     println(result)
@@ -1273,7 +1273,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByVmpCodes(listOfIdsDto)
     println(result)
@@ -1320,7 +1320,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<AmpDto> = apiInstance.listAmpsByVmpIds(listOfIdsDto)
     println(result)
@@ -1367,7 +1367,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<NmpDto> = apiInstance.listNmpsByCnks(listOfIdsDto)
     println(result)
@@ -1496,7 +1496,7 @@ Returns a list of group codes matched with given input. If several types are pro
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<VmpGroupDto> = apiInstance.listVmpGroupsByVmpGroupCodes(listOfIdsDto)
     println(result)
@@ -1543,7 +1543,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<VmpDto> = apiInstance.listVmpsByGroupIds(listOfIdsDto)
     println(result)
@@ -1590,7 +1590,7 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = Besamv2Api()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<VmpDto> = apiInstance.listVmpsByVmpCodes(listOfIdsDto)
     println(result)
@@ -1621,4 +1621,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

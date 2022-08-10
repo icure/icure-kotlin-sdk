@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **name** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **edqmCode** | **kotlin.String** |  |  [optional]
 **edqmDefinition** | **kotlin.String** |  |  [optional]
-
-
-

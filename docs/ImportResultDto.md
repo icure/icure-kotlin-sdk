@@ -13,6 +13,3 @@ Name | Type | Description | Notes
 **hcps** | [**kotlin.collections.List&lt;HealthcarePartyDto&gt;**](HealthcarePartyDto.md) |  |  [optional]
 **documents** | [**kotlin.collections.List&lt;DocumentDto&gt;**](DocumentDto.md) |  |  [optional]
 **attachments** | [**kotlin.collections.Map&lt;kotlin.String, MimeAttachmentDto&gt;**](MimeAttachmentDto.md) |  |  [optional]
-
-
-

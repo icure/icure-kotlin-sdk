@@ -45,4 +45,3 @@ data class PaginatedListPatientDto (
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
-

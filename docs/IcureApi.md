@@ -157,7 +157,7 @@ Get replication info
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : ReplicatorDocumentDto = apiInstance.getReplicatorInfo(id)
     println(result)
@@ -325,7 +325,7 @@ Resolve contacts conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.resolveContactsConflicts(limit)
     println(result)
@@ -370,8 +370,8 @@ resolve documents conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val ids : kotlin.String = ids_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val ids : kotlin.String = ids_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.resolveDocumentsConflicts(ids, limit)
     println(result)
@@ -417,7 +417,7 @@ resolve forms conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.resolveFormsConflicts(limit)
     println(result)
@@ -462,7 +462,7 @@ resolve healthcare elements conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.resolveHealthElementsConflicts(limit)
     println(result)
@@ -507,7 +507,7 @@ resolve invoices conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.resolveInvoicesConflicts(limit)
     println(result)
@@ -552,7 +552,7 @@ resolve messages conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.resolveMessagesConflicts(limit)
     println(result)
@@ -597,7 +597,7 @@ Resolve patients conflicts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.resolvePatientsConflicts(limit)
     println(result)
@@ -642,8 +642,8 @@ Force update design doc
 //import io.icure.kraken.client.models.*
 
 val apiInstance = IcureApi()
-val entityName : kotlin.String = entityName_example // kotlin.String | 
-val warmup : kotlin.Boolean = true // kotlin.Boolean | 
+val entityName : kotlin.String = entityName_example // kotlin.String |
+val warmup : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.Boolean = apiInstance.updateDesignDoc(entityName, warmup)
     println(result)
@@ -675,4 +675,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

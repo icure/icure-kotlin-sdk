@@ -11,24 +11,3 @@ interface AbstractFilterDto<O> {
     @JsonProperty(value = "\$type")
     fun getJavaType(): String = this::class.java.simpleName
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

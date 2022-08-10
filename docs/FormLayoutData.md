@@ -22,6 +22,3 @@ Name | Type | Description | Notes
 **codes** | [**kotlin.collections.List&lt;GuiCode&gt;**](GuiCode.md) |  |  [optional]
 **codeTypes** | [**kotlin.collections.List&lt;GuiCodeType&gt;**](GuiCodeType.md) |  |  [optional]
 **formulas** | [**kotlin.collections.List&lt;Formula&gt;**](Formula.md) |  |  [optional]
-
-
-

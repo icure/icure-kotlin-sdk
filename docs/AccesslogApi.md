@@ -26,7 +26,7 @@ Creates an access log
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val accessLogDto : AccessLogDto =  // AccessLogDto | 
+val accessLogDto : AccessLogDto =  // AccessLogDto |
 try {
     val result : AccessLogDto = apiInstance.createAccessLog(accessLogDto)
     println(result)
@@ -71,7 +71,7 @@ Deletes an access log
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAccessLogs(listOfIdsDto)
     println(result)
@@ -116,12 +116,12 @@ Get Paginated List of Access logs
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val fromEpoch : kotlin.Long = 789 // kotlin.Long | 
-val toEpoch : kotlin.Long = 789 // kotlin.Long | 
-val startKey : kotlin.Long = 789 // kotlin.Long | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val descending : kotlin.Boolean = true // kotlin.Boolean | 
+val fromEpoch : kotlin.Long = 789 // kotlin.Long |
+val toEpoch : kotlin.Long = 789 // kotlin.Long |
+val startKey : kotlin.Long = 789 // kotlin.Long |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
+val descending : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : PaginatedListAccessLogDto = apiInstance.findAccessLogsBy(fromEpoch, toEpoch, startKey, startDocumentId, limit, descending)
     println(result)
@@ -228,7 +228,7 @@ Gets an access log
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val accessLogId : kotlin.String = accessLogId_example // kotlin.String | 
+val accessLogId : kotlin.String = accessLogId_example // kotlin.String |
 try {
     val result : AccessLogDto = apiInstance.getAccessLog(accessLogId)
     println(result)
@@ -273,8 +273,8 @@ List access logs found By Healthcare Party and secret foreign keyelementIds.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<AccessLogDto> = apiInstance.listAccessLogsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -320,7 +320,7 @@ Modifies an access log
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AccessLogApi()
-val accessLogDto : AccessLogDto =  // AccessLogDto | 
+val accessLogDto : AccessLogDto =  // AccessLogDto |
 try {
     val result : AccessLogDto = apiInstance.modifyAccessLog(accessLogDto)
     println(result)
@@ -351,4 +351,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

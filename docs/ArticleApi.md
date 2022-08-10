@@ -24,7 +24,7 @@ Creates a article
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val articleDto : ArticleDto =  // ArticleDto | 
+val articleDto : ArticleDto =  // ArticleDto |
 try {
     val result : ArticleDto = apiInstance.createArticle(articleDto)
     println(result)
@@ -69,7 +69,7 @@ Deletes articles
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteArticles(listOfIdsDto)
     println(result)
@@ -114,7 +114,7 @@ Gets an article
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val articleId : kotlin.String = articleId_example // kotlin.String | 
+val articleId : kotlin.String = articleId_example // kotlin.String |
 try {
     val result : ArticleDto = apiInstance.getArticle(articleId)
     println(result)
@@ -200,7 +200,7 @@ Modifies an article
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ArticleApi()
-val articleDto : ArticleDto =  // ArticleDto | 
+val articleDto : ArticleDto =  // ArticleDto |
 try {
     val result : ArticleDto = apiInstance.modifyArticle(articleDto)
     println(result)
@@ -231,4 +231,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

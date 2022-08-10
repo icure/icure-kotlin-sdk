@@ -139,4 +139,3 @@ data class AccessLogDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

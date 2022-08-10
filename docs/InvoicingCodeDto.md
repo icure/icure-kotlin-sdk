@@ -63,6 +63,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 paymentType | cash, wired, insurance, creditcard, debitcard, paypal, bitcoin, other
-
-
-

@@ -29,7 +29,7 @@ Type, Tarification and Version are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val tarificationDto : TarificationDto =  // TarificationDto | 
+val tarificationDto : TarificationDto =  // TarificationDto |
 try {
     val result : TarificationDto = apiInstance.createTarification(tarificationDto)
     println(result)
@@ -76,12 +76,12 @@ Returns a list of tarifications matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val region : kotlin.String = region_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val tarification : kotlin.String = tarification_example // kotlin.String | 
-val version : kotlin.String = version_example // kotlin.String | 
+val region : kotlin.String = region_example // kotlin.String |
+val type : kotlin.String = type_example // kotlin.String |
+val tarification : kotlin.String = tarification_example // kotlin.String |
+val version : kotlin.String = version_example // kotlin.String |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
-val startKey : kotlin.String = startKey_example // kotlin.String | 
+val startKey : kotlin.String = startKey_example // kotlin.String |
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
     val result : PaginatedListTarificationDto = apiInstance.findTarificationsBy(region, type, tarification, version, startDocumentId, startKey, limit)
@@ -188,11 +188,11 @@ Returns a list of tarifications matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val region : kotlin.String = region_example // kotlin.String | 
-val types : kotlin.String = types_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val label : kotlin.String = label_example // kotlin.String | 
-val startKey : kotlin.String = startKey_example // kotlin.String | 
+val region : kotlin.String = region_example // kotlin.String |
+val types : kotlin.String = types_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val label : kotlin.String = label_example // kotlin.String |
+val startKey : kotlin.String = startKey_example // kotlin.String |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A tarification document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -345,7 +345,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<TarificationDto> = apiInstance.getTarifications(listOfIdsDto)
     println(result)
@@ -392,7 +392,7 @@ Modification of (type, tarification, version) is not allowed.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TarificationApi()
-val tarificationDto : TarificationDto =  // TarificationDto | 
+val tarificationDto : TarificationDto =  // TarificationDto |
 try {
     val result : TarificationDto = apiInstance.modifyTarification(tarificationDto)
     println(result)
@@ -423,4 +423,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

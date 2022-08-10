@@ -40,7 +40,7 @@ val apiInstance = GroupApi()
 val id : kotlin.String = id_example // kotlin.String | The id of the group, also used for subsequent authentication against the db (can only contain digits, letters, - and _)
 val name : kotlin.String = name_example // kotlin.String | The name of the group
 val password : kotlin.String = password_example // kotlin.String | The password of the group (can only contain digits, letters, - and _)
-val databaseInitialisationDto : DatabaseInitialisationDto =  // DatabaseInitialisationDto | 
+val databaseInitialisationDto : DatabaseInitialisationDto =  // DatabaseInitialisationDto |
 val server : kotlin.String = server_example // kotlin.String | The server on which the group dbs will be created
 val q : kotlin.Int = 56 // kotlin.Int | The number of shards for patient and healthdata dbs : 3-8 is a recommended range of value
 val n : kotlin.Int = 56 // kotlin.Int | The number of replications for other dbs : 3 is a recommended value
@@ -298,7 +298,7 @@ Reset storage
 //import io.icure.kraken.client.models.*
 
 val apiInstance = GroupApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<GroupDatabasesInfoDto> = apiInstance.getGroupsStorageInfos(listOfIdsDto)
     println(result)
@@ -577,7 +577,7 @@ Update existing group properties
 
 val apiInstance = GroupApi()
 val id : kotlin.String = id_example // kotlin.String | The id of the group
-val listOfPropertiesDto : ListOfPropertiesDto =  // ListOfPropertiesDto | 
+val listOfPropertiesDto : ListOfPropertiesDto =  // ListOfPropertiesDto |
 try {
     val result : GroupDto = apiInstance.modifyGroupProperties(id, listOfPropertiesDto)
     println(result)
@@ -625,7 +625,7 @@ Create a new group and associated dbs.  The created group will be manageable by 
 //import io.icure.kraken.client.models.*
 
 val apiInstance = GroupApi()
-val registrationInformationDto : RegistrationInformationDto =  // RegistrationInformationDto | 
+val registrationInformationDto : RegistrationInformationDto =  // RegistrationInformationDto |
 try {
     val result : RegistrationSuccessDto = apiInstance.registerNewGroupAdministrator(registrationInformationDto)
     println(result)
@@ -673,7 +673,7 @@ Reset storage
 
 val apiInstance = GroupApi()
 val id : kotlin.String = id_example // kotlin.String | The id of the group
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 val q : kotlin.Int = 56 // kotlin.Int | The number of shards for patient and healthdata dbs : 3-8 is a recommended range of value
 val n : kotlin.Int = 56 // kotlin.Int | The number of replications for dbs : 3 is a recommended value
 try {
@@ -809,4 +809,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

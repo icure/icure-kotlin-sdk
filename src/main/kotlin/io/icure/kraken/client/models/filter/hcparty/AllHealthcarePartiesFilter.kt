@@ -28,4 +28,3 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 data class AllHealthcarePartiesFilter(
         override val desc:String? = null,
 ) : AbstractFilterDto<HealthcarePartyDto>
-

@@ -5,7 +5,7 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createEntityReference**](EntityrefApi.md#createEntityReference) | **POST** /rest/v2/entityref | Create an entity reference
-[**getLatest**](EntityrefApi.md#getLatest) | **GET** /rest/v2/entityref/latest/{prefix} | Find latest reference for a prefix 
+[**getLatest**](EntityrefApi.md#getLatest) | **GET** /rest/v2/entityref/latest/{prefix} | Find latest reference for a prefix
 
 
 <a name="createEntityReference"></a>
@@ -21,7 +21,7 @@ Create an entity reference
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityrefApi()
-val entityReferenceDto : EntityReferenceDto =  // EntityReferenceDto | 
+val entityReferenceDto : EntityReferenceDto =  // EntityReferenceDto |
 try {
     val result : EntityReferenceDto = apiInstance.createEntityReference(entityReferenceDto)
     println(result)
@@ -57,7 +57,7 @@ No authorization required
 # **getLatest**
 > EntityReferenceDto getLatest(prefix)
 
-Find latest reference for a prefix 
+Find latest reference for a prefix
 
 ### Example
 ```kotlin
@@ -66,7 +66,7 @@ Find latest reference for a prefix
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityrefApi()
-val prefix : kotlin.String = prefix_example // kotlin.String | 
+val prefix : kotlin.String = prefix_example // kotlin.String |
 try {
     val result : EntityReferenceDto = apiInstance.getLatest(prefix)
     println(result)
@@ -97,4 +97,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

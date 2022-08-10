@@ -22,7 +22,7 @@ Create new application settings
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ApplicationsettingsApi()
-val applicationSettingsDto : ApplicationSettingsDto =  // ApplicationSettingsDto | 
+val applicationSettingsDto : ApplicationSettingsDto =  // ApplicationSettingsDto |
 try {
     val result : ApplicationSettingsDto = apiInstance.createApplicationSettings(applicationSettingsDto)
     println(result)
@@ -108,7 +108,7 @@ Update application settings
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ApplicationsettingsApi()
-val applicationSettingsDto : ApplicationSettingsDto =  // ApplicationSettingsDto | 
+val applicationSettingsDto : ApplicationSettingsDto =  // ApplicationSettingsDto |
 try {
     val result : ApplicationSettingsDto = apiInstance.updateApplicationSettings(applicationSettingsDto)
     println(result)
@@ -139,4 +139,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

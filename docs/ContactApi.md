@@ -8,15 +8,15 @@ Method | HTTP request | Description
 [**createContact**](ContactApi.md#createContact) | **POST** /rest/v2/contact | Create a contact with the current user
 [**createContacts**](ContactApi.md#createContacts) | **POST** /rest/v2/contact/batch | Create a batch of contacts
 [**deleteContacts**](ContactApi.md#deleteContacts) | **POST** /rest/v2/contact/delete/batch | Delete contacts.
-[**filterContactsBy**](ContactApi.md#filterContactsBy) | **POST** /rest/v2/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
-[**filterServicesBy**](ContactApi.md#filterServicesBy) | **POST** /rest/v2/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
+[**filterContactsBy**](ContactApi.md#filterContactsBy) | **POST** /rest/v2/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter
+[**filterServicesBy**](ContactApi.md#filterServicesBy) | **POST** /rest/v2/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter
 [**findContactsByOpeningDate**](ContactApi.md#findContactsByOpeningDate) | **GET** /rest/v2/contact/byOpeningDate | List contacts by opening date parties with(out) pagination
 [**getContact**](ContactApi.md#getContact) | **GET** /rest/v2/contact/{contactId} | Get a contact
 [**getContacts**](ContactApi.md#getContacts) | **POST** /rest/v2/contact/byIds | Get contacts
 [**getEmptyContent**](ContactApi.md#getEmptyContent) | **GET** /rest/v2/contact/service/content/empty | Get an empty content
 [**getServiceCodesOccurences**](ContactApi.md#getServiceCodesOccurences) | **GET** /rest/v2/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
-[**getServices**](ContactApi.md#getServices) | **POST** /rest/v2/contact/service | List services with provided ids 
-[**getServicesLinkedTo**](ContactApi.md#getServicesLinkedTo) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids 
+[**getServices**](ContactApi.md#getServices) | **POST** /rest/v2/contact/service | List services with provided ids
+[**getServicesLinkedTo**](ContactApi.md#getServicesLinkedTo) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids
 [**listContactByHCPartyServiceId**](ContactApi.md#listContactByHCPartyServiceId) | **GET** /rest/v2/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
 [**listContactsByExternalId**](ContactApi.md#listContactsByExternalId) | **POST** /rest/v2/contact/byExternalId | List contacts found By externalId.
 [**listContactsByHCPartyAndFormId**](ContactApi.md#listContactsByHCPartyAndFormId) | **GET** /rest/v2/contact/byHcPartyFormId | List contacts found By Healthcare Party and form Id.
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 [**listContactsDelegationsStubsByHCPartyAndPatientForeignKeys**](ContactApi.md#listContactsDelegationsStubsByHCPartyAndPatientForeignKeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys/delegations | List contacts found By Healthcare Party and secret foreign keys.
 [**listServicesByAssociationId**](ContactApi.md#listServicesByAssociationId) | **GET** /rest/v2/contact/service/associationId | List services by related association id
 [**listServicesByHealthElementId**](ContactApi.md#listServicesByHealthElementId) | **GET** /rest/v2/contact/service/healthElementId/{healthElementId} | List services linked to a health element
-[**matchContactsBy**](ContactApi.md#matchContactsBy) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
+[**matchContactsBy**](ContactApi.md#matchContactsBy) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty)
 [**matchServicesBy**](ContactApi.md#matchServicesBy) | **POST** /rest/v2/contact/service/match | Get ids of services matching the provided filter for the current user
 [**modifyContact**](ContactApi.md#modifyContact) | **PUT** /rest/v2/contact | Modify a contact
 [**modifyContacts**](ContactApi.md#modifyContacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
@@ -50,8 +50,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.closeForHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -99,7 +99,7 @@ Returns an instance of created contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactDto : ContactDto =  // ContactDto | 
+val contactDto : ContactDto =  // ContactDto |
 try {
     val result : ContactDto = apiInstance.createContact(contactDto)
     println(result)
@@ -146,7 +146,7 @@ Returns the modified contacts.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> | 
+val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.createContacts(contactDto)
     println(result)
@@ -193,7 +193,7 @@ Response is a set containing the ID&#39;s of deleted contacts.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteContacts(listOfIdsDto)
     println(result)
@@ -229,7 +229,7 @@ No authorization required
 # **filterContactsBy**
 > PaginatedListContactDto filterContactsBy(filterChainContact, startDocumentId, limit)
 
-List contacts for the current user (HcParty) or the given hcparty in the filter 
+List contacts for the current user (HcParty) or the given hcparty in the filter
 
 Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -240,7 +240,7 @@ Returns a list of contacts along with next start keys and Document ID. If the ne
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val filterChainContact : FilterChainContact =  // FilterChainContact | 
+val filterChainContact : FilterChainContact =  // FilterChainContact |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A Contact document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -280,7 +280,7 @@ No authorization required
 # **filterServicesBy**
 > PaginatedListServiceDto filterServicesBy(filterChainService, startDocumentId, limit)
 
-List services for the current user (HcParty) or the given hcparty in the filter 
+List services for the current user (HcParty) or the given hcparty in the filter
 
 Returns a list of contacts along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -291,7 +291,7 @@ Returns a list of contacts along with next start keys and Document ID. If the ne
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val filterChainService : FilterChainService =  // FilterChainService | 
+val filterChainService : FilterChainService =  // FilterChainService |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A Contact document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -395,7 +395,7 @@ Get a contact
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactId : kotlin.String = contactId_example // kotlin.String | 
+val contactId : kotlin.String = contactId_example // kotlin.String |
 try {
     val result : ContactDto = apiInstance.getContact(contactId)
     println(result)
@@ -440,7 +440,7 @@ Get contacts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.getContacts(listOfIdsDto)
     println(result)
@@ -526,8 +526,8 @@ Get the list of all used codes frequencies in services
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val codeType : kotlin.String = codeType_example // kotlin.String | 
-val minOccurences : kotlin.Long = 789 // kotlin.Long | 
+val codeType : kotlin.String = codeType_example // kotlin.String |
+val minOccurences : kotlin.Long = 789 // kotlin.Long |
 try {
     val result : kotlin.collections.List<LabelledOccurenceDto> = apiInstance.getServiceCodesOccurences(codeType, minOccurences)
     println(result)
@@ -564,7 +564,7 @@ No authorization required
 # **getServices**
 > kotlin.collections.List&lt;ServiceDto&gt; getServices(listOfIdsDto)
 
-List services with provided ids 
+List services with provided ids
 
 Returns a list of services
 
@@ -575,7 +575,7 @@ Returns a list of services
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<ServiceDto> = apiInstance.getServices(listOfIdsDto)
     println(result)
@@ -611,7 +611,7 @@ No authorization required
 # **getServicesLinkedTo**
 > kotlin.collections.List&lt;ServiceDto&gt; getServicesLinkedTo(listOfIdsDto, linkType)
 
-List services linked to provided ids 
+List services linked to provided ids
 
 Returns a list of services
 
@@ -622,7 +622,7 @@ Returns a list of services
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 val linkType : kotlin.String = linkType_example // kotlin.String | The type of the link
 try {
     val result : kotlin.collections.List<ServiceDto> = apiInstance.getServicesLinkedTo(listOfIdsDto, linkType)
@@ -669,8 +669,8 @@ List contacts found By Healthcare Party and service Id.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val serviceId : kotlin.String = serviceId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val serviceId : kotlin.String = serviceId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactByHCPartyServiceId(hcPartyId, serviceId)
     println(result)
@@ -716,7 +716,7 @@ List contacts found By externalId.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val externalId : kotlin.String = externalId_example // kotlin.String | 
+val externalId : kotlin.String = externalId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByExternalId(externalId)
     println(result)
@@ -761,8 +761,8 @@ List contacts found By Healthcare Party and form Id.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val formId : kotlin.String = formId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val formId : kotlin.String = formId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndFormId(hcPartyId, formId)
     println(result)
@@ -808,8 +808,8 @@ List contacts found By Healthcare Party and form Id.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndFormIds(hcPartyId, listOfIdsDto)
     println(result)
@@ -855,8 +855,8 @@ List contacts found By Healthcare Party and Patient foreign keys.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndPatientForeignKeys(hcPartyId, listOfIdsDto)
     println(result)
@@ -904,10 +904,10 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-val planOfActionsIds : kotlin.String = planOfActionsIds_example // kotlin.String | 
-val skipClosedContacts : kotlin.Boolean = true // kotlin.Boolean | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
+val planOfActionsIds : kotlin.String = planOfActionsIds_example // kotlin.String |
+val skipClosedContacts : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.listContactsByHCPartyAndPatientSecretFKeys(hcPartyId, secretFKeys, planOfActionsIds, skipClosedContacts)
     println(result)
@@ -957,8 +957,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.listContactsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -1006,7 +1006,7 @@ Returns a list of services
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val associationId : kotlin.String = associationId_example // kotlin.String | 
+val associationId : kotlin.String = associationId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ServiceDto> = apiInstance.listServicesByAssociationId(associationId)
     println(result)
@@ -1053,7 +1053,7 @@ Returns the list of services linked to the provided health element id
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
+val healthElementId : kotlin.String = healthElementId_example // kotlin.String |
 val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | hcPartyId
 try {
     val result : kotlin.collections.List<ServiceDto> = apiInstance.listServicesByHealthElementId(healthElementId, hcPartyId)
@@ -1091,7 +1091,7 @@ No authorization required
 # **matchContactsBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchContactsBy(abstractFilterDtoContact)
 
-Get ids of contacts matching the provided filter for the current user (HcParty) 
+Get ids of contacts matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -1100,7 +1100,7 @@ Get ids of contacts matching the provided filter for the current user (HcParty)
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val abstractFilterDtoContact : AbstractFilterDtoContact =  // AbstractFilterDtoContact | 
+val abstractFilterDtoContact : AbstractFilterDtoContact =  // AbstractFilterDtoContact |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchContactsBy(abstractFilterDtoContact)
     println(result)
@@ -1145,7 +1145,7 @@ Get ids of services matching the provided filter for the current user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val abstractFilterDtoService : AbstractFilterDtoService =  // AbstractFilterDtoService | 
+val abstractFilterDtoService : AbstractFilterDtoService =  // AbstractFilterDtoService |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchServicesBy(abstractFilterDtoService)
     println(result)
@@ -1192,7 +1192,7 @@ Returns the modified contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactDto : ContactDto =  // ContactDto | 
+val contactDto : ContactDto =  // ContactDto |
 try {
     val result : ContactDto = apiInstance.modifyContact(contactDto)
     println(result)
@@ -1239,7 +1239,7 @@ Returns the modified contacts.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> | 
+val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.modifyContacts(contactDto)
     println(result)
@@ -1286,7 +1286,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.modifyContactsDelegations(icureStubDto)
     println(result)
@@ -1333,8 +1333,8 @@ It delegates a contact to a healthcare party (By current healthcare party). Retu
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val contactId : kotlin.String = contactId_example // kotlin.String | 
-val delegationDto : DelegationDto =  // DelegationDto | 
+val contactId : kotlin.String = contactId_example // kotlin.String |
+val delegationDto : DelegationDto =  // DelegationDto |
 try {
     val result : ContactDto = apiInstance.newContactDelegations(contactId, delegationDto)
     println(result)
@@ -1382,7 +1382,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ContactApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.setContactsDelegations(icureStubDto)
     println(result)
@@ -1413,4 +1413,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

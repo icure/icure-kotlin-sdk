@@ -16,6 +16,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 type | CAS, DM_D, EDQM, SNOMED_CT
-
-
-

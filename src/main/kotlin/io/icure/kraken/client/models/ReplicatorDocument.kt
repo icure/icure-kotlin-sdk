@@ -86,4 +86,3 @@ data class ReplicatorDocument (
     val revHistory: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
 
 )
-

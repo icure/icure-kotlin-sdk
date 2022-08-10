@@ -36,16 +36,16 @@
   },
   "findMessagesByFromAddress": {
     "fromAddress": "LABO LBS, 1190 BRUSSEL",
-    "startKey": null, 
+    "startKey": null,
     "startDocumentId": "009a5705-7eb0-459f-9a57-057eb0059fbf",
     "limit": null,
     "hcpId": null
   },
   "findMessagesByToAddress": {
     "toAddress": "INBOX",
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "reverse": null,
     "hcpId": null
   },
@@ -53,19 +53,19 @@
     "listOfIdsDto": {
       "ids":["LINKING-LETTER:PATIENT:ARCHIVE"]
     },
-    "received": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "received": null,
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "hcpId": "70d2af51-545d-4124-92af-51545d1124d8"
   },
   "findMessagesByTransportGuidSentDate": {
     "transportGuid": "LINKING-LETTER:PATIENT:ARCHIVE",
     "from": 20140000,
     "to": 20170000,
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "hcpId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98"
   },
   "getChildrenMessages": {

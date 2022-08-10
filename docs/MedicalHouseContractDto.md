@@ -4,16 +4,16 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**kine** | **kotlin.Boolean** |  | 
-**gp** | **kotlin.Boolean** |  | 
-**ptd** | **kotlin.Boolean** |  | 
-**nurse** | **kotlin.Boolean** |  | 
-**noKine** | **kotlin.Boolean** |  | 
-**noGp** | **kotlin.Boolean** |  | 
-**noNurse** | **kotlin.Boolean** |  | 
-**forcedSuspension** | **kotlin.Boolean** |  | 
-**options** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
-**receipts** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
+**kine** | **kotlin.Boolean** |  |
+**gp** | **kotlin.Boolean** |  |
+**ptd** | **kotlin.Boolean** |  |
+**nurse** | **kotlin.Boolean** |  |
+**noKine** | **kotlin.Boolean** |  |
+**noGp** | **kotlin.Boolean** |  |
+**noNurse** | **kotlin.Boolean** |  |
+**forcedSuspension** | **kotlin.Boolean** |  |
+**options** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |
+**receipts** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |
 **contractId** | **kotlin.String** |  |  [optional]
 **validFrom** | **kotlin.Long** |  |  [optional]
 **validTo** | **kotlin.Long** |  |  [optional]
@@ -58,6 +58,3 @@ suspensionReason | notInsured, noReasonGiven, isHospitalized, outsideOfCountry, 
 Name | Value
 ---- | -----
 signatureType | holderEid, holderPaper, legalrepresentativeEid, legalrepresentativePaper
-
-
-

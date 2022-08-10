@@ -46,11 +46,11 @@ Check whether patients in SMF already exists in DB
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val documentKey : kotlin.String = documentKey_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val documentKey : kotlin.String = documentKey_example // kotlin.String |
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> |
 try {
     val result : kotlin.collections.List<CheckSMFPatientResult> = apiInstance.checkIfSMFPatientsExists(documentId, documentKey, patientId, language, requestBody)
     println(result)
@@ -99,16 +99,16 @@ Get Kmehr contactreport
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateContactreportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -162,9 +162,9 @@ Generate diarynote
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val diaryNoteExportInfoDto : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val diaryNoteExportInfoDto : DiaryNoteExportInfoDto =  // DiaryNoteExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateDiaryNote(patientId, language, diaryNoteExportInfoDto)
     println(result)
@@ -211,10 +211,10 @@ Get Incapacity export
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val incapacityExportInfoDto : IncapacityExportInfoDto =  // IncapacityExportInfoDto | 
-val xTimezoneOffset : kotlin.String = xTimezoneOffset_example // kotlin.String | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val incapacityExportInfoDto : IncapacityExportInfoDto =  // IncapacityExportInfoDto |
+val xTimezoneOffset : kotlin.String = xTimezoneOffset_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateIncapacityExport(patientId, language, incapacityExportInfoDto, xTimezoneOffset)
     println(result)
@@ -262,16 +262,16 @@ Get Kmehr labresult
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateLabresultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -325,11 +325,11 @@ Get Medicationscheme export
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String | 
-val version : kotlin.Int = 56 // kotlin.Int | 
-val medicationSchemeExportInfoDto : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientSafe : kotlin.String = recipientSafe_example // kotlin.String |
+val version : kotlin.Int = 56 // kotlin.Int |
+val medicationSchemeExportInfoDto : MedicationSchemeExportInfoDto =  // MedicationSchemeExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateMedicationSchemeExport(patientId, language, recipientSafe, version, medicationSchemeExportInfoDto)
     println(result)
@@ -378,16 +378,16 @@ Get Kmehr note
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateNoteExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -441,8 +441,8 @@ Get KMEHR Patient Info export
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePatientInfoExport(patientId, language)
     println(result)
@@ -488,16 +488,16 @@ Get Kmehr prescription
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generatePrescriptionExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -551,16 +551,16 @@ Get Kmehr report
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateReportExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -614,16 +614,16 @@ Get Kmehr request
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateRequestExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -677,16 +677,16 @@ Get Kmehr result
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val id : kotlin.String = id_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val language : kotlin.String = language_example // kotlin.String | 
-val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String | 
-val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String | 
-val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String | 
-val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String | 
-val mimeType : kotlin.String = mimeType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val id : kotlin.String = id_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val language : kotlin.String = language_example // kotlin.String |
+val recipientNihii : kotlin.String = recipientNihii_example // kotlin.String |
+val recipientSsin : kotlin.String = recipientSsin_example // kotlin.String |
+val recipientFirstName : kotlin.String = recipientFirstName_example // kotlin.String |
+val recipientLastName : kotlin.String = recipientLastName_example // kotlin.String |
+val mimeType : kotlin.String = mimeType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateResultExport(patientId, id, date, language, recipientNihii, recipientSsin, recipientFirstName, recipientLastName, mimeType, body)
     println(result)
@@ -740,9 +740,9 @@ Get SMF (Software Medical File) export
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val softwareMedicalFileExportDto : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val softwareMedicalFileExportDto : SoftwareMedicalFileExportDto =  // SoftwareMedicalFileExportDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSmfExport(patientId, language, softwareMedicalFileExportDto)
     println(result)
@@ -789,9 +789,9 @@ Generate sumehr
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
@@ -838,9 +838,9 @@ Generate sumehr
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.generateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
@@ -887,8 +887,8 @@ Get sumehr elements
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : SumehrContentDto = apiInstance.getSumehrContent(patientId, sumehrExportInfoDto)
     println(result)
@@ -934,8 +934,8 @@ Check sumehr signature
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : ContentDto = apiInstance.getSumehrMd5(patientId, sumehrExportInfoDto)
     println(result)
@@ -981,8 +981,8 @@ Get sumehr elements
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : SumehrContentDto = apiInstance.getSumehrV2Content(patientId, sumehrExportInfoDto)
     println(result)
@@ -1028,8 +1028,8 @@ Check sumehr signature
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : ContentDto = apiInstance.getSumehrV2Md5(patientId, sumehrExportInfoDto)
     println(result)
@@ -1075,12 +1075,12 @@ Import MedicationScheme into patient(s) using existing document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val documentKey : kotlin.String = documentKey_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val documentKey : kotlin.String = documentKey_example // kotlin.String |
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> |
 try {
     val result : kotlin.collections.List<ImportResultDto> = apiInstance.importMedicationScheme(documentId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
@@ -1130,12 +1130,12 @@ Import SMF into patient(s) using existing document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val documentKey : kotlin.String = documentKey_example // kotlin.String | 
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val dryRun : kotlin.Boolean = true // kotlin.Boolean | 
-val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val documentKey : kotlin.String = documentKey_example // kotlin.String |
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val dryRun : kotlin.Boolean = true // kotlin.Boolean |
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> |
 try {
     val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSmf(documentId, documentKey, patientId, language, dryRun, requestBody)
     println(result)
@@ -1185,12 +1185,12 @@ Import sumehr into patient(s) using existing document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val documentKey : kotlin.String = documentKey_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val documentKey : kotlin.String = documentKey_example // kotlin.String |
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> |
 try {
     val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSumehr(documentId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
@@ -1240,13 +1240,13 @@ Import sumehr into patient(s) using existing document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val itemId : kotlin.String = itemId_example // kotlin.String | 
-val documentKey : kotlin.String = documentKey_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val itemId : kotlin.String = itemId_example // kotlin.String |
+val documentKey : kotlin.String = documentKey_example // kotlin.String |
 val dryRun : kotlin.Boolean = true // kotlin.Boolean | Dry run: do not save in database
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val requestBody : kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> =  // kotlin.collections.Map<kotlin.String, kotlin.collections.List<ImportMapping>> |
 try {
     val result : kotlin.collections.List<ImportResultDto> = apiInstance.importSumehrByItemId(documentId, itemId, documentKey, dryRun, patientId, language, requestBody)
     println(result)
@@ -1297,8 +1297,8 @@ Get sumehr validity
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : SumehrValidityDto = apiInstance.isSumehrV2Valid(patientId, sumehrExportInfoDto)
     println(result)
@@ -1344,8 +1344,8 @@ Get sumehr validity
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : SumehrValidityDto = apiInstance.isSumehrValid(patientId, sumehrExportInfoDto)
     println(result)
@@ -1391,9 +1391,9 @@ Validate sumehr
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.validateSumehr(patientId, language, sumehrExportInfoDto)
     println(result)
@@ -1440,9 +1440,9 @@ Validate sumehr
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BekmehrApi()
-val patientId : kotlin.String = patientId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto | 
+val patientId : kotlin.String = patientId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val sumehrExportInfoDto : SumehrExportInfoDto =  // SumehrExportInfoDto |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.validateSumehrV2(patientId, language, sumehrExportInfoDto)
     println(result)
@@ -1475,4 +1475,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/octet-stream
-

@@ -116,5 +116,3 @@ suspend fun CryptoConfig<ClassificationDto, io.icure.kraken.client.models.Classi
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(classification, decryptAES(data = Base64.getDecoder().decode(classification.encryptedSelf), key = key))
 }
-
-

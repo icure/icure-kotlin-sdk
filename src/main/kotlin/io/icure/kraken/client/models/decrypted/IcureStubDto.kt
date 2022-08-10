@@ -103,4 +103,3 @@ data class IcureStubDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

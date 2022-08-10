@@ -20,7 +20,7 @@ Method | HTTP request | Description
 [**getPublicKey**](HealthcarePartyApi.md#getPublicKey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
 [**listHealthcarePartiesByName**](HealthcarePartyApi.md#listHealthcarePartiesByName) | **GET** /rest/v2/hcparty/byNameStrict/{name} | Find healthcare parties by name with(out) pagination
 [**listHealthcarePartiesByParentId**](HealthcarePartyApi.md#listHealthcarePartiesByParentId) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
-[**matchHealthcarePartiesBy**](HealthcarePartyApi.md#matchHealthcarePartiesBy) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+[**matchHealthcarePartiesBy**](HealthcarePartyApi.md#matchHealthcarePartiesBy) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty)
 [**modifyHealthcareParty**](HealthcarePartyApi.md#modifyHealthcareParty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
 [**modifyHealthcarePartyInGroup**](HealthcarePartyApi.md#modifyHealthcarePartyInGroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 [**registerPatient1**](HealthcarePartyApi.md#registerPatient1) | **POST** /rest/v2/hcparty/register/inGroup/{groupId} | Register a hcp
@@ -41,7 +41,7 @@ One of Name or Last name+First name, Nihii, and Public key are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto |
 try {
     val result : HealthcarePartyDto = apiInstance.createHealthcareParty(healthcarePartyDto)
     println(result)
@@ -88,8 +88,8 @@ One of Name or Last name+First name, Nihii, and Public key are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto |
 try {
     val result : HealthcarePartyDto = apiInstance.createHealthcarePartyInGroup(groupId, healthcarePartyDto)
     println(result)
@@ -137,7 +137,7 @@ Deleting healthcareParties. Response is an array containing the id of deleted he
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthcareParties(listOfIdsDto)
     println(result)
@@ -184,8 +184,8 @@ Deleting a healthcareParty. Response is an array containing the id of deleted he
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthcarePartiesInGroup(groupId, listOfIdsDto)
     println(result)
@@ -233,7 +233,7 @@ Returns a list of healthcare party along with next start keys and Document ID. I
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val filterChainHealthcareParty : FilterChainHealthcareParty =  // FilterChainHealthcareParty | 
+val filterChainHealthcareParty : FilterChainHealthcareParty =  // FilterChainHealthcareParty |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A HealthcareParty document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -447,7 +447,7 @@ Returns a list of healthcare parties.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val searchValue : kotlin.String = searchValue_example // kotlin.String | 
+val searchValue : kotlin.String = searchValue_example // kotlin.String |
 val startKey : kotlin.String = startKey_example // kotlin.String | A healthcare party Last name
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A healthcare party document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -502,7 +502,7 @@ Get the HcParty encrypted AES keys indexed by owner.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String |
 try {
     val result : kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.collections.Map<kotlin.String, kotlin.String>>> = apiInstance.getAesExchangeKeysForDelegate(healthcarePartyId)
     println(result)
@@ -592,7 +592,7 @@ General information about the healthcare Party
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.getHealthcareParties(listOfIdsDto)
     println(result)
@@ -639,7 +639,7 @@ General information about the healthcare Party
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String |
 try {
     val result : HealthcarePartyDto = apiInstance.getHealthcareParty(healthcarePartyId)
     println(result)
@@ -686,7 +686,7 @@ Returns the public key of a healthcare party in Hex
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String |
 try {
     val result : PublicKeyDto = apiInstance.getPublicKey(healthcarePartyId)
     println(result)
@@ -780,7 +780,7 @@ Return a list of children hcp.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val parentId : kotlin.String = parentId_example // kotlin.String | 
+val parentId : kotlin.String = parentId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<HealthcarePartyDto> = apiInstance.listHealthcarePartiesByParentId(parentId)
     println(result)
@@ -816,7 +816,7 @@ No authorization required
 # **matchHealthcarePartiesBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty)
 
-Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+Get ids of healthcare party matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -825,7 +825,7 @@ Get ids of healthcare party matching the provided filter for the current user (H
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val abstractFilterDtoHealthcareParty : AbstractFilterDtoHealthcareParty =  // AbstractFilterDtoHealthcareParty | 
+val abstractFilterDtoHealthcareParty : AbstractFilterDtoHealthcareParty =  // AbstractFilterDtoHealthcareParty |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty)
     println(result)
@@ -872,7 +872,7 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto |
 try {
     val result : HealthcarePartyDto = apiInstance.modifyHealthcareParty(healthcarePartyDto)
     println(result)
@@ -919,8 +919,8 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto |
 try {
     val result : HealthcarePartyDto = apiInstance.modifyHealthcarePartyInGroup(groupId, healthcarePartyDto)
     println(result)
@@ -968,11 +968,11 @@ Register a new hcp into the system
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HealthcarePartyApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto | 
-val parentHcPartyId : kotlin.String = parentHcPartyId_example // kotlin.String | 
-val token : kotlin.String = token_example // kotlin.String | 
-val useShortToken : kotlin.Boolean = true // kotlin.Boolean | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val healthcarePartyDto : HealthcarePartyDto =  // HealthcarePartyDto |
+val parentHcPartyId : kotlin.String = parentHcPartyId_example // kotlin.String |
+val token : kotlin.String = token_example // kotlin.String |
+val useShortToken : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : DataOwnerRegistrationSuccessDto = apiInstance.registerPatient1(groupId, healthcarePartyDto, parentHcPartyId, token, useShortToken)
     println(result)
@@ -1007,4 +1007,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

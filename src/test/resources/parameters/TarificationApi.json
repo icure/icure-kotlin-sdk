@@ -17,9 +17,9 @@
   "findPaginatedTarifications": {
     "region": "fr",
     "type": "customTests",
-    "tarification": null, 
+    "tarification": null,
     "version": 1.0,
-    "startDocumentId": null, 
+    "startDocumentId": null,
     "limit": 10
   },
   "findPaginatedTarificationsByLabel": {
@@ -67,7 +67,7 @@
       ]
     }
   },
-  
+
   "fallback": {
   },
   "beforeElements": {

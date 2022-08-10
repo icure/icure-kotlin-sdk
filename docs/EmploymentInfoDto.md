@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **endDate** | **kotlin.Long** |  |  [optional]
 **professionType** | [**CodeStubDto**](CodeStubDto.md) |  |  [optional]
 **employer** | [**EmployerDto**](EmployerDto.md) |  |  [optional]
-
-
-

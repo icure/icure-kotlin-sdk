@@ -169,4 +169,3 @@ data class ContactDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**orphan** | **kotlin.Boolean** |  | 
-**atcs** | [**kotlin.collections.List&lt;AtcDto&gt;**](AtcDto.md) |  | 
-**dmpps** | [**kotlin.collections.List&lt;DmppDto&gt;**](DmppDto.md) |  | 
+**orphan** | **kotlin.Boolean** |  |
+**atcs** | [**kotlin.collections.List&lt;AtcDto&gt;**](AtcDto.md) |  |
+**dmpps** | [**kotlin.collections.List&lt;DmppDto&gt;**](DmppDto.md) |  |
 **from** | **kotlin.Long** |  |  [optional]
 **to** | **kotlin.Long** |  |  [optional]
 **index** | **kotlin.Double** |  |  [optional]
@@ -52,6 +52,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 status | AUTHORIZED, SUSPENDED, REVOKED
-
-
-

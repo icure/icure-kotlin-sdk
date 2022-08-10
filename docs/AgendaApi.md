@@ -26,7 +26,7 @@ Creates a agenda
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val agendaDto : AgendaDto =  // AgendaDto | 
+val agendaDto : AgendaDto =  // AgendaDto |
 try {
     val result : AgendaDto = apiInstance.createAgenda(agendaDto)
     println(result)
@@ -71,7 +71,7 @@ Deletes agendas
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteAgendas(listOfIdsDto)
     println(result)
@@ -116,7 +116,7 @@ Gets an agenda
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val agendaId : kotlin.String = agendaId_example // kotlin.String | 
+val agendaId : kotlin.String = agendaId_example // kotlin.String |
 try {
     val result : AgendaDto = apiInstance.getAgenda(agendaId)
     println(result)
@@ -202,7 +202,7 @@ Gets all agendas for user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : AgendaDto = apiInstance.getAgendasForUser(userId)
     println(result)
@@ -247,7 +247,7 @@ Gets readable agendas for user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<AgendaDto> = apiInstance.getReadableAgendasForUser(userId)
     println(result)
@@ -292,7 +292,7 @@ Modifies an agenda
 //import io.icure.kraken.client.models.*
 
 val apiInstance = AgendaApi()
-val agendaDto : AgendaDto =  // AgendaDto | 
+val agendaDto : AgendaDto =  // AgendaDto |
 try {
     val result : AgendaDto = apiInstance.modifyAgenda(agendaDto)
     println(result)
@@ -323,4 +323,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

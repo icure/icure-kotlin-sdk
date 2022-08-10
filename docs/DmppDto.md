@@ -30,6 +30,3 @@ deliveryEnvironment | P, A, H, R
 Name | Value
 ---- | -----
 codeType | CNK, PSEUDO
-
-
-

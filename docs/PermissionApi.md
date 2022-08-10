@@ -22,8 +22,8 @@ Add a list of granted and revoked permissions to user.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PermissionApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val permissionDto : PermissionDto =  // PermissionDto | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val permissionDto : PermissionDto =  // PermissionDto |
 try {
     val result : kotlin.collections.List<PermissionDto> = apiInstance.modifyUserPermissions(userId, permissionDto)
     println(result)
@@ -55,4 +55,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -10,6 +10,3 @@ Name | Type | Description | Notes
 **name** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **note** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
 **standardSubstances** | [**kotlin.collections.List&lt;StandardSubstanceDto&gt;**](StandardSubstanceDto.md) |  |  [optional]
-
-
-

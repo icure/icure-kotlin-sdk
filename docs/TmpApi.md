@@ -71,7 +71,7 @@ Method | HTTP request | Description
 [**modifyTmpPatient**](TmpApi.md#modifyTmpPatient) | **PUT** /rest/v2/tmp/patient | Modify a patient
 [**modifyTmpPatients**](TmpApi.md#modifyTmpPatients) | **PUT** /rest/v2/tmp/patient/batch | Modify a batch of healthcare elements
 [**purgeTmpItems**](TmpApi.md#purgeTmpItems) | **POST** /rest/v2/tmp/batch/purge | Hard delete items.
-[**replicateToTmpDatabase**](TmpApi.md#replicateToTmpDatabase) | **POST** /rest/v2/tmp/replicate/from/{from} | 
+[**replicateToTmpDatabase**](TmpApi.md#replicateToTmpDatabase) | **POST** /rest/v2/tmp/replicate/from/{from} |
 
 
 <a name="createTmpClassification"></a>
@@ -89,7 +89,7 @@ Returns an instance of created classification.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val classificationDto : ClassificationDto =  // ClassificationDto | 
+val classificationDto : ClassificationDto =  // ClassificationDto |
 try {
     val result : ClassificationDto = apiInstance.createTmpClassification(classificationDto)
     println(result)
@@ -136,7 +136,7 @@ Returns an instance of created classification.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val classificationDto : kotlin.collections.List<ClassificationDto> =  // kotlin.collections.List<ClassificationDto> | 
+val classificationDto : kotlin.collections.List<ClassificationDto> =  // kotlin.collections.List<ClassificationDto> |
 try {
     val result : kotlin.collections.List<ClassificationDto> = apiInstance.createTmpClassifications(classificationDto)
     println(result)
@@ -183,7 +183,7 @@ Returns an instance of created contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val contactDto : ContactDto =  // ContactDto | 
+val contactDto : ContactDto =  // ContactDto |
 try {
     val result : ContactDto = apiInstance.createTmpContact(contactDto)
     println(result)
@@ -230,7 +230,7 @@ Returns an instance of created contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> | 
+val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.createTmpContacts(contactDto)
     println(result)
@@ -320,7 +320,7 @@ Returns an instance of created document.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val documentDto : DocumentDto =  // DocumentDto | 
+val documentDto : DocumentDto =  // DocumentDto |
 try {
     val result : DocumentDto = apiInstance.createTmpDocument(documentDto)
     println(result)
@@ -367,7 +367,7 @@ Returns an instance of created document.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> | 
+val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.createTmpDocuments(documentDto)
     println(result)
@@ -414,7 +414,7 @@ Returns an instance of created entityTemplate.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto |
 try {
     val result : EntityTemplateDto = apiInstance.createTmpEntityTemplate(entityTemplateDto)
     println(result)
@@ -461,7 +461,7 @@ Returns an instance of created entityTemplate.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.createTmpEntityTemplates(entityTemplateDto)
     println(result)
@@ -508,7 +508,7 @@ Returns an instance of created form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val formDto : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto |
 try {
     val result : FormDto = apiInstance.createTmpForm(formDto)
     println(result)
@@ -555,7 +555,7 @@ Returns an instance of created form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.createTmpForms(formDto)
     println(result)
@@ -602,7 +602,7 @@ Returns an instance of created healthElement.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val healthElementDto : HealthElementDto =  // HealthElementDto | 
+val healthElementDto : HealthElementDto =  // HealthElementDto |
 try {
     val result : HealthElementDto = apiInstance.createTmpHealthElement(healthElementDto)
     println(result)
@@ -649,7 +649,7 @@ Returns an instance of created healthElement.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> | 
+val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.createTmpHealthElements(healthElementDto)
     println(result)
@@ -696,7 +696,7 @@ Returns an instance of created invoice.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val invoiceDto : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto |
 try {
     val result : InvoiceDto = apiInstance.createTmpInvoice(invoiceDto)
     println(result)
@@ -743,7 +743,7 @@ Returns an instance of created invoice.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.createTmpInvoices(invoiceDto)
     println(result)
@@ -790,7 +790,7 @@ Returns an instance of created message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val messageDto : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto |
 try {
     val result : MessageDto = apiInstance.createTmpMessage(messageDto)
     println(result)
@@ -837,7 +837,7 @@ Returns an instance of created message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val messageDto : kotlin.collections.List<MessageDto> =  // kotlin.collections.List<MessageDto> | 
+val messageDto : kotlin.collections.List<MessageDto> =  // kotlin.collections.List<MessageDto> |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.createTmpMessages(messageDto)
     println(result)
@@ -884,7 +884,7 @@ Returns an instance of created patient.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val patientDto : PatientDto =  // PatientDto | 
+val patientDto : PatientDto =  // PatientDto |
 try {
     val result : PatientDto = apiInstance.createTmpPatient(patientDto)
     println(result)
@@ -931,7 +931,7 @@ Returns an instance of created patient.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.createTmpPatients(patientDto)
     println(result)
@@ -978,7 +978,7 @@ Response is a set containing the ID&#39;s of deleted items.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteTmpItems(requestBody)
     println(result)
@@ -1068,7 +1068,7 @@ Returns an instance of classification.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : ClassificationDto = apiInstance.getTmpClassification(id)
     println(result)
@@ -1115,7 +1115,7 @@ Returns an instance of created classification.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<ClassificationDto> = apiInstance.getTmpClassifications(requestBody)
     println(result)
@@ -1162,7 +1162,7 @@ Returns an instance of contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : ContactDto = apiInstance.getTmpContact(id)
     println(result)
@@ -1209,7 +1209,7 @@ Returns an instance of created contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.getTmpContacts(requestBody)
     println(result)
@@ -1256,7 +1256,7 @@ Returns an instance of document.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.getTmpDocument(id)
     println(result)
@@ -1303,7 +1303,7 @@ Returns an instance of created document.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.getTmpDocuments(requestBody)
     println(result)
@@ -1350,7 +1350,7 @@ Returns an instance of entityTemplate.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : EntityTemplateDto = apiInstance.getTmpEntityTemplate(id)
     println(result)
@@ -1397,7 +1397,7 @@ Returns an instance of created entityTemplate.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.getTmpEntityTemplates(requestBody)
     println(result)
@@ -1444,7 +1444,7 @@ Returns an instance of form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : FormDto = apiInstance.getTmpForm(id)
     println(result)
@@ -1491,7 +1491,7 @@ Returns an instance of created form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.getTmpForms(requestBody)
     println(result)
@@ -1538,7 +1538,7 @@ Returns an instance of healthElement.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : HealthElementDto = apiInstance.getTmpHealthElement(id)
     println(result)
@@ -1585,7 +1585,7 @@ Returns an instance of created healthElement.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.getTmpHealthElements(requestBody)
     println(result)
@@ -1632,7 +1632,7 @@ Returns an instance of invoice.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : InvoiceDto = apiInstance.getTmpInvoice(id)
     println(result)
@@ -1679,7 +1679,7 @@ Returns an instance of created invoice.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.getTmpInvoices(requestBody)
     println(result)
@@ -1726,7 +1726,7 @@ Returns an instance of message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : MessageDto = apiInstance.getTmpMessage(id)
     println(result)
@@ -1773,7 +1773,7 @@ Returns an instance of created message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.getTmpMessages(requestBody)
     println(result)
@@ -1820,7 +1820,7 @@ Returns an instance of patient.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : PatientDto = apiInstance.getTmpPatient(id)
     println(result)
@@ -1867,7 +1867,7 @@ Returns an instance of created patient.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.getTmpPatients(requestBody)
     println(result)
@@ -1914,8 +1914,8 @@ Returns paginated classifications.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstClassificationId : kotlin.String = firstClassificationId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstClassificationId : kotlin.String = firstClassificationId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListClassificationDto = apiInstance.listTmpClassifications(firstClassificationId, pageSize)
     println(result)
@@ -1963,8 +1963,8 @@ Returns paginated contacts.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstContactId : kotlin.String = firstContactId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstContactId : kotlin.String = firstContactId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListInvoiceDto = apiInstance.listTmpContacts(firstContactId, pageSize)
     println(result)
@@ -2012,8 +2012,8 @@ Returns paginated documents.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstDocumentId : kotlin.String = firstDocumentId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstDocumentId : kotlin.String = firstDocumentId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListDocumentDto = apiInstance.listTmpDocuments(firstDocumentId, pageSize)
     println(result)
@@ -2061,8 +2061,8 @@ Returns paginated entityTemplates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstEntityTemplateId : kotlin.String = firstEntityTemplateId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstEntityTemplateId : kotlin.String = firstEntityTemplateId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListEntityTemplateDto = apiInstance.listTmpEntityTemplates(firstEntityTemplateId, pageSize)
     println(result)
@@ -2110,8 +2110,8 @@ Returns paginated forms.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstFormId : kotlin.String = firstFormId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstFormId : kotlin.String = firstFormId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListFormDto = apiInstance.listTmpForms(firstFormId, pageSize)
     println(result)
@@ -2159,8 +2159,8 @@ Returns paginated healthElements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstHealthElementId : kotlin.String = firstHealthElementId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstHealthElementId : kotlin.String = firstHealthElementId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListHealthElementDto = apiInstance.listTmpHealthElements(firstHealthElementId, pageSize)
     println(result)
@@ -2208,8 +2208,8 @@ Returns paginated invoices.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstInvoiceId : kotlin.String = firstInvoiceId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstInvoiceId : kotlin.String = firstInvoiceId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListInvoiceDto = apiInstance.listTmpInvoices(firstInvoiceId, pageSize)
     println(result)
@@ -2257,8 +2257,8 @@ Returns paginated messages.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstMessageId : kotlin.String = firstMessageId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstMessageId : kotlin.String = firstMessageId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListInvoiceDto = apiInstance.listTmpMessages(firstMessageId, pageSize)
     println(result)
@@ -2306,8 +2306,8 @@ Returns paginated patients.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val firstPatientId : kotlin.String = firstPatientId_example // kotlin.String | 
-val pageSize : kotlin.Int = 56 // kotlin.Int | 
+val firstPatientId : kotlin.String = firstPatientId_example // kotlin.String |
+val pageSize : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListPatientDto = apiInstance.listTmpPatients(firstPatientId, pageSize)
     println(result)
@@ -2355,7 +2355,7 @@ Returns the modified classification.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val classificationDto : ClassificationDto =  // ClassificationDto | 
+val classificationDto : ClassificationDto =  // ClassificationDto |
 try {
     val result : ClassificationDto = apiInstance.modifyTmpClassification(classificationDto)
     println(result)
@@ -2402,7 +2402,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val classificationDto : kotlin.collections.List<ClassificationDto> =  // kotlin.collections.List<ClassificationDto> | 
+val classificationDto : kotlin.collections.List<ClassificationDto> =  // kotlin.collections.List<ClassificationDto> |
 try {
     val result : kotlin.collections.List<ClassificationDto> = apiInstance.modifyTmpClassifications(classificationDto)
     println(result)
@@ -2449,7 +2449,7 @@ Returns the modified contact.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val contactDto : ContactDto =  // ContactDto | 
+val contactDto : ContactDto =  // ContactDto |
 try {
     val result : ContactDto = apiInstance.modifyTmpContact(contactDto)
     println(result)
@@ -2496,7 +2496,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> | 
+val contactDto : kotlin.collections.List<ContactDto> =  // kotlin.collections.List<ContactDto> |
 try {
     val result : kotlin.collections.List<ContactDto> = apiInstance.modifyTmpContacts(contactDto)
     println(result)
@@ -2543,7 +2543,7 @@ Returns the modified document.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val documentDto : DocumentDto =  // DocumentDto | 
+val documentDto : DocumentDto =  // DocumentDto |
 try {
     val result : DocumentDto = apiInstance.modifyTmpDocument(documentDto)
     println(result)
@@ -2590,7 +2590,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> | 
+val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.modifyTmpDocuments(documentDto)
     println(result)
@@ -2637,7 +2637,7 @@ Returns the modified entityTemplate.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto |
 try {
     val result : EntityTemplateDto = apiInstance.modifyTmpEntityTemplate(entityTemplateDto)
     println(result)
@@ -2684,7 +2684,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.modifyTmpEntityTemplates(entityTemplateDto)
     println(result)
@@ -2731,7 +2731,7 @@ Returns the modified form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val formDto : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto |
 try {
     val result : FormDto = apiInstance.modifyTmpForm(formDto)
     println(result)
@@ -2778,7 +2778,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.modifyTmpForms(formDto)
     println(result)
@@ -2825,7 +2825,7 @@ Returns the modified healthElement.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val healthElementDto : HealthElementDto =  // HealthElementDto | 
+val healthElementDto : HealthElementDto =  // HealthElementDto |
 try {
     val result : HealthElementDto = apiInstance.modifyTmpHealthElement(healthElementDto)
     println(result)
@@ -2872,7 +2872,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> | 
+val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.modifyTmpHealthElements(healthElementDto)
     println(result)
@@ -2919,7 +2919,7 @@ Returns the modified invoice.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val invoiceDto : InvoiceDto =  // InvoiceDto | 
+val invoiceDto : InvoiceDto =  // InvoiceDto |
 try {
     val result : InvoiceDto = apiInstance.modifyTmpInvoice(invoiceDto)
     println(result)
@@ -2966,7 +2966,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> | 
+val invoiceDto : kotlin.collections.List<InvoiceDto> =  // kotlin.collections.List<InvoiceDto> |
 try {
     val result : kotlin.collections.List<InvoiceDto> = apiInstance.modifyTmpInvoices(invoiceDto)
     println(result)
@@ -3013,7 +3013,7 @@ Returns the modified message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val messageDto : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto |
 try {
     val result : MessageDto = apiInstance.modifyTmpMessage(messageDto)
     println(result)
@@ -3060,7 +3060,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val messageDto : kotlin.collections.List<MessageDto> =  // kotlin.collections.List<MessageDto> | 
+val messageDto : kotlin.collections.List<MessageDto> =  // kotlin.collections.List<MessageDto> |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.modifyTmpMessages(messageDto)
     println(result)
@@ -3107,7 +3107,7 @@ Returns the modified patient.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val patientDto : PatientDto =  // PatientDto | 
+val patientDto : PatientDto =  // PatientDto |
 try {
     val result : PatientDto = apiInstance.modifyTmpPatient(patientDto)
     println(result)
@@ -3154,7 +3154,7 @@ Returns the modified healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> | 
+val patientDto : kotlin.collections.List<PatientDto> =  // kotlin.collections.List<PatientDto> |
 try {
     val result : kotlin.collections.List<PatientDto> = apiInstance.modifyTmpPatients(patientDto)
     println(result)
@@ -3201,7 +3201,7 @@ Response is a set containing the ID&#39;s of deleted items.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.purgeTmpItems(requestBody)
     println(result)
@@ -3246,8 +3246,8 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TmpApi()
-val from : kotlin.String = from_example // kotlin.String | 
-val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> | 
+val from : kotlin.String = from_example // kotlin.String |
+val requestBody : kotlin.collections.List<kotlin.String> =  // kotlin.collections.List<kotlin.String> |
 try {
     val result : ReplicatorDocumentDto = apiInstance.replicateToTmpDatabase(from, requestBody)
     println(result)
@@ -3279,4 +3279,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **language** | **kotlin.String** |  |  [optional]
 **info** | [**MedicationSchemeExportInfoDto**](MedicationSchemeExportInfoDto.md) |  |  [optional]
 **recipientSafe** | **kotlin.String** |  |  [optional]
-
-
-

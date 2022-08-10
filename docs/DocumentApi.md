@@ -36,7 +36,7 @@ Creates a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentDto : DocumentDto =  // DocumentDto | 
+val documentDto : DocumentDto =  // DocumentDto |
 try {
     val result : DocumentDto = apiInstance.createDocument(documentDto)
     println(result)
@@ -81,7 +81,7 @@ Deletes a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.deleteAttachment(documentId)
     println(result)
@@ -126,7 +126,7 @@ Deletes documents
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteDocument(listOfIdsDto)
     println(result)
@@ -173,7 +173,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.findWithoutDelegation(limit)
     println(result)
@@ -218,7 +218,7 @@ Gets a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.getDocument(documentId)
     println(result)
@@ -263,10 +263,10 @@ Load document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-val fileName : kotlin.String = fileName_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
+val fileName : kotlin.String = fileName_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getDocumentAttachment(documentId, attachmentId, enckeys, fileName)
     println(result)
@@ -314,7 +314,7 @@ Gets a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val externalUuid : kotlin.String = externalUuid_example // kotlin.String | 
+val externalUuid : kotlin.String = externalUuid_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.getDocumentByExternalUuid(externalUuid)
     println(result)
@@ -359,7 +359,7 @@ Gets a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.getDocuments(listOfIdsDto)
     println(result)
@@ -404,7 +404,7 @@ Get all documents with externalUuid
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val externalUuid : kotlin.String = externalUuid_example // kotlin.String | 
+val externalUuid : kotlin.String = externalUuid_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.getDocumentsByExternalUuid(externalUuid)
     println(result)
@@ -451,9 +451,9 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String | 
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val documentTypeCode : kotlin.String = documentTypeCode_example // kotlin.String |
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
     println(result)
@@ -502,8 +502,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -549,7 +549,7 @@ Updates a document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentDto : DocumentDto =  // DocumentDto | 
+val documentDto : DocumentDto =  // DocumentDto |
 try {
     val result : DocumentDto = apiInstance.modifyDocument(documentDto)
     println(result)
@@ -596,7 +596,7 @@ Returns the modified documents.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> | 
+val documentDto : kotlin.collections.List<DocumentDto> =  // kotlin.collections.List<DocumentDto> |
 try {
     val result : kotlin.collections.List<DocumentDto> = apiInstance.modifyDocuments(documentDto)
     println(result)
@@ -641,9 +641,9 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.setDocumentAttachment(documentId, body, enckeys)
     println(result)
@@ -690,9 +690,9 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.setDocumentAttachmentMulti(documentId, attachment, enckeys)
     println(result)
@@ -741,7 +741,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.setDocumentsDelegations(icureStubDto)
     println(result)
@@ -786,9 +786,9 @@ Creates a document&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = DocumentApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : DocumentDto = apiInstance.setSafeDocumentAttachment(documentId, body, enckeys)
     println(result)
@@ -821,4 +821,3 @@ No authorization required
 
  - **Content-Type**: application/octet-stream
  - **Accept**: */*
-

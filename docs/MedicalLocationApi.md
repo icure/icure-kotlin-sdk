@@ -24,7 +24,7 @@ Creates a medical location
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MedicalLocationApi()
-val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
+val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto |
 try {
     val result : MedicalLocationDto = apiInstance.createMedicalLocation(medicalLocationDto)
     println(result)
@@ -69,7 +69,7 @@ Deletes medical locations
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MedicalLocationApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMedicalLocations(listOfIdsDto)
     println(result)
@@ -114,7 +114,7 @@ Gets a medical location
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MedicalLocationApi()
-val locationId : kotlin.String = locationId_example // kotlin.String | 
+val locationId : kotlin.String = locationId_example // kotlin.String |
 try {
     val result : MedicalLocationDto = apiInstance.getMedicalLocation(locationId)
     println(result)
@@ -200,7 +200,7 @@ Modifies a medical location
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MedicalLocationApi()
-val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto | 
+val medicalLocationDto : MedicalLocationDto =  // MedicalLocationDto |
 try {
     val result : MedicalLocationDto = apiInstance.modifyMedicalLocation(medicalLocationDto)
     println(result)
@@ -231,4 +231,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

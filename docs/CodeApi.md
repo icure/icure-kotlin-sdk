@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createCode**](CodeApi.md#createCode) | **POST** /rest/v2/code | Create a Code
 [**createCodes**](CodeApi.md#createCodes) | **POST** /rest/v2/code/batch | Create a batch of codes
-[**filterCodesBy**](CodeApi.md#filterCodesBy) | **POST** /rest/v2/code/filter | Filter codes 
+[**filterCodesBy**](CodeApi.md#filterCodesBy) | **POST** /rest/v2/code/filter | Filter codes
 [**findCodesByLabel**](CodeApi.md#findCodesByLabel) | **GET** /rest/v2/code/byLabel | Finding codes by code, type and version with pagination.
 [**findCodesByLink**](CodeApi.md#findCodesByLink) | **GET** /rest/v2/code/byLink/{linkType} | Finding codes by code, type and version with pagination.
 [**findCodesByType**](CodeApi.md#findCodesByType) | **GET** /rest/v2/code | Finding codes by code, type and version with pagination.
@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**listCodeTypesBy**](CodeApi.md#listCodeTypesBy) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 [**listCodesByRegionTypeCodeVersion**](CodeApi.md#listCodesByRegionTypeCodeVersion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 [**listTagTypesBy**](CodeApi.md#listTagTypesBy) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
-[**matchCodesBy**](CodeApi.md#matchCodesBy) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
+[**matchCodesBy**](CodeApi.md#matchCodesBy) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty)
 [**modifyCode**](CodeApi.md#modifyCode) | **PUT** /rest/v2/code | Modify a code
 [**modifyCodes**](CodeApi.md#modifyCodes) | **PUT** /rest/v2/code/batch | Modify a batch of codes
 
@@ -37,7 +37,7 @@ Type, Code and Version are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeDto : CodeDto =  // CodeDto | 
+val codeDto : CodeDto =  // CodeDto |
 try {
     val result : CodeDto = apiInstance.createCode(codeDto)
     println(result)
@@ -84,7 +84,7 @@ Create a batch of code entities. Fields Type, Code and Version are required for 
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> | 
+val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> |
 try {
     val result : kotlin.collections.List<CodeDto> = apiInstance.createCodes(codeDto)
     println(result)
@@ -120,7 +120,7 @@ No authorization required
 # **filterCodesBy**
 > PaginatedListCodeDto filterCodesBy(startKey, startDocumentId, limit, skip, sort, desc, filterChainCode)
 
-Filter codes 
+Filter codes
 
 Returns a list of codes along with next start keys and Document ID. If the nextStartKey is Null it means that this is the last page.
 
@@ -137,7 +137,7 @@ val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 val skip : kotlin.Int = 56 // kotlin.Int | Skip rows
 val sort : kotlin.String = sort_example // kotlin.String | Sort key
 val desc : kotlin.Boolean = true // kotlin.Boolean | Descending
-val filterChainCode : FilterChainCode =  // FilterChainCode | 
+val filterChainCode : FilterChainCode =  // FilterChainCode |
 try {
     val result : PaginatedListCodeDto = apiInstance.filterCodesBy(startKey, startDocumentId, limit, skip, sort, desc, filterChainCode)
     println(result)
@@ -190,11 +190,11 @@ Returns a list of codes matched with given input. If several types are provided,
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | 
-val types : kotlin.String = types_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val label : kotlin.String = label_example // kotlin.String | 
-val version : kotlin.String = version_example // kotlin.String | 
+val region : kotlin.String = region_example // kotlin.String |
+val types : kotlin.String = types_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val label : kotlin.String = label_example // kotlin.String |
+val version : kotlin.String = version_example // kotlin.String |
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -251,8 +251,8 @@ Returns a list of codes matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val linkType : kotlin.String = linkType_example // kotlin.String | 
-val linkedId : kotlin.String = linkedId_example // kotlin.String | 
+val linkType : kotlin.String = linkType_example // kotlin.String |
+val linkedId : kotlin.String = linkedId_example // kotlin.String |
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination: a JSON representation of an array containing all the necessary components to form the Complex Key's startKey
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -306,10 +306,10 @@ Returns a list of codes matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val region : kotlin.String = region_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val code : kotlin.String = code_example // kotlin.String | 
-val version : kotlin.String = version_example // kotlin.String | 
+val region : kotlin.String = region_example // kotlin.String |
+val type : kotlin.String = type_example // kotlin.String |
+val code : kotlin.String = code_example // kotlin.String |
+val version : kotlin.String = version_example // kotlin.String |
 val startKey : kotlin.String = startKey_example // kotlin.String | The start key for pagination
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A code document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -463,7 +463,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<CodeDto> = apiInstance.getCodes(listOfIdsDto)
     println(result)
@@ -510,7 +510,7 @@ Import codes from the resources XML file depending on the passed pathVariable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeType : kotlin.String = codeType_example // kotlin.String | 
+val codeType : kotlin.String = codeType_example // kotlin.String |
 try {
     val result : kotlin.Any = apiInstance.importCodes(codeType)
     println(result)
@@ -697,7 +697,7 @@ No authorization required
 # **matchCodesBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchCodesBy(abstractFilterDtoCode)
 
-Get ids of code matching the provided filter for the current user (HcParty) 
+Get ids of code matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -706,7 +706,7 @@ Get ids of code matching the provided filter for the current user (HcParty)
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val abstractFilterDtoCode : AbstractFilterDtoCode =  // AbstractFilterDtoCode | 
+val abstractFilterDtoCode : AbstractFilterDtoCode =  // AbstractFilterDtoCode |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchCodesBy(abstractFilterDtoCode)
     println(result)
@@ -753,7 +753,7 @@ Modification of (type, code, version) is not allowed.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeDto : CodeDto =  // CodeDto | 
+val codeDto : CodeDto =  // CodeDto |
 try {
     val result : CodeDto = apiInstance.modifyCode(codeDto)
     println(result)
@@ -800,7 +800,7 @@ Modification of (type, code, version) is not allowed.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CodeApi()
-val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> | 
+val codeDto : kotlin.collections.List<CodeDto> =  // kotlin.collections.List<CodeDto> |
 try {
     val result : kotlin.collections.List<CodeDto> = apiInstance.modifyCodes(codeDto)
     println(result)
@@ -831,4 +831,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

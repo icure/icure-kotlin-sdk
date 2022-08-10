@@ -100,9 +100,9 @@ suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.Maint
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys)
             .firstOrNull()
-            ?.keyFromHexString() 
+            ?.keyFromHexString()
             ?: throw IllegalArgumentException("No encryption key for user")
-        
+
         val (sanitizedMaintenanceTask, marshalledData) = this.marshaller(p)
         sanitizedMaintenanceTask.applyIf({ marshalledData.isNotEmpty() }) {
             sanitizedMaintenanceTask.copy(encryptedSelf = Base64.getEncoder().encodeToString(
@@ -129,5 +129,3 @@ suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.Maint
 }
 
 data class PropertyWrapper(val typedValue: TypedValueDtoObject)
-
-

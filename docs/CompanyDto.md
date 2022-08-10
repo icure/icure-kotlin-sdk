@@ -21,6 +21,3 @@ Name | Type | Description | Notes
 **phone** | **kotlin.String** |  |  [optional]
 **language** | **kotlin.String** |  |  [optional]
 **website** | **kotlin.String** |  |  [optional]
-
-
-

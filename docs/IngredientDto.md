@@ -20,6 +20,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 type | ACTIVE_SUBSTANCE, EXCIPIENT
-
-
-

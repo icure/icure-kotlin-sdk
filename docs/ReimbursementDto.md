@@ -42,6 +42,3 @@ codeType | CNK, PSEUDO
 Name | Value
 ---- | -----
 multiple | M, V
-
-
-

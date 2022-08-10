@@ -265,4 +265,3 @@ data class DocumentDto (
         @JsonProperty(value = "delivered") delivered("delivered");
     }
 }
-

@@ -31,7 +31,7 @@ Creates a calendarItem
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val calendarItemDto : CalendarItemDto =  // CalendarItemDto | 
+val calendarItemDto : CalendarItemDto =  // CalendarItemDto |
 try {
     val result : CalendarItemDto = apiInstance.createCalendarItem(calendarItemDto)
     println(result)
@@ -76,7 +76,7 @@ Deletes an calendarItem
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val calendarItemIds : kotlin.String = calendarItemIds_example // kotlin.String | 
+val calendarItemIds : kotlin.String = calendarItemIds_example // kotlin.String |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItem(calendarItemIds)
     println(result)
@@ -121,7 +121,7 @@ Deletes calendarItems
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItems(listOfIdsDto)
     println(result)
@@ -166,8 +166,8 @@ Find CalendarItems by hcparty and patient
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -213,7 +213,7 @@ Find CalendarItems by recurrenceId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val recurrenceId : kotlin.String = recurrenceId_example // kotlin.String | 
+val recurrenceId : kotlin.String = recurrenceId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.findCalendarItemsByRecurrenceId(recurrenceId)
     println(result)
@@ -258,7 +258,7 @@ Gets an calendarItem
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val calendarItemId : kotlin.String = calendarItemId_example // kotlin.String | 
+val calendarItemId : kotlin.String = calendarItemId_example // kotlin.String |
 try {
     val result : CalendarItemDto = apiInstance.getCalendarItem(calendarItemId)
     println(result)
@@ -344,9 +344,9 @@ Get CalendarItems by Period and HcPartyId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val startDate : kotlin.Long = 789 // kotlin.Long |
+val endDate : kotlin.Long = 789 // kotlin.Long |
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarItemsByPeriodAndHcPartyId(startDate, endDate, hcPartyId)
     println(result)
@@ -393,7 +393,7 @@ Get calendarItems by ids
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarItemsWithIds(listOfIdsDto)
     println(result)
@@ -438,9 +438,9 @@ Get CalendarItems by Period and AgendaId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
-val agendaId : kotlin.String = agendaId_example // kotlin.String | 
+val startDate : kotlin.Long = 789 // kotlin.Long |
+val endDate : kotlin.Long = 789 // kotlin.Long |
+val agendaId : kotlin.String = agendaId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.getCalendarsByPeriodAndAgendaId(startDate, endDate, agendaId)
     println(result)
@@ -487,7 +487,7 @@ Modifies an calendarItem
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val calendarItemDto : CalendarItemDto =  // CalendarItemDto | 
+val calendarItemDto : CalendarItemDto =  // CalendarItemDto |
 try {
     val result : CalendarItemDto = apiInstance.modifyCalendarItem(calendarItemDto)
     println(result)
@@ -532,7 +532,7 @@ Update delegations in calendarItems
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<CalendarItemDto> = apiInstance.setCalendarItemsDelegations(icureStubDto)
     println(result)
@@ -563,4 +563,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

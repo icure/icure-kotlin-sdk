@@ -228,4 +228,3 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.decrypt
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(form, decryptAES(data = Base64.getDecoder().decode(form.encryptedSelf), key = key))
 }
-

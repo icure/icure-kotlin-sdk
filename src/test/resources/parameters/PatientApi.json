@@ -26,11 +26,11 @@
   "filterPatientsBy": {
     "skipEndpoint": true,
     "startKey": null,
-    "startDocumentId": null, 
-    "limit": null, 
+    "startDocumentId": null,
+    "limit": null,
     "skip": 20,
-    "sort": null, 
-    "desc": null, 
+    "sort": null,
+    "desc": null,
     "filterChainPatient": {
       "filter": {
         "$type": "PatientByIdsFilter",
@@ -40,10 +40,10 @@
   },
   "findPatientsByAccessLogUserAfterDate": {
     "userId": "ebd30407-9f33-4cd5-9999-079f334cd5e8",
-    "accessType": null, 
-    "startDate": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
+    "accessType": null,
+    "startDate": null,
+    "startKey": null,
+    "startDocumentId": null,
     "limit": null
   },
   "getPatientByExternalId": {
@@ -51,20 +51,20 @@
   },
   "findPatientsByNameBirthSsinAuto": {
     "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "filterValue": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "filterValue": null,
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "sortDirection": null
   },
   "findDuplicatesByName": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "startKey": null, 
+    "startKey": null,
     "limit": null
   },
   "findDuplicatesBySsin": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "startKey": null, 
+    "startKey": null,
     "limit": null
   },
   "fuzzySearch": {
@@ -85,8 +85,8 @@
   "findDeletedPatients": {
     "startDate": 12345,
     "endDate": 146350150095655,
-    "desc": null, 
-    "startDocumentId": null, 
+    "desc": null,
+    "startDocumentId": null,
     "limit": null
   },
   "listDeletedPatientsByName": {
@@ -99,38 +99,38 @@
   },
   "listOfPatientsModifiedAfter": {
     "date": 123456789,
-    "startKey": null, 
-    "startDocumentId": null, 
+    "startKey": null,
+    "startDocumentId": null,
     "limit": null
   },
   "listPatients": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "sortField": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "sortField": null,
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "sortDirection": "asc"
   },
   "findPatientsByHealthcareParty": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "sortField": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "sortField": null,
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "sortDirection": "asc"
   },
   "findPatientsIdsByHealthcareParty": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "startKey": null, 
-    "startDocumentId": null, 
+    "startKey": null,
+    "startDocumentId": null,
     "limit": null
   },
   "listPatientsOfHcParty": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
-    "sortField": null, 
-    "startKey": null, 
-    "startDocumentId": null, 
-    "limit": null, 
+    "sortField": null,
+    "startKey": null,
+    "startDocumentId": null,
+    "limit": null,
     "sortDirection": null
   },
   "matchPatientsBy": {
@@ -151,7 +151,7 @@
   "modifyPatientReferral": {
     "patientId": "ecb7b653-7f83-4a41-acfe-a6bf0178b40e",
     "referralId": "63d36586-2d94-4bc0-adaa-1db9dcf3e7d8",
-    "start": null, 
+    "start": null,
     "end": null
   },
   "newPatientDelegations": {

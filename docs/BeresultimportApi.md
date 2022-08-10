@@ -22,8 +22,8 @@ Can we handle this document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
-val id : kotlin.String = id_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : kotlin.Boolean = apiInstance.canHandle(id, enckeys)
     println(result)
@@ -69,14 +69,14 @@ import document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
-val documentId : kotlin.String = documentId_example // kotlin.String | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val protocolIds : kotlin.String = protocolIds_example // kotlin.String | 
-val formIds : kotlin.String = formIds_example // kotlin.String | 
-val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-val contactDto : ContactDto =  // ContactDto | 
+val documentId : kotlin.String = documentId_example // kotlin.String |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val protocolIds : kotlin.String = protocolIds_example // kotlin.String |
+val formIds : kotlin.String = formIds_example // kotlin.String |
+val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
+val contactDto : ContactDto =  // ContactDto |
 try {
     val result : ContactDto = apiInstance.doImport(documentId, hcpId, language, protocolIds, formIds, planOfActionId, enckeys, contactDto)
     println(result)
@@ -128,10 +128,10 @@ Extract general infos from document
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultimportApi()
-val id : kotlin.String = id_example // kotlin.String | 
-val language : kotlin.String = language_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
-val full : kotlin.Boolean = true // kotlin.Boolean | 
+val id : kotlin.String = id_example // kotlin.String |
+val language : kotlin.String = language_example // kotlin.String |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
+val full : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<ResultInfoDto> = apiInstance.getInfos(id, language, enckeys, full)
     println(result)
@@ -165,4 +165,3 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
-

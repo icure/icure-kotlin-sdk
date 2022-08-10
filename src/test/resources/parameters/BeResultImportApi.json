@@ -7,23 +7,23 @@
     "deleteIds": null
   },
   "canHandle": {
-    "id": null, 
+    "id": null,
     "enckeys": null
   },
   "doImport": {
-    "documentId": null, 
-    "hcpId": null, 
-    "language": null, 
-    "protocolIds": null, 
-    "formIds": null, 
-    "planOfActionId": null, 
-    "enckeys": null, 
+    "documentId": null,
+    "hcpId": null,
+    "language": null,
+    "protocolIds": null,
+    "formIds": null,
+    "planOfActionId": null,
+    "enckeys": null,
     "body": null
   },
   "getInfos": {
-    "id": null, 
-    "full": null, 
-    "language": null, 
+    "id": null,
+    "full": null,
+    "language": null,
     "enckeys": null
   },
   "fallback": {

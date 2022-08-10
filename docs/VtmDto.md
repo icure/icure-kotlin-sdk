@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **to** | **kotlin.Long** |  |  [optional]
 **code** | **kotlin.String** |  |  [optional]
 **name** | [**SamTextDto**](SamTextDto.md) |  |  [optional]
-
-
-

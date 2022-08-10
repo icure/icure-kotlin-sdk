@@ -139,4 +139,3 @@ data class MaintenanceTaskDto (
         @JsonProperty(value = "completed") completed("completed");
     }
 }
-

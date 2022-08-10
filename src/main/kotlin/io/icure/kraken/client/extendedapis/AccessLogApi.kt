@@ -120,5 +120,3 @@ suspend fun CryptoConfig<AccessLogDto, io.icure.kraken.client.models.AccessLogDt
     )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
     return this.unmarshaller(accessLog, decryptAES(data = Base64.getDecoder().decode(accessLog.encryptedSelf), key = key))
 }
-
-

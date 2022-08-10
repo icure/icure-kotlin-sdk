@@ -47,4 +47,3 @@ data class PaginatedListMaintenanceTaskDto (
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
-

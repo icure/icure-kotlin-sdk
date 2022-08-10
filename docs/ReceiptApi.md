@@ -26,7 +26,7 @@ Creates a receipt
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptDto : ReceiptDto =  // ReceiptDto | 
+val receiptDto : ReceiptDto =  // ReceiptDto |
 try {
     val result : ReceiptDto = apiInstance.createReceipt(receiptDto)
     println(result)
@@ -71,7 +71,7 @@ Deletes receipts
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteReceipts(listOfIdsDto)
     println(result)
@@ -116,7 +116,7 @@ Gets a receipt
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptId : kotlin.String = receiptId_example // kotlin.String | 
+val receiptId : kotlin.String = receiptId_example // kotlin.String |
 try {
     val result : ReceiptDto = apiInstance.getReceipt(receiptId)
     println(result)
@@ -161,9 +161,9 @@ Get an attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptId : kotlin.String = receiptId_example // kotlin.String | 
-val attachmentId : kotlin.String = attachmentId_example // kotlin.String | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val receiptId : kotlin.String = receiptId_example // kotlin.String |
+val attachmentId : kotlin.String = attachmentId_example // kotlin.String |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.getReceiptAttachment(receiptId, attachmentId, enckeys)
     println(result)
@@ -210,7 +210,7 @@ Gets a receipt
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val ref : kotlin.String = ref_example // kotlin.String | 
+val ref : kotlin.String = ref_example // kotlin.String |
 try {
     val result : kotlin.collections.List<ReceiptDto> = apiInstance.listByReference(ref)
     println(result)
@@ -255,7 +255,7 @@ Updates a receipt
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptDto : ReceiptDto =  // ReceiptDto | 
+val receiptDto : ReceiptDto =  // ReceiptDto |
 try {
     val result : ReceiptDto = apiInstance.modifyReceipt(receiptDto)
     println(result)
@@ -300,10 +300,10 @@ Creates a receipt&#39;s attachment
 //import io.icure.kraken.client.models.*
 
 val apiInstance = ReceiptApi()
-val receiptId : kotlin.String = receiptId_example // kotlin.String | 
-val blobType : kotlin.String = blobType_example // kotlin.String | 
-val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> | 
-val enckeys : kotlin.String = enckeys_example // kotlin.String | 
+val receiptId : kotlin.String = receiptId_example // kotlin.String |
+val blobType : kotlin.String = blobType_example // kotlin.String |
+val body : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = BINARY_DATA_HERE // kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> |
+val enckeys : kotlin.String = enckeys_example // kotlin.String |
 try {
     val result : ReceiptDto = apiInstance.setReceiptAttachment(receiptId, blobType, body, enckeys)
     println(result)
@@ -337,4 +337,3 @@ No authorization required
 
  - **Content-Type**: application/octet-stream
  - **Accept**: */*
-

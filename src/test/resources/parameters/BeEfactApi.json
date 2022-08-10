@@ -7,9 +7,9 @@
     "deleteIds": null
   },
   "createBatchAndMessage": {
-    "insuranceId": null, 
-    "newMessageId": null, 
-    "numericalRef": null, 
+    "insuranceId": null,
+    "newMessageId": null,
+    "numericalRef": null,
     "body": null
   },
   "fallback": {

@@ -4,18 +4,18 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** | The Id of the Service. We encourage using either a v4 UUID or a HL7 Id. | 
-**identifier** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md) |  | 
-**cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The public patient key, encrypted here for separate Crypto Actors. | 
-**delegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The delegations giving access to connected healthcare information. | 
-**encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The contact secret encryption key used to encrypt the secured properties (like services for example), encrypted for separate Crypto Actors. | 
-**content** | [**kotlin.collections.Map&lt;kotlin.String, ContentDto&gt;**](ContentDto.md) | Information contained in the service. Content is localized, using ISO language code as key | 
-**textIndexes** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  | 
-**invoicingCodes** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of invoicing codes | 
-**notes** | [**kotlin.collections.List&lt;AnnotationDto&gt;**](AnnotationDto.md) | Comments - Notes recorded by a HCP about this service | 
-**qualifiedLinks** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;** | Links towards related services (possibly in other contacts) | 
-**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes | 
-**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. | 
+**id** | **kotlin.String** | The Id of the Service. We encourage using either a v4 UUID or a HL7 Id. |
+**identifier** | [**kotlin.collections.List&lt;IdentifierDto&gt;**](IdentifierDto.md) |  |
+**cryptedForeignKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The public patient key, encrypted here for separate Crypto Actors. |
+**delegations** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The delegations giving access to connected healthcare information. |
+**encryptionKeys** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Set&lt;DelegationDto&gt;&gt;** | The contact secret encryption key used to encrypt the secured properties (like services for example), encrypted for separate Crypto Actors. |
+**content** | [**kotlin.collections.Map&lt;kotlin.String, ContentDto&gt;**](ContentDto.md) | Information contained in the service. Content is localized, using ISO language code as key |
+**textIndexes** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** |  |
+**invoicingCodes** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of invoicing codes |
+**notes** | [**kotlin.collections.List&lt;AnnotationDto&gt;**](AnnotationDto.md) | Comments - Notes recorded by a HCP about this service |
+**qualifiedLinks** | **kotlin.collections.Map&lt;kotlin.String, kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;&gt;** | Links towards related services (possibly in other contacts) |
+**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes |
+**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. |
 **transactionId** | **kotlin.String** | The transactionId is used when a single service had to be split into parts for technical reasons. Several services with the same non null transaction id form one single service |  [optional]
 **contactId** | **kotlin.String** | Id of the contact during which the service is provided |  [optional]
 **subContactIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** | List of IDs of all sub-contacts that link the service to structural elements. Only used when the Service is emitted outside of its contact |  [optional]
@@ -39,6 +39,3 @@ Name | Type | Description | Notes
 **comment** | **kotlin.String** | Text, comments on the Service provided |  [optional]
 **status** | **kotlin.Int** |  |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
-
-
-

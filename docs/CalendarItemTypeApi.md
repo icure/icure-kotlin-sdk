@@ -25,7 +25,7 @@ Creates a calendarItemType
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto | 
+val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto |
 try {
     val result : CalendarItemTypeDto = apiInstance.createCalendarItemType(calendarItemTypeDto)
     println(result)
@@ -70,7 +70,7 @@ Deletes calendarItemTypes
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteCalendarItemTypes(listOfIdsDto)
     println(result)
@@ -115,7 +115,7 @@ Gets a calendarItemType
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String | 
+val calendarItemTypeId : kotlin.String = calendarItemTypeId_example // kotlin.String |
 try {
     val result : CalendarItemTypeDto = apiInstance.getCalendarItemType(calendarItemTypeId)
     println(result)
@@ -242,7 +242,7 @@ Modifies an calendarItemType
 //import io.icure.kraken.client.models.*
 
 val apiInstance = CalendarItemTypeApi()
-val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto | 
+val calendarItemTypeDto : CalendarItemTypeDto =  // CalendarItemTypeDto |
 try {
     val result : CalendarItemTypeDto = apiInstance.modifyCalendarItemType(calendarItemTypeDto)
     println(result)
@@ -273,4 +273,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

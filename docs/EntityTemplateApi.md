@@ -32,7 +32,7 @@ Type, EntityTemplate and Version are required.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto |
 try {
     val result : EntityTemplateDto = apiInstance.createEntityTemplate(entityTemplateDto)
     println(result)
@@ -79,7 +79,7 @@ Returns the modified entityTemplates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.createEntityTemplates(entityTemplateDto)
     println(result)
@@ -124,7 +124,7 @@ Delete entity templates
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteEntityTemplate(listOfIdsDto)
     println(result)
@@ -171,9 +171,9 @@ Returns a list of entityTemplates matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val type : kotlin.String = type_example // kotlin.String | 
-val keyword : kotlin.String = keyword_example // kotlin.String | 
-val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+val type : kotlin.String = type_example // kotlin.String |
+val keyword : kotlin.String = keyword_example // kotlin.String |
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.findAllEntityTemplatesByKeyword(type, keyword, includeEntities)
     println(result)
@@ -269,7 +269,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.getEntityTemplates(listOfIdsDto)
     println(result)
@@ -316,9 +316,9 @@ Returns a list of entityTemplates matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val type : kotlin.String = type_example // kotlin.String | 
-val searchString : kotlin.String = searchString_example // kotlin.String | 
-val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+val type : kotlin.String = type_example // kotlin.String |
+val searchString : kotlin.String = searchString_example // kotlin.String |
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.listAllEntityTemplatesBy(type, searchString, includeEntities)
     println(result)
@@ -367,10 +367,10 @@ Returns a list of entityTemplates matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val searchString : kotlin.String = searchString_example // kotlin.String | 
-val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val type : kotlin.String = type_example // kotlin.String |
+val searchString : kotlin.String = searchString_example // kotlin.String |
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.listEntityTemplatesBy(userId, type, searchString, includeEntities)
     println(result)
@@ -420,10 +420,10 @@ Returns a list of entityTemplates matched with given input.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val type : kotlin.String = type_example // kotlin.String | 
-val keyword : kotlin.String = keyword_example // kotlin.String | 
-val includeEntities : kotlin.Boolean = true // kotlin.Boolean | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val type : kotlin.String = type_example // kotlin.String |
+val keyword : kotlin.String = keyword_example // kotlin.String |
+val includeEntities : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.listEntityTemplatesByKeyword(userId, type, keyword, includeEntities)
     println(result)
@@ -473,7 +473,7 @@ Modification of (type, entityTemplate, version) is not allowed.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto | 
+val entityTemplateDto : EntityTemplateDto =  // EntityTemplateDto |
 try {
     val result : EntityTemplateDto = apiInstance.modifyEntityTemplate(entityTemplateDto)
     println(result)
@@ -520,7 +520,7 @@ Returns the modified entityTemplates.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = EntityTemplateApi()
-val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> | 
+val entityTemplateDto : kotlin.collections.List<EntityTemplateDto> =  // kotlin.collections.List<EntityTemplateDto> |
 try {
     val result : kotlin.collections.List<EntityTemplateDto> = apiInstance.modifyEntityTemplates(entityTemplateDto)
     println(result)
@@ -551,4 +551,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

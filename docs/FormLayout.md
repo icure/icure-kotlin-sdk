@@ -13,6 +13,3 @@ Name | Type | Description | Notes
 **group** | **kotlin.String** |  |  [optional]
 **sections** | [**kotlin.collections.List&lt;FormSection&gt;**](FormSection.md) |  |  [optional]
 **importedServiceXPaths** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional]
-
-
-

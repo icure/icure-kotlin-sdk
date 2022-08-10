@@ -20,6 +20,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 labelPosition | Up, Down, Left, Right
-
-
-

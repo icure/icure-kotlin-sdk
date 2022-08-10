@@ -476,4 +476,3 @@ data class PatientDto (
         @JsonProperty(value = "polygamous") polygamous("polygamous");
     }
 }
-

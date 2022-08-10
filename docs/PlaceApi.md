@@ -24,7 +24,7 @@ Creates a place
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val placeDto : PlaceDto =  // PlaceDto | 
+val placeDto : PlaceDto =  // PlaceDto |
 try {
     val result : PlaceDto = apiInstance.createPlace(placeDto)
     println(result)
@@ -69,7 +69,7 @@ Deletes places
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deletePlaces(listOfIdsDto)
     println(result)
@@ -114,7 +114,7 @@ Gets an place
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val placeId : kotlin.String = placeId_example // kotlin.String | 
+val placeId : kotlin.String = placeId_example // kotlin.String |
 try {
     val result : PlaceDto = apiInstance.getPlace(placeId)
     println(result)
@@ -200,7 +200,7 @@ Modifies an place
 //import io.icure.kraken.client.models.*
 
 val apiInstance = PlaceApi()
-val placeDto : PlaceDto =  // PlaceDto | 
+val placeDto : PlaceDto =  // PlaceDto |
 try {
     val result : PlaceDto = apiInstance.modifyPlace(placeDto)
     println(result)
@@ -231,4 +231,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

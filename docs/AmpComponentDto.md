@@ -33,6 +33,3 @@ crushable | Y, N, X
 Name | Value
 ---- | -----
 containsAlcohol | Y, N, X
-
-
-

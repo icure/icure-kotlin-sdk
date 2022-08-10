@@ -29,4 +29,3 @@ data class DeviceByIdsFilter(
         val ids: Set<String>,
         override val desc: String? = null
 ) : AbstractFilterDto<DeviceDto>
-

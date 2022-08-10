@@ -35,9 +35,9 @@
   },
   "createGroup": {
     "skipEndpoint": true,
-    "id": null, 
-    "name": null, 
-    "password": null, 
+    "id": null,
+    "name": null,
+    "password": null,
     "body": null
   },
   "getGroupsStorageInfos": {

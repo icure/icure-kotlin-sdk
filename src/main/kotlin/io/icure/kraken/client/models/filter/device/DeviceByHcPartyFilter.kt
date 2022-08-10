@@ -11,4 +11,3 @@ data class DeviceByHcPartyFilter(
         override val desc: String? = null,
         val responsibleId: String? = null
 ) : AbstractFilterDto<DeviceDto>
-

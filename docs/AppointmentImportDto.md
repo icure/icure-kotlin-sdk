@@ -25,6 +25,3 @@ Name | Type | Description | Notes
 **customerBirthDate** | [**java.time.OffsetDateTime**](java.time.OffsetDateTime.md) |  |  [optional]
 **customerGsm** | **kotlin.String** |  |  [optional]
 **customerFixPhone** | **kotlin.String** |  |  [optional]
-
-
-

@@ -36,7 +36,7 @@
   },
   "listClassificationTemplatesByHCPartyPatientForeignKeys": {
     "skipEndpoint": true,
-    "hcPartyId": null, 
+    "hcPartyId": null,
     "secretFKeys": null
   },
   "getClassificationTemplate": {
@@ -49,7 +49,7 @@
   },
   "listClassificationTemplates": {
     "skipEndpoint": true,
-    "startKey": null, 
+    "startKey": null,
     "startDocumentId": "ClTp_2000121613505350908",
     "limit": "10"
   },
@@ -66,10 +66,10 @@
   },
   "newClassificationTemplateDelegations": {
     "skipEndpoint": true,
-    "classificationTemplateId": null, 
+    "classificationTemplateId": null,
     "delegationDto": null
   },
-  
+
   "fallback": {
   }
 }

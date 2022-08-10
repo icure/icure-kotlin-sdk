@@ -22,12 +22,12 @@ Export data
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
-val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
-val patId : kotlin.String = patId_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val ref : kotlin.String = ref_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String |
+val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
+val patId : kotlin.String = patId_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val ref : kotlin.String = ref_example // kotlin.String |
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportHealthOne(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
@@ -77,13 +77,13 @@ Export data
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
-val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
-val patId : kotlin.String = patId_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val ref : kotlin.String = ref_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
-val mimeType : kotlin.Boolean = true // kotlin.Boolean | 
+val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String |
+val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
+val patId : kotlin.String = patId_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val ref : kotlin.String = ref_example // kotlin.String |
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> |
+val mimeType : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportKmehrReport(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper, mimeType)
     println(result)
@@ -134,12 +134,12 @@ Export data
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeresultexportApi()
-val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String | 
-val toHcpId : kotlin.String = toHcpId_example // kotlin.String | 
-val patId : kotlin.String = patId_example // kotlin.String | 
-val date : kotlin.Long = 789 // kotlin.Long | 
-val ref : kotlin.String = ref_example // kotlin.String | 
-val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> | 
+val fromHcpId : kotlin.String = fromHcpId_example // kotlin.String |
+val toHcpId : kotlin.String = toHcpId_example // kotlin.String |
+val patId : kotlin.String = patId_example // kotlin.String |
+val date : kotlin.Long = 789 // kotlin.Long |
+val ref : kotlin.String = ref_example // kotlin.String |
+val ioIcureKrakenClientInfrastructureByteArrayWrapper : kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> =  // kotlin.collections.List<io.icure.kraken.client.infrastructure.ByteArrayWrapper> |
 try {
     val result : kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer> = apiInstance.exportMedidoc(fromHcpId, toHcpId, patId, date, ref, ioIcureKrakenClientInfrastructureByteArrayWrapper)
     println(result)
@@ -175,4 +175,3 @@ No authorization required
 
  - **Content-Type**: application/octet-stream
  - **Accept**: application/octet-stream
-

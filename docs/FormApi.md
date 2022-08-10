@@ -45,7 +45,7 @@ Returns an instance of created form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formDto : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto |
 try {
     val result : FormDto = apiInstance.createForm(formDto)
     println(result)
@@ -92,7 +92,7 @@ Returns an instance of created form template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateDto : FormTemplateDto =  // FormTemplateDto | 
+val formTemplateDto : FormTemplateDto =  // FormTemplateDto |
 try {
     val result : FormTemplateDto = apiInstance.createFormTemplate(formTemplateDto)
     println(result)
@@ -139,7 +139,7 @@ Returns the created forms.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.createForms(formDto)
     println(result)
@@ -184,7 +184,7 @@ Delete a form template
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteFormTemplate(formTemplateId)
     println(result)
@@ -231,7 +231,7 @@ Response is a set containing the ID&#39;s of deleted forms.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteForms(listOfIdsDto)
     println(result)
@@ -278,8 +278,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formId : kotlin.String = formId_example // kotlin.String | 
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
+val formId : kotlin.String = formId_example // kotlin.String |
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.getChildrenForms(formId, hcPartyId)
     println(result)
@@ -325,7 +325,7 @@ Gets a form
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formId : kotlin.String = formId_example // kotlin.String | 
+val formId : kotlin.String = formId_example // kotlin.String |
 try {
     val result : FormDto = apiInstance.getForm(formId)
     println(result)
@@ -370,7 +370,7 @@ Gets the most recent form with the given logicalUuid
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String | 
+val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String |
 try {
     val result : FormDto = apiInstance.getFormByLogicalUuid(logicalUuid)
     println(result)
@@ -415,7 +415,7 @@ Gets the most recent form with the given uniqueId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val uniqueId : kotlin.String = uniqueId_example // kotlin.String | 
+val uniqueId : kotlin.String = uniqueId_example // kotlin.String |
 try {
     val result : FormDto = apiInstance.getFormByUniqueId(uniqueId)
     println(result)
@@ -460,7 +460,7 @@ Gets a form template by guid
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String |
 try {
     val result : FormTemplateDto = apiInstance.getFormTemplate(formTemplateId)
     println(result)
@@ -505,7 +505,7 @@ Gets all form templates for current user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
+val loadLayout : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<FormTemplateDto> = apiInstance.getFormTemplates(loadLayout)
     println(result)
@@ -550,8 +550,8 @@ Gets a form template
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateGuid : kotlin.String = formTemplateGuid_example // kotlin.String | 
-val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
+val formTemplateGuid : kotlin.String = formTemplateGuid_example // kotlin.String |
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FormTemplateDto> = apiInstance.getFormTemplatesByGuid(formTemplateGuid, specialityCode)
     println(result)
@@ -599,7 +599,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.getForms(listOfIdsDto)
     println(result)
@@ -644,7 +644,7 @@ Gets all forms with given logicalUuid
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String | 
+val logicalUuid : kotlin.String = logicalUuid_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.getFormsByLogicalUuid(logicalUuid)
     println(result)
@@ -689,7 +689,7 @@ Gets all forms by uniqueId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val uniqueId : kotlin.String = uniqueId_example // kotlin.String | 
+val uniqueId : kotlin.String = uniqueId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.getFormsByUniqueId(uniqueId)
     println(result)
@@ -734,8 +734,8 @@ Gets all form templates
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val specialityCode : kotlin.String = specialityCode_example // kotlin.String | 
-val loadLayout : kotlin.Boolean = true // kotlin.Boolean | 
+val specialityCode : kotlin.String = specialityCode_example // kotlin.String |
+val loadLayout : kotlin.Boolean = true // kotlin.Boolean |
 try {
     val result : kotlin.collections.List<FormTemplateDto> = apiInstance.listFormTemplatesBySpeciality(specialityCode, loadLayout)
     println(result)
@@ -783,11 +783,11 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
-val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
-val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String | 
-val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
+val healthElementId : kotlin.String = healthElementId_example // kotlin.String |
+val planOfActionId : kotlin.String = planOfActionId_example // kotlin.String |
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.listFormsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys, healthElementId, planOfActionId, formTemplateId)
     println(result)
@@ -838,8 +838,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.listFormsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -887,7 +887,7 @@ Returns the modified form.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formDto : FormDto =  // FormDto | 
+val formDto : FormDto =  // FormDto |
 try {
     val result : FormDto = apiInstance.modifyForm(formDto)
     println(result)
@@ -934,7 +934,7 @@ Returns the modified forms.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> | 
+val formDto : kotlin.collections.List<FormDto> =  // kotlin.collections.List<FormDto> |
 try {
     val result : kotlin.collections.List<FormDto> = apiInstance.modifyForms(formDto)
     println(result)
@@ -981,8 +981,8 @@ It delegates a form to a healthcare party. Returns the form with the new delegat
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formId : kotlin.String = formId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val formId : kotlin.String = formId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : FormDto = apiInstance.newFormDelegations(formId, delegationDto)
     println(result)
@@ -1030,7 +1030,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.setFormsDelegations(icureStubDto)
     println(result)
@@ -1075,8 +1075,8 @@ Update a form template&#39;s layout
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
-val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String |
+val attachment : io.icure.kraken.client.infrastructure.ByteArrayWrapper = BYTE_ARRAY_DATA_HERE // io.icure.kraken.client.infrastructure.ByteArrayWrapper |
 try {
     val result : kotlin.String = apiInstance.setTemplateAttachmentMulti(formTemplateId, attachment)
     println(result)
@@ -1124,8 +1124,8 @@ Returns an instance of created form template.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = FormApi()
-val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String | 
-val formTemplateDto : FormTemplateDto =  // FormTemplateDto | 
+val formTemplateId : kotlin.String = formTemplateId_example // kotlin.String |
+val formTemplateDto : FormTemplateDto =  // FormTemplateDto |
 try {
     val result : FormTemplateDto = apiInstance.updateFormTemplate(formTemplateId, formTemplateDto)
     println(result)
@@ -1157,4 +1157,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -15,6 +15,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 localTarget | base, healthdata, patient
-
-
-

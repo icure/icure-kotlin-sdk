@@ -45,4 +45,3 @@ data class PaginatedListAccessLogDto (
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null
 
 )
-

@@ -4,8 +4,5 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**read** | **kotlin.Boolean** |  | 
+**read** | **kotlin.Boolean** |  |
 **time** | **kotlin.Long** |  |  [optional]
-
-
-

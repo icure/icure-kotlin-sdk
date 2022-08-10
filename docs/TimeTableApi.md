@@ -25,7 +25,7 @@ Creates a timeTable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val timeTableDto : TimeTableDto =  // TimeTableDto | 
+val timeTableDto : TimeTableDto =  // TimeTableDto |
 try {
     val result : TimeTableDto = apiInstance.createTimeTable(timeTableDto)
     println(result)
@@ -70,7 +70,7 @@ Deletes an timeTable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteTimeTable(listOfIdsDto)
     println(result)
@@ -115,7 +115,7 @@ Gets a timeTable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val timeTableId : kotlin.String = timeTableId_example // kotlin.String | 
+val timeTableId : kotlin.String = timeTableId_example // kotlin.String |
 try {
     val result : TimeTableDto = apiInstance.getTimeTable(timeTableId)
     println(result)
@@ -160,7 +160,7 @@ Get TimeTables by AgendaId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val agendaId : kotlin.String = agendaId_example // kotlin.String | 
+val agendaId : kotlin.String = agendaId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<TimeTableDto> = apiInstance.getTimeTablesByAgendaId(agendaId)
     println(result)
@@ -205,9 +205,9 @@ Get TimeTables by Period and AgendaId
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val startDate : kotlin.Long = 789 // kotlin.Long | 
-val endDate : kotlin.Long = 789 // kotlin.Long | 
-val agendaId : kotlin.String = agendaId_example // kotlin.String | 
+val startDate : kotlin.Long = 789 // kotlin.Long |
+val endDate : kotlin.Long = 789 // kotlin.Long |
+val agendaId : kotlin.String = agendaId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<TimeTableDto> = apiInstance.getTimeTablesByPeriodAndAgendaId(startDate, endDate, agendaId)
     println(result)
@@ -254,7 +254,7 @@ Modifies an timeTable
 //import io.icure.kraken.client.models.*
 
 val apiInstance = TimeTableApi()
-val timeTableDto : TimeTableDto =  // TimeTableDto | 
+val timeTableDto : TimeTableDto =  // TimeTableDto |
 try {
     val result : TimeTableDto = apiInstance.modifyTimeTable(timeTableDto)
     println(result)
@@ -285,4 +285,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

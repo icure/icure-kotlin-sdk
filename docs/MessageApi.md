@@ -37,7 +37,7 @@ Creates a message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageDto : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto |
 try {
     val result : MessageDto = apiInstance.createMessage(messageDto)
     println(result)
@@ -82,8 +82,8 @@ Deletes a message delegation
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageId : kotlin.String = messageId_example // kotlin.String | 
-val delegateId : kotlin.String = delegateId_example // kotlin.String | 
+val messageId : kotlin.String = messageId_example // kotlin.String |
+val delegateId : kotlin.String = delegateId_example // kotlin.String |
 try {
     val result : MessageDto = apiInstance.deleteDelegation(messageId, delegateId)
     println(result)
@@ -129,7 +129,7 @@ Deletes multiple messages
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteMessages(listOfIdsDto)
     println(result)
@@ -174,9 +174,9 @@ Get all messages (paginated) for current HC Party
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val startKey : kotlin.String = startKey_example // kotlin.String | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
+val startKey : kotlin.String = startKey_example // kotlin.String |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
 try {
     val result : PaginatedListMessageDto = apiInstance.findMessages(startKey, startDocumentId, limit)
     println(result)
@@ -223,11 +223,11 @@ Get all messages (paginated) for current HC Party and provided from address
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val fromAddress : kotlin.String = fromAddress_example // kotlin.String | 
-val startKey : kotlin.String = startKey_example // kotlin.String | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val fromAddress : kotlin.String = fromAddress_example // kotlin.String |
+val startKey : kotlin.String = startKey_example // kotlin.String |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
 try {
     val result : PaginatedListMessageDto = apiInstance.findMessagesByFromAddress(fromAddress, startKey, startDocumentId, limit, hcpId)
     println(result)
@@ -278,7 +278,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.findMessagesByHCPartyPatientForeignKeys(secretFKeys)
     println(result)
@@ -323,12 +323,12 @@ Get all messages (paginated) for current HC Party and provided to address
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val toAddress : kotlin.String = toAddress_example // kotlin.String | 
-val startKey : kotlin.String = startKey_example // kotlin.String | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val reverse : kotlin.Boolean = true // kotlin.Boolean | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val toAddress : kotlin.String = toAddress_example // kotlin.String |
+val startKey : kotlin.String = startKey_example // kotlin.String |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
+val reverse : kotlin.Boolean = true // kotlin.Boolean |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
 try {
     val result : PaginatedListMessageDto = apiInstance.findMessagesByToAddress(toAddress, startKey, startDocumentId, limit, reverse, hcpId)
     println(result)
@@ -378,12 +378,12 @@ Get all messages (paginated) for current HC Party and provided transportGuid
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val transportGuid : kotlin.String = transportGuid_example // kotlin.String | 
-val received : kotlin.Boolean = true // kotlin.Boolean | 
-val startKey : kotlin.String = startKey_example // kotlin.String | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val transportGuid : kotlin.String = transportGuid_example // kotlin.String |
+val received : kotlin.Boolean = true // kotlin.Boolean |
+val startKey : kotlin.String = startKey_example // kotlin.String |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
 try {
     val result : PaginatedListMessageDto = apiInstance.findMessagesByTransportGuid(transportGuid, received, startKey, startDocumentId, limit, hcpId)
     println(result)
@@ -433,13 +433,13 @@ Get all messages starting by a prefix between two date
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val transportGuid : kotlin.String = transportGuid_example // kotlin.String | 
-val from : kotlin.Long = 789 // kotlin.Long | 
-val to : kotlin.Long = 789 // kotlin.Long | 
-val startKey : kotlin.String = startKey_example // kotlin.String | 
-val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | 
-val limit : kotlin.Int = 56 // kotlin.Int | 
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
+val transportGuid : kotlin.String = transportGuid_example // kotlin.String |
+val from : kotlin.Long = 789 // kotlin.Long |
+val to : kotlin.Long = 789 // kotlin.Long |
+val startKey : kotlin.String = startKey_example // kotlin.String |
+val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String |
+val limit : kotlin.Int = 56 // kotlin.Int |
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
 try {
     val result : PaginatedListMessageDto = apiInstance.findMessagesByTransportGuidSentDate(transportGuid, from, to, startKey, startDocumentId, limit, hcpId)
     println(result)
@@ -490,7 +490,7 @@ Get children messages of provided message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageId : kotlin.String = messageId_example // kotlin.String | 
+val messageId : kotlin.String = messageId_example // kotlin.String |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.getChildrenMessages(messageId)
     println(result)
@@ -535,7 +535,7 @@ Gets a message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageId : kotlin.String = messageId_example // kotlin.String | 
+val messageId : kotlin.String = messageId_example // kotlin.String |
 try {
     val result : MessageDto = apiInstance.getMessage(messageId)
     println(result)
@@ -580,7 +580,7 @@ Get children messages of provided message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.getMessagesChildren(listOfIdsDto)
     println(result)
@@ -625,7 +625,7 @@ Get children messages of provided message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByInvoices(listOfIdsDto)
     println(result)
@@ -670,8 +670,8 @@ Get all messages for current HC Party and provided transportGuids
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val hcpId : kotlin.String = hcpId_example // kotlin.String | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val hcpId : kotlin.String = hcpId_example // kotlin.String |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.listMessagesByTransportGuids(hcpId, listOfIdsDto)
     println(result)
@@ -717,7 +717,7 @@ Updates a message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageDto : MessageDto =  // MessageDto | 
+val messageDto : MessageDto =  // MessageDto |
 try {
     val result : MessageDto = apiInstance.modifyMessage(messageDto)
     println(result)
@@ -762,8 +762,8 @@ Adds a delegation to a message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messageId : kotlin.String = messageId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val messageId : kotlin.String = messageId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : IcureStubDto = apiInstance.newMessageDelegations(messageId, delegationDto)
     println(result)
@@ -809,7 +809,7 @@ Set read status for given list of messages
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val messagesReadStatusUpdate : MessagesReadStatusUpdate =  // MessagesReadStatusUpdate | 
+val messagesReadStatusUpdate : MessagesReadStatusUpdate =  // MessagesReadStatusUpdate |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.setMessagesReadStatus(messagesReadStatusUpdate)
     println(result)
@@ -854,8 +854,8 @@ Set status bits for given list of messages
 //import io.icure.kraken.client.models.*
 
 val apiInstance = MessageApi()
-val status : kotlin.Int = 56 // kotlin.Int | 
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val status : kotlin.Int = 56 // kotlin.Int |
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<MessageDto> = apiInstance.setMessagesStatusBits(status, listOfIdsDto)
     println(result)
@@ -887,4 +887,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

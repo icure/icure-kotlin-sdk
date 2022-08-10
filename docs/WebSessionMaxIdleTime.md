@@ -9,6 +9,3 @@ Name | Type | Description | Notes
 **negative** | **kotlin.Boolean** |  |  [optional]
 **zero** | **kotlin.Boolean** |  |  [optional]
 **nano** | **kotlin.Int** |  |  [optional]
-
-
-

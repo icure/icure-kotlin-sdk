@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **from** | **kotlin.Long** |  |  [optional]
 **to** | **kotlin.Long** |  |  [optional]
 **feeAmount** | **kotlin.String** |  |  [optional]
-
-
-

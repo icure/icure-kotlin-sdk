@@ -129,4 +129,3 @@ data class TimeTableDto (
     val encryptedSelf: kotlin.String? = null
 
 )
-

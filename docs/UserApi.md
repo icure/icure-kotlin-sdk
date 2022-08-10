@@ -5,13 +5,13 @@ All URIs are relative to *https://kraken.icure.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**assignHealthcareParty**](UserApi.md#assignHealthcareParty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
-[**checkPassword**](UserApi.md#checkPassword) | **GET** /rest/v2/user/checkPassword | 
+[**checkPassword**](UserApi.md#checkPassword) | **GET** /rest/v2/user/checkPassword |
 [**checkTokenValidity**](UserApi.md#checkTokenValidity) | **GET** /rest/v2/user/token/{userId} | Check token validity
 [**createUser**](UserApi.md#createUser) | **POST** /rest/v2/user | Create a user
 [**createUserInGroup**](UserApi.md#createUserInGroup) | **POST** /rest/v2/user/inGroup/{groupId} | Create a user
 [**deleteUser**](UserApi.md#deleteUser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
 [**deleteUserInGroup**](UserApi.md#deleteUserInGroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
-[**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword | 
+[**encodePassword**](UserApi.md#encodePassword) | **GET** /rest/v2/user/encodePassword |
 [**filterUsersBy**](UserApi.md#filterUsersBy) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 [**filterUsersInGroupBy**](UserApi.md#filterUsersInGroupBy) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 [**findByHcpartyId**](UserApi.md#findByHcpartyId) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 [**getUserByEmail**](UserApi.md#getUserByEmail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 [**listUsersBy**](UserApi.md#listUsersBy) | **GET** /rest/v2/user | List users with(out) pagination
 [**listUsersInGroup**](UserApi.md#listUsersInGroup) | **GET** /rest/v2/user/inGroup/{groupId} | List users with(out) pagination
-[**matchUsersBy**](UserApi.md#matchUsersBy) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+[**matchUsersBy**](UserApi.md#matchUsersBy) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty)
 [**modifyProperties**](UserApi.md#modifyProperties) | **PUT** /rest/v2/user/{userId}/properties | Modify a User property
 [**modifyUser**](UserApi.md#modifyUser) | **PUT** /rest/v2/user | Modify a user.
 [**modifyUserInGroup**](UserApi.md#modifyUserInGroup) | **PUT** /rest/v2/user/inGroup/{groupId} | Modify a user.
@@ -47,7 +47,7 @@ UserDto gets returned.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String | 
+val healthcarePartyId : kotlin.String = healthcarePartyId_example // kotlin.String |
 try {
     val result : UserDto = apiInstance.assignHealthcareParty(healthcarePartyId)
     println(result)
@@ -92,7 +92,7 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val password : kotlin.String = password_example // kotlin.String | 
+val password : kotlin.String = password_example // kotlin.String |
 try {
     val result : kotlin.Boolean = apiInstance.checkPassword(password)
     println(result)
@@ -137,8 +137,8 @@ Check token validity
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val token : kotlin.String = token_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val token : kotlin.String = token_example // kotlin.String |
 try {
     val result : kotlin.Boolean = apiInstance.checkTokenValidity(userId, token)
     println(result)
@@ -186,7 +186,7 @@ Create a user. HealthcareParty ID should be set. Email or Login have to be set. 
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userDto : UserDto =  // UserDto | 
+val userDto : UserDto =  // UserDto |
 try {
     val result : UserDto = apiInstance.createUser(userDto)
     println(result)
@@ -233,8 +233,8 @@ Create a user. HealthcareParty ID should be set. Email has to be set and the Log
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val userDto : UserDto =  // UserDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val userDto : UserDto =  // UserDto |
 try {
     val result : UserDto = apiInstance.createUserInGroup(groupId, userDto)
     println(result)
@@ -282,7 +282,7 @@ Delete a User based on his/her ID. The return value is an array containing the I
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : DocIdentifier = apiInstance.deleteUser(userId)
     println(result)
@@ -329,8 +329,8 @@ Delete a User based on his/her ID. The return value is an array containing the I
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val userId : kotlin.String = userId_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : kotlin.Any = apiInstance.deleteUserInGroup(groupId, userId)
     println(result)
@@ -376,7 +376,7 @@ No authorization required
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val password : kotlin.String = password_example // kotlin.String | 
+val password : kotlin.String = password_example // kotlin.String |
 try {
     val result : kotlin.String = apiInstance.encodePassword(password)
     println(result)
@@ -423,7 +423,7 @@ Returns a list of users along with next start keys and Document ID. If the nextS
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val filterChainUser : FilterChainUser =  // FilterChainUser | 
+val filterChainUser : FilterChainUser =  // FilterChainUser |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A User document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -474,8 +474,8 @@ Returns a list of users along with next start keys and Document ID. If the nextS
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val filterChainUser : FilterChainUser =  // FilterChainUser | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val filterChainUser : FilterChainUser =  // FilterChainUser |
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | A User document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
 try {
@@ -525,7 +525,7 @@ Get the list of users by healthcare party id
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.findByHcpartyId(id)
     println(result)
@@ -570,7 +570,7 @@ Get the list of users by patient id
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val id : kotlin.String = id_example // kotlin.String | 
+val id : kotlin.String = id_example // kotlin.String |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.findByPatientId(id)
     println(result)
@@ -744,7 +744,7 @@ Request a new temporary token for authentication
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
 val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
 try {
@@ -793,9 +793,9 @@ Require a new temporary token for authentication inside all groups
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userIdentifier : kotlin.String = userIdentifier_example // kotlin.String | 
+val userIdentifier : kotlin.String = userIdentifier_example // kotlin.String |
 val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
-val token : kotlin.String = token_example // kotlin.String | 
+val token : kotlin.String = token_example // kotlin.String |
 val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
 try {
     val result : kotlin.collections.List<TokenWithGroupDto> = apiInstance.getTokenInAllGroups(userIdentifier, key, token, tokenValidity)
@@ -844,10 +844,10 @@ Require a new temporary token for authentication inside provided group
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val userId : kotlin.String = userId_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val userId : kotlin.String = userId_example // kotlin.String |
 val key : kotlin.String = key_example // kotlin.String | The token key. Only one instance of a token with a defined key can exist at the same time
-val token : kotlin.String = token_example // kotlin.String | 
+val token : kotlin.String = token_example // kotlin.String |
 val tokenValidity : kotlin.Long = 789 // kotlin.Long | The token validity in seconds
 try {
     val result : kotlin.String = apiInstance.getTokenInGroup(groupId, userId, key, token, tokenValidity)
@@ -899,7 +899,7 @@ General information about the user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
+val userId : kotlin.String = userId_example // kotlin.String |
 try {
     val result : UserDto = apiInstance.getUser(userId)
     println(result)
@@ -946,7 +946,7 @@ General information about the user
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val email : kotlin.String = email_example // kotlin.String | 
+val email : kotlin.String = email_example // kotlin.String |
 try {
     val result : UserDto = apiInstance.getUserByEmail(email)
     println(result)
@@ -1046,7 +1046,7 @@ Returns a list of users.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
 val startKey : kotlin.String = startKey_example // kotlin.String | An user login
 val startDocumentId : kotlin.String = startDocumentId_example // kotlin.String | An user document ID
 val limit : kotlin.Int = 56 // kotlin.Int | Number of rows
@@ -1088,7 +1088,7 @@ No authorization required
 # **matchUsersBy**
 > kotlin.collections.List&lt;kotlin.String&gt; matchUsersBy(abstractFilterDtoUser)
 
-Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+Get ids of healthcare party matching the provided filter for the current user (HcParty)
 
 ### Example
 ```kotlin
@@ -1097,7 +1097,7 @@ Get ids of healthcare party matching the provided filter for the current user (H
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val abstractFilterDtoUser : AbstractFilterDtoUser =  // AbstractFilterDtoUser | 
+val abstractFilterDtoUser : AbstractFilterDtoUser =  // AbstractFilterDtoUser |
 try {
     val result : kotlin.collections.List<kotlin.String> = apiInstance.matchUsersBy(abstractFilterDtoUser)
     println(result)
@@ -1144,8 +1144,8 @@ Modify a User properties based on his/her ID. The return value is the modified u
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userId : kotlin.String = userId_example // kotlin.String | 
-val propertyStubDto : kotlin.collections.List<PropertyStubDto> =  // kotlin.collections.List<PropertyStubDto> | 
+val userId : kotlin.String = userId_example // kotlin.String |
+val propertyStubDto : kotlin.collections.List<PropertyStubDto> =  // kotlin.collections.List<PropertyStubDto> |
 try {
     val result : UserDto = apiInstance.modifyProperties(userId, propertyStubDto)
     println(result)
@@ -1193,7 +1193,7 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val userDto : UserDto =  // UserDto | 
+val userDto : UserDto =  // UserDto |
 try {
     val result : UserDto = apiInstance.modifyUser(userDto)
     println(result)
@@ -1240,8 +1240,8 @@ No particular return value. It&#39;s just a message.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = UserApi()
-val groupId : kotlin.String = groupId_example // kotlin.String | 
-val userDto : UserDto =  // UserDto | 
+val groupId : kotlin.String = groupId_example // kotlin.String |
+val userDto : UserDto =  // UserDto |
 try {
     val result : UserDto = apiInstance.modifyUserInGroup(groupId, userDto)
     println(result)
@@ -1273,4 +1273,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

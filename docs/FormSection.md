@@ -8,6 +8,3 @@ Name | Type | Description | Notes
 **title** | **kotlin.String** |  |  [optional]
 **columns** | **kotlin.Int** |  |  [optional]
 **formColumns** | [**kotlin.collections.List&lt;FormColumn&gt;**](FormColumn.md) |  |  [optional]
-
-
-

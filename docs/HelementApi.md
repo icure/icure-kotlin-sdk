@@ -32,7 +32,7 @@ Returns an instance of created health element.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementDto : HealthElementDto =  // HealthElementDto | 
+val healthElementDto : HealthElementDto =  // HealthElementDto |
 try {
     val result : HealthElementDto = apiInstance.createHealthElement(healthElementDto)
     println(result)
@@ -79,7 +79,7 @@ Returns the created healthcare elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> | 
+val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.createHealthElements(healthElementDto)
     println(result)
@@ -126,7 +126,7 @@ Response is a set containing the ID&#39;s of deleted health elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto | 
+val listOfIdsDto : ListOfIdsDto =  // ListOfIdsDto |
 try {
     val result : kotlin.collections.List<DocIdentifier> = apiInstance.deleteHealthElements(listOfIdsDto)
     println(result)
@@ -173,7 +173,7 @@ Returns a list of health elements along with next start keys and Document ID. If
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val filterChainHealthElement : FilterChainHealthElement =  // FilterChainHealthElement | 
+val filterChainHealthElement : FilterChainHealthElement =  // FilterChainHealthElement |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.filterHealthElementsBy(filterChainHealthElement)
     println(result)
@@ -218,7 +218,7 @@ Get a health element
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
+val healthElementId : kotlin.String = healthElementId_example // kotlin.String |
 try {
     val result : HealthElementDto = apiInstance.getHealthElement(healthElementId)
     println(result)
@@ -265,8 +265,8 @@ Keys hast to delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.listHealthElementsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -314,8 +314,8 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String | 
-val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String | 
+val hcPartyId : kotlin.String = hcPartyId_example // kotlin.String |
+val secretFKeys : kotlin.String = secretFKeys_example // kotlin.String |
 try {
     val result : kotlin.collections.List<IcureStubDto> = apiInstance.listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
     println(result)
@@ -363,7 +363,7 @@ Returns the modified health element.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementDto : HealthElementDto =  // HealthElementDto | 
+val healthElementDto : HealthElementDto =  // HealthElementDto |
 try {
     val result : HealthElementDto = apiInstance.modifyHealthElement(healthElementDto)
     println(result)
@@ -410,7 +410,7 @@ Returns the modified health elements.
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> | 
+val healthElementDto : kotlin.collections.List<HealthElementDto> =  // kotlin.collections.List<HealthElementDto> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.modifyHealthElements(healthElementDto)
     println(result)
@@ -457,8 +457,8 @@ It delegates a health element to a healthcare party (By current healthcare party
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val healthElementId : kotlin.String = healthElementId_example // kotlin.String | 
-val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> | 
+val healthElementId : kotlin.String = healthElementId_example // kotlin.String |
+val delegationDto : kotlin.collections.List<DelegationDto> =  // kotlin.collections.List<DelegationDto> |
 try {
     val result : HealthElementDto = apiInstance.newHealthElementDelegations(healthElementId, delegationDto)
     println(result)
@@ -506,7 +506,7 @@ Keys must be delimited by coma
 //import io.icure.kraken.client.models.*
 
 val apiInstance = HelementApi()
-val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> | 
+val icureStubDto : kotlin.collections.List<IcureStubDto> =  // kotlin.collections.List<IcureStubDto> |
 try {
     val result : kotlin.collections.List<HealthElementDto> = apiInstance.setHealthElementsDelegations(icureStubDto)
     println(result)
@@ -537,4 +537,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -4,13 +4,13 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **kotlin.String** |  | 
-**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. | 
-**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes | 
-**status** | **kotlin.Int** | bit 0: active/inactive, bit 1: relevant/irrelevant, bit 2 : present/absent, ex: 0 &#x3D; active,relevant and present | 
-**documentIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  | 
-**careTeamMemberships** | [**kotlin.collections.List&lt;CareTeamMembershipDto&gt;**](CareTeamMembershipDto.md) | Members of the careteam involved in this approach | 
-**relevant** | **kotlin.Boolean** |  | 
+**id** | **kotlin.String** |  |
+**tags** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. |
+**codes** | [**kotlin.collections.Set&lt;CodeStubDto&gt;**](CodeStubDto.md) | A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes |
+**status** | **kotlin.Int** | bit 0: active/inactive, bit 1: relevant/irrelevant, bit 2 : present/absent, ex: 0 &#x3D; active,relevant and present |
+**documentIds** | **kotlin.collections.Set&lt;kotlin.String&gt;** |  |
+**careTeamMemberships** | [**kotlin.collections.List&lt;CareTeamMembershipDto&gt;**](CareTeamMembershipDto.md) | Members of the careteam involved in this approach |
+**relevant** | **kotlin.Boolean** |  |
 **created** | **kotlin.Long** | The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
 **modified** | **kotlin.Long** | The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
 **author** | **kotlin.String** | The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. |  [optional]
@@ -29,6 +29,3 @@ Name | Type | Description | Notes
 **idClosingContact** | **kotlin.String** | Id of the closing contact for the healthcare approach. |  [optional]
 **numberOfCares** | **kotlin.Int** | The number of individual cares already performed in the course of this healthcare approach |  [optional]
 **encryptedSelf** | **kotlin.String** | The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. |  [optional]
-
-
-

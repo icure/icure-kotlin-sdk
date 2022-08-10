@@ -20,10 +20,10 @@ create batch and message
 //import io.icure.kraken.client.models.*
 
 val apiInstance = BeefactApi()
-val insuranceId : kotlin.String = insuranceId_example // kotlin.String | 
-val newMessageId : kotlin.String = newMessageId_example // kotlin.String | 
-val numericalRef : kotlin.Long = 789 // kotlin.Long | 
-val mapOfIdsDto : MapOfIdsDto =  // MapOfIdsDto | 
+val insuranceId : kotlin.String = insuranceId_example // kotlin.String |
+val newMessageId : kotlin.String = newMessageId_example // kotlin.String |
+val numericalRef : kotlin.Long = 789 // kotlin.Long |
+val mapOfIdsDto : MapOfIdsDto =  // MapOfIdsDto |
 try {
     val result : MessageWithBatch = apiInstance.createBatchAndMessage(insuranceId, newMessageId, numericalRef, mapOfIdsDto)
     println(result)
@@ -57,4 +57,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

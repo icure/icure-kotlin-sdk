@@ -112,13 +112,13 @@ Class | Method | HTTP request | Description
 *Besamv2Api* | [**findPaginatedVmpsByGroupId**](docs/Besamv2Api.md#findpaginatedvmpsbygroupid) | **GET** /rest/v2/be_samv2/vmp/byGroupId/{vmpgId} | Finding VMPs by group with pagination.
 *Besamv2Api* | [**findPaginatedVmpsByLabel**](docs/Besamv2Api.md#findpaginatedvmpsbylabel) | **GET** /rest/v2/be_samv2/vmp | Finding VMPs by label with pagination.
 *Besamv2Api* | [**findPaginatedVmpsByVmpCode**](docs/Besamv2Api.md#findpaginatedvmpsbyvmpcode) | **GET** /rest/v2/be_samv2/vmp/byVmpCode/{vmpCode} | Finding VMPs by group with pagination.
-*Besamv2Api* | [**findParagraphs**](docs/Besamv2Api.md#findparagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} | 
-*Besamv2Api* | [**findParagraphsWithCnk**](docs/Besamv2Api.md#findparagraphswithcnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} | 
-*Besamv2Api* | [**getAddedDocument**](docs/Besamv2Api.md#getaddeddocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} | 
-*Besamv2Api* | [**getAmpsForParagraph**](docs/Besamv2Api.md#getampsforparagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} | 
+*Besamv2Api* | [**findParagraphs**](docs/Besamv2Api.md#findparagraphs) | **GET** /rest/v2/be_samv2/chap/search/{searchString}/{language} |
+*Besamv2Api* | [**findParagraphsWithCnk**](docs/Besamv2Api.md#findparagraphswithcnk) | **GET** /rest/v2/be_samv2/chap/bycnk/{cnk}/{language} |
+*Besamv2Api* | [**getAddedDocument**](docs/Besamv2Api.md#getaddeddocument) | **GET** /rest/v2/be_samv2/chap/{chapterName}/{paragraphName}/{verseSeq}/addeddoc/{docSeq}/{language} |
+*Besamv2Api* | [**getAmpsForParagraph**](docs/Besamv2Api.md#getampsforparagraph) | **GET** /rest/v2/be_samv2/chap/amps/{chapterName}/{paragraphName} |
 *Besamv2Api* | [**getSamVersion**](docs/Besamv2Api.md#getsamversion) | **GET** /rest/v2/be_samv2/v | Get Samv2 version.
-*Besamv2Api* | [**getVersesHierarchy**](docs/Besamv2Api.md#getverseshierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} | 
-*Besamv2Api* | [**getVtmNamesForParagraph**](docs/Besamv2Api.md#getvtmnamesforparagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} | 
+*Besamv2Api* | [**getVersesHierarchy**](docs/Besamv2Api.md#getverseshierarchy) | **GET** /rest/v2/be_samv2/chap/verse/{chapterName}/{paragraphName} |
+*Besamv2Api* | [**getVtmNamesForParagraph**](docs/Besamv2Api.md#getvtmnamesforparagraph) | **GET** /rest/v2/be_samv2/chap/vtms/{chapterName}/{paragraphName}/{language} |
 *Besamv2Api* | [**listAmpsByDmppCodes**](docs/Besamv2Api.md#listampsbydmppcodes) | **POST** /rest/v2/be_samv2/amp/byDmppCodes | Finding AMPs by dmpp code
 *Besamv2Api* | [**listAmpsByGroupCodes**](docs/Besamv2Api.md#listampsbygroupcodes) | **POST** /rest/v2/be_samv2/amp/byGroupCodes | Finding AMPs by group.
 *Besamv2Api* | [**listAmpsByGroupIds**](docs/Besamv2Api.md#listampsbygroupids) | **POST** /rest/v2/be_samv2/amp/byGroupIds | Finding AMPs by group.
@@ -166,7 +166,7 @@ Class | Method | HTTP request | Description
 *ClassificationTemplateApi* | [**newClassificationTemplateDelegations**](docs/ClassificationTemplateApi.md#newclassificationtemplatedelegations) | **POST** /rest/v2/classificationTemplate/{classificationTemplateId}/delegate | Delegates a classification Template to a healthcare party
 *CodeApi* | [**createCode**](docs/CodeApi.md#createcode) | **POST** /rest/v2/code | Create a Code
 *CodeApi* | [**createCodes**](docs/CodeApi.md#createcodes) | **POST** /rest/v2/code/batch | Create a batch of codes
-*CodeApi* | [**filterCodesBy**](docs/CodeApi.md#filtercodesby) | **POST** /rest/v2/code/filter | Filter codes 
+*CodeApi* | [**filterCodesBy**](docs/CodeApi.md#filtercodesby) | **POST** /rest/v2/code/filter | Filter codes
 *CodeApi* | [**findCodesByLabel**](docs/CodeApi.md#findcodesbylabel) | **GET** /rest/v2/code/byLabel | Finding codes by code, type and version with pagination.
 *CodeApi* | [**findCodesByLink**](docs/CodeApi.md#findcodesbylink) | **GET** /rest/v2/code/byLink/{linkType} | Finding codes by code, type and version with pagination.
 *CodeApi* | [**findCodesByType**](docs/CodeApi.md#findcodesbytype) | **GET** /rest/v2/code | Finding codes by code, type and version with pagination.
@@ -177,22 +177,22 @@ Class | Method | HTTP request | Description
 *CodeApi* | [**listCodeTypesBy**](docs/CodeApi.md#listcodetypesby) | **GET** /rest/v2/code/codetype/byRegionType | Finding code types.
 *CodeApi* | [**listCodesByRegionTypeCodeVersion**](docs/CodeApi.md#listcodesbyregiontypecodeversion) | **GET** /rest/v2/code/byRegionTypeCode | Finding codes by code, type and version
 *CodeApi* | [**listTagTypesBy**](docs/CodeApi.md#listtagtypesby) | **GET** /rest/v2/code/tagtype/byRegionType | Finding tag types.
-*CodeApi* | [**matchCodesBy**](docs/CodeApi.md#matchcodesby) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty) 
+*CodeApi* | [**matchCodesBy**](docs/CodeApi.md#matchcodesby) | **POST** /rest/v2/code/match | Get ids of code matching the provided filter for the current user (HcParty)
 *CodeApi* | [**modifyCode**](docs/CodeApi.md#modifycode) | **PUT** /rest/v2/code | Modify a code
 *CodeApi* | [**modifyCodes**](docs/CodeApi.md#modifycodes) | **PUT** /rest/v2/code/batch | Modify a batch of codes
 *ContactApi* | [**closeForHCPartyPatientForeignKeys**](docs/ContactApi.md#closeforhcpartypatientforeignkeys) | **PUT** /rest/v2/contact/byHcPartySecretForeignKeys/close | Close contacts for Healthcare Party and secret foreign keys.
 *ContactApi* | [**createContact**](docs/ContactApi.md#createcontact) | **POST** /rest/v2/contact | Create a contact with the current user
 *ContactApi* | [**createContacts**](docs/ContactApi.md#createcontacts) | **POST** /rest/v2/contact/batch | Create a batch of contacts
 *ContactApi* | [**deleteContacts**](docs/ContactApi.md#deletecontacts) | **POST** /rest/v2/contact/delete/batch | Delete contacts.
-*ContactApi* | [**filterContactsBy**](docs/ContactApi.md#filtercontactsby) | **POST** /rest/v2/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter 
-*ContactApi* | [**filterServicesBy**](docs/ContactApi.md#filterservicesby) | **POST** /rest/v2/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter 
+*ContactApi* | [**filterContactsBy**](docs/ContactApi.md#filtercontactsby) | **POST** /rest/v2/contact/filter | List contacts for the current user (HcParty) or the given hcparty in the filter
+*ContactApi* | [**filterServicesBy**](docs/ContactApi.md#filterservicesby) | **POST** /rest/v2/contact/service/filter | List services for the current user (HcParty) or the given hcparty in the filter
 *ContactApi* | [**findContactsByOpeningDate**](docs/ContactApi.md#findcontactsbyopeningdate) | **GET** /rest/v2/contact/byOpeningDate | List contacts by opening date parties with(out) pagination
 *ContactApi* | [**getContact**](docs/ContactApi.md#getcontact) | **GET** /rest/v2/contact/{contactId} | Get a contact
 *ContactApi* | [**getContacts**](docs/ContactApi.md#getcontacts) | **POST** /rest/v2/contact/byIds | Get contacts
 *ContactApi* | [**getEmptyContent**](docs/ContactApi.md#getemptycontent) | **GET** /rest/v2/contact/service/content/empty | Get an empty content
 *ContactApi* | [**getServiceCodesOccurences**](docs/ContactApi.md#getservicecodesoccurences) | **GET** /rest/v2/contact/service/codes/{codeType}/{minOccurences} | Get the list of all used codes frequencies in services
-*ContactApi* | [**getServices**](docs/ContactApi.md#getservices) | **POST** /rest/v2/contact/service | List services with provided ids 
-*ContactApi* | [**getServicesLinkedTo**](docs/ContactApi.md#getserviceslinkedto) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids 
+*ContactApi* | [**getServices**](docs/ContactApi.md#getservices) | **POST** /rest/v2/contact/service | List services with provided ids
+*ContactApi* | [**getServicesLinkedTo**](docs/ContactApi.md#getserviceslinkedto) | **POST** /rest/v2/contact/service/linkedTo | List services linked to provided ids
 *ContactApi* | [**listContactByHCPartyServiceId**](docs/ContactApi.md#listcontactbyhcpartyserviceid) | **GET** /rest/v2/contact/byHcPartyServiceId | List contacts found By Healthcare Party and service Id.
 *ContactApi* | [**listContactsByExternalId**](docs/ContactApi.md#listcontactsbyexternalid) | **POST** /rest/v2/contact/byExternalId | List contacts found By externalId.
 *ContactApi* | [**listContactsByHCPartyAndFormId**](docs/ContactApi.md#listcontactsbyhcpartyandformid) | **GET** /rest/v2/contact/byHcPartyFormId | List contacts found By Healthcare Party and form Id.
@@ -202,7 +202,7 @@ Class | Method | HTTP request | Description
 *ContactApi* | [**listContactsDelegationsStubsByHCPartyAndPatientForeignKeys**](docs/ContactApi.md#listcontactsdelegationsstubsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/contact/byHcPartySecretForeignKeys/delegations | List contacts found By Healthcare Party and secret foreign keys.
 *ContactApi* | [**listServicesByAssociationId**](docs/ContactApi.md#listservicesbyassociationid) | **GET** /rest/v2/contact/service/associationId | List services by related association id
 *ContactApi* | [**listServicesByHealthElementId**](docs/ContactApi.md#listservicesbyhealthelementid) | **GET** /rest/v2/contact/service/healthElementId/{healthElementId} | List services linked to a health element
-*ContactApi* | [**matchContactsBy**](docs/ContactApi.md#matchcontactsby) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty) 
+*ContactApi* | [**matchContactsBy**](docs/ContactApi.md#matchcontactsby) | **POST** /rest/v2/contact/match | Get ids of contacts matching the provided filter for the current user (HcParty)
 *ContactApi* | [**matchServicesBy**](docs/ContactApi.md#matchservicesby) | **POST** /rest/v2/contact/service/match | Get ids of services matching the provided filter for the current user
 *ContactApi* | [**modifyContact**](docs/ContactApi.md#modifycontact) | **PUT** /rest/v2/contact | Modify a contact
 *ContactApi* | [**modifyContacts**](docs/ContactApi.md#modifycontacts) | **PUT** /rest/v2/contact/batch | Modify a batch of contacts
@@ -216,12 +216,12 @@ Class | Method | HTTP request | Description
 *DeviceApi* | [**deleteDevice**](docs/DeviceApi.md#deletedevice) | **DELETE** /rest/v2/device/{deviceId} | Delete device.
 *DeviceApi* | [**deleteDevices**](docs/DeviceApi.md#deletedevices) | **POST** /rest/v2/device/delete/batch | Delete devices.
 *DeviceApi* | [**deleteDevicesInGroup**](docs/DeviceApi.md#deletedevicesingroup) | **DELETE** /rest/v2/device/inGroup/{groupId}/{deviceIds} | Delete a device
-*DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty) 
+*DeviceApi* | [**filterDevicesBy**](docs/DeviceApi.md#filterdevicesby) | **POST** /rest/v2/device/filter | Filter devices for the current user (HcParty)
 *DeviceApi* | [**getDevice**](docs/DeviceApi.md#getdevice) | **GET** /rest/v2/device/{deviceId} | Get Device
 *DeviceApi* | [**getDeviceAesExchangeKeysForDelegate**](docs/DeviceApi.md#getdeviceaesexchangekeysfordelegate) | **GET** /rest/v2/device/{deviceId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 *DeviceApi* | [**getDevices**](docs/DeviceApi.md#getdevices) | **POST** /rest/v2/device/byIds | Get devices by id
 *DeviceApi* | [**getDevicesInGroup**](docs/DeviceApi.md#getdevicesingroup) | **POST** /rest/v2/device/inGroup/{groupId}/byIds | Get devices by their IDs
-*DeviceApi* | [**matchDevicesBy**](docs/DeviceApi.md#matchdevicesby) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty) 
+*DeviceApi* | [**matchDevicesBy**](docs/DeviceApi.md#matchdevicesby) | **POST** /rest/v2/device/match | Get ids of devices matching the provided filter for the current user (HcParty)
 *DeviceApi* | [**modifyDeviceInGroup**](docs/DeviceApi.md#modifydeviceingroup) | **PUT** /rest/v2/device/inGroup/{groupId} | Modify a Device.
 *DeviceApi* | [**updateDevice**](docs/DeviceApi.md#updatedevice) | **PUT** /rest/v2/device | Modify a device
 *DeviceApi* | [**updateDevices**](docs/DeviceApi.md#updatedevices) | **PUT** /rest/v2/device/batch | Modify devices in bulk
@@ -268,7 +268,7 @@ Class | Method | HTTP request | Description
 *EntityTemplateApi* | [**modifyEntityTemplate**](docs/EntityTemplateApi.md#modifyentitytemplate) | **PUT** /rest/v2/entitytemplate | Modify a entityTemplate
 *EntityTemplateApi* | [**modifyEntityTemplates**](docs/EntityTemplateApi.md#modifyentitytemplates) | **PUT** /rest/v2/entitytemplate/batch | Modify a batch of entityTemplates
 *EntityrefApi* | [**createEntityReference**](docs/EntityrefApi.md#createentityreference) | **POST** /rest/v2/entityref | Create an entity reference
-*EntityrefApi* | [**getLatest**](docs/EntityrefApi.md#getlatest) | **GET** /rest/v2/entityref/latest/{prefix} | Find latest reference for a prefix 
+*EntityrefApi* | [**getLatest**](docs/EntityrefApi.md#getlatest) | **GET** /rest/v2/entityref/latest/{prefix} | Find latest reference for a prefix
 *FormApi* | [**createForm**](docs/FormApi.md#createform) | **POST** /rest/v2/form | Create a form with the current user
 *FormApi* | [**createFormTemplate**](docs/FormApi.md#createformtemplate) | **POST** /rest/v2/form/template | Create a form template with the current user
 *FormApi* | [**createForms**](docs/FormApi.md#createforms) | **POST** /rest/v2/form/batch | Create a batch of forms
@@ -323,7 +323,7 @@ Class | Method | HTTP request | Description
 *HealthElementApi* | [**getHealthElements**](docs/HealthElementApi.md#gethealthelements) | **POST** /rest/v2/helement/byIds | Get healthElements by batch
 *HealthElementApi* | [**listHealthElementsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys | List health elements found By Healthcare Party and secret foreign keyelementIds.
 *HealthElementApi* | [**listHealthElementsDelegationsStubsByHCPartyAndPatientForeignKeys**](docs/HealthElementApi.md#listhealthelementsdelegationsstubsbyhcpartyandpatientforeignkeys) | **GET** /rest/v2/helement/byHcPartySecretForeignKeys/delegations | List helement stubs found By Healthcare Party and secret foreign keys.
-*HealthElementApi* | [**matchHealthElementsBy**](docs/HealthElementApi.md#matchhealthelementsby) | **POST** /rest/v2/helement/match | Get ids of health element matching the provided filter for the current user (HcParty) 
+*HealthElementApi* | [**matchHealthElementsBy**](docs/HealthElementApi.md#matchhealthelementsby) | **POST** /rest/v2/helement/match | Get ids of health element matching the provided filter for the current user (HcParty)
 *HealthElementApi* | [**modifyHealthElement**](docs/HealthElementApi.md#modifyhealthelement) | **PUT** /rest/v2/helement | Modify a health element
 *HealthElementApi* | [**modifyHealthElements**](docs/HealthElementApi.md#modifyhealthelements) | **PUT** /rest/v2/helement/batch | Modify a batch of health elements
 *HealthElementApi* | [**newHealthElementDelegations**](docs/HealthElementApi.md#newhealthelementdelegations) | **POST** /rest/v2/helement/{healthElementId}/delegate | Delegates a health element to a healthcare party
@@ -344,7 +344,7 @@ Class | Method | HTTP request | Description
 *HealthcarePartyApi* | [**getPublicKey**](docs/HealthcarePartyApi.md#getpublickey) | **GET** /rest/v2/hcparty/{healthcarePartyId}/publicKey | Get public key of a healthcare party
 *HealthcarePartyApi* | [**listHealthcarePartiesByName**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyname) | **GET** /rest/v2/hcparty/byNameStrict/{name} | Find healthcare parties by name with(out) pagination
 *HealthcarePartyApi* | [**listHealthcarePartiesByParentId**](docs/HealthcarePartyApi.md#listhealthcarepartiesbyparentid) | **GET** /rest/v2/hcparty/{parentId}/children | Find children of an healthcare parties
-*HealthcarePartyApi* | [**matchHealthcarePartiesBy**](docs/HealthcarePartyApi.md#matchhealthcarepartiesby) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+*HealthcarePartyApi* | [**matchHealthcarePartiesBy**](docs/HealthcarePartyApi.md#matchhealthcarepartiesby) | **POST** /rest/v2/hcparty/match | Get ids of healthcare party matching the provided filter for the current user (HcParty)
 *HealthcarePartyApi* | [**modifyHealthcareParty**](docs/HealthcarePartyApi.md#modifyhealthcareparty) | **PUT** /rest/v2/hcparty | Modify a Healthcare Party.
 *HealthcarePartyApi* | [**modifyHealthcarePartyInGroup**](docs/HealthcarePartyApi.md#modifyhealthcarepartyingroup) | **PUT** /rest/v2/hcparty/inGroup/{groupId} | Modify a Healthcare Party.
 *HealthcarePartyApi* | [**registerPatient1**](docs/HealthcarePartyApi.md#registerpatient1) | **POST** /rest/v2/hcparty/register/inGroup/{groupId} | Register a hcp
@@ -409,7 +409,7 @@ Class | Method | HTTP request | Description
 *KeywordApi* | [**modifyKeyword**](docs/KeywordApi.md#modifykeyword) | **PUT** /rest/v2/keyword | Modify a keyword
 *MaintenanceTaskApi* | [**createMaintenanceTask**](docs/MaintenanceTaskApi.md#createmaintenancetask) | **POST** /rest/v2/maintenancetask | Creates a maintenanceTask
 *MaintenanceTaskApi* | [**deleteMaintenanceTask**](docs/MaintenanceTaskApi.md#deletemaintenancetask) | **DELETE** /rest/v2/maintenancetask/{maintenanceTaskIds} | Delete maintenanceTasks
-*MaintenanceTaskApi* | [**filterMaintenanceTasksBy**](docs/MaintenanceTaskApi.md#filtermaintenancetasksby) | **POST** /rest/v2/maintenancetask/filter | Filter maintenanceTasks for the current user (HcParty) 
+*MaintenanceTaskApi* | [**filterMaintenanceTasksBy**](docs/MaintenanceTaskApi.md#filtermaintenancetasksby) | **POST** /rest/v2/maintenancetask/filter | Filter maintenanceTasks for the current user (HcParty)
 *MaintenanceTaskApi* | [**getMaintenanceTask**](docs/MaintenanceTaskApi.md#getmaintenancetask) | **GET** /rest/v2/maintenancetask/{maintenanceTaskId} | Gets a maintenanceTask
 *MaintenanceTaskApi* | [**modifyMaintenanceTask**](docs/MaintenanceTaskApi.md#modifymaintenancetask) | **PUT** /rest/v2/maintenancetask | Updates a maintenanceTask
 *MedexApi* | [**generateMedex**](docs/MedexApi.md#generatemedex) | **POST** /rest/v2/medex/generate | Generate a Medex XML String
@@ -436,28 +436,28 @@ Class | Method | HTTP request | Description
 *MessageApi* | [**newMessageDelegations**](docs/MessageApi.md#newmessagedelegations) | **PUT** /rest/v2/message/{messageId}/delegate | Adds a delegation to a message
 *MessageApi* | [**setMessagesReadStatus**](docs/MessageApi.md#setmessagesreadstatus) | **PUT** /rest/v2/message/readstatus | Set read status for given list of messages
 *MessageApi* | [**setMessagesStatusBits**](docs/MessageApi.md#setmessagesstatusbits) | **PUT** /rest/v2/message/status/{status} | Set status bits for given list of messages
-*PatientApi* | [**countOfPatients**](docs/PatientApi.md#countofpatients) | **GET** /rest/v2/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty 
+*PatientApi* | [**countOfPatients**](docs/PatientApi.md#countofpatients) | **GET** /rest/v2/patient/hcParty/{hcPartyId}/count | Get count of patients for a specific HcParty or for the current HcParty
 *PatientApi* | [**createPatient**](docs/PatientApi.md#createpatient) | **POST** /rest/v2/patient | Create a patient
 *PatientApi* | [**createPatients**](docs/PatientApi.md#createpatients) | **POST** /rest/v2/patient/batch | Create patients in bulk
 *PatientApi* | [**deletePatients**](docs/PatientApi.md#deletepatients) | **POST** /rest/v2/patient/delete/batch | Delete patients.
-*PatientApi* | [**filterPatientsBy**](docs/PatientApi.md#filterpatientsby) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty) 
+*PatientApi* | [**filterPatientsBy**](docs/PatientApi.md#filterpatientsby) | **POST** /rest/v2/patient/filter | Filter patients for the current user (HcParty)
 *PatientApi* | [**findDeletedPatients**](docs/PatientApi.md#finddeletedpatients) | **GET** /rest/v2/patient/deleted/byDate | Find deleted patients
 *PatientApi* | [**findDuplicatesByName**](docs/PatientApi.md#findduplicatesbyname) | **POST** /rest/v2/patient/duplicates/name | Provides a paginated list of patients with duplicate name for an hecparty
 *PatientApi* | [**findDuplicatesBySsin**](docs/PatientApi.md#findduplicatesbyssin) | **POST** /rest/v2/patient/duplicates/ssin | Provides a paginated list of patients with duplicate ssin for an hecparty
 *PatientApi* | [**findPatientsByAccessLogUserAfterDate**](docs/PatientApi.md#findpatientsbyaccessloguserafterdate) | **GET** /rest/v2/patient/byAccess/{userId} | Get Paginated List of Patients sorted by Access logs descending
 *PatientApi* | [**findPatientsByHealthcareParty**](docs/PatientApi.md#findpatientsbyhealthcareparty) | **GET** /rest/v2/patient | List patients for a specific HcParty
-*PatientApi* | [**findPatientsByNameBirthSsinAuto**](docs/PatientApi.md#findpatientsbynamebirthssinauto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty) 
+*PatientApi* | [**findPatientsByNameBirthSsinAuto**](docs/PatientApi.md#findpatientsbynamebirthssinauto) | **GET** /rest/v2/patient/byNameBirthSsinAuto | Find patients for the current user (HcParty)
 *PatientApi* | [**findPatientsIdsByHealthcareParty**](docs/PatientApi.md#findpatientsidsbyhealthcareparty) | **GET** /rest/v2/patient/byHcPartyId | List patients by pages for a specific HcParty
 *PatientApi* | [**findPatientsModifiedAfter**](docs/PatientApi.md#findpatientsmodifiedafter) | **GET** /rest/v2/patient/modifiedAfter/{date} | List patients that have been modified after the provided date
-*PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty) 
+*PatientApi* | [**fuzzySearch**](docs/PatientApi.md#fuzzysearch) | **GET** /rest/v2/patient/fuzzy | Filter patients for the current user (HcParty)
 *PatientApi* | [**getPatient**](docs/PatientApi.md#getpatient) | **GET** /rest/v2/patient/{patientId} | Get patient
 *PatientApi* | [**getPatientAesExchangeKeysForDelegate**](docs/PatientApi.md#getpatientaesexchangekeysfordelegate) | **GET** /rest/v2/patient/{patientId}/aesExchangeKeys | Get the HcParty encrypted AES keys indexed by owner.
 *PatientApi* | [**getPatientByExternalId**](docs/PatientApi.md#getpatientbyexternalid) | **GET** /rest/v2/patient/byExternalId/{externalId} | Get the patient having the provided externalId
 *PatientApi* | [**getPatientByHealthcarepartyAndIdentifier**](docs/PatientApi.md#getpatientbyhealthcarepartyandidentifier) | **GET** /rest/v2/patient/{hcPartyId}/{id} | Get patient by identifier
 *PatientApi* | [**getPatients**](docs/PatientApi.md#getpatients) | **POST** /rest/v2/patient/byIds | Get patients by id
 *PatientApi* | [**listDeletedPatientsByName**](docs/PatientApi.md#listdeletedpatientsbyname) | **GET** /rest/v2/patient/deleted/by_name | Find deleted patients
-*PatientApi* | [**listOfMergesAfter**](docs/PatientApi.md#listofmergesafter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient 
-*PatientApi* | [**matchPatientsBy**](docs/PatientApi.md#matchpatientsby) | **POST** /rest/v2/patient/match | Get ids of patients matching the provided filter for the current user (HcParty) 
+*PatientApi* | [**listOfMergesAfter**](docs/PatientApi.md#listofmergesafter) | **GET** /rest/v2/patient/merges/{date} | List patients that have been merged towards another patient
+*PatientApi* | [**matchPatientsBy**](docs/PatientApi.md#matchpatientsby) | **POST** /rest/v2/patient/match | Get ids of patients matching the provided filter for the current user (HcParty)
 *PatientApi* | [**mergeInto**](docs/PatientApi.md#mergeinto) | **PUT** /rest/v2/patient/mergeInto/{toId}/from/{fromIds} | Merge a series of patients into another patient
 *PatientApi* | [**modifyPatient**](docs/PatientApi.md#modifypatient) | **PUT** /rest/v2/patient | Modify a patient
 *PatientApi* | [**modifyPatientReferral**](docs/PatientApi.md#modifypatientreferral) | **PUT** /rest/v2/patient/{patientId}/referral/{referralId} | Set a patient referral doctor
@@ -559,15 +559,15 @@ Class | Method | HTTP request | Description
 *TmpApi* | [**modifyTmpPatient**](docs/TmpApi.md#modifytmppatient) | **PUT** /rest/v2/tmp/patient | Modify a patient
 *TmpApi* | [**modifyTmpPatients**](docs/TmpApi.md#modifytmppatients) | **PUT** /rest/v2/tmp/patient/batch | Modify a batch of healthcare elements
 *TmpApi* | [**purgeTmpItems**](docs/TmpApi.md#purgetmpitems) | **POST** /rest/v2/tmp/batch/purge | Hard delete items.
-*TmpApi* | [**replicateToTmpDatabase**](docs/TmpApi.md#replicatetotmpdatabase) | **POST** /rest/v2/tmp/replicate/from/{from} | 
+*TmpApi* | [**replicateToTmpDatabase**](docs/TmpApi.md#replicatetotmpdatabase) | **POST** /rest/v2/tmp/replicate/from/{from} |
 *UserApi* | [**assignHealthcareParty**](docs/UserApi.md#assignhealthcareparty) | **PUT** /rest/v2/user/current/hcparty/{healthcarePartyId} | Assign a healthcare party ID to current user
-*UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v2/user/checkPassword | 
+*UserApi* | [**checkPassword**](docs/UserApi.md#checkpassword) | **GET** /rest/v2/user/checkPassword |
 *UserApi* | [**checkTokenValidity**](docs/UserApi.md#checktokenvalidity) | **GET** /rest/v2/user/token/{userId} | Check token validity
 *UserApi* | [**createUser**](docs/UserApi.md#createuser) | **POST** /rest/v2/user | Create a user
 *UserApi* | [**createUserInGroup**](docs/UserApi.md#createuseringroup) | **POST** /rest/v2/user/inGroup/{groupId} | Create a user
 *UserApi* | [**deleteUser**](docs/UserApi.md#deleteuser) | **DELETE** /rest/v2/user/{userId} | Delete a User based on his/her ID.
 *UserApi* | [**deleteUserInGroup**](docs/UserApi.md#deleteuseringroup) | **DELETE** /rest/v2/user/inGroup/{groupId}/{userId} | Delete a User based on his/her ID.
-*UserApi* | [**encodePassword**](docs/UserApi.md#encodepassword) | **GET** /rest/v2/user/encodePassword | 
+*UserApi* | [**encodePassword**](docs/UserApi.md#encodepassword) | **GET** /rest/v2/user/encodePassword |
 *UserApi* | [**filterUsersBy**](docs/UserApi.md#filterusersby) | **POST** /rest/v2/user/filter | Filter users for the current user (HcParty)
 *UserApi* | [**filterUsersInGroupBy**](docs/UserApi.md#filterusersingroupby) | **POST** /rest/v2/user/filter/inGroup/{groupId} | Filter users for the current user (HcParty) for a provided groupId
 *UserApi* | [**findByHcpartyId**](docs/UserApi.md#findbyhcpartyid) | **GET** /rest/v2/user/byHealthcarePartyId/{id} | Get the list of users by healthcare party id
@@ -582,7 +582,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**getUserByEmail**](docs/UserApi.md#getuserbyemail) | **GET** /rest/v2/user/byEmail/{email} | Get a user by his Email/Login
 *UserApi* | [**listUsersBy**](docs/UserApi.md#listusersby) | **GET** /rest/v2/user | List users with(out) pagination
 *UserApi* | [**listUsersInGroup**](docs/UserApi.md#listusersingroup) | **GET** /rest/v2/user/inGroup/{groupId} | List users with(out) pagination
-*UserApi* | [**matchUsersBy**](docs/UserApi.md#matchusersby) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty) 
+*UserApi* | [**matchUsersBy**](docs/UserApi.md#matchusersby) | **POST** /rest/v2/user/match | Get ids of healthcare party matching the provided filter for the current user (HcParty)
 *UserApi* | [**modifyProperties**](docs/UserApi.md#modifyproperties) | **PUT** /rest/v2/user/{userId}/properties | Modify a User property
 *UserApi* | [**modifyUser**](docs/UserApi.md#modifyuser) | **PUT** /rest/v2/user | Modify a user.
 *UserApi* | [**modifyUserInGroup**](docs/UserApi.md#modifyuseringroup) | **PUT** /rest/v2/user/inGroup/{groupId} | Modify a user.
@@ -849,4 +849,3 @@ Class | Method | HTTP request | Description
 ### basicSchema
 
 - **Type**: HTTP basic authentication
-

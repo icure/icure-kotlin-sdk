@@ -16,6 +16,3 @@ Name | Type | Description | Notes
 **comment** | **kotlin.String** |  |  [optional]
 **comparator** | **kotlin.String** |  |  [optional]
 **sign** | **kotlin.String** |  |  [optional]
-
-
-

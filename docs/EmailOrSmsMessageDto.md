@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**attachments** | [**kotlin.collections.List&lt;MimeAttachmentDto&gt;**](MimeAttachmentDto.md) |  | 
-**destinationIsNotPatient** | **kotlin.Boolean** |  | 
-**sendCopyToSender** | **kotlin.Boolean** |  | 
+**attachments** | [**kotlin.collections.List&lt;MimeAttachmentDto&gt;**](MimeAttachmentDto.md) |  |
+**destinationIsNotPatient** | **kotlin.Boolean** |  |
+**sendCopyToSender** | **kotlin.Boolean** |  |
 **destination** | **kotlin.String** |  |  [optional]
 **destinationName** | **kotlin.String** |  |  [optional]
 **senderName** | **kotlin.String** |  |  [optional]
@@ -24,6 +24,3 @@ Name | Type | Description | Notes
 Name | Value
 ---- | -----
 type | EMAIL, SMS
-
-
-

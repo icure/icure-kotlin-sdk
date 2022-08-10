@@ -29,4 +29,3 @@ data class HealthElementByIdsFilter(
         val ids: Set<String>,
         override val desc: String? = null
 ) : AbstractFilterDto<HealthElementDto>
-

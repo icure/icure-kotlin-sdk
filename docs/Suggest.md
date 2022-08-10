@@ -9,6 +9,3 @@ Name | Type | Description | Notes
 **entityClass** | **kotlin.String** |  |  [optional]
 **fieldValue** | **kotlin.String** |  |  [optional]
 **fieldDisplay** | **kotlin.String** |  |  [optional]
-
-
-

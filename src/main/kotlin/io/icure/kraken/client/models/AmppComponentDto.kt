@@ -59,6 +59,8 @@ data class AmppComponentDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -70,4 +72,6 @@ data class AmppComponentDto (
         @JsonProperty(value = "DEVICE") dEVICE("DEVICE"),
         @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

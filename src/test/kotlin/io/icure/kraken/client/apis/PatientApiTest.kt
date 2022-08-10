@@ -13,7 +13,7 @@
 
 package io.icure.kraken.client.apis
 
-
+/* ktlint-disable no-wildcard-imports */
 import io.icure.kraken.client.models.ContentDto
 import io.icure.kraken.client.models.DataOwnerRegistrationSuccessDto
 import io.icure.kraken.client.models.DelegationDto
@@ -67,6 +67,7 @@ import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+/* ktlint-enable no-wildcard-imports */
 
 /**
  * API tests for PatientApi

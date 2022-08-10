@@ -41,6 +41,8 @@ data class PaymentDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -56,4 +58,6 @@ data class PaymentDto (
         @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

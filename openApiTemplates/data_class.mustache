@@ -30,9 +30,11 @@ import kotlinx.parcelize.Parcelize
 {{/parcelizeModels}}
 {{/multiplatform}}
 {{#multiplatform}}
+/* ktlint-disable no-wildcard-imports */
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
+/* ktlint-enable no-wildcard-imports */
 {{/multiplatform}}
 {{#serializableModel}}
 import java.io.Serializable
@@ -74,6 +76,8 @@ import java.io.Serializable
 {{#hasEnums}}
 {{#vars}}
 {{#isEnum}}
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * {{{description}}}
      *
@@ -110,6 +114,8 @@ import java.io.Serializable
     {{/enumVars}}
     {{/allowableValues}}
     }
+
+    /* ktlint-enable enum-entry-name-case */
 {{/isEnum}}
 {{/vars}}
 {{/hasEnums}}

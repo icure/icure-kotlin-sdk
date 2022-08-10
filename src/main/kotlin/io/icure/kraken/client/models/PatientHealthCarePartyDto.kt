@@ -60,6 +60,8 @@ data class PatientHealthCarePartyDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Type of care/relationship.
      *
@@ -75,4 +77,6 @@ data class PatientHealthCarePartyDto (
         @JsonProperty(value = "referringphysician") referringphysician("referringphysician"),
         @JsonProperty(value = "managingorganization") managingorganization("managingorganization");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

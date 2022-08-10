@@ -47,6 +47,8 @@ data class TelecomDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The type of telecom method being used, ex: landline phone, mobile phone, email, fax, etc.
      *
@@ -68,4 +70,6 @@ data class TelecomDto (
         @JsonProperty(value = "other") other("other"),
         @JsonProperty(value = "pager") pager("pager");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -107,6 +107,8 @@ data class AmpDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -117,6 +119,10 @@ data class AmpDto (
         @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
         @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -126,4 +132,6 @@ data class AmpDto (
         @JsonProperty(value = "ALLOPATHIC") aLLOPATHIC("ALLOPATHIC"),
         @JsonProperty(value = "HOMEOPATHIC") hOMEOPATHIC("HOMEOPATHIC");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

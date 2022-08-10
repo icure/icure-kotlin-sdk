@@ -90,6 +90,8 @@ data class AddressDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The type of place the address represents, ex: home, office, hospital, clinic, etc.
      *
@@ -109,4 +111,6 @@ data class AddressDto (
         @JsonProperty(value = "reference") reference("reference"),
         @JsonProperty(value = "careaddress") careaddress("careaddress");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

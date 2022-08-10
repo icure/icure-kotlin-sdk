@@ -37,6 +37,8 @@ data class Formula (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -50,4 +52,6 @@ data class Formula (
         @JsonProperty(value = "OnDestroy") onDestroy("OnDestroy"),
         @JsonProperty(value = "OnLoadPropertiesEditor") onLoadPropertiesEditor("OnLoadPropertiesEditor");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

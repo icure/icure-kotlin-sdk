@@ -50,6 +50,8 @@ data class CareTeamMembershipDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -62,4 +64,6 @@ data class CareTeamMembershipDto (
         @JsonProperty(value = "specialist") specialist("specialist"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

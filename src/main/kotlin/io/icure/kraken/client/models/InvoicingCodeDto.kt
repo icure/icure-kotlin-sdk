@@ -238,6 +238,8 @@ data class InvoicingCodeDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -253,4 +255,6 @@ data class InvoicingCodeDto (
         @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

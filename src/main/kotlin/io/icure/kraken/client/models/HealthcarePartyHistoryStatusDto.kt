@@ -45,6 +45,8 @@ data class HealthcarePartyHistoryStatusDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -55,4 +57,6 @@ data class HealthcarePartyHistoryStatusDto (
         @JsonProperty(value = "withconvention") withconvention("withconvention"),
         @JsonProperty(value = "accreditated") accreditated("accreditated");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

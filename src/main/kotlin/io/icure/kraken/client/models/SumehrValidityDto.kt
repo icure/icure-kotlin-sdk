@@ -33,6 +33,8 @@ data class SumehrValidityDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -43,4 +45,6 @@ data class SumehrValidityDto (
         @JsonProperty(value = "uptodate") uptodate("uptodate"),
         @JsonProperty(value = "outdated") outdated("outdated");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

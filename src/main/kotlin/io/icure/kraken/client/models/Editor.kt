@@ -65,6 +65,8 @@ data class Editor (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -76,4 +78,6 @@ data class Editor (
         @JsonProperty(value = "Left") left("Left"),
         @JsonProperty(value = "Right") right("Right");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

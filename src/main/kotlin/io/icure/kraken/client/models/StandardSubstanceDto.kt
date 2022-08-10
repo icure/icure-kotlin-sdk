@@ -50,6 +50,8 @@ data class StandardSubstanceDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -61,4 +63,6 @@ data class StandardSubstanceDto (
         @JsonProperty(value = "EDQM") eDQM("EDQM"),
         @JsonProperty(value = "SNOMED_CT") sNOMEDCT("SNOMED_CT");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

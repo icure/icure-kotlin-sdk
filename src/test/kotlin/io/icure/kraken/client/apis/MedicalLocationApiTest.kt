@@ -13,6 +13,7 @@
 
 package io.icure.kraken.client.apis
 
+/* ktlint-disable no-wildcard-imports */
 import io.icure.kraken.client.models.DocIdentifier
 import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.MedicalLocationDto
@@ -58,7 +59,8 @@ import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.toList/* ktlint-enable no-wildcard-imports */
+/* ktlint-enable no-wildcard-imports */
 
 /**
  * API tests for MedicalLocationApi

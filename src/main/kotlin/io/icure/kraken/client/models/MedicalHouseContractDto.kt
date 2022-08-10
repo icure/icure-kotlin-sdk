@@ -162,6 +162,8 @@ data class MedicalHouseContractDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -173,6 +175,10 @@ data class MedicalHouseContractDto (
         @JsonProperty(value = "suspension") suspension("suspension"),
         @JsonProperty(value = "coverageChange") coverageChange("coverageChange");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -185,6 +191,10 @@ data class MedicalHouseContractDto (
         @JsonProperty(value = "outsideOfCountry") outsideOfCountry("outsideOfCountry"),
         @JsonProperty(value = "changeOfMutuality") changeOfMutuality("changeOfMutuality");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -196,4 +206,6 @@ data class MedicalHouseContractDto (
         @JsonProperty(value = "legalrepresentativeEid") legalrepresentativeEid("legalrepresentativeEid"),
         @JsonProperty(value = "legalrepresentativePaper") legalrepresentativePaper("legalrepresentativePaper");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

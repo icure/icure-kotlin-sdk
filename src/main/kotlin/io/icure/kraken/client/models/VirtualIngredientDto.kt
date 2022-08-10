@@ -55,6 +55,8 @@ data class VirtualIngredientDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -64,4 +66,6 @@ data class VirtualIngredientDto (
         @JsonProperty(value = "ACTIVE_SUBSTANCE") aCTIVESUBSTANCE("ACTIVE_SUBSTANCE"),
         @JsonProperty(value = "EXCIPIENT") eXCIPIENT("EXCIPIENT");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

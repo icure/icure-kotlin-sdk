@@ -83,6 +83,8 @@ data class EfactInvoice (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -95,4 +97,6 @@ data class EfactInvoice (
         @JsonProperty(value = "Accident") accident("Accident"),
         @JsonProperty(value = "Other") other("Other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

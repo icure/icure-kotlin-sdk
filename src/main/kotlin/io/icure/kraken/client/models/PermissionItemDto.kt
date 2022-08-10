@@ -41,6 +41,8 @@ data class PermissionItemDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -59,4 +61,6 @@ data class PermissionItemDto (
         @JsonProperty(value = "FINANCIAL_DATA_CREATE") fINANCIALDATACREATE("FINANCIAL_DATA_CREATE"),
         @JsonProperty(value = "FINANCIAL_CHANGE_DELETE") fINANCIALCHANGEDELETE("FINANCIAL_CHANGE_DELETE");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

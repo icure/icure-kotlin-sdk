@@ -58,6 +58,8 @@ data class TypedValueDtoObject (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -72,4 +74,6 @@ data class TypedValueDtoObject (
         @JsonProperty(value = "CLOB") cLOB("CLOB"),
         @JsonProperty(value = "JSON") jSON("JSON");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

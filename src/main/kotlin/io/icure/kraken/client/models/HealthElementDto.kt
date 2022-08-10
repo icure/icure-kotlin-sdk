@@ -194,6 +194,8 @@ data class HealthElementDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Left or Right dominance/preference.
      *
@@ -203,4 +205,6 @@ data class HealthElementDto (
         @JsonProperty(value = "left") left("left"),
         @JsonProperty(value = "right") right("right");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

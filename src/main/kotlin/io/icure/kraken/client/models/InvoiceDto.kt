@@ -338,6 +338,8 @@ data class InvoiceDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The format the invoice should follow based on the recipient which could be a patient, mutual fund or paying agency such as the CPAS
      *
@@ -351,6 +353,10 @@ data class InvoiceDto (
         @JsonProperty(value = "efact") efact("efact"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Medium of the invoice: CD ROM, Email, paper, etc.
      *
@@ -365,6 +371,10 @@ data class InvoiceDto (
         @JsonProperty(value = "paper") paper("paper"),
         @JsonProperty(value = "stat") stat("stat");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -374,6 +384,10 @@ data class InvoiceDto (
         @JsonProperty(value = "total") total("total"),
         @JsonProperty(value = "userfees") userfees("userfees");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Type of payment, ex: cash, wired, insurance, debit card, etc.
      *
@@ -389,4 +403,6 @@ data class InvoiceDto (
         @JsonProperty(value = "bitcoin") bitcoin("bitcoin"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

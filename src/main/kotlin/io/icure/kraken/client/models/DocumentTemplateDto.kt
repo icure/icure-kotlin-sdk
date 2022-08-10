@@ -137,6 +137,8 @@ data class DocumentTemplateDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The type of document, ex: admission, clinical path, document report,invoice, etc.
      *
@@ -183,6 +185,10 @@ data class DocumentTemplateDto (
         @JsonProperty(value = "treatmentsuspension") treatmentsuspension("treatmentsuspension"),
         @JsonProperty(value = "vaccination") vaccination("vaccination");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -191,4 +197,6 @@ data class DocumentTemplateDto (
     enum class Version(val value: kotlin.String) {
         @JsonProperty(value = "V1_0_0") v100("V1_0_0");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

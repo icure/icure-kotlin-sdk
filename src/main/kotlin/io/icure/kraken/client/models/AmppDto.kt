@@ -201,6 +201,8 @@ data class AmppDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -211,4 +213,6 @@ data class AmppDto (
         @JsonProperty(value = "SUSPENDED") sUSPENDED("SUSPENDED"),
         @JsonProperty(value = "REVOKED") rEVOKED("REVOKED");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

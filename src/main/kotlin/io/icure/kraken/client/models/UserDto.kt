@@ -156,6 +156,8 @@ data class UserDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Authorization source for user. 'Database', 'ldap' or 'token'
      *
@@ -166,6 +168,10 @@ data class UserDto (
         @JsonProperty(value = "ldap") ldap("ldap"),
         @JsonProperty(value = "token") token("token");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * State of user's activeness: 'Active', 'Disabled' or 'Registering'
      *
@@ -176,4 +182,6 @@ data class UserDto (
         @JsonProperty(value = "DISABLED") dISABLED("DISABLED"),
         @JsonProperty(value = "REGISTERING") rEGISTERING("REGISTERING");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

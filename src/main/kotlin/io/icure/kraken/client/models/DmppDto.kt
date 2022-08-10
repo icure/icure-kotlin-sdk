@@ -78,6 +78,8 @@ data class DmppDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -89,6 +91,10 @@ data class DmppDto (
         @JsonProperty(value = "H") h("H"),
         @JsonProperty(value = "R") r("R");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -98,4 +104,6 @@ data class DmppDto (
         @JsonProperty(value = "CNK") cNK("CNK"),
         @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

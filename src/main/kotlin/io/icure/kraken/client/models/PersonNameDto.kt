@@ -69,6 +69,8 @@ data class PersonNameDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * What is the use of this name
      *
@@ -84,4 +86,6 @@ data class PersonNameDto (
         @JsonProperty(value = "old") old("old"),
         @JsonProperty(value = "other") other("other");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

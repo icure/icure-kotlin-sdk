@@ -54,6 +54,8 @@ data class PartnershipDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Type of relationship.
      *
@@ -97,6 +99,10 @@ data class PartnershipDto (
         @JsonProperty(value = "seealso") seealso("seealso"),
         @JsonProperty(value = "refer") refer("refer");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Status of the relationship.
      *
@@ -107,4 +113,6 @@ data class PartnershipDto (
         @JsonProperty(value = "complicated") complicated("complicated"),
         @JsonProperty(value = "past") past("past");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

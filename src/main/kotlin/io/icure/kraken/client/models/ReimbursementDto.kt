@@ -100,6 +100,8 @@ data class ReimbursementDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -111,6 +113,10 @@ data class ReimbursementDto (
         @JsonProperty(value = "H") h("H"),
         @JsonProperty(value = "R") r("R");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -120,6 +126,10 @@ data class ReimbursementDto (
         @JsonProperty(value = "CNK") cNK("CNK"),
         @JsonProperty(value = "PSEUDO") pSEUDO("PSEUDO");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -129,4 +139,6 @@ data class ReimbursementDto (
         @JsonProperty(value = "M") m("M"),
         @JsonProperty(value = "V") v("V");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

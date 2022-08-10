@@ -107,6 +107,8 @@ data class CodeDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -192,4 +194,6 @@ data class CodeDto (
         @JsonProperty(value = "deptpercutaneous") deptpercutaneous("deptpercutaneous"),
         @JsonProperty(value = "deptchildbirth") deptchildbirth("deptchildbirth");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

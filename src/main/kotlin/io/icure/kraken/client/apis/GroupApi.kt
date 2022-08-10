@@ -12,6 +12,7 @@
  */
 package io.icure.kraken.client.apis
 
+/* ktlint-disable no-wildcard-imports */
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
@@ -40,6 +41,7 @@ import java.util.*
 import javax.inject.Named
 import kotlinx.coroutines.flow.Flow
 import java.net.URLEncoder
+/* ktlint-enable no-wildcard-imports */
 
 @Named
 @ExperimentalStdlibApi

@@ -51,6 +51,8 @@ data class FlatRateTarificationDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -62,4 +64,6 @@ data class FlatRateTarificationDto (
         @JsonProperty(value = "nurse") nurse("nurse"),
         @JsonProperty(value = "ptd") ptd("ptd");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -84,6 +84,8 @@ data class FrontEndMigrationDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -95,4 +97,6 @@ data class FrontEndMigrationDto (
         @JsonProperty(value = "ERROR") eRROR("ERROR"),
         @JsonProperty(value = "SUCCESS") sUCCESS("SUCCESS");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -93,6 +93,8 @@ data class AmpComponentDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -103,6 +105,10 @@ data class AmpComponentDto (
         @JsonProperty(value = "N") n("N"),
         @JsonProperty(value = "X") x("X");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -113,4 +119,6 @@ data class AmpComponentDto (
         @JsonProperty(value = "N") n("N"),
         @JsonProperty(value = "X") x("X");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

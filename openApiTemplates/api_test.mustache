@@ -4,6 +4,7 @@ package {{package}}
 
 {{#imports}}import {{import}}
 {{/imports}}
+/* ktlint-disable no-wildcard-imports */
 import assertk.assertThat
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
@@ -49,6 +50,7 @@ import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+/* ktlint-enable no-wildcard-imports */
 
 /**
  * API tests for {{classname}}

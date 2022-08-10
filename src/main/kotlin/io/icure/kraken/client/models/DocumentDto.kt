@@ -194,6 +194,8 @@ data class DocumentDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * Location of the document
      *
@@ -203,6 +205,10 @@ data class DocumentDto (
         @JsonProperty(value = "annex") annex("annex"),
         @JsonProperty(value = "body") body("body");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The type of document, ex: admission, clinical path, document report,invoice, etc.
      *
@@ -249,6 +255,10 @@ data class DocumentDto (
         @JsonProperty(value = "treatmentsuspension") treatmentsuspension("treatmentsuspension"),
         @JsonProperty(value = "vaccination") vaccination("vaccination");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      * The status of the development of the document. Ex: Draft, finalized, reviewed, signed, etc.
      *
@@ -265,4 +275,6 @@ data class DocumentDto (
         @JsonProperty(value = "sent") sent("sent"),
         @JsonProperty(value = "delivered") delivered("delivered");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -37,6 +37,8 @@ data class PropertyTypeStubDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -51,4 +53,6 @@ data class PropertyTypeStubDto (
         @JsonProperty(value = "CLOB") cLOB("CLOB"),
         @JsonProperty(value = "JSON") jSON("JSON");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

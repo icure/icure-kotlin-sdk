@@ -45,6 +45,8 @@ data class DatabaseSynchronizationDto (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -55,4 +57,6 @@ data class DatabaseSynchronizationDto (
         @JsonProperty(value = "healthdata") healthdata("healthdata"),
         @JsonProperty(value = "patient") patient("patient");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

@@ -118,6 +118,8 @@ data class InvoiceItem (
 
 ) {
 
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -128,6 +130,10 @@ data class InvoiceItem (
         @JsonProperty(value = "Left") left("Left"),
         @JsonProperty(value = "Right") right("Right");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -140,6 +146,10 @@ data class InvoiceItem (
         @JsonProperty(value = "Bankholiday") bankholiday("Bankholiday"),
         @JsonProperty(value = "Urgent") urgent("Urgent");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -152,6 +162,10 @@ data class InvoiceItem (
         @JsonProperty(value = "SecondPrestationOfDay") secondPrestationOfDay("SecondPrestationOfDay"),
         @JsonProperty(value = "ThirdAndNextPrestationOfDay") thirdAndNextPrestationOfDay("ThirdAndNextPrestationOfDay");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -164,6 +178,10 @@ data class InvoiceItem (
         @JsonProperty(value = "AddedCode") addedCode("AddedCode"),
         @JsonProperty(value = "ManyPrescribers") manyPrescribers("ManyPrescribers");
     }
+
+    /* ktlint-enable enum-entry-name-case */
+    /* ktlint-disable enum-entry-name-case */
+
     /**
      *
      *
@@ -179,4 +197,6 @@ data class InvoiceItem (
         @JsonProperty(value = "InvoiceException") invoiceException("InvoiceException"),
         @JsonProperty(value = "ForInformation") forInformation("ForInformation");
     }
+
+    /* ktlint-enable enum-entry-name-case */
 }

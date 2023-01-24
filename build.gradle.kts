@@ -76,6 +76,9 @@ dependencies {
     implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
     implementation(group = "ch.qos.logback", name = "logback-access", version = "1.2.3")
 
+    //Apple Silicon Compatibility
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64")
+
     implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jul-to-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")

@@ -25,6 +25,8 @@ import io.icure.kraken.client.infrastructure.ServerException
 import io.icure.kraken.client.infrastructure.MultiValueMap
 import io.icure.kraken.client.infrastructure.RequestConfig
 import io.icure.kraken.client.infrastructure.RequestMethod
+import io.icure.kraken.client.security.AuthProvider
+import io.icure.kraken.client.security.NoAuthProvider
 import kotlinx.coroutines.flow.flowOf
 import java.nio.ByteBuffer
 import java.util.*
@@ -35,7 +37,7 @@ import java.net.URLEncoder
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authHeader: String? = null) : ApiClient(basePath, webClient, authHeader) {
+class EntityrefApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authProvider: AuthProvider = NoAuthProvider()) : ApiClient(basePath, webClient, authProvider) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {

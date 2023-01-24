@@ -12,6 +12,8 @@ import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
 import io.icure.asyncjacksonhttpclient.net.web.Request
 import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.parser.toObject
+import io.icure.kraken.client.security.AuthProvider
+import io.icure.kraken.client.security.NoAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,21 +30,16 @@ import java.time.Instant
 
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHeader: String? = null) {
+open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authProvider: AuthProvider = NoAuthProvider()) {
     companion object {
         protected const val ContentType = "Content-Type"
         protected const val Accept = "Accept"
         protected const val Authorization = "Authorization"
         protected const val JsonMediaType = "application/json"
-        protected const val FormDataMediaType = "multipart/form-data"
-        protected const val FormUrlEncMediaType = "application/x-www-form-urlencoded"
-        protected const val XmlMediaType = "application/xml"
 
-        var username: String? = null
-        var password: String? = null
         var timeoutDuration: Duration? = null
 
-        val objectMapper = ObjectMapper()
+        val objectMapper: ObjectMapper = ObjectMapper()
                     .registerModule(KotlinModule())
                     .registerModule(object: SimpleModule() {
                         override fun setupModule(context: SetupContext?) {
@@ -76,7 +73,7 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
         )
 
         // take authMethod from operation
-        authHeader?.let { requestConfig.headers[Authorization] = it }
+        requestConfig.headers[Authorization] = authProvider.getAuthHeader()
 
         // take content-type/accept from spec or set to default (application/json) if not defined
         if (requestConfig.headers[ContentType].isNullOrEmpty()) {
@@ -86,7 +83,7 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
             requestConfig.headers[Accept] = JsonMediaType
         }
 
-        var request = when (requestConfig.method) {
+        val request = when (requestConfig.method) {
             RequestMethod.DELETE -> httpClient.uri(uri).method(HttpMethod.DELETE, timeoutDuration)
                 .addBody(requestConfig.body)
             RequestMethod.GET -> httpClient.uri(uri).method(HttpMethod.GET, timeoutDuration)
@@ -100,12 +97,6 @@ open class ApiClient(val baseUrl: String, val httpClient: WebClient, val authHea
             RequestMethod.OPTIONS -> httpClient.uri(uri).method(HttpMethod.OPTIONS, timeoutDuration)
         }.apply {
             requestConfig.headers.forEach { header -> header(header.key, header.value) }
-        }
-
-        username?.let {
-            password?.let {
-                request = request.basicAuth(username!!, password!!)
-            }
         }
 
     return request.retrieve()

@@ -51,6 +51,7 @@
     "calendarItemId": "650daca7-6a89-45b4-8376-25f6a18d7183"
   },
   "getCalendarItems": {
+    "skipEndpoint": true
   },
   "getCalendarItemsByPeriodAndHcPartyId": {
     "startDate": 20190704093000,

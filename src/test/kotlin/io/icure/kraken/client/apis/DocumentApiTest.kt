@@ -997,7 +997,12 @@ class DocumentApiTest() {
                     } else {
                         object : TypeReference<kotlin.collections.List<DocumentDto>>() {}
                     })
-                    assertAreEquals("modifyDocuments", objectFromFile, response)
+                    val objectFromFileWithNewTimestamp = (objectFromFile as DocumentDto)
+                        .copy(
+                            created = (response as DocumentDto).created,
+                            modified = (response as DocumentDto).modified
+                        )
+                    assertAreEquals("modifyDocuments", objectFromFileWithNewTimestamp, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {

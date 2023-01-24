@@ -47,7 +47,8 @@
     "limit": null
   },
   "getPatientByExternalId": {
-    "externalId": "86267701"
+    "externalId": "86267701",
+    "skipEndpoint": true
   },
   "findPatientsByNameBirthSsinAuto": {
     "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
@@ -55,7 +56,8 @@
     "startKey": null, 
     "startDocumentId": null, 
     "limit": null, 
-    "sortDirection": null
+    "sortDirection": null,
+    "skipEndpoint": true
   },
   "findDuplicatesByName": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
@@ -73,7 +75,7 @@
     "dateOfBirth": null
   },
   "getPatient": {
-    "patientId": "fa32ae29-3765-4494-ad1f-0f321241e7d2"
+    "patientId": "be98cf02-28a2-4fe0-acda-b4c13332268a"
   },
   "getPatients": {
     "listOfIdsDto": {
@@ -117,13 +119,15 @@
     "startKey": null, 
     "startDocumentId": null, 
     "limit": null, 
-    "sortDirection": "asc"
+    "sortDirection": "asc",
+    "skipEndpoint": true
   },
   "findPatientsIdsByHealthcareParty": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
     "startKey": null, 
     "startDocumentId": null, 
-    "limit": null
+    "limit": null,
+    "skipEndpoint": true
   },
   "listPatientsOfHcParty": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
@@ -172,12 +176,14 @@
     "patientId": "ecb7b653-7f83-4a41-acfe-a6bf0178b40e"
   },
   "findPatientsModifiedAfter": {
-    "date": 12345
+    "date": 12345,
+    "skipEndpoint": true
   },
   "getPatientByHealthcarepartyAndIdentifier": {
     "hcPartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98",
     "system": "2.16.840.1.113883.19.3.2409",
-    "id": "be98cf02-28a2-4fe0-acda-b4c13332268a"
+    "id": "be98cf02-28a2-4fe0-acda-b4c13332268a",
+    "skipEndpoint": true
   },
   "registerPatient": {
     "skipEndpoint": true

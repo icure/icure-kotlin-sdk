@@ -149,12 +149,12 @@ class TestUtils {
             if (family != null && ids != null) {
                 ids.forEach { id ->
                     val res = httpClient.get()
-                        .uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/${URLEncoder.encode(id, Charsets.UTF_8)}"))
+                        .uri(URI("https://couch.svcacc.icure.cloud/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}"))
                         .responseSingle{ response, bytes ->
                             if (response.status().code()<400) {
                                 bytes.mapNotNull { objectMapper?.readValue(it.toByteArraySafe(), object:TypeReference<IdWithRev>() {}) }
                                     .flatMap {
-                                        it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-test-2-tz-dev-team-$family/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}")).response() } ?: Mono.empty()
+                                        it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}")).response() } ?: Mono.empty()
                                     }
                             } else Mono.empty()
                         }.awaitFirstOrNull()

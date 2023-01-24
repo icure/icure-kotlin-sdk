@@ -48,7 +48,7 @@
     "secretFKeys": "c0ab2b25-5eac-433f-8c34-9180ae90ebf2"
   },
   "getInvoice": {
-    "invoiceId": "05ce5432-15bb-49d8-9428-5da06cc3c04f"
+    "invoiceId": "9ee75961-0c5c-49ec-9c3b-973fd9d5345f"
   },
   "getInvoices": {
     "listOfIdsDto": {

@@ -38,7 +38,7 @@ import java.net.URLEncoder
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authProvider: AuthProvider = NoAuthProvider()) : ApiClient(basePath, webClient, authProvider) {
+class AuthApi(basePath: String = defaultBasePath, webClient: WebClient = NettyWebClient(), authProvider: AuthProvider = NoAuthProvider()) : ApiClient(basePath, webClient, authProvider) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -84,6 +84,43 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
             headers = localVariableHeaders,
             body = localVariableBody        )
     }
+
+    /**
+     * Refresh the authentication JWT using the refresh JWT
+     * @param refreshJWT
+     * @return AuthenticationResponse
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    suspend fun refresh(refreshJWT: String) : AuthenticationResponse  {
+        val localVariableConfig = refreshRequestConfig(refreshJWT = refreshJWT)
+
+        return request<Unit, AuthenticationResponse>(
+            localVariableConfig
+        )!!
+    }
+    /**
+     * To refresh the JWT
+     *
+     * @param refreshJWT
+     * @return RequestConfig
+     */
+    fun refreshRequestConfig(refreshJWT: String) : RequestConfig<Unit> {
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+       localVariableHeaders["Refresh-Token"] = refreshJWT
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/auth/refresh",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = null)
+    }
+
 
     /**
     * logout
@@ -171,10 +208,10 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun token(method: kotlin.String, path: kotlin.String) : kotlin.String  {
+    suspend fun token(method: String, path: String) : String  {
         val localVariableConfig = tokenRequestConfig(method = method, path = path)
 
-        return request<Unit, kotlin.String>(
+        return request<Unit, String>(
             localVariableConfig
         )!!
     }
@@ -185,7 +222,7 @@ class AuthApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = 
     * @param path  
     * @return RequestConfig
     */
-    fun tokenRequestConfig(method: kotlin.String, path: kotlin.String) : RequestConfig<Unit> {
+    fun tokenRequestConfig(method: String, path: String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

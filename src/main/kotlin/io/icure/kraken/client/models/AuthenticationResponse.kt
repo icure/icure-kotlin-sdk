@@ -32,16 +32,22 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class AuthenticationResponse (
 
     @field:JsonProperty("successful")
-    val successful: kotlin.Boolean,
+    val successful: Boolean,
 
     @field:JsonProperty("healthcarePartyId")
-    val healthcarePartyId: kotlin.String? = null,
+    val healthcarePartyId: String? = null,
 
     @field:JsonProperty("reason")
-    val reason: kotlin.String? = null,
+    val reason: String? = null,
 
     @field:JsonProperty("username")
-    val username: kotlin.String? = null
+    val username: String? = null,
+
+    @field:JsonProperty("token")
+    val token: String? = null,
+
+    @field:JsonProperty("refreshToken")
+    val refreshToken: String? = null
 
 )
 

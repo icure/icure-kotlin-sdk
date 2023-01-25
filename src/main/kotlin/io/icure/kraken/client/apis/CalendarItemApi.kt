@@ -40,7 +40,7 @@ import java.net.URLEncoder
 @Named
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
-class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebClient = NettyWebClient(), authProvider: AuthProvider = NoAuthProvider()) : ApiClient(basePath, webClient, authProvider) {
+class CalendarItemApi(basePath: String = defaultBasePath, webClient: WebClient = NettyWebClient(), authProvider: AuthProvider = NoAuthProvider()) : ApiClient(basePath, webClient, authProvider) {
     companion object {
         @JvmStatic
         val defaultBasePath: String by lazy {
@@ -99,11 +99,11 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     @Deprecated(message = "This operation is deprecated.")
-    suspend fun deleteCalendarItem(calendarItemIds: kotlin.String) : kotlin.collections.List<DocIdentifier>  {
+    suspend fun deleteCalendarItem(calendarItemIds: String) : List<DocIdentifier>  {
         @Suppress("DEPRECATION")
         val localVariableConfig = deleteCalendarItemRequestConfig(calendarItemIds = calendarItemIds)
 
-        return request<Unit, kotlin.collections.List<DocIdentifier>>(
+        return request<Unit,List<DocIdentifier>>(
             localVariableConfig
         )!!
     }
@@ -114,7 +114,7 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @return RequestConfig
     */
     @Deprecated(message = "This operation is deprecated.")
-    fun deleteCalendarItemRequestConfig(calendarItemIds: kotlin.String) : RequestConfig<Unit> {
+    fun deleteCalendarItemRequestConfig(calendarItemIds: String) : RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -180,10 +180,10 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : kotlin.collections.List<CalendarItemDto>  {
+    suspend fun findCalendarItemsByHCPartyPatientForeignKeys(hcPartyId: String, secretFKeys: String) : List<CalendarItemDto>  {
         val localVariableConfig = findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId = hcPartyId, secretFKeys = secretFKeys)
 
-        return request<Unit, kotlin.collections.List<CalendarItemDto>>(
+        return request<Unit, List<CalendarItemDto>>(
             localVariableConfig
         )!!
     }
@@ -194,12 +194,12 @@ class CalendarItemApi(basePath: kotlin.String = defaultBasePath, webClient: WebC
     * @param secretFKeys  
     * @return RequestConfig
     */
-    fun findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: kotlin.String, secretFKeys: kotlin.String) : RequestConfig<Unit> {
+    fun findCalendarItemsByHCPartyPatientForeignKeysRequestConfig(hcPartyId: String, secretFKeys: String) : RequestConfig<Unit> {
         // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, List<kotlin.String>>()
+        val localVariableQuery: MultiValueMap = mutableMapOf<String, List<String>>()
             .apply {
-                put("hcPartyId", listOf(hcPartyId.toString()))
-                put("secretFKeys", listOf(secretFKeys.toString()))
+                put("hcPartyId", listOf(hcPartyId))
+                put("secretFKeys", listOf(secretFKeys))
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"

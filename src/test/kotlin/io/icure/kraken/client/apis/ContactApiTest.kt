@@ -27,8 +27,6 @@ import io.icure.kraken.client.models.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
 import io.icure.kraken.client.models.ServiceDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -41,21 +39,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -64,11 +55,9 @@ import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 
 /**
@@ -86,7 +75,7 @@ class ContactApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = ContactApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = ContactApi(basePath = System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -105,14 +94,12 @@ class ContactApiTest() {
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
             TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
-                val deleteFunction = api(credentialsFile)::class.memberFunctions
-                    .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
@@ -674,12 +661,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContact")
-                val contactId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getContact.contactId")!!.let {
-                    (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContact") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                val contactId: String = TestUtils.getParameter<String>(fileName, "getContact.contactId")!!.let { rawContact ->
+                        (rawContact as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContact") }?.let {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            it.copy(rev = currentRev)
+                        } as? String ?: rawContact
                     }
 
                 val response = api(credentialsFile).getContact(contactId = contactId)

@@ -9,18 +9,15 @@ import io.icure.kraken.client.crypto.maintenanceTaskCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.PropertyStubDto
-import io.icure.kraken.client.models.PropertyTypeStubDto
-import io.icure.kraken.client.models.TypedValueDtoObject
-import io.icure.kraken.client.models.UserDto
+import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskAfterDateFilter
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskByHcPartyAndIdentifiersFilter
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskByHcPartyAndTypeFilter
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskByIdsFilter
+import io.icure.kraken.client.security.AuthProvider
+import io.icure.kraken.client.security.BasicAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.runBlocking
@@ -36,19 +33,19 @@ import java.util.*
 internal class MaintenanceTaskApiKtTest {
     private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
-    private val hcp1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
-    private val hcp2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val hcp1Authorization = BasicAuthProvider(System.getenv("PARENT_HCP_USERNAME"), System.getenv("PARENT_HCP_PASSWORD"))
+    private val hcp2Authorization = BasicAuthProvider(System.getenv("CHILD_1_HCP_USERNAME"), System.getenv("CHILD_1_HCP_PASSWORD"))
 
     private val hcp1PrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
     private val hcp2PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
 
-    private val hcp1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
-    private val hcp1HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
-    private val hcp1MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp1Authorization)
+    private val hcp1UserApi = UserApi(basePath = iCureBackendUrl, authProvider = hcp1Authorization)
+    private val hcp1HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = hcp1Authorization)
+    private val hcp1MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authProvider = hcp1Authorization)
 
-    private val hcp2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
-    private val hcp2HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
-    private val hcp2MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authHeader = hcp2Authorization)
+    private val hcp2UserApi = UserApi(basePath = iCureBackendUrl, authProvider = hcp2Authorization)
+    private val hcp2HcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = hcp2Authorization)
+    private val hcp2MaintenanceTaskApi = MaintenanceTaskApi(basePath = iCureBackendUrl, authProvider = hcp2Authorization)
 
     @Test
     fun test_CreateMaintenanceTask_Success() = runBlocking {
@@ -210,14 +207,14 @@ internal class MaintenanceTaskApiKtTest {
 
     private fun cryptoConfigFor(user: UserDto,
                                 hcp: HealthcarePartyDto,
-                                authHeader: String,
+                                authProvider: AuthProvider,
                                 hcpPrivKey: RSAPrivateKey,
                                 additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
         return maintenanceTaskCryptoConfig(
             LocalCrypto(
                 ExtendedTestUtils.dataOwnerWrapperFor(
                     iCureBackendUrl,
-                    authHeader
+                    authProvider
                 ), mapOf(rsaKeyPairFor(hcp, hcpPrivKey)) + additionalRsaKeyPairs
             ), user
         )

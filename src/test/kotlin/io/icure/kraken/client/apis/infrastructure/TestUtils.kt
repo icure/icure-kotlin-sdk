@@ -24,10 +24,15 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.icure.kraken.client.infrastructure.ByteArrayWrapper
+import io.icure.kraken.client.infrastructure.ByteArrayWrapperDeserializer
+import io.icure.kraken.client.infrastructure.ByteArrayWrapperSerializer
+import io.icure.kraken.client.infrastructure.FilterDeserializer
 import io.icure.kraken.client.models.filter.AbstractFilterDto
+import io.icure.kraken.client.security.AuthProvider
+import io.icure.kraken.client.security.BasicAuthProvider
 import io.netty.buffer.ByteBuf
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.reactive.awaitFirstOrNull
@@ -136,25 +141,25 @@ class TestUtils {
 
         suspend fun deleteAfterElements(parametersFileName: String) {
             val callingFunctionName = "afterElements"
-            val usernamePassword: UsernamePassword = Companion.objectMapper.readValue(File(".credentialsCouchDb").readText())!!
+            val usernamePassword: UsernamePassword = objectMapper.readValue(File(".credentialsCouchDb").readText())!!
             val u = usernamePassword.username
             val p = usernamePassword.password
             val family  = getParameter<String>(parametersFileName, "$callingFunctionName.family")
             val ids  = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
             val httpClient = HttpClient.create().headers { h ->
-                h.set("Authorization", UsernamePassword(u,p).toBasicAuth())
+                h.set("Authorization", UsernamePassword(u,p).toBasicAuth().getAuthHeader())
                 h.set("Content-type", "application/json")
             }
 
             if (family != null && ids != null) {
                 ids.forEach { id ->
                     val res = httpClient.get()
-                        .uri(URI("https://couch.svcacc.icure.cloud/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}"))
+                        .uri(URI("${System.getenv("COUCHDB_URL")!!}/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}"))
                         .responseSingle{ response, bytes ->
                             if (response.status().code()<400) {
                                 bytes.mapNotNull { objectMapper?.readValue(it.toByteArraySafe(), object:TypeReference<IdWithRev>() {}) }
                                     .flatMap {
-                                        it?.let { httpClient.delete().uri(URI("https://couch.svcacc.icure.cloud/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}")).response() } ?: Mono.empty()
+                                        it?.let { httpClient.delete().uri(URI("${System.getenv("COUCHDB_URL")!!}/icure-ic-e2etests-7ab7585f-55fa-4819-9317-2028229d5fc4-$family/${URLEncoder.encode(id, Charsets.UTF_8)}?rev=${URLEncoder.encode(it.rev, Charsets.UTF_8)}")).response() } ?: Mono.empty()
                                     }
                             } else Mono.empty()
                         }.awaitFirstOrNull()
@@ -203,7 +208,7 @@ class TestUtils {
             }
         }
 
-        fun String.basicAuth() : String {
+        fun String.basicAuth() : AuthProvider {
             val usernamePassword: UsernamePassword = objectMapper.readValue(File(this).readText())!!
             return usernamePassword.toBasicAuth()
         }
@@ -263,5 +268,5 @@ fun File.readAsFlow() = flow {
 }
 
 data class UsernamePassword(val username: String, val password: String) {
-    fun toBasicAuth() = "Basic ${java.util.Base64.getEncoder().encodeToString("$username:$password".toByteArray())}"
+    fun toBasicAuth() = BasicAuthProvider(username, password)
 }

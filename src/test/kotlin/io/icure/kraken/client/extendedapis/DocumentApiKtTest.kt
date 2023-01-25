@@ -7,6 +7,7 @@ import io.icure.kraken.client.crypto.documentCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.models.decrypted.DocumentDto
+import io.icure.kraken.client.security.BasicAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
@@ -23,12 +24,12 @@ import java.util.*
 internal class DocumentApiKtTest {
     private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
-    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val parentAuthorization = BasicAuthProvider(System.getenv("PARENT_HCP_USERNAME"), System.getenv("PARENT_HCP_PASSWORD"))
     private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
     
-    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
-    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
-    private val documentApi = DocumentApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val userApi = UserApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
+    private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
+    private val documentApi = DocumentApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
 
     @FlowPreview
     @Test

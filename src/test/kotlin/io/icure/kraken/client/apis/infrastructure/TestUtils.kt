@@ -31,6 +31,7 @@ import io.icure.kraken.client.infrastructure.FilterDeserializer
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 import io.icure.kraken.client.security.AuthProvider
 import io.icure.kraken.client.security.BasicAuthProvider
+import io.icure.kraken.client.security.JWTProvider
 import io.netty.buffer.ByteBuf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -146,8 +147,9 @@ class TestUtils {
             val p = usernamePassword.password
             val family  = getParameter<String>(parametersFileName, "$callingFunctionName.family")
             val ids  = getParameter<List<String>>(parametersFileName, "$callingFunctionName.deleteIds")
+            val authHeader = UsernamePassword(u,p).toBasicAuth().getAuthHeader()
             val httpClient = HttpClient.create().headers { h ->
-                h.set("Authorization", UsernamePassword(u,p).toBasicAuth().getAuthHeader())
+                h.set("Authorization", authHeader)
                 h.set("Content-type", "application/json")
             }
 
@@ -213,6 +215,11 @@ class TestUtils {
             return usernamePassword.toBasicAuth()
         }
 
+        fun String.jwtAuth() : JWTProvider {
+            val usernamePassword: UsernamePassword = objectMapper.readValue(File(this).readText())!!
+            return usernamePassword.toJwtAuth()
+        }
+
         fun String.runCommandExitStatus(path: String = ".", streamOutput: Boolean = true, checkReturnValue: Boolean = true, variables: Map<String, String> = mapOf(), suicideOnFailure: Boolean = false): Pair<String, Int> {
             val output = if (streamOutput) ProcessBuilder.Redirect.INHERIT else ProcessBuilder.Redirect.PIPE
             try {
@@ -269,4 +276,5 @@ fun File.readAsFlow() = flow {
 
 data class UsernamePassword(val username: String, val password: String) {
     fun toBasicAuth() = BasicAuthProvider(username, password)
+    fun toJwtAuth() = JWTProvider(System.getProperty("API_URL"), username, password)
 }

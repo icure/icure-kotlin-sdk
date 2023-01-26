@@ -91,6 +91,10 @@ dependencies {
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
 
+    implementation(group = "io.jsonwebtoken", name = "jjwt-api", version = "0.11.5")
+    implementation(group = "io.jsonwebtoken", name = "jjwt-impl", version = "0.11.5")
+    implementation(group = "io.jsonwebtoken", name = "jjwt-jackson", version = "0.11.5")
+
     testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")

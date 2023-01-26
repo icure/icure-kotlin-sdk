@@ -1,22 +1,16 @@
 package io.icure.kraken.client.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.icure.kraken.client.apis.AuthApi
 import io.icure.kraken.client.models.LoginCredentials
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.impl.DefaultClaims
+import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.util.*
 
-private data class JWTExp(
-    val exp: Long
-)
-
-@OptIn(ExperimentalStdlibApi::class)
+@OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class JWTProvider(
     basePath: String,
     private val username: String,
@@ -31,11 +25,12 @@ class JWTProvider(
 
     override suspend fun getAuthHeader(): String =
         mutex.withLock {
+            println(authJWT)
+            println(authJWT == null || isJwtExpired(authJWT!!))
             if (authJWT == null || isJwtExpired(authJWT!!)) {
                 refreshAuthenticationJWT()
             }
         }.let { "Bearer ${authJWT!!}" }
-
 
     private suspend fun refreshAuthenticationJWT() =
         if (refreshJWT == null || isJwtExpired(refreshJWT!!)) {
@@ -51,8 +46,8 @@ class JWTProvider(
         val parts = token.split(".")
         if (parts.size != 3) return true
         return try {
-            val expiration = mapper.readValue<JWTExp>(Base64.getDecoder().decode(parts[1]).toString()).exp * 1000
-            expiration < System.currentTimeMillis()
+            val expiration = (Jwts.parserBuilder().build().parse("${parts[0]}.${parts[1]}.").body as DefaultClaims).expiration
+            expiration < Date(System.currentTimeMillis())
         } catch (e: Exception) {
             true
         }

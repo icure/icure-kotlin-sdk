@@ -65,7 +65,7 @@ class AccessLogApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = AccessLogApi(basePath = java.lang.System.getProperty("API_URL"), authProvider = fileName.basicAuth())
+    fun api(fileName: String) = AccessLogApi(basePath = System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())

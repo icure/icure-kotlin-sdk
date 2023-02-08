@@ -2,7 +2,7 @@ package io.icure.kraken.client.extendedapis
 
 import io.icure.kraken.client.crypto.Crypto
 import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
-import io.icure.kraken.client.models.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
 import java.security.PrivateKey
 import java.security.PublicKey
 
@@ -14,7 +14,7 @@ suspend fun DeviceDto.addNewKeyPair(
 ) = crypto.addNewKeyPairTo(user, this.toDataOwner(), devicePublicKey, devicePrivateKey).let { dataOwner ->
     this.copy(
         publicKey = dataOwner.publicKey,
-        hcPartyKeys = dataOwner.hcPartyKeys,
+        hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(),
         aesExchangeKeys = dataOwner.aesExchangeKeys,
         transferKeys = dataOwner.transferKeys
     )

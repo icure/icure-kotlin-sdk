@@ -9,18 +9,19 @@ import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import org.taktik.icure.services.external.rest.v2.dto.MessageDto
 import org.taktik.icure.services.external.rest.v2.dto.PatientDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
 import java.nio.ByteBuffer
 import java.util.*
 
 suspend fun DocumentDto.initDelegations(
     user: UserDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
-    val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegations = (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
@@ -29,20 +30,20 @@ suspend fun DocumentDto.initDelegations(
         delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
+                    emptyList()
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
+                    emptyList()
                 ),
             ))
         },
@@ -54,12 +55,12 @@ suspend fun DocumentDto.initDelegations(
 suspend fun DocumentApi.createDocument(
     user: UserDto,
     document: DocumentDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ) =
     this.createDocument(
         config.encryptDocument(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             document.initDelegations(user, config)
         )
     ).let { config.decryptDocument(user.dataOwnerId(), it) }
@@ -70,7 +71,7 @@ suspend fun DocumentApi.findDocumentsByHCPartyPatient(
     user: UserDto,
     hcPartyId: String,
     patient: PatientDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
@@ -84,7 +85,7 @@ suspend fun DocumentApi.listDocumentByTypeHCPartyMessage(
     documentTypeCode: String,
     hcPartyId: String,
     message: MessageDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), message.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
@@ -101,7 +102,7 @@ suspend fun DocumentApi.findDocumentsByHCPartyPatientForeignKeys(
     user: UserDto,
     hcPartyId: String,
     secretFKeys: String,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.listDocumentsByHCPartyAndPatientForeignKeys(hcPartyId, secretFKeys)
         .map { config.decryptDocument(user.dataOwnerId(), it) }
@@ -114,7 +115,7 @@ suspend fun DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys(
     documentTypeCode: String,
     hcPartyId: String,
     secretFKeys: String,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.listDocumentByTypeHCPartyMessageSecretFKeys(documentTypeCode, hcPartyId, secretFKeys)
         .map { config.decryptDocument(user.dataOwnerId(), it) }
@@ -125,7 +126,7 @@ suspend fun DocumentApi.listDocumentByTypeHCPartyMessageSecretFKeys(
 suspend fun DocumentApi.findWithoutDelegation(
     user: UserDto,
     limit: Int?,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.findWithoutDelegation(limit).map { config.decryptDocument(user.dataOwnerId(), it) }
 }
@@ -136,7 +137,7 @@ suspend fun DocumentApi.findWithoutDelegation(
 suspend fun DocumentApi.getDocument(
     user: UserDto,
     documentId: String,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
     return this.getDocument(documentId).let { config.decryptDocument(user.dataOwnerId(), it) }
 }
@@ -146,12 +147,12 @@ suspend fun DocumentApi.getDocument(
 suspend fun DocumentApi.modifyDocument(
     user: UserDto,
     document: DocumentDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
     return this.modifyDocument(
         config.encryptDocument(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             document
         )
     ).let { config.decryptDocument(user.dataOwnerId(), it) }
@@ -162,12 +163,12 @@ suspend fun DocumentApi.modifyDocument(
 suspend fun DocumentApi.modifyDocuments(
     user: UserDto,
     documents: List<DocumentDto>,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.modifyDocuments(documents.map {
         config.encryptDocument(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             it
         )
     }).map { config.decryptDocument(user.dataOwnerId(), it) }
@@ -178,7 +179,7 @@ suspend fun DocumentApi.modifyDocuments(
 suspend fun DocumentApi.deleteAttachment(
     user: UserDto,
     documentId: String,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
     return this.deleteAttachment(documentId).let { config.decryptDocument(user.dataOwnerId(), it) }
 }
@@ -190,7 +191,7 @@ suspend fun DocumentApi.setDocumentAttachment(
     documentId: String,
     requestBody: Flow<ByteBuffer>,
     enckeys: String?,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
     return this.setDocumentAttachment(documentId, requestBody, enckeys)
         .let { config.decryptDocument(user.dataOwnerId(), it) }
@@ -201,7 +202,7 @@ suspend fun DocumentApi.setDocumentAttachment(
 suspend fun DocumentApi.getDocumentsByExternalUuid(
     user: UserDto,
     externalUuid: String,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.getDocumentsByExternalUuid(externalUuid).map { config.decryptDocument(user.dataOwnerId(), it) }
 }
@@ -211,16 +212,16 @@ suspend fun DocumentApi.getDocumentsByExternalUuid(
 suspend fun DocumentApi.getDocuments(
     user: UserDto,
     listOfIdsDto: ListOfIdsDto,
-    config: CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
+    config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): List<DocumentDto> {
     return this.getDocuments(listOfIdsDto).map { config.decryptDocument(user.dataOwnerId(), it) }
 }
 
-suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>.encryptDocument(
+suspend fun CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>.encryptDocument(
     myId: String,
     delegations: Set<String>,
     document: DocumentDto
-): io.icure.kraken.client.models.DocumentDto {
+): org.taktik.icure.services.external.rest.v2.dto.DocumentDto {
     return if (document.encryptionKeys.any { (_, s) -> s.isNotEmpty() }) {
         document
     } else {
@@ -228,10 +229,10 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
         document.copy(encryptionKeys = (delegations + myId).fold(document.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     myId,
                     d,
-                    this.crypto.encryptAESKeyForDataOwner(myId, d, document.id, secret).first
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, document.id, secret).first,
+                    emptyList()
                 )
             ))
         })
@@ -247,9 +248,9 @@ suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>
     }
 }
 
-suspend fun CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>.decryptDocument(
+suspend fun CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>.decryptDocument(
     myId: String,
-    document: io.icure.kraken.client.models.DocumentDto
+    document: org.taktik.icure.services.external.rest.v2.dto.DocumentDto
 ): DocumentDto {
     val key = this.crypto.decryptEncryptionKeys(myId, document.encryptionKeys).firstOrNull()?.replace(
         "-",

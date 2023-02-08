@@ -6,8 +6,8 @@ import org.mapstruct.Mapper
 
 @Mapper(uses = [ServiceMapper::class], injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface ContactMapper {
-    fun map(contact: ContactDto): io.icure.kraken.client.models.ContactDto
-    fun map(contact: io.icure.kraken.client.models.ContactDto): ContactDto
+    fun map(contact: ContactDto): org.taktik.icure.services.external.rest.v2.dto.ContactDto
+    fun map(contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto): ContactDto
 }
 
 object ContactMapperFactory {

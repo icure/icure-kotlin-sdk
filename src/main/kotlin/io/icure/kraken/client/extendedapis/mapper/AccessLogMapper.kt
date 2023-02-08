@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface AccessLogMapper {
-    fun map(accessLog: AccessLogDto): io.icure.kraken.client.models.AccessLogDto
-    fun map(accessLog: io.icure.kraken.client.models.AccessLogDto): AccessLogDto
+    fun map(accessLog: AccessLogDto): org.taktik.icure.services.external.rest.v2.dto.AccessLogDto
+    fun map(accessLog: org.taktik.icure.services.external.rest.v2.dto.AccessLogDto): AccessLogDto
 }
 
 object AccessLogMapperFactory {

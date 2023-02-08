@@ -6,11 +6,11 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface ServiceMapper {
-    fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
-    fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+    fun map(service: ServiceDto): org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
+    fun map(service: org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto): ServiceDto
 
-    fun map(content: ContentDto): io.icure.kraken.client.models.ContentDto
-    fun map(content: io.icure.kraken.client.models.ContentDto): ContentDto
+    fun map(content: ContentDto): org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
+    fun map(content: org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto): ContentDto
 }
 
 object ServiceMapperFactory {

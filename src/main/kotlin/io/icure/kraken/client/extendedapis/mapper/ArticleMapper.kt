@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface ArticleMapper {
-    fun map(article: ArticleDto): io.icure.kraken.client.models.ArticleDto
-    fun map(article: io.icure.kraken.client.models.ArticleDto): ArticleDto
+    fun map(article: ArticleDto): org.taktik.icure.services.external.rest.v2.dto.ArticleDto
+    fun map(article: org.taktik.icure.services.external.rest.v2.dto.ArticleDto): ArticleDto
 }
 
 object ArticleMapperFactory {

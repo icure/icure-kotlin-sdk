@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface MessageMapper {
-    fun map(message: MessageDto): io.icure.kraken.client.models.MessageDto
-    fun map(message: io.icure.kraken.client.models.MessageDto): MessageDto
+    fun map(message: MessageDto): org.taktik.icure.services.external.rest.v2.dto.MessageDto
+    fun map(message: org.taktik.icure.services.external.rest.v2.dto.MessageDto): MessageDto
 }
 
 object MessageMapperFactory {

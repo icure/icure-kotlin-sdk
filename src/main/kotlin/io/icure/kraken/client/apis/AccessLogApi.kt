@@ -16,7 +16,7 @@ import io.icure.asyncjacksonhttpclient.net.web.WebClient
 import io.icure.asyncjacksonhttpclient.netty.NettyWebClient
 import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.decrypted.PaginatedListAccessLogDto
+import io.icure.kraken.client.models.PaginatedListAccessLogDto
 import io.icure.kraken.client.security.AuthProvider
 import io.icure.kraken.client.security.NoAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi

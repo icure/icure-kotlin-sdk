@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface DocumentMapper {
-    fun map(document: DocumentDto): io.icure.kraken.client.models.DocumentDto
-    fun map(document: io.icure.kraken.client.models.DocumentDto): DocumentDto
+    fun map(document: DocumentDto): org.taktik.icure.services.external.rest.v2.dto.DocumentDto
+    fun map(document: org.taktik.icure.services.external.rest.v2.dto.DocumentDto): DocumentDto
 }
 
 object DocumentMapperFactory {

@@ -14,7 +14,7 @@ import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.data
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PatientDto

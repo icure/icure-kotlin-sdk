@@ -13,9 +13,9 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.AccessLogDto
+import org.taktik.icure.services.external.rest.v2.dto.AccessLogDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListAccessLogDto
 import java.io.*
 
@@ -34,9 +34,9 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 

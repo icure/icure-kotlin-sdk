@@ -14,7 +14,7 @@
 package io.icure.kraken.client.apis
 
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FrontEndMigrationDto
+import org.taktik.icure.services.external.rest.v2.dto.FrontEndMigrationDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

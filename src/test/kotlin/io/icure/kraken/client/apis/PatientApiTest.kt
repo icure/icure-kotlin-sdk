@@ -14,16 +14,16 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.ContentDto
-import io.icure.kraken.client.models.DataOwnerRegistrationSuccessDto
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
+import org.taktik.icure.services.external.rest.v2.dto.DataOwnerRegistrationSuccessDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.IdWithRevDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.IdWithRevDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListPatientDto
 import io.icure.kraken.client.models.PaginatedListString
-import io.icure.kraken.client.models.PatientDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

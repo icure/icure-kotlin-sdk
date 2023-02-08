@@ -14,11 +14,11 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.DeviceDto
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.IdWithRevDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.IdWithRevDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListDeviceDto
 import java.io.*
 
@@ -37,9 +37,9 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -461,12 +461,12 @@ class DeviceApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterDevicesBy")
-                val filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>>(fileName, "filterDevicesBy.filterChainDevice")!!.let {
+                val filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto>>(fileName, "filterDevicesBy.filterChainDevice")!!.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterDevicesBy.startDocumentId")?.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
@@ -673,12 +673,12 @@ class DeviceApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchDevicesBy")
-                val abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>>(fileName, "matchDevicesBy.abstractFilterDtoDevice")!!.let {
+                val abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto>>(fileName, "matchDevicesBy.abstractFilterDtoDevice")!!.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchDevicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchDevicesBy(abstractFilterDtoDevice = abstractFilterDtoDevice)

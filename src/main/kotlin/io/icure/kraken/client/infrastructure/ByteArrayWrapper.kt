@@ -3,7 +3,7 @@ package io.icure.kraken.client.infrastructure
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ByteArrayWrapper(val byteArray: ByteArray): Iterable<Byte> {
+data class ByteArrayWrapper(val byteArray: ByteArray) : Iterable<Byte> {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is ByteArrayWrapper) return false

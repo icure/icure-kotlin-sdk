@@ -13,7 +13,7 @@
 package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.InvoicesBatch
-import io.icure.kraken.client.models.MessageDto
+import org.taktik.icure.services.external.rest.v2.dto.MessageDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

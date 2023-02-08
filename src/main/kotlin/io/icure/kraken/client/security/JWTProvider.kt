@@ -46,7 +46,8 @@ class JWTProvider(
         val parts = token.split(".")
         if (parts.size != 3) return true
         return try {
-            val expiration = (Jwts.parserBuilder().build().parse("${parts[0]}.${parts[1]}.").body as DefaultClaims).expiration
+            val expiration =
+                (Jwts.parserBuilder().build().parse("${parts[0]}.${parts[1]}.").body as DefaultClaims).expiration
             expiration < Date(System.currentTimeMillis())
         } catch (e: Exception) {
             true

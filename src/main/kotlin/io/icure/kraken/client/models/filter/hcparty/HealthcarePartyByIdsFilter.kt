@@ -20,12 +20,12 @@ package io.icure.kraken.client.models.filter.hcparty
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class HealthcarePartyByIdsFilter(
-        val ids: Set<String>,
-        override val desc: String? = null
+    val ids: Set<String>,
+    override val desc: String? = null
 ) : AbstractFilterDto<HealthcarePartyDto>

@@ -12,8 +12,8 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.ServiceDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

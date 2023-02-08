@@ -5,16 +5,18 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.FormDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.factory.Mappers
 import java.util.*
 
-suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
+suspend fun FormDto.initDelegations(
+    user: UserDto,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): FormDto {
     val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
@@ -46,7 +48,11 @@ suspend fun FormDto.initDelegations(user: UserDto, config: CryptoConfig<FormDto,
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.createForm(user: UserDto, form: FormDto, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>) =
+suspend fun FormApi.createForm(
+    user: UserDto,
+    form: FormDto,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+) =
     this.createForm(
         config.encryptForm(
             user.dataOwnerId(),
@@ -81,7 +87,15 @@ suspend fun FormApi.listFormsByHCPartyAndPatient(
 ): List<FormDto> {
     val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
-    return this.listFormsByHCPartyAndPatientForeignKeys(user, hcPartyId, keys.joinToString(","), healthElementId, planOfActionId, formTemplateId, config)
+    return this.listFormsByHCPartyAndPatientForeignKeys(
+        user,
+        hcPartyId,
+        keys.joinToString(","),
+        healthElementId,
+        planOfActionId,
+        formTemplateId,
+        config
+    )
 }
 
 @ExperimentalCoroutinesApi
@@ -106,13 +120,21 @@ suspend fun FormApi.listFormsByHCPartyAndPatientForeignKeys(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getForm(user: UserDto, formId: String, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
+suspend fun FormApi.getForm(
+    user: UserDto,
+    formId: String,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): FormDto {
     return this.getForm(formId).let { config.decryptForm(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.modifyForm(user: UserDto, form: FormDto, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
+suspend fun FormApi.modifyForm(
+    user: UserDto,
+    form: FormDto,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): FormDto {
     return this.modifyForm(
         config.encryptForm(
             user.dataOwnerId(),
@@ -124,7 +146,11 @@ suspend fun FormApi.modifyForm(user: UserDto, form: FormDto, config: CryptoConfi
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.modifyForms(user: UserDto, form: List<FormDto>, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): List<FormDto> {
+suspend fun FormApi.modifyForms(
+    user: UserDto,
+    form: List<FormDto>,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): List<FormDto> {
     return this.modifyForms(
         form.map {
             config.encryptForm(
@@ -139,7 +165,11 @@ suspend fun FormApi.modifyForms(user: UserDto, form: List<FormDto>, config: Cryp
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.createForms(user: UserDto, form: List<FormDto>, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): List<FormDto> {
+suspend fun FormApi.createForms(
+    user: UserDto,
+    form: List<FormDto>,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): List<FormDto> {
     return this.createForms(
         form.map {
             config.encryptForm(
@@ -164,19 +194,31 @@ suspend fun FormApi.getChildrenForms(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getFormByLogicalUuid(user: UserDto, logicalUuid: String, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
+suspend fun FormApi.getFormByLogicalUuid(
+    user: UserDto,
+    logicalUuid: String,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): FormDto {
     return this.getFormByLogicalUuid(logicalUuid).let { config.decryptForm(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getFormByUniqueId(user: UserDto, uniqueId: String, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): FormDto {
+suspend fun FormApi.getFormByUniqueId(
+    user: UserDto,
+    uniqueId: String,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): FormDto {
     return this.getFormByUniqueId(uniqueId).let { config.decryptForm(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getForms(user: UserDto, listOfIdsDto: ListOfIdsDto, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): List<FormDto> {
+suspend fun FormApi.getForms(
+    user: UserDto,
+    listOfIdsDto: ListOfIdsDto,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): List<FormDto> {
     return this.getForms(listOfIdsDto).map { config.decryptForm(user.dataOwnerId(), it) }
 }
 
@@ -192,7 +234,11 @@ suspend fun FormApi.getFormsByLogicalUuid(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun FormApi.getFormsByUniqueId(user: UserDto, uniqueId: String, config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>): List<FormDto> {
+suspend fun FormApi.getFormsByUniqueId(
+    user: UserDto,
+    uniqueId: String,
+    config: CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>
+): List<FormDto> {
     return this.getFormsByUniqueId(uniqueId).map { config.decryptForm(user.dataOwnerId(), it) }
 }
 
@@ -207,7 +253,14 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
     } else {
         val secret = UUID.randomUUID().toString()
         form.copy(encryptionKeys = (delegations + myId).fold(form.encryptionKeys) { m, d ->
-            m + (d to setOf(DelegationDto(emptyList(), myId, d, this.crypto.encryptAESKeyForDataOwner(myId, d, form.id, secret).first)))
+            m + (d to setOf(
+                DelegationDto(
+                    emptyList(),
+                    myId,
+                    d,
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, form.id, secret).first
+                )
+            ))
         })
     }.let { p ->
         val key = this.crypto.decryptEncryptionKeys(myId, p.encryptionKeys).firstOrNull()?.replace(
@@ -221,7 +274,10 @@ suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.encrypt
     }
 }
 
-suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.decryptForm(myId: String, form: io.icure.kraken.client.models.FormDto): FormDto {
+suspend fun CryptoConfig<FormDto, io.icure.kraken.client.models.FormDto>.decryptForm(
+    myId: String,
+    form: io.icure.kraken.client.models.FormDto
+): FormDto {
     val key = this.crypto.decryptEncryptionKeys(myId, form.encryptionKeys).firstOrNull()?.replace(
         "-",
         ""

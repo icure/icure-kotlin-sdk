@@ -14,8 +14,8 @@
 package io.icure.kraken.client.apis
 
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.InsuranceDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.InsuranceDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

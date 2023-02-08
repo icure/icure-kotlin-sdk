@@ -33,8 +33,8 @@ apply(plugin = "git-version")
 apply(plugin = "maven-repository")
 val gitVersion: String? by project
 
-group = "io.icure"
-version = gitVersion ?: "0.0.1-SNAPSHOT"
+group = "org.icure"
+version = "0.1"
 
 repositories {
     mavenCentral()
@@ -54,6 +54,9 @@ kotlin {
 dependencies {
     implementation(group = "io.icure", name = "kmap", version = kmapVersion)
     ksp(group = "io.icure", name = "kmap", version = kmapVersion)
+
+    //Kraken DTOs
+    implementation(group = "org.taktik.icure", name = "dto", version = "4.0.5-g6334d02dbe")
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 

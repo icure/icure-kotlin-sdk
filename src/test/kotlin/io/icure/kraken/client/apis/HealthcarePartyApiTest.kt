@@ -14,13 +14,13 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.DataOwnerRegistrationSuccessDto
+import org.taktik.icure.services.external.rest.v2.dto.DataOwnerRegistrationSuccessDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthcarePartyDto
-import io.icure.kraken.client.models.PublicKeyDto
+import org.taktik.icure.services.external.rest.v2.dto.PublicKeyDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -410,12 +410,12 @@ class HealthcarePartyApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterHealthPartiesBy")
-                val filterChainHealthcareParty: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto>>(fileName, "filterHealthPartiesBy.filterChainHealthcareParty")!!.let {
+                val filterChainHealthcareParty: io.icure.kraken.client.models.filter.chain.FilterChain<HealthcarePartyDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<HealthcarePartyDto>>(fileName, "filterHealthPartiesBy.filterChainHealthcareParty")!!.let {
                     (it as? HealthcarePartyDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthPartiesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthcareParty(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthcarePartyDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<HealthcarePartyDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterHealthPartiesBy.startDocumentId")?.let {
                     (it as? HealthcarePartyDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthPartiesBy") }?.let {
@@ -1249,12 +1249,12 @@ class HealthcarePartyApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchHealthcarePartiesBy")
-                val abstractFilterDtoHealthcareParty: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto>>(fileName, "matchHealthcarePartiesBy.abstractFilterDtoHealthcareParty")!!.let {
+                val abstractFilterDtoHealthcareParty: AbstractFilterDto<HealthcarePartyDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<HealthcarePartyDto>>(fileName, "matchHealthcarePartiesBy.abstractFilterDtoHealthcareParty")!!.let {
                     (it as? HealthcarePartyDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchHealthcarePartiesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthcareParty(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthcarePartyDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<HealthcarePartyDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchHealthcarePartiesBy(abstractFilterDtoHealthcareParty = abstractFilterDtoHealthcareParty)

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.SingletonSupport
-import io.icure.kraken.client.models.CodeDto
+import org.taktik.icure.services.external.rest.v2.dto.CodeDto
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient

@@ -8,6 +8,7 @@ interface AccessLogMapper {
     fun map(accessLog: AccessLogDto): io.icure.kraken.client.models.AccessLogDto
     fun map(accessLog: io.icure.kraken.client.models.AccessLogDto): AccessLogDto
 }
+
 object AccessLogMapperFactory {
     val instance = AccessLogMapperImpl()
 }

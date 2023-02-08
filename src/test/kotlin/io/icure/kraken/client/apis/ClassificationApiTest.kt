@@ -13,11 +13,7 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.ClassificationDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -35,9 +31,8 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList
+import java.util.Map
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -45,11 +40,16 @@ import kotlinx.coroutines.runBlocking
 import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
+import io.icure.kraken.client.models.DocIdentifier
 import kotlinx.coroutines.flow.Flow
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.toList
+import org.taktik.icure.services.external.rest.v2.dto.ClassificationDto
+import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
+import java.nio.file.NoSuchFileException
 
 /**
  * API tests for ClassificationApi
@@ -158,7 +158,7 @@ class ClassificationApiTest() {
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -217,14 +217,14 @@ class ClassificationApiTest() {
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.collections.List<DocIdentifier>>() {}
+                        object : TypeReference<List<DocIdentifier>>() {}
                     })
                     assertAreEquals("deleteClassifications", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -261,19 +261,19 @@ class ClassificationApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "findClassificationsByHCPartyPatientForeignKeys")
-                val hcPartyId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findClassificationsByHCPartyPatientForeignKeys.hcPartyId")!!.let {
+                val hcPartyId: String = TestUtils.getParameter<String>(fileName, "findClassificationsByHCPartyPatientForeignKeys.hcPartyId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationsByHCPartyPatientForeignKeys") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                    } as? String ?: it
                     }
-                val secretFKeys: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "findClassificationsByHCPartyPatientForeignKeys.secretFKeys")!!.let {
+                val secretFKeys: String = TestUtils.getParameter<String>(fileName, "findClassificationsByHCPartyPatientForeignKeys.secretFKeys")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "findClassificationsByHCPartyPatientForeignKeys") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                    } as? String ?: it
                     }
 
                 val response = api(credentialsFile).findClassificationsByHCPartyPatientForeignKeys(hcPartyId = hcPartyId,secretFKeys = secretFKeys)
@@ -290,14 +290,14 @@ class ClassificationApiTest() {
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
+                        object : TypeReference<List<ClassificationDto>>() {}
                     })
                     assertAreEquals("findClassificationsByHCPartyPatientForeignKeys", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -334,12 +334,12 @@ class ClassificationApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassification")
-                val classificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassification.classificationId")!!.let {
+                val classificationId: String = TestUtils.getParameter<String>(fileName, "getClassification.classificationId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassification") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                    } as? String ?: it
                     }
 
                 val response = api(credentialsFile).getClassification(classificationId = classificationId)
@@ -363,7 +363,7 @@ class ClassificationApiTest() {
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -400,12 +400,12 @@ class ClassificationApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getClassificationByHcPartyId")
-                val ids: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getClassificationByHcPartyId.ids")!!.let {
+                val ids: String = TestUtils.getParameter<String>(fileName, "getClassificationByHcPartyId.ids")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "getClassificationByHcPartyId") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                    } as? String ?: it
                     }
 
                 val response = api(credentialsFile).getClassificationByHcPartyId(ids = ids)
@@ -422,14 +422,14 @@ class ClassificationApiTest() {
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.collections.List<ClassificationDto>>() {}
+                        object : TypeReference<List<ClassificationDto>>() {}
                     })
                     assertAreEquals("getClassificationByHcPartyId", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -495,7 +495,7 @@ class ClassificationApiTest() {
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -532,20 +532,20 @@ class ClassificationApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "newClassificationDelegations")
-                val classificationId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "newClassificationDelegations.classificationId")!!.let {
+                val classificationId: String = TestUtils.getParameter<String>(fileName, "newClassificationDelegations.classificationId")!!.let {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "newClassificationDelegations") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                    } as? String ?: it
                     }
-                val delegationDto: kotlin.collections.List<DelegationDto> = TestUtils.getParameter<kotlin.collections.List<DelegationDto>>(fileName, "newClassificationDelegations.delegationDto")!!.map {
+                val delegationDto: List<DelegationDto> = TestUtils.getParameter<List<DelegationDto>>(fileName, "newClassificationDelegations.delegationDto")!!.map {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "newClassificationDelegations") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<DelegationDto>
+                    } as List<DelegationDto>
 
                 val response = api(credentialsFile).newClassificationDelegations(classificationId = classificationId,delegationDto = delegationDto)
 
@@ -568,7 +568,7 @@ class ClassificationApiTest() {
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -605,13 +605,13 @@ class ClassificationApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "setClassificationsDelegations")
-                val icureStubDto: kotlin.collections.List<IcureStubDto> = TestUtils.getParameter<kotlin.collections.List<IcureStubDto>>(fileName, "setClassificationsDelegations.icureStubDto")!!.map {
+                val icureStubDto: List<IcureStubDto> = TestUtils.getParameter<List<IcureStubDto>>(fileName, "setClassificationsDelegations.icureStubDto")!!.map {
                     (it as? ClassificationDto)?.takeIf { TestUtils.isAutoRev(fileName, "setClassificationsDelegations") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getClassification(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
                     } ?: it
-                    } as kotlin.collections.List<IcureStubDto>
+                    } as List<IcureStubDto>
 
                 val response = api(credentialsFile).setClassificationsDelegations(icureStubDto = icureStubDto)
 
@@ -627,14 +627,14 @@ class ClassificationApiTest() {
                     } else if(response as? kotlin.collections.Map<String, String>? != null){
                         object : TypeReference<Map<String,String>>() {}
                     } else {
-                        object : TypeReference<kotlin.collections.List<IcureStubDto>>() {}
+                        object : TypeReference<List<IcureStubDto>>() {}
                     })
                     assertAreEquals("setClassificationsDelegations", objectFromFile, response)
                     println("Comparison successful")
                 }
                 catch (e: Exception) {
                     when (e) {
-                        is FileNotFoundException, is java.nio.file.NoSuchFileException -> {
+                        is FileNotFoundException, is NoSuchFileException -> {
                             file.parentFile.mkdirs()
                             file.createNewFile()
                             (response as? Flow<ByteBuffer>)
@@ -657,7 +657,7 @@ class ClassificationApiTest() {
     private suspend fun assertAreEquals(functionName: String, objectFromFile: Any?, response: Any) {
         when {
             objectFromFile as? Iterable<Any> != null -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip : List<String> = when {
                     functionName.let { name -> listOf("listContact", "modifyContacts").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("getServices").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "openingDate")
                     functionName.let { name -> listOf("create", "new", "get", "list", "set").any { name.startsWith(it) } } -> listOf("rev", "created", "modified")
@@ -698,7 +698,7 @@ class ClassificationApiTest() {
                 )
                 )}
             else -> {
-                val toSkip : kotlin.collections.List<String> = when {
+                val toSkip : List<String> = when {
                     functionName.let { name -> listOf("modifyContact").any { name.startsWith(it) } } -> listOf("subContacts.[created, rev, modified]", "services.[openingDate]", "groupId", "created", "modified", "rev")
                     functionName.let { name -> listOf("modifyPatientReferral").any { name.startsWith(it) } } -> listOf("rev", "patientHealthCareParties.[referralPeriods]", "created", "modified")
                     functionName.let { name -> listOf("createContact").any { name.startsWith(it) } } -> listOf("rev", "created", "modified", "deletionDate", "groupId")

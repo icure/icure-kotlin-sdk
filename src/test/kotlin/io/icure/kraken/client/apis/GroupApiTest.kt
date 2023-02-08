@@ -13,16 +13,8 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.DatabaseInitialisationDto
-import io.icure.kraken.client.models.GroupDatabasesInfoDto
-import io.icure.kraken.client.models.GroupDto
-import io.icure.kraken.client.models.IdWithRevDto
-import io.icure.kraken.client.models.ListOfIdsDto
-import io.icure.kraken.client.models.ListOfPropertiesDto
+import org.taktik.icure.services.external.rest.v2.dto.couchdb.GroupDatabasesInfoDto
 import io.icure.kraken.client.models.PaginatedListGroupDto
-import io.icure.kraken.client.models.RegistrationInformationDto
-import io.icure.kraken.client.models.RegistrationSuccessDto
-import io.icure.kraken.client.models.ReplicationInfoDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -55,6 +47,7 @@ import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.toList
+import org.taktik.icure.services.external.rest.v2.dto.*
 
 /**
  * API tests for GroupApi

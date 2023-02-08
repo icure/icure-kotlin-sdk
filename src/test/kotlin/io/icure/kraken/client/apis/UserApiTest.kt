@@ -17,7 +17,7 @@ package io.icure.kraken.client.apis
 import io.icure.kraken.client.models.DocIdentifier
 
 import io.icure.kraken.client.models.PaginatedListUserDto
-import io.icure.kraken.client.models.PropertyStubDto
+import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
 import io.icure.kraken.client.models.TokenWithGroupDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.UserGroupDto

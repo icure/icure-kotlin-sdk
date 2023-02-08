@@ -7,7 +7,7 @@ import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class UserByNameEmailPhoneFilter (
+data class UserByNameEmailPhoneFilter(
     val searchString: String,
     override val desc: String? = null
 ) : AbstractFilterDto<UserDto>

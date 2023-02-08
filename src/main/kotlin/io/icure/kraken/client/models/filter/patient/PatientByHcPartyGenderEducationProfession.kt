@@ -5,15 +5,15 @@ package io.icure.kraken.client.models.filter.patient
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.PatientDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class PatientByHcPartyGenderEducationProfession(
-        override val desc: String? = null,
-        val healthcarePartyId: String? = null,
-        val gender: PatientDto.Gender? = null,
-        val education: String? = null,
-        val profession: String? = null
+    override val desc: String? = null,
+    val healthcarePartyId: String? = null,
+    val gender: PatientDto.Gender? = null,
+    val education: String? = null,
+    val profession: String? = null
 ) : AbstractFilterDto<PatientDto>

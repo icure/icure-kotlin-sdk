@@ -16,7 +16,7 @@ import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
 import io.icure.kraken.client.models.AuthenticationTokenDto
-import io.icure.kraken.client.models.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.security.BasicAuthProvider

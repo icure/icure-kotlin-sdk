@@ -14,12 +14,12 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.HealthElementDto
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
+import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthElementDto
 import java.io.*
 
@@ -330,12 +330,12 @@ class HealthElementApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterHealthElementsBy")
-                val filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>>(fileName, "filterHealthElementsBy.filterChainHealthElement")!!.let {
+                val filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto>>(fileName, "filterHealthElementsBy.filterChainHealthElement")!!.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthElementsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterHealthElementsBy.startDocumentId")?.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthElementsBy") }?.let {
@@ -688,12 +688,12 @@ class HealthElementApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchHealthElementsBy")
-                val abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>>(fileName, "matchHealthElementsBy.abstractFilterDtoHealthElement")!!.let {
+                val abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto>>(fileName, "matchHealthElementsBy.abstractFilterDtoHealthElement")!!.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchHealthElementsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchHealthElementsBy(abstractFilterDtoHealthElement = abstractFilterDtoHealthElement)

@@ -13,10 +13,10 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.ByteArrayDto
+import org.taktik.icure.services.external.rest.v2.dto.data.ByteArrayDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.DocumentTemplateDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.DocumentTemplateDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

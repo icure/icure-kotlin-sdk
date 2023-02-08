@@ -13,12 +13,12 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.FormDto
-import io.icure.kraken.client.models.FormTemplateDto
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.FormDto
+import org.taktik.icure.services.external.rest.v2.dto.FormTemplateDto
+import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

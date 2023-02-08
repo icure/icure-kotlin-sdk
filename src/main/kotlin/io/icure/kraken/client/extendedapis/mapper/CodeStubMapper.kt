@@ -1,7 +1,7 @@
 package io.icure.kraken.client.extendedapis.mapper
 
 import io.icure.kraken.client.models.CodeStub
-import io.icure.kraken.client.models.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.mapstruct.Mapper
 
 @Mapper
@@ -14,6 +14,7 @@ abstract class CodeStubMapper {
         version = codeStub.version,
         label = codeStub.label
     )
+
     fun map(codeStubDto: CodeStubDto): CodeStub = CodeStub(
         id = codeStubDto.id ?: "${codeStubDto.type}|${codeStubDto.code}|${codeStubDto.version}",
         context = codeStubDto.context,

@@ -5,18 +5,20 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.InvoicingCodeDto
-import io.icure.kraken.client.models.ListOfIdsDto
-import io.icure.kraken.client.models.PatientDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.InvoicingCodeDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.InvoiceDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.mapstruct.factory.Mappers
 import java.util.*
 
-suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>): InvoiceDto {
+suspend fun InvoiceDto.initDelegations(
+    user: UserDto,
+    config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
+): InvoiceDto {
     val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
@@ -48,7 +50,11 @@ suspend fun InvoiceDto.initDelegations(user: UserDto, config: CryptoConfig<Invoi
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun InvoiceApi.createInvoice(user: UserDto, invoice: InvoiceDto, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
+suspend fun InvoiceApi.createInvoice(
+    user: UserDto,
+    invoice: InvoiceDto,
+    config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
+) =
     this.createInvoice(
         config.encryptInvoice(
             user.dataOwnerId(),
@@ -59,7 +65,11 @@ suspend fun InvoiceApi.createInvoice(user: UserDto, invoice: InvoiceDto, config:
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun InvoiceApi.createInvoices(user: UserDto, invoices: List<InvoiceDto>, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
+suspend fun InvoiceApi.createInvoices(
+    user: UserDto,
+    invoices: List<InvoiceDto>,
+    config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
+) =
     this.createInvoices(invoices.map {
         config.encryptInvoice(
             user.dataOwnerId(),
@@ -108,7 +118,11 @@ suspend fun InvoiceApi.listInvoicesByHCPartyAndPatientForeignKeys(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun InvoiceApi.getInvoice(user: UserDto, invoiceId: String, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>): InvoiceDto {
+suspend fun InvoiceApi.getInvoice(
+    user: UserDto,
+    invoiceId: String,
+    config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
+): InvoiceDto {
     return this.getInvoice(invoiceId).let { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
@@ -130,7 +144,11 @@ suspend fun InvoiceApi.modifyInvoice(
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
-suspend fun InvoiceApi.modifyInvoices(user: UserDto, invoices: List<InvoiceDto>, config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>) =
+suspend fun InvoiceApi.modifyInvoices(
+    user: UserDto,
+    invoices: List<InvoiceDto>,
+    config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
+) =
     this.modifyInvoices(invoices.map {
         config.encryptInvoice(
             user.dataOwnerId(),
@@ -190,7 +208,12 @@ suspend fun InvoiceApi.findInvoicesByAuthor(
 ): io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto {
     return this.findInvoicesByAuthor(hcPartyId, fromDate, toDate, startKey, startDocumentId, limit)
         .let {
-            io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto(rows = it.rows.map { config.decryptInvoice(user.dataOwnerId(), it) }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
+            io.icure.kraken.client.models.decrypted.PaginatedListInvoiceDto(rows = it.rows.map {
+                config.decryptInvoice(
+                    user.dataOwnerId(),
+                    it
+                )
+            }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
         }
 }
 
@@ -236,7 +259,8 @@ suspend fun InvoiceApi.listByHcPartyGroupId(
     groupId: String,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId).map { config.decryptInvoice(user.dataOwnerId(), it) }
+    return this.listInvoicesByHcPartyAndGroupId(hcPartyId, groupId)
+        .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -251,7 +275,14 @@ suspend fun InvoiceApi.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(
     to: Long?,
     config: CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>
 ): List<InvoiceDto> {
-    return this.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(hcPartyId, sentMediumType, invoiceType, sent, from, to)
+    return this.listInvoicesByHcPartySentMediumTypeInvoiceTypeSentDate(
+        hcPartyId,
+        sentMediumType,
+        invoiceType,
+        sent,
+        from,
+        to
+    )
         .map { config.decryptInvoice(user.dataOwnerId(), it) }
 }
 
@@ -418,9 +449,9 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.e
             ""
         )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
         val (sanitizedInvoice, marshalledData) = this.marshaller(p)
-            sanitizedInvoice.copy(
-                encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))
-            )
+        sanitizedInvoice.copy(
+            encryptedSelf = Base64.getEncoder().encodeToString(encryptAES(data = marshalledData, key = key))
+        )
     }
 }
 
@@ -428,9 +459,9 @@ suspend fun CryptoConfig<InvoiceDto, io.icure.kraken.client.models.InvoiceDto>.d
     myId: String,
     invoice: io.icure.kraken.client.models.InvoiceDto
 ): InvoiceDto {
-        val key = this.crypto.decryptEncryptionKeys(myId, invoice.encryptionKeys).firstOrNull()?.replace(
-            "-",
-            ""
-        )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
-        return this.unmarshaller(invoice, decryptAES(data = Base64.getDecoder().decode(invoice.encryptedSelf), key = key))
+    val key = this.crypto.decryptEncryptionKeys(myId, invoice.encryptionKeys).firstOrNull()?.replace(
+        "-",
+        ""
+    )?.keyFromHexString() ?: throw IllegalArgumentException("No encryption key for user")
+    return this.unmarshaller(invoice, decryptAES(data = Base64.getDecoder().decode(invoice.encryptedSelf), key = key))
 }

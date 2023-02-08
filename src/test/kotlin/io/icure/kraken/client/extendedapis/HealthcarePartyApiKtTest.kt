@@ -14,7 +14,7 @@ import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.models.AuthenticationTokenDto
-import io.icure.kraken.client.models.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
 import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.filter.chain.FilterChain

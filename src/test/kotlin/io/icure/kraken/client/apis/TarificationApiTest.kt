@@ -13,9 +13,9 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListTarificationDto
-import io.icure.kraken.client.models.TarificationDto
+import org.taktik.icure.services.external.rest.v2.dto.TarificationDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude

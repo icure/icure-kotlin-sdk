@@ -13,10 +13,10 @@
 
 package io.icure.kraken.client.apis
 
-import io.icure.kraken.client.models.ClassificationTemplateDto
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.ClassificationTemplateDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListClassificationTemplateDto
 import java.io.*
 

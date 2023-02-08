@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class KeyValuePredicate(val key: String? = null, val operator: Operator? = null, val value: Any? = null) : Predicate {
+data class KeyValuePredicate(val key: String? = null, val operator: Operator? = null, val value: Any? = null) :
+    Predicate {
     enum class Operator(val code: String) {
         EQUAL("=="),
         NOTEQUAL("!="),
@@ -18,6 +19,7 @@ data class KeyValuePredicate(val key: String? = null, val operator: Operator? = 
         SMALLERTHANOREQUAL("<="),
         LIKE("%="),
         ILIKE("%%=");
+
         override fun toString(): String {
             return code
         }

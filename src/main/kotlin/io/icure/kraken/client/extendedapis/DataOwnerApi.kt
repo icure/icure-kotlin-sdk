@@ -14,9 +14,9 @@ class DataOwnerApi(val healthcarePartyApi: HealthcarePartyApi, val patientApi: P
     suspend inline fun <reified T> getDataOwner(dataOwnerId: String): T? {
         return try {
             when (T::class) {
-                HealthcarePartyDto::class -> healthcarePartyApi.getHealthcareParty(dataOwnerId)
-                PatientDto::class -> patientApi.getPatient(dataOwnerId)
-                DeviceDto::class -> deviceApi.getDevice(dataOwnerId)
+                HealthcarePartyDto::class -> healthcarePartyApi.getHealthcareParty(dataOwnerId) as T
+                PatientDto::class -> patientApi.getPatient(dataOwnerId) as T
+                DeviceDto::class -> deviceApi.getDevice(dataOwnerId) as T
                 else -> null
             }
         } catch (e: Exception) {

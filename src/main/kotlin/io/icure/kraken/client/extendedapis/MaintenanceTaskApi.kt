@@ -5,22 +5,23 @@ import io.icure.kraken.client.applyIf
 import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils
 import io.icure.kraken.client.crypto.keyFromHexString
-import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.TypedValueDtoObject
-import io.icure.kraken.client.models.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.decrypted.PaginatedListMaintenanceTaskDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
 import java.util.*
 
 suspend fun MaintenanceTaskDto.initDelegations(
     user: UserDto,
-    config: CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>,
+    config: CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>,
     taskDelegatedTo: String? = null
 ): MaintenanceTaskDto {
-    val delegations = (taskDelegatedTo?.let { setOf(it) } ?: emptySet()) + (user.autoDelegations["all"]
-        ?: emptySet()) + (user.autoDelegations["medicalInformation"] ?: emptySet())
+    val delegations = (taskDelegatedTo?.let { setOf(it) } ?: emptySet()) + (user.autoDelegations[DelegationTagDto.all]
+        ?: emptySet()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: emptySet())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
@@ -29,20 +30,20 @@ suspend fun MaintenanceTaskDto.initDelegations(
         delegations = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
+                    emptyList()
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
+                    emptyList()
                 ),
             ))
         },
@@ -55,12 +56,12 @@ suspend fun MaintenanceTaskApi.createMaintenanceTask(
     user: UserDto,
     maintenanceTask: MaintenanceTaskDto,
     delegatedTo: String? = null,
-    config: CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>
+    config: CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>
 ) = this.createMaintenanceTask(
     config.encryptMaintenanceTask(
         myId = user.dataOwnerId(),
-        delegations = (delegatedTo?.let { setOf(it) } ?: emptySet()) + (user.autoDelegations["all"]
-            ?: emptySet()) + (user.autoDelegations["medicalInformation"] ?: emptySet()),
+        delegations = (delegatedTo?.let { setOf(it) } ?: emptySet()) + (user.autoDelegations[DelegationTagDto.all]
+            ?: emptySet()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: emptySet()),
         maintenanceTask = maintenanceTask.initDelegations(user, config, delegatedTo)
     )
 ).let { config.decryptMaintenanceTask(user.dataOwnerId(), it) }
@@ -70,10 +71,10 @@ suspend fun MaintenanceTaskApi.createMaintenanceTask(
 @ExperimentalStdlibApi
 suspend fun MaintenanceTaskApi.filterMaintenanceTasksBy(
     user: UserDto,
-    filterChain: FilterChain<io.icure.kraken.client.models.MaintenanceTaskDto>,
+    filterChain: FilterChain<org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>,
     startDocumentId: String? = null,
     limit: Int? = null,
-    config: CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>
+    config: CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>
 ): PaginatedListMaintenanceTaskDto = this.filterMaintenanceTasksBy(filterChain, startDocumentId, limit).let {
     PaginatedListMaintenanceTaskDto(
         rows = it.rows.map { config.decryptMaintenanceTask(user.dataOwnerId(), it) },
@@ -88,7 +89,7 @@ suspend fun MaintenanceTaskApi.filterMaintenanceTasksBy(
 suspend fun MaintenanceTaskApi.getMaintenanceTask(
     user: UserDto,
     maintenanceTaskId: String,
-    config: CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>
+    config: CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>
 ): MaintenanceTaskDto =
     this.getMaintenanceTask(maintenanceTaskId).let { config.decryptMaintenanceTask(user.dataOwnerId(), it) }
 
@@ -97,11 +98,11 @@ suspend fun MaintenanceTaskApi.getMaintenanceTask(
 suspend fun MaintenanceTaskApi.modifyMaintenanceTask(
     user: UserDto,
     maintenanceTask: MaintenanceTaskDto,
-    config: CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>
+    config: CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>
 ) = this.modifyMaintenanceTask(
     config.encryptMaintenanceTask(
         myId = user.dataOwnerId(),
-        delegations = (user.autoDelegations["all"] ?: emptySet()) + (user.autoDelegations["medicalInformation"]
+        delegations = (user.autoDelegations[DelegationTagDto.all] ?: emptySet()) + (user.autoDelegations[DelegationTagDto.medicalInformation]
             ?: emptySet()),
         maintenanceTask = maintenanceTask
     )
@@ -109,11 +110,11 @@ suspend fun MaintenanceTaskApi.modifyMaintenanceTask(
 
 
 // CRYPTO
-suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>.encryptMaintenanceTask(
+suspend fun CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>.encryptMaintenanceTask(
     myId: String,
     delegations: Set<String>,
     maintenanceTask: MaintenanceTaskDto
-): io.icure.kraken.client.models.MaintenanceTaskDto {
+): org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto {
     return if (maintenanceTask.encryptionKeys.any { (_, s) -> s.isNotEmpty() }) {
         maintenanceTask
     } else {
@@ -121,10 +122,10 @@ suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.Maint
         maintenanceTask.copy(encryptionKeys = (delegations + myId).fold(maintenanceTask.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     myId,
                     d,
-                    this.crypto.encryptAESKeyForDataOwner(myId, d, maintenanceTask.id, secret).first
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, maintenanceTask.id, secret).first,
+                    emptyList()
                 )
             ))
         })
@@ -148,9 +149,9 @@ suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.Maint
     }
 }
 
-suspend fun CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>.decryptMaintenanceTask(
+suspend fun CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>.decryptMaintenanceTask(
     myId: String,
-    maintenanceTask: io.icure.kraken.client.models.MaintenanceTaskDto
+    maintenanceTask: org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto
 ): MaintenanceTaskDto {
     val key = this.crypto.decryptEncryptionKeys(myId, maintenanceTask.encryptionKeys)
         .firstOrNull()

@@ -76,7 +76,7 @@ class CodeBatchGenerator {
                 code = code,
                 version = version,
                 label = if (Random.nextInt(0, 4) == 0) mapOf(lang to generateRandomString(Random.nextInt(20, 100))) else mapOf(),
-                regions = if (Random.nextInt(0, 4) == 0) listOf(regions[Random.nextInt(0, regions.size)]) else listOf(),
+                regions = if (Random.nextInt(0, 4) == 0) setOf(regions[Random.nextInt(0, regions.size)]) else setOf(),
                 qualifiedLinks = if (Random.nextInt(0, 4) == 0) mapOf(generateRandomString(10) to List(
                     Random.nextInt(
                         1,

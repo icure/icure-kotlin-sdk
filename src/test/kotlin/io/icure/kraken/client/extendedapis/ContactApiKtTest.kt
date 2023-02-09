@@ -199,7 +199,7 @@ internal class ContactApiKtTest {
     )
 
     private fun customContactCrypto(crypto: LocalCrypto) =
-        CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>(
+        CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>(
             crypto = crypto,
             marshaller = { c ->
                 ContactMapperFactory.instance.map(c).copy(

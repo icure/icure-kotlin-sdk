@@ -9,7 +9,6 @@ import io.icure.kraken.client.crypto.maintenanceTaskCryptoConfig
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
-import io.icure.kraken.client.models.*
 import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskAfterDateFilter
@@ -22,6 +21,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
+import org.taktik.icure.constants.TypedValuesType
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
+import org.taktik.icure.services.external.rest.v2.dto.PropertyTypeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.TypedValueDto
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
@@ -29,6 +35,7 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 @FlowPreview
 internal class MaintenanceTaskApiKtTest {
     private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
@@ -209,7 +216,7 @@ internal class MaintenanceTaskApiKtTest {
                                 hcp: HealthcarePartyDto,
                                 authProvider: AuthProvider,
                                 hcpPrivKey: RSAPrivateKey,
-                                additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto> {
+                                additionalRsaKeyPairs: Map<String, List<Pair<RSAPrivateKey, RSAPublicKey>>> = emptyMap()) : CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto> {
         return maintenanceTaskCryptoConfig(
             LocalCrypto(
                 ExtendedTestUtils.dataOwnerWrapperFor(
@@ -232,17 +239,17 @@ internal class MaintenanceTaskApiKtTest {
         properties = listOf(
             PropertyStubDto(
                 id = "dataOwnerConcernedId",
-                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
-                typedValue = TypedValueDtoObject(
-                    type = TypedValueDtoObject.Type.sTRING,
+                type = PropertyTypeStubDto(type = TypedValuesType.STRING),
+                typedValue = TypedValueDto<String>(
+                    type = TypedValuesType.STRING,
                     stringValue = delegatedTo.id
                 )
             ),
             PropertyStubDto(
                 id = "dataOwnerConcernedPubKey",
-                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
-                typedValue = TypedValueDtoObject(
-                    type = TypedValueDtoObject.Type.sTRING,
+                type = PropertyTypeStubDto(type = TypedValuesType.STRING),
+                typedValue = TypedValueDto<String>(
+                    type = TypedValuesType.STRING,
                     stringValue = delegatedTo.publicKey
                 )
             )

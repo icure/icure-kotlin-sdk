@@ -8,16 +8,16 @@ import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.DataOwner
 import io.icure.kraken.client.extendedapis.DataOwnerResolver
 import io.icure.kraken.client.extendedapis.dataOwnerId
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.security.AuthProvider
-import io.icure.kraken.client.security.BasicAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
 import java.security.interfaces.RSAPrivateKey
 
 @FlowPreview
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
+@ExperimentalUnsignedTypes
 object ExtendedTestUtils {
 
     fun localCrypto(basePath: String,

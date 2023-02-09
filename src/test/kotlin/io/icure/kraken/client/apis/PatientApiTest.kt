@@ -399,12 +399,12 @@ class PatientApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterPatientsBy")
-                val filterChainPatient: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto>>(fileName, "filterPatientsBy.filterChainPatient")!!.let {
+                val filterChainPatient: io.icure.kraken.client.models.filter.chain.FilterChain<PatientDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<PatientDto>>(fileName, "filterPatientsBy.filterChainPatient")!!.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterPatientsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.PatientDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<PatientDto> ?: it
                     }
                 val startKey: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterPatientsBy.startKey")?.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterPatientsBy") }?.let {
@@ -1749,12 +1749,12 @@ class PatientApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchPatientsBy")
-                val abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto>>(fileName, "matchPatientsBy.abstractFilterDtoPatient")!!.let {
+                val abstractFilterDtoPatient: io.icure.kraken.client.models.filter.AbstractFilterDto<PatientDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<PatientDto>>(fileName, "matchPatientsBy.abstractFilterDtoPatient")!!.let {
                     (it as? PatientDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchPatientsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getPatient(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.PatientDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<PatientDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchPatientsBy(abstractFilterDtoPatient = abstractFilterDtoPatient)

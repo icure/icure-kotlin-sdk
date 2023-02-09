@@ -18,7 +18,6 @@ import io.icure.kraken.client.models.DocIdentifier
 import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
 import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import org.taktik.icure.services.external.rest.v2.dto.MessageDto
-import io.icure.kraken.client.models.MessagesReadStatusUpdate
 import io.icure.kraken.client.models.PaginatedListMessageDto
 import java.io.*
 
@@ -52,6 +51,7 @@ import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
 import kotlinx.coroutines.flow.toList
+import org.taktik.icure.services.external.rest.v2.dto.MessagesReadStatusUpdate
 
 /**
  * API tests for MessageApi

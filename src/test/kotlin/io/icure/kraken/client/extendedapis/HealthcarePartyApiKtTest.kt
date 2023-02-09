@@ -13,9 +13,7 @@ import io.icure.kraken.client.crypto.publicKeyAsString
 import io.icure.kraken.client.crypto.toPrivateKey
 import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
-import io.icure.kraken.client.models.AuthenticationTokenDto
 import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.icure.kraken.client.models.filter.maintenancetask.MaintenanceTaskByHcPartyAndTypeFilter
@@ -26,6 +24,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.taktik.icure.constants.Users
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
+import org.taktik.icure.services.external.rest.v2.dto.security.AuthenticationTokenDto
 import java.security.KeyPair
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -254,8 +256,8 @@ internal class HealthcarePartyApiKtTest {
         UserDto(
             id = UUID.randomUUID().toString(),
             login = "jimmy-${System.currentTimeMillis()}",
-            type = UserDto.Type.database,
-            status = UserDto.Status.aCTIVE,
+            type = Users.Type.database,
+            status = Users.Status.ACTIVE,
             name = "${newHcp.firstName} ${newHcp.lastName}",
             authenticationTokens = mapOf(
                 "test" to AuthenticationTokenDto(
@@ -265,10 +267,11 @@ internal class HealthcarePartyApiKtTest {
                 )
             ),
             healthcarePartyId = newHcp.id,
-            autoDelegations = mapOf("all" to setOf(parent.id))
+            autoDelegations = mapOf(DelegationTagDto.all to setOf(parent.id))
         )
     )
 
+    @FlowPreview
     private suspend fun createHealthcareParty(
         parentUser: UserDto,
         parentLocalCrypto: LocalCrypto,

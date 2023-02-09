@@ -15,9 +15,7 @@ import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils
 import io.icure.kraken.client.extendedapis.mapper.PatientMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.AuthenticationTokenDto
 import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.security.BasicAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +23,10 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
+import org.taktik.icure.constants.Users
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
+import org.taktik.icure.services.external.rest.v2.dto.security.AuthenticationTokenDto
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.time.Instant
@@ -60,6 +62,7 @@ internal class PatientApiKtTest {
 
     @org.junit.jupiter.api.Test
     @FlowPreview
+    @ExperimentalUnsignedTypes
     fun createPatientWithCustomCryptoConfig() = runBlocking {
         // Before
         val user = userApi.getCurrentUser()
@@ -88,6 +91,7 @@ internal class PatientApiKtTest {
     }
     @FlowPreview
     @org.junit.jupiter.api.Test
+    @ExperimentalUnsignedTypes
     fun createPatientWithDefaultCryptoConfig() = runBlocking {
         // Before
         val user = userApi.getCurrentUser()
@@ -113,6 +117,7 @@ internal class PatientApiKtTest {
 
     @FlowPreview
     @org.junit.jupiter.api.Test
+    @ExperimentalUnsignedTypes
     fun createPatientWithDefaultCryptoConfigHcpWithParent() = runBlocking {
         val parent = userApi.getCurrentUser()
         val parentHcp = hcpartyApi.getCurrentHealthcareParty()
@@ -181,12 +186,12 @@ internal class PatientApiKtTest {
             UserDto(
                 id = UUID.randomUUID().toString(),
                 login = "jimmy-${System.currentTimeMillis()}",
-                type = UserDto.Type.database,
-                status = UserDto.Status.aCTIVE,
+                type = Users.Type.database,
+                status = Users.Status.ACTIVE,
                 name = "${newHcp.firstName} ${newHcp.lastName}",
                 authenticationTokens = mapOf("test" to AuthenticationTokenDto("test", Instant.now().toEpochMilli(), 24 * 3600 * 365)),
                 healthcarePartyId = newHcp.id,
-                autoDelegations = mapOf("all" to setOf(parent.id))
+                autoDelegations = mapOf(DelegationTagDto.all to setOf(parent.id))
             )
         )
 
@@ -244,8 +249,10 @@ internal class PatientApiKtTest {
         Assertions.assertTrue(newHcpUpdated.hcPartyKeys.isEmpty())
     }
 
+    @ExperimentalUnsignedTypes
+    @FlowPreview
     private fun customPatientCryptoConfig(crypto: LocalCrypto) =
-        CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
+        CryptoConfig<PatientDto, org.taktik.icure.services.external.rest.v2.dto.PatientDto>(
             crypto = crypto,
             marshaller = { p -> PatientMapperFactory.instance.map(p)
                 .copy(

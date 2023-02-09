@@ -141,6 +141,9 @@ data class PatientDto(
     @field:JsonProperty("deactivationReason")
     val deactivationReason: DeactivationReason = DeactivationReason.none,
 
+    @field:JsonProperty("deactivationDate")
+    val deactivationDate: Int? = null,
+
     /* List of insurance coverages (of class Insurability, see below). */
     @field:JsonProperty("insurabilities")
     val insurabilities: List<InsurabilityDto> = emptyList(),

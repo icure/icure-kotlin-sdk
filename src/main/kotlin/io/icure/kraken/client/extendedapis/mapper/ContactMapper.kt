@@ -11,5 +11,10 @@ interface ContactMapper {
 }
 
 object ContactMapperFactory {
-    val instance = ContactMapperImpl(ServiceMapperImpl())
+    val instance = ContactMapperImpl(
+        ServiceMapperImpl(
+            InstantMapperImpl(),
+            ByteArrayMapperImpl()
+        )
+    )
 }

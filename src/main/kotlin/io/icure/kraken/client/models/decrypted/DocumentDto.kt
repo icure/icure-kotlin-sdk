@@ -16,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DataAttachmentDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DeletedAttachmentDto
 
 /**
  * This entity is a root level object. It represents a Document. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -166,7 +168,7 @@ data class DocumentDto(
 
     /* Size of the document file */
     @field:JsonProperty("size")
-    val propertySize: Long? = null,
+    val size: Long? = null,
 
     /* Hashed version of the document */
     @field:JsonProperty("hash")
@@ -179,6 +181,10 @@ data class DocumentDto(
     /* Id of attachment to this document */
     @field:JsonProperty("attachmentId")
     val attachmentId: String? = null,
+
+    val secondaryAttachments: Map<String, DataAttachmentDto> = emptyMap(),
+
+    val deletedAttachments: List<DeletedAttachmentDto> = emptyList(),
 
     @field:JsonProperty("encryptedAttachment")
     val encryptedAttachment: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,

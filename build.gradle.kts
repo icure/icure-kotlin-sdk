@@ -1,11 +1,11 @@
-val kotlinVersion = "1.6.21"
+val kotlinVersion = "1.8.0"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
-val kmapVersion = "0.1.33-b53d7e7ec1"
+val kmapVersion = "0.1.52-main.8d4a565b58"
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    id("com.google.devtools.ksp") version "1.6.21-1.0.5"
+    kotlin("jvm") version "1.8.0"
+    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     id("jacoco")
     id("org.sonarqube") version "3.3"
 }

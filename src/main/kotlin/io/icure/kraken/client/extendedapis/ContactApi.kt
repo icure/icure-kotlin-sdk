@@ -11,7 +11,6 @@ import org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
 import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.PaginatedListContactDto
 import io.icure.kraken.client.models.decrypted.PatientDto
@@ -21,13 +20,15 @@ import io.icure.kraken.client.models.filter.contact.ContactByServiceIdsFilter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.mapstruct.Mapper
 import org.mapstruct.factory.Mappers
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
 import java.util.*
 
 suspend fun ContactDto.initDelegations(
     user: UserDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): ContactDto {
-    val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegations = (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf())
     val ek = UUID.randomUUID().toString()
     val sfk = UUID.randomUUID().toString()
     return this.copy(
@@ -36,20 +37,20 @@ suspend fun ContactDto.initDelegations(
         delegations = (delegations + user.dataOwnerId()).fold(this.delegations) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, sfk).first,
+                    emptyList()
                 ),
             ))
         },
         encryptionKeys = (delegations + user.dataOwnerId()).fold(this.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     user.dataOwnerId(),
                     d,
                     config.crypto.encryptAESKeyForDataOwner(user.dataOwnerId(), d, this.id, ek).first,
+                    emptyList()
                 ),
             ))
         },
@@ -61,12 +62,12 @@ suspend fun ContactDto.initDelegations(
 suspend fun ContactApi.createContact(
     user: UserDto,
     contact: ContactDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ) =
     this.createContact(
         config.encryptContact(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             contact
         )
     ).let { config.decryptContact(user.dataOwnerId(), it) }
@@ -77,26 +78,26 @@ suspend fun ContactApi.createContact(
     user: UserDto,
     patient: PatientDto,
     contact: ContactDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): ContactDto {
     val key = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).firstOrNull()
         ?: throw IllegalArgumentException("No delegation for user")
-    val delegations = (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf())
+    val delegations = (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf())
     return this.createContact(
         config.encryptContact(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             contact.initDelegations(user, config)
         ).let { ec ->
             ec.copy(
-                secretForeignKeys = listOf(key),
+                secretForeignKeys = setOf(key),
                 cryptedForeignKeys = (delegations + user.dataOwnerId()).fold(ec.cryptedForeignKeys) { m, d ->
                     m + (d to setOf(
                         DelegationDto(
-                            emptyList(),
                             user.dataOwnerId(),
                             d,
                             config.crypto.encryptValueForDataOwner(user.dataOwnerId(), d, ec.id, patient.id).first,
+                            emptyList()
                         ),
                     ))
                 },
@@ -110,12 +111,12 @@ suspend fun ContactApi.createContact(
 suspend fun ContactApi.modifyContact(
     user: UserDto,
     contact: ContactDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ) =
     this.modifyContact(
         config.encryptContact(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             contact
         )
     ).let { config.decryptContact(user.dataOwnerId(), it) }
@@ -125,12 +126,12 @@ suspend fun ContactApi.modifyContact(
 suspend fun ContactApi.createContacts(
     user: UserDto,
     contactDto: List<ContactDto>,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.createContacts(contactDto.map {
         config.encryptContact(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             it
         )
     }).map { config.decryptContact(user.dataOwnerId(), it) }
@@ -141,12 +142,12 @@ suspend fun ContactApi.createContacts(
 suspend fun ContactApi.modifyContacts(
     user: UserDto,
     contactDto: List<ContactDto>,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.modifyContacts(contactDto.map {
         config.encryptContact(
             user.dataOwnerId(),
-            (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"] ?: setOf()),
+            (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
             it
         )
     }).map { config.decryptContact(user.dataOwnerId(), it) }
@@ -158,7 +159,7 @@ suspend fun ContactApi.deleteServices(
     user: UserDto,
     patient: PatientDto,
     services: List<ServiceDto>,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): ContactDto {
     val currentTime = System.currentTimeMillis()
     return this.createContact(
@@ -184,13 +185,13 @@ suspend fun ContactApi.updateServices(
     user: UserDto,
     patient: PatientDto,
     services: List<ServiceDto>,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     val serviceIds = services.map { it.id }
     val contactIds = this.matchContactsBy(ContactByServiceIdsFilter(ids = serviceIds))
 
-    return this.getContacts(user, ListOfIdsDto(contactIds), config).map { contactDto ->
-        val contactServiceIds = contactDto.services.map { service -> service.id }.intersect(serviceIds)
+    return this.getContacts(user, ListOfIdsDto().apply { this.ids =contactIds }, config).map { contactDto ->
+        val contactServiceIds = contactDto.services.map { service -> service.id }.intersect(serviceIds.toSet())
         val contactServices = services.filter { service -> service.id in contactServiceIds }
         val subContacts =
             contactDto.subContacts.filter { subContact -> subContact.services.any { serviceLink -> serviceLink.serviceId in contactServiceIds } }
@@ -210,11 +211,11 @@ suspend fun ContactApi.updateServices(
 @ExperimentalStdlibApi
 suspend fun ContactApi.filterContactsBy(
     user: UserDto,
-    filterChainContact: FilterChain<io.icure.kraken.client.models.ContactDto>,
+    filterChainContact: FilterChain<org.taktik.icure.services.external.rest.v2.dto.ContactDto>,
     startKey: String?,
     startDocumentId: String?,
     limit: Int?,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): PaginatedListContactDto {
     return this.filterContactsBy(filterChainContact, startDocumentId, limit).let {
         PaginatedListContactDto(
@@ -231,7 +232,7 @@ suspend fun ContactApi.filterContactsBy(
 suspend fun ContactApi.getContact(
     user: UserDto,
     contactId: String,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): ContactDto {
     return this.getContact(contactId).let { config.decryptContact(user.dataOwnerId(), it) }
 }
@@ -241,7 +242,7 @@ suspend fun ContactApi.getContact(
 suspend fun ContactApi.getContacts(
     user: UserDto,
     listOfIdsDto: ListOfIdsDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.getContacts(listOfIdsDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
@@ -250,17 +251,17 @@ suspend fun ContactApi.getContacts(
 @ExperimentalStdlibApi
 suspend fun ContactApi.filterServicesBy(
     user: UserDto,
-    filterChainService: FilterChain<io.icure.kraken.client.models.ServiceDto>,
+    filterChainService: FilterChain<org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto>,
     startDocumentId: String?,
     limit: Int?,
     crypto: Crypto
 ): io.icure.kraken.client.models.decrypted.PaginatedListServiceDto {
     return this.filterServicesBy(filterChainService, startDocumentId, limit).let {
-        io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows.let {
+        io.icure.kraken.client.models.decrypted.PaginatedListServiceDto(rows = it.rows.let { servList ->
             crypto.decryptServices(
                 user.dataOwnerId(),
                 null,
-                it
+                servList
             )
         }, pageSize = it.pageSize, totalSize = it.totalSize, nextKeyPair = it.nextKeyPair)
     }
@@ -272,7 +273,7 @@ suspend fun ContactApi.findByHCPartyFormId(
     user: UserDto,
     hcPartyId: String,
     formId: String,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.listContactsByHCPartyAndFormId(hcPartyId, formId).map { config.decryptContact(user.dataOwnerId(), it) }
 }
@@ -283,7 +284,7 @@ suspend fun ContactApi.findByHCPartyFormIds(
     user: UserDto,
     hcPartyId: String,
     listOfIdsDto: ListOfIdsDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.listContactsByHCPartyAndFormIds(hcPartyId, listOfIdsDto)
         .map { config.decryptContact(user.dataOwnerId(), it) }
@@ -298,7 +299,7 @@ suspend fun ContactApi.findByHCPartyPatient(
     patient: PatientDto,
     planOfActionsIds: String?,
     skipClosedContacts: Boolean?,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     val keys = config.crypto.decryptEncryptionKeys(user.dataOwnerId(), patient.delegations).takeIf { it.isNotEmpty() }
         ?: throw IllegalArgumentException("No delegation for user")
@@ -316,7 +317,7 @@ suspend fun ContactApi.findByHCPartyServiceId(
     user: UserDto,
     hcPartyId: String,
     serviceId: String,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.listContactByHCPartyServiceId(hcPartyId, serviceId)
         .map { config.decryptContact(user.dataOwnerId(), it) }
@@ -327,7 +328,7 @@ suspend fun ContactApi.findByHCPartyServiceId(
 suspend fun ContactApi.findContactsByExternalId(
     user: UserDto,
     externalId: String,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.listContactsByExternalId(externalId).map { config.decryptContact(user.dataOwnerId(), it) }
 }
@@ -338,7 +339,7 @@ suspend fun ContactApi.findContactsByHCPartyPatientForeignKeys(
     user: UserDto,
     hcPartyId: String,
     listOfIdsDto: ListOfIdsDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.listContactsByHCPartyAndPatientForeignKeys(hcPartyId, listOfIdsDto)
         .map { config.decryptContact(user.dataOwnerId(), it) }
@@ -353,7 +354,7 @@ suspend fun ContactApi.listContactsByOpeningDate(
     hcpartyid: String,
     startDocumentId: String?,
     limit: Int?,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): PaginatedListContactDto {
     return this.findContactsByOpeningDate(startKey, endKey, hcpartyid, startDocumentId, limit).let {
         PaginatedListContactDto(
@@ -412,7 +413,7 @@ suspend fun ContactApi.newContactDelegations(
     user: UserDto,
     contactId: String,
     delegationDto: DelegationDto,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): ContactDto {
     return this.newContactDelegations(contactId, delegationDto).let { config.decryptContact(user.dataOwnerId(), it) }
 }
@@ -422,16 +423,16 @@ suspend fun ContactApi.newContactDelegations(
 suspend fun ContactApi.setContactsDelegations(
     user: UserDto,
     icureStubDto: List<IcureStubDto>,
-    config: CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>
+    config: CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>
 ): List<ContactDto> {
     return this.setContactsDelegations(icureStubDto).map { config.decryptContact(user.dataOwnerId(), it) }
 }
 
-suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.encryptContact(
+suspend fun CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>.encryptContact(
     myId: String,
     delegations: Set<String>,
     contact: ContactDto
-): io.icure.kraken.client.models.ContactDto {
+): org.taktik.icure.services.external.rest.v2.dto.ContactDto {
     return if (contact.encryptionKeys.any { (_, s) -> s.isNotEmpty() }) {
         contact
     } else {
@@ -439,10 +440,10 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
         contact.copy(encryptionKeys = (delegations + myId).fold(contact.encryptionKeys) { m, d ->
             m + (d to setOf(
                 DelegationDto(
-                    emptyList(),
                     myId,
                     d,
-                    this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first
+                    this.crypto.encryptAESKeyForDataOwner(myId, d, contact.id, secret).first,
+                    emptyList()
                 )
             ))
         })
@@ -458,9 +459,9 @@ suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.e
     }
 }
 
-suspend fun CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>.decryptContact(
+suspend fun CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>.decryptContact(
     myId: String,
-    contact: io.icure.kraken.client.models.ContactDto
+    contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto
 ): ContactDto {
     val key = this.crypto.decryptEncryptionKeys(myId, contact.encryptionKeys)
         .firstOrNull()?.replace(
@@ -475,7 +476,7 @@ suspend fun Crypto.encryptServices(
     delegations: Set<String>,
     contactKey: ByteArray?,
     services: List<ServiceDto>
-): List<io.icure.kraken.client.models.ServiceDto> {
+): List<org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto> {
     val objectMapper = ObjectMapper()
 
     return services.map { s ->
@@ -516,7 +517,7 @@ suspend fun Crypto.encryptServices(
 suspend fun Crypto.decryptServices(
     myId: String,
     contactKey: ByteArray?,
-    services: List<io.icure.kraken.client.models.ServiceDto>
+    services: List<org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto>
 ): List<ServiceDto> = services.map { s ->
     val objectMapper = ObjectMapper()
 
@@ -561,8 +562,8 @@ data class ContentWrapper(
 
 @Mapper(uses = [ServiceMapper::class])
 interface ContactMapper {
-    fun map(contact: ContactDto): io.icure.kraken.client.models.ContactDto
-    fun map(contact: io.icure.kraken.client.models.ContactDto): ContactDto
+    fun map(contact: ContactDto): org.taktik.icure.services.external.rest.v2.dto.ContactDto
+    fun map(contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto): ContactDto
 }
 
 object ContactMapperFactory {
@@ -572,8 +573,8 @@ object ContactMapperFactory {
 @Mapper
 interface ServiceMapper {
 
-    fun map(service: ServiceDto): io.icure.kraken.client.models.ServiceDto
-    fun map(service: io.icure.kraken.client.models.ServiceDto): ServiceDto
+    fun map(service: ServiceDto): org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
+    fun map(service: org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto): ServiceDto
 
     fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
     fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto

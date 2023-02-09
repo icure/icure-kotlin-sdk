@@ -12,13 +12,6 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CommentedClassificationDto
-import io.icure.kraken.client.models.SamTextDto
-import io.icure.kraken.client.models.VmpComponentDto
-import io.icure.kraken.client.models.VmpGroupStubDto
-import io.icure.kraken.client.models.VtmDto
-import io.icure.kraken.client.models.WadaDto
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -47,23 +40,23 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class VmpDto (
 
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     @field:JsonProperty("from")
-    val from: kotlin.Long? = null,
+    val from: Long? = null,
 
     @field:JsonProperty("to")
-    val to: kotlin.Long? = null,
+    val to: Long? = null,
 
     @field:JsonProperty("code")
-    val code: kotlin.String? = null,
+    val code: String? = null,
 
     @field:JsonProperty("vmpGroup")
     val vmpGroup: VmpGroupStubDto? = null,
@@ -78,13 +71,13 @@ data class VmpDto (
     val vtm: VtmDto? = null,
 
     @field:JsonProperty("wadas")
-    val wadas: kotlin.collections.List<WadaDto>? = null,
+    val wadas: List<WadaDto>? = null,
 
     @field:JsonProperty("components")
-    val components: kotlin.collections.List<VmpComponentDto>? = null,
+    val components: List<VmpComponentDto>? = null,
 
     @field:JsonProperty("commentedClassifications")
-    val commentedClassifications: kotlin.collections.List<CommentedClassificationDto>? = null
+    val commentedClassifications: List<CommentedClassificationDto>? = null
 
 )
 

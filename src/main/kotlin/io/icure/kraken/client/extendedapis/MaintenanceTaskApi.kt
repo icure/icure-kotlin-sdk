@@ -13,6 +13,7 @@ import io.icure.kraken.client.models.filter.chain.FilterChain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.taktik.icure.services.external.rest.v2.dto.UserDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.TypedValueDto
 import java.util.*
 
 suspend fun MaintenanceTaskDto.initDelegations(
@@ -165,6 +166,6 @@ suspend fun CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.
     )
 }
 
-data class PropertyWrapper(val typedValue: TypedValueDtoObject)
+data class PropertyWrapper(val typedValue: TypedValueDto<*>)
 
 

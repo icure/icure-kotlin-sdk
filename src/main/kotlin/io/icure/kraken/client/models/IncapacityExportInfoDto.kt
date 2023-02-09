@@ -12,14 +12,13 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AddressDto
 import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import org.taktik.icure.services.external.rest.v2.dto.embed.AddressDto
 
 /**
  * 
@@ -62,91 +61,91 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class IncapacityExportInfoDto (
 
     @field:JsonProperty("incapacityId")
-    val incapacityId: kotlin.String,
+    val incapacityId: String,
 
     @field:JsonProperty("notificationDate")
-    val notificationDate: kotlin.Long,
+    val notificationDate: Long,
 
     @field:JsonProperty("retraction")
-    val retraction: kotlin.Boolean,
+    val retraction: Boolean,
 
     @field:JsonProperty("dataset")
-    val dataset: kotlin.String,
+    val dataset: String,
 
     @field:JsonProperty("transactionType")
-    val transactionType: kotlin.String,
+    val transactionType: String,
 
     @field:JsonProperty("incapacityreason")
-    val incapacityreason: kotlin.String,
+    val incapacityreason: String,
 
     @field:JsonProperty("beginmoment")
-    val beginmoment: kotlin.Long,
+    val beginmoment: Long,
 
     @field:JsonProperty("endmoment")
-    val endmoment: kotlin.Long,
+    val endmoment: Long,
 
     @field:JsonProperty("outofhomeallowed")
-    val outofhomeallowed: kotlin.Boolean,
+    val outofhomeallowed: Boolean,
 
     @field:JsonProperty("incapWork")
-    val incapWork: kotlin.Boolean,
+    val incapWork: Boolean,
 
     @field:JsonProperty("incapSchool")
-    val incapSchool: kotlin.Boolean,
+    val incapSchool: Boolean,
 
     @field:JsonProperty("incapSwim")
-    val incapSwim: kotlin.Boolean,
+    val incapSwim: Boolean,
 
     @field:JsonProperty("incapSchoolsports")
-    val incapSchoolsports: kotlin.Boolean,
+    val incapSchoolsports: Boolean,
 
     @field:JsonProperty("incapHeavyphysicalactivity")
-    val incapHeavyphysicalactivity: kotlin.Boolean,
+    val incapHeavyphysicalactivity: Boolean,
 
     @field:JsonProperty("diagnoseServices")
-    val diagnoseServices: kotlin.collections.List<ServiceDto> = listOf(),
+    val diagnoseServices: List<ServiceDto> = listOf(),
 
     @field:JsonProperty("jobstatus")
-    val jobstatus: kotlin.String,
+    val jobstatus: String,
 
     @field:JsonProperty("job")
-    val job: kotlin.String,
+    val job: String,
 
     @field:JsonProperty("occupationalDiseaseDeclDate")
-    val occupationalDiseaseDeclDate: kotlin.Long,
+    val occupationalDiseaseDeclDate: Long,
 
     @field:JsonProperty("accidentDate")
-    val accidentDate: kotlin.Long,
+    val accidentDate: Long,
 
     @field:JsonProperty("expectedbirthgivingDate")
-    val expectedbirthgivingDate: kotlin.Long,
+    val expectedbirthgivingDate: Long,
 
     @field:JsonProperty("maternityleaveBegin")
-    val maternityleaveBegin: kotlin.Long,
+    val maternityleaveBegin: Long,
 
     @field:JsonProperty("maternityleaveEnd")
-    val maternityleaveEnd: kotlin.Long,
+    val maternityleaveEnd: Long,
 
     @field:JsonProperty("hospitalisationBegin")
-    val hospitalisationBegin: kotlin.Long,
+    val hospitalisationBegin: Long,
 
     @field:JsonProperty("hospitalisationEnd")
-    val hospitalisationEnd: kotlin.Long,
+    val hospitalisationEnd: Long,
 
     @field:JsonProperty("contactPersonTel")
-    val contactPersonTel: kotlin.String,
+    val contactPersonTel: String,
 
     @field:JsonProperty("foreignStayBegin")
-    val foreignStayBegin: kotlin.Long,
+    val foreignStayBegin: Long,
 
     @field:JsonProperty("foreignStayEnd")
-    val foreignStayEnd: kotlin.Long,
+    val foreignStayEnd: Long,
 
     @field:JsonProperty("recipient")
     val recipient: HealthcarePartyDto? = null,
 
     @field:JsonProperty("comment")
-    val comment: kotlin.String? = null,
+    val comment: String? = null,
 
     @field:JsonProperty("hospital")
     val hospital: HealthcarePartyDto? = null,

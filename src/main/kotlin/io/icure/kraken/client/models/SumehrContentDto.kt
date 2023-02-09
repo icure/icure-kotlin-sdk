@@ -13,13 +13,12 @@
 package io.icure.kraken.client.models
 
 import org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
-import io.icure.kraken.client.models.PartnershipDto
-import io.icure.kraken.client.models.PatientHealthCarePartyDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.taktik.icure.services.external.rest.v2.dto.embed.PartnershipDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.PatientHealthCarePartyDto
 
 
 /**
@@ -36,16 +35,16 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class SumehrContentDto (
 
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto>? = null,
+    val services: List<ServiceDto>? = null,
 
     @field:JsonProperty("healthElements")
-    val healthElements: kotlin.collections.List<HealthElementDto>? = null,
+    val healthElements: List<HealthElementDto>? = null,
 
     @field:JsonProperty("partnerships")
-    val partnerships: kotlin.collections.List<PartnershipDto>? = null,
+    val partnerships: List<PartnershipDto>? = null,
 
     @field:JsonProperty("patientHealthcareParties")
-    val patientHealthcareParties: kotlin.collections.List<PatientHealthCarePartyDto>? = null
+    val patientHealthcareParties: List<PatientHealthCarePartyDto>? = null
 
 )
 

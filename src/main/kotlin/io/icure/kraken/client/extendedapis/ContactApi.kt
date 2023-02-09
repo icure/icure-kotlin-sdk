@@ -7,6 +7,8 @@ import io.icure.kraken.client.crypto.CryptoConfig
 import io.icure.kraken.client.crypto.CryptoUtils.decryptAES
 import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
+import io.icure.kraken.client.extendedapis.mapper.ContactMapper
+import io.icure.kraken.client.extendedapis.mapper.ServiceMapper
 import org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
@@ -560,37 +562,37 @@ data class ContentWrapper(
     val content: Map<String, io.icure.kraken.client.models.decrypted.ContentDto> = mapOf()
 )
 
-@Mapper(uses = [ServiceMapper::class])
-interface ContactMapper {
-    fun map(contact: ContactDto): org.taktik.icure.services.external.rest.v2.dto.ContactDto
-    fun map(contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto): ContactDto
-}
+//@Mapper(uses = [ServiceMapper::class])
+//interface ContactMapper {
+//    fun map(contact: ContactDto): org.taktik.icure.services.external.rest.v2.dto.ContactDto
+//    fun map(contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto): ContactDto
+//}
 
 object ContactMapperFactory {
     val instance = Mappers.getMapper(ContactMapper::class.java)
 }
 
-@Mapper
-interface ServiceMapper {
-
-    fun map(service: ServiceDto): org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
-    fun map(service: org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto): ServiceDto
-
-    fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
-    fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto
-
-    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>): Map<String, Map<String, String>> {
-        return qualifiedLinks
-            .map { (key, value) -> key.value to value }
-            .toMap()
-    }
-
-    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>): Map<ServiceDto.LinkQualification, Map<String, String>> {
-        return qualifiedLinks
-            .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
-            .toMap()
-    }
-}
+//@Mapper
+//interface ServiceMapper {
+//
+//    fun map(service: ServiceDto): org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
+//    fun map(service: org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto): ServiceDto
+//
+//    fun map(content: io.icure.kraken.client.models.decrypted.ContentDto): ContentDto
+//    fun map(content: ContentDto): io.icure.kraken.client.models.decrypted.ContentDto
+//
+//    fun mapQualifiedLinks(qualifiedLinks: Map<ServiceDto.LinkQualification, Map<String, String>>): Map<String, Map<String, String>> {
+//        return qualifiedLinks
+//            .map { (key, value) -> key.value to value }
+//            .toMap()
+//    }
+//
+//    fun mapRawQualifiedLinks(qualifiedLinks: Map<String, Map<String, String>>): Map<ServiceDto.LinkQualification, Map<String, String>> {
+//        return qualifiedLinks
+//            .map { (key, value) -> ServiceDto.LinkQualification.valueOf(key) to value }
+//            .toMap()
+//    }
+//}
 
 object ServiceMapperFactory {
     val instance = Mappers.getMapper(ServiceMapper::class.java)

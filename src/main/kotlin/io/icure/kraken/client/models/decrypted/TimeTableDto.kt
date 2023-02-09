@@ -17,8 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
-import io.icure.kraken.client.models.TimeTableItemDto
-
+import org.taktik.icure.services.external.rest.v2.dto.embed.TimeTableItemDto
 
 /**
  *

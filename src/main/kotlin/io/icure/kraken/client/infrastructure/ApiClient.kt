@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.icure.asyncjacksonhttpclient.net.params
 import io.icure.asyncjacksonhttpclient.net.web.HttpMethod
 import io.icure.asyncjacksonhttpclient.net.web.Request
@@ -42,7 +43,7 @@ open class ApiClient(
         var timeoutDuration: Duration? = null
 
         val objectMapper: ObjectMapper = ObjectMapper()
-            .registerModule(KotlinModule())
+            .registerKotlinModule()
             .registerModule(object : SimpleModule() {
                 override fun setupModule(context: SetupContext?) {
                     addDeserializer(ByteArrayWrapper::class.java, ByteArrayWrapperDeserializer())

@@ -2,6 +2,7 @@ val kotlinVersion = "1.8.0"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
 val kmapVersion = "0.1.52-main.8d4a565b58"
+val krakenLibsVersion = "4.0.7-g829bf4ea49"
 
 plugins {
     kotlin("jvm") version "1.8.0"
@@ -56,7 +57,8 @@ dependencies {
     ksp(group = "io.icure", name = "kmap", version = kmapVersion)
 
     //Kraken DTOs
-    implementation(group = "org.taktik.icure", name = "dto", version = "4.0.5-g6334d02dbe")
+    implementation(group = "org.taktik.icure", name = "dto", version = krakenLibsVersion)
+    implementation(group = "org.taktik.icure", name = "domain", version = krakenLibsVersion)
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 

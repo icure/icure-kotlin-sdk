@@ -14,12 +14,13 @@ import io.icure.kraken.client.extendedapis.DataOwnerResolver
 import io.icure.kraken.client.extendedapis.createMaintenanceTask
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
-import io.icure.kraken.client.models.PropertyTypeStubDto
-import io.icure.kraken.client.models.TypedValueDtoObject
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import org.taktik.icure.constants.TypedValuesType
+import org.taktik.icure.services.external.rest.v2.dto.PropertyTypeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.TypedValueDto
 import java.security.KeyFactory
 import java.security.PrivateKey
 import java.security.PublicKey
@@ -431,17 +432,17 @@ class LocalCrypto(
         properties = listOf(
             PropertyStubDto(
                 id = "dataOwnerConcernedId",
-                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
-                typedValue = TypedValueDtoObject(
-                    type = TypedValueDtoObject.Type.sTRING,
+                type = PropertyTypeStubDto(type = TypedValuesType.STRING),
+                typedValue = TypedValueDto<String>(
+                    type = TypedValuesType.STRING,
                     stringValue = concernedDataOwner.dataOwnerId
                 )
             ),
             PropertyStubDto(
                 id = "dataOwnerConcernedPubKey",
-                type = PropertyTypeStubDto(type = PropertyTypeStubDto.Type.sTRING),
-                typedValue = TypedValueDtoObject(
-                    type = TypedValueDtoObject.Type.sTRING,
+                type = PropertyTypeStubDto(type = TypedValuesType.STRING),
+                typedValue = TypedValueDto<String>(
+                    type = TypedValuesType.STRING,
                     stringValue = concernedDataOwnerPubKey
                 )
             )

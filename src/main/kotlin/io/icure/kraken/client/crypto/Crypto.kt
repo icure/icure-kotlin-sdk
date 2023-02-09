@@ -1,8 +1,8 @@
 package io.icure.kraken.client.crypto
 
 import io.icure.kraken.client.extendedapis.DataOwner
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
-import io.icure.kraken.client.models.UserDto
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.interfaces.RSAPrivateKey

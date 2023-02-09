@@ -7,7 +7,6 @@ import io.icure.kraken.client.extendedapis.decryptServices
 import io.icure.kraken.client.extendedapis.encryptServices
 import io.icure.kraken.client.extendedapis.mapper.*
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.UserDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.DocumentDto
 import io.icure.kraken.client.models.decrypted.HealthElementDto
@@ -15,6 +14,9 @@ import io.icure.kraken.client.models.decrypted.MaintenanceTaskDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import com.fasterxml.jackson.module.kotlin.readValue
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationTagDto
 import java.util.*
 
 /*
@@ -35,8 +37,9 @@ open class CryptoConfig<D, K>(
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 fun patientCryptoConfig(crypto: LocalCrypto) =
-    CryptoConfig<PatientDto, io.icure.kraken.client.models.PatientDto>(
+    CryptoConfig<PatientDto, org.taktik.icure.services.external.rest.v2.dto.PatientDto>(
         crypto = crypto,
         marshaller = { p ->
             PatientMapperFactory.instance.map(p)
@@ -54,8 +57,9 @@ fun patientCryptoConfig(crypto: LocalCrypto) =
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
-    CryptoConfig<MaintenanceTaskDto, io.icure.kraken.client.models.MaintenanceTaskDto>(
+    CryptoConfig<MaintenanceTaskDto, org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto>(
         crypto = crypto,
         marshaller = { mt ->
             if (mt.properties.isEmpty()) {
@@ -96,16 +100,16 @@ fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
                 val decryptedProps = mt.properties.map { prop ->
                     prop.encryptedSelf?.let { es ->
                         prop.copy(
-                            typedValue = ApiClient.objectMapper.readValue(
+                            typedValue = ApiClient.objectMapper.readValue<PropertyWrapper>(
                                 CryptoUtils.decryptAES(
                                     data = Base64.getDecoder().decode(es), key = decryptedKey
-                                ), PropertyWrapper::class.java
+                                )
                             ).typedValue
                         )
                     } ?: prop
                 }
 
-                MaintenanceTaskMapperFactory.instance.map(mt.copy(properties = decryptedProps))
+                MaintenanceTaskMapperFactory.instance.map(mt.copy(properties = decryptedProps.toSet()))
             }
         }
     )
@@ -113,10 +117,11 @@ fun maintenanceTaskCryptoConfig(crypto: LocalCrypto, user: UserDto) =
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 fun contactCryptoConfig(
     crypto: LocalCrypto,
     user: UserDto
-) = CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>(
+) = CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>(
     crypto = crypto,
     marshaller = { c ->
         val decryptedKey =
@@ -125,11 +130,10 @@ fun contactCryptoConfig(
         ContactMapperFactory.instance.map(c).copy(
             services = crypto.encryptServices(
                 user.dataOwnerId(),
-                (user.autoDelegations["all"] ?: setOf()) + (user.autoDelegations["medicalInformation"]
-                    ?: setOf()),
+                (user.autoDelegations[DelegationTagDto.all] ?: setOf()) + (user.autoDelegations[DelegationTagDto.medicalInformation] ?: setOf()),
                 decryptedKey?.toByteArray(),
                 c.services
-            )
+            ).toSet()
         ) to byteArrayOf()
     },
     unmarshaller = { c, _ ->
@@ -138,7 +142,7 @@ fun contactCryptoConfig(
                 user.dataOwnerId(),
                 crypto.decryptEncryptionKeys(user.dataOwnerId(), c.encryptionKeys).firstOrNull()
                     ?.toByteArray(),
-                c.services
+                c.services.toList()
             )
         )
     }
@@ -147,9 +151,10 @@ fun contactCryptoConfig(
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 fun healthElementCryptoConfig(
     crypto: LocalCrypto
-) = CryptoConfig<HealthElementDto, io.icure.kraken.client.models.HealthElementDto>(
+) = CryptoConfig<HealthElementDto, org.taktik.icure.services.external.rest.v2.dto.HealthElementDto>(
     crypto = crypto,
     marshaller = { c ->
         HealthElementMapperFactory.instance.map(c) to byteArrayOf()
@@ -162,9 +167,10 @@ fun healthElementCryptoConfig(
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalStdlibApi
+@ExperimentalUnsignedTypes
 fun documentCryptoConfig(
     crypto: LocalCrypto
-) = CryptoConfig<DocumentDto, io.icure.kraken.client.models.DocumentDto>(
+) = CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>(
     crypto = crypto,
     marshaller = { c ->
         DocumentMapperFactory.instance.map(c) to byteArrayOf()

@@ -34,8 +34,8 @@ apply(plugin = "git-version")
 apply(plugin = "maven-repository")
 val gitVersion: String? by project
 
-group = "org.icure"
-version = "0.1"
+group = "io.icure"
+version = gitVersion ?: "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()

@@ -9,6 +9,7 @@ import io.icure.kraken.client.crypto.CryptoUtils.encryptAES
 import io.icure.kraken.client.crypto.keyFromHexString
 import io.icure.kraken.client.extendedapis.mapper.ContactMapper
 import io.icure.kraken.client.extendedapis.mapper.ServiceMapper
+import io.icure.kraken.client.extendedapis.mapper.ServiceMapperFactory
 import org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
@@ -568,9 +569,9 @@ data class ContentWrapper(
 //    fun map(contact: org.taktik.icure.services.external.rest.v2.dto.ContactDto): ContactDto
 //}
 
-object ContactMapperFactory {
-    val instance = Mappers.getMapper(ContactMapper::class.java)
-}
+//object ContactMapperFactory {
+//    val instance = Mappers.getMapper(ContactMapper::class.java)
+//}
 
 //@Mapper
 //interface ServiceMapper {
@@ -594,6 +595,6 @@ object ContactMapperFactory {
 //    }
 //}
 
-object ServiceMapperFactory {
-    val instance = Mappers.getMapper(ServiceMapper::class.java)
-}
+//object ServiceMapperFactory {
+//    val instance = Mappers.getMapper(ServiceMapper::class.java)
+//}

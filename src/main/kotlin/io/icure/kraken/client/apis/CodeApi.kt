@@ -20,6 +20,7 @@ import io.icure.kraken.client.models.PaginatedListCodeDto
 import io.icure.kraken.client.security.AuthProvider
 import io.icure.kraken.client.security.NoAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.taktik.icure.services.external.rest.v2.dto.BooleanResponseDto
 import org.taktik.icure.services.external.rest.v2.dto.CodeDto
 import java.net.URLEncoder
 import java.util.*
@@ -121,6 +122,67 @@ class CodeApi(
             body = localVariableBody
         )
     }
+
+    /**
+     * Checks if a code is valid
+     * Type, Code and Version are required.
+     * @param type the type field of the code
+     * @param code the code field of the code
+     * @param version the version field of the code
+     * @param ofType the type of the code
+     * @return true if the code is valid, false otherwise
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun isValid(type: String, code: String, version: String, ofType: String? = null): Boolean {
+        val localVariableConfig = isValidRequestConfig(
+            type = type,
+            code = code,
+            version = version,
+            ofType = ofType
+        )
+
+        return request<Unit, BooleanResponseDto>(
+            localVariableConfig
+        )!!.response
+    }
+
+    /**
+     * To obtain the request config of the operation isValid
+     *
+     * @param type the type field of the code
+     * @param code the code field of the code
+     * @param version the version field of the code
+     * @param ofType the type of the code
+     * @return RequestConfig
+     */
+    fun isValidRequestConfig(type: String, code: String, version: String, ofType: String? = null): RequestConfig<Unit> {
+        // val localVariableBody = codeDto
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "type" to listOf(type),
+            "code" to listOf(code),
+            "version" to listOf(version)
+        ).apply {
+            if(ofType != null)
+                put("ofType", listOf(ofType))
+        }
+
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/isValid",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
 
     /**
      * Filter codes

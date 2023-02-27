@@ -176,7 +176,7 @@ class CodeApi(
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/isValid",
+            path = "/rest/v2/code/isValid",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

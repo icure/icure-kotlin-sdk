@@ -137,7 +137,7 @@ class CodeApi(
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun isValid(type: String, code: String, version: String, ofType: String? = null): Boolean {
+    suspend fun isValid(type: String, code: String, version: String?, ofType: String? = null): Boolean {
         val localVariableConfig = isValidRequestConfig(
             type = type,
             code = code,
@@ -159,13 +159,15 @@ class CodeApi(
      * @param ofType the type of the code
      * @return RequestConfig
      */
-    fun isValidRequestConfig(type: String, code: String, version: String, ofType: String? = null): RequestConfig<Unit> {
+    fun isValidRequestConfig(type: String, code: String, version: String?, ofType: String? = null): RequestConfig<Unit> {
         // val localVariableBody = codeDto
         val localVariableQuery: MultiValueMap = mutableMapOf(
             "type" to listOf(type),
-            "code" to listOf(code),
-            "version" to listOf(version)
+            "code" to listOf(code)
         ).apply {
+            if(version != null) {
+                put("version", listOf(version))
+            }
             if(ofType != null)
                 put("ofType", listOf(ofType))
         }

@@ -807,6 +807,66 @@ class CodeApi(
     }
 
     /**
+     * Gets a code given the region, the type, the label, and the language of the label
+     * @param region Code region
+     * @param label Code label
+     * @param type Code type
+     * @param languages a list of languages
+     * @return CodeDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getCodeByRegionLanguagesTypeLabel(
+        region: String,
+        label: String,
+        type: String,
+        languages: List<String> = listOf("nl", "fr")
+    ): CodeDto? {
+        val localVariableConfig =
+            getCodeByRegionLanguagesTypeLabelRequestConfig(region = region, label = label, type = type, languages = languages)
+
+        return request(localVariableConfig)
+    }
+
+    /**
+     * To obtain the request config of the operation getCodeByRegionLanguagesTypeLabelRequestConfig
+     *
+     * @param region Code region
+     * @param label Code label
+     * @param type Code type
+     * @param languages a list of languages
+     * @return RequestConfig
+     */
+    fun getCodeByRegionLanguagesTypeLabelRequestConfig(
+        region: String,
+        label: String,
+        type: String,
+        languages: List<String>
+    ): RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "region" to listOf(region),
+            "label" to listOf(label),
+            "type" to listOf(type),
+            "languages" to listOf(languages.joinToString(separator = ","){ it })
+        )
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/rest/v2/code/byRegionLanguagesTypeLabel",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
      * Finding codes by code, type and version
      * Returns a list of codes matched with given input.
      * @param region Code region (optional)

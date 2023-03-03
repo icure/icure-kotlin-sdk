@@ -55,8 +55,8 @@ class DocumentApi(
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun createDocument(documentDto: DocumentDto): DocumentDto {
-        val localVariableConfig = createDocumentRequestConfig(documentDto = documentDto)
+    suspend fun createDocument(documentDto: DocumentDto, strict: Boolean = false): DocumentDto {
+        val localVariableConfig = createDocumentRequestConfig(documentDto = documentDto, strict = strict)
 
         return request<DocumentDto, DocumentDto>(
             localVariableConfig
@@ -69,9 +69,11 @@ class DocumentApi(
      * @param documentDto
      * @return RequestConfig
      */
-    fun createDocumentRequestConfig(documentDto: DocumentDto): RequestConfig<DocumentDto> {
+    private fun createDocumentRequestConfig(documentDto: DocumentDto, strict: Boolean): RequestConfig<DocumentDto> {
         // val localVariableBody = documentDto
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "strict" to listOf("true".takeIf { strict } ?: "false")
+        )
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = documentDto

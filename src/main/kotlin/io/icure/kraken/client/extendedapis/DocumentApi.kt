@@ -179,9 +179,10 @@ suspend fun DocumentApi.modifyDocuments(
 suspend fun DocumentApi.deleteAttachment(
     user: UserDto,
     documentId: String,
+    rev: String,
     config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
-    return this.deleteAttachment(documentId).let { config.decryptDocument(user.dataOwnerId(), it) }
+    return this.deleteAttachment(documentId, rev).let { config.decryptDocument(user.dataOwnerId(), it) }
 }
 
 @ExperimentalCoroutinesApi
@@ -189,11 +190,14 @@ suspend fun DocumentApi.deleteAttachment(
 suspend fun DocumentApi.setDocumentAttachment(
     user: UserDto,
     documentId: String,
+    rev: String,
+    utis: List<String>,
     requestBody: Flow<ByteBuffer>,
+    contentLength: Long,
     enckeys: String?,
     config: CryptoConfig<DocumentDto, org.taktik.icure.services.external.rest.v2.dto.DocumentDto>
 ): DocumentDto {
-    return this.setDocumentAttachment(documentId, requestBody, enckeys)
+    return this.setDocumentAttachment(documentId, rev, utis, requestBody, contentLength, enckeys)
         .let { config.decryptDocument(user.dataOwnerId(), it) }
 }
 

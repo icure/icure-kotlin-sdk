@@ -91,6 +91,7 @@ class DocumentApi(
      * Deletes a document&#39;s attachment
      *
      * @param documentId
+     * @param rev
      * @return DocumentDto
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
      * @throws ClientException If the API returns a client error response
@@ -98,8 +99,8 @@ class DocumentApi(
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteAttachment(documentId: String): DocumentDto {
-        val localVariableConfig = deleteAttachmentRequestConfig(documentId = documentId)
+    suspend fun deleteAttachment(documentId: String, rev: String): DocumentDto {
+        val localVariableConfig = deleteAttachmentRequestConfig(documentId = documentId, rev = rev)
 
         return request<Unit, DocumentDto>(
             localVariableConfig
@@ -112,9 +113,11 @@ class DocumentApi(
      * @param documentId
      * @return RequestConfig
      */
-    fun deleteAttachmentRequestConfig(documentId: String): RequestConfig<Unit> {
+    fun deleteAttachmentRequestConfig(documentId: String, rev: String): RequestConfig<Unit> {
         // val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "rev" to listOf(rev)
+        )
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null
@@ -124,6 +127,63 @@ class DocumentApi(
             path = "/rest/v2/document/{documentId}/attachment".replace(
                 "{" + "documentId" + "}",
                 URLEncoder.encode(documentId, Charsets.UTF_8)
+            ),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * Deletes a Document secondary attachment.
+     *
+     * @param documentId
+     * @param rev
+     * @param key
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteSecondaryAttachment(
+        documentId: String,
+        rev: String,
+        key: String
+    ): DocumentDto {
+        val localVariableConfig = deleteSecondaryAttachmentRequestConfig(documentId = documentId, rev = rev, key = key)
+
+        return request<Unit, DocumentDto>(
+            localVariableConfig
+        )!!
+    }
+
+    /**
+     * To obtain the request config of the operation deleteAttachment
+     *
+     * @param documentId
+     * @param rev
+     * @param key
+     * @return RequestConfig
+     */
+    private fun deleteSecondaryAttachmentRequestConfig(documentId: String, rev: String, key: String): RequestConfig<Unit> {
+        // val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "rev" to listOf(rev)
+        )
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = null
+
+        return RequestConfig(
+            method = RequestMethod.DELETE,
+            path = "/rest/v2/document/{documentId}/secondaryAttachments/{key}".replace(
+                "{" + "documentId" + "}",
+                URLEncoder.encode(documentId, Charsets.UTF_8)
+            ).replace(
+                "{" + "key" + "}",
+                URLEncoder.encode(key, Charsets.UTF_8)
             ),
             query = localVariableQuery,
             headers = localVariableHeaders,
@@ -665,8 +725,11 @@ class DocumentApi(
     /**
      * Creates a document&#39;s attachment
      *
-     * @param documentId
+     * @param documentId the id of the Document
+     * @param rev Revision of the latest known version of the document. If it doesn't match the current revision the method will fail with CONFLICT.
+     * @param utis Utis for the attachment
      * @param body
+     * @param contentLength
      * @param enckeys  (optional)
      * @return DocumentDto
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -677,11 +740,14 @@ class DocumentApi(
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun setDocumentAttachment(
         documentId: String,
+        rev: String,
+        utis: List<String>?,
         body: Flow<ByteBuffer>,
+        contentLength: Long,
         enckeys: String?
     ): DocumentDto {
         val localVariableConfig =
-            setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys)
+            setDocumentAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys, rev = rev, utis = utis, contentLength = contentLength)
 
         return request<Flow<ByteBuffer>, DocumentDto>(
             localVariableConfig
@@ -691,25 +757,38 @@ class DocumentApi(
     /**
      * To obtain the request config of the operation setDocumentAttachment
      *
-     * @param documentId
+     * @param documentId the id of the Document
+     * @param rev Revision of the latest known version of the document. If it doesn't match the current revision the method will fail with CONFLICT.
+     * @param utis Utis for the attachment
      * @param body
+     * @param contentLength
      * @param enckeys  (optional)
      * @return RequestConfig
      */
     fun setDocumentAttachmentRequestConfig(
         documentId: String,
+        rev: String,
+        utis: List<String>?,
         body: Flow<ByteBuffer>,
+        contentLength: Long,
         enckeys: String?
     ): RequestConfig<Flow<ByteBuffer>> {
         // val localVariableBody = body
-        val localVariableQuery: MultiValueMap = mutableMapOf<String, List<String>>()
-            .apply {
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "rev" to listOf(rev)
+        ).apply {
                 if (enckeys != null) {
                     put("enckeys", listOf(enckeys.toString()))
                 }
+                if (utis != null) {
+                    put("utis", listOf(utis.joinToString(",")))
+                }
             }
         val localVariableHeaders: MutableMap<String, String> =
-            mutableMapOf("Content-Type" to "application/octet-stream")
+            mutableMapOf(
+                "Content-Type" to "application/octet-stream",
+                "Content-Length" to contentLength.toString()
+            )
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = body
 
@@ -724,6 +803,96 @@ class DocumentApi(
             body = localVariableBody
         )
     }
+
+    /**
+     * Creates or updates one of the Document's secondary attachments.
+     *
+     * @param documentId the id of the Document
+     * @param rev the revision of the latest known version of the document. If it doesn't match the current revision the method will fail with CONFLICT.
+     * @param key the key of the Document secondary attachment.
+     * @param utis Utis for the attachment
+     * @param body
+     * @param contentLength
+     * @param enckeys  (optional)
+     * @return DocumentDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun setDocumentSecondaryAttachment(
+        documentId: String,
+        rev: String,
+        key: String,
+        utis: List<String>?,
+        body: Flow<ByteBuffer>,
+        contentLength: Long,
+        enckeys: String?
+    ): DocumentDto {
+        val localVariableConfig =
+            setDocumentSecondaryAttachmentRequestConfig(documentId = documentId, body = body, enckeys = enckeys, rev = rev, key = key, utis = utis, contentLength = contentLength)
+
+        return request<Flow<ByteBuffer>, DocumentDto>(
+            localVariableConfig
+        )!!
+    }
+
+    /**
+     * To obtain the request config of the operation setDocumentAttachment
+     *
+     * @param documentId the id of the Document
+     * @param rev the revision of the latest known version of the document. If it doesn't match the current revision the method will fail with CONFLICT.
+     * @param key the key of the Document secondary attachment.
+     * @param utis Utis for the attachment
+     * @param body
+     * @param contentLength
+     * @param enckeys  (optional)
+     * @return RequestConfig
+     */
+    private fun setDocumentSecondaryAttachmentRequestConfig(
+        documentId: String,
+        rev: String,
+        key: String,
+        utis: List<String>?,
+        body: Flow<ByteBuffer>,
+        contentLength: Long,
+        enckeys: String?
+    ): RequestConfig<Flow<ByteBuffer>> {
+        // val localVariableBody = body
+        val localVariableQuery: MultiValueMap = mutableMapOf(
+            "rev" to listOf(rev)
+        ).apply {
+            if (enckeys != null) {
+                put("enckeys", listOf(enckeys.toString()))
+            }
+            if (utis != null) {
+                put("utis", listOf(utis.joinToString(",")))
+            }
+        }
+        val localVariableHeaders: MutableMap<String, String> =
+            mutableMapOf(
+                "Content-Type" to "application/octet-stream",
+                "Content-Length" to contentLength.toString()
+            )
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = body
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/rest/v2/document/{documentId}/secondaryAttachments/{key}".replace(
+                "{" + "documentId" + "}",
+                URLEncoder.encode(documentId, Charsets.UTF_8)
+            ).replace(
+                "{" + "key" + "}",
+                URLEncoder.encode(key, Charsets.UTF_8)
+            ),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
 
     /**
      * Creates a document&#39;s attachment

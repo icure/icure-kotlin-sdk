@@ -323,11 +323,9 @@ class DocumentApi(
     }
 
     /**
-     * Load document&#39;s attachment
+     * Loads the main attachment of a Document.
      *
      * @param documentId
-     * @param attachmentId
-     * @param enckeys  (optional)
      * @param fileName  (optional)
      * @return kotlinx.coroutines.flow.Flow<java.nio.ByteBuffer>
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -336,16 +334,12 @@ class DocumentApi(
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getDocumentAttachment(
+    suspend fun getDocumentMainAttachment(
         documentId: String,
-        attachmentId: String,
-        enckeys: String?,
         fileName: String?
     ): Flow<ByteBuffer> {
-        val localVariableConfig = getDocumentAttachmentRequestConfig(
+        val localVariableConfig = getDocumentMainAttachmentRequestConfig(
             documentId = documentId,
-            attachmentId = attachmentId,
-            enckeys = enckeys,
             fileName = fileName
         )
 
@@ -355,26 +349,18 @@ class DocumentApi(
     }
 
     /**
-     * To obtain the request config of the operation getDocumentAttachment
+     * To obtain the request config of the operation getDocumentMainAttachment
      *
      * @param documentId
-     * @param attachmentId
-     * @param enckeys  (optional)
      * @param fileName  (optional)
      * @return RequestConfig
      */
-    fun getDocumentAttachmentRequestConfig(
+    private fun getDocumentMainAttachmentRequestConfig(
         documentId: String,
-        attachmentId: String,
-        enckeys: String?,
         fileName: String?
     ): RequestConfig<Unit> {
-        // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<String, List<String>>()
             .apply {
-                if (enckeys != null) {
-                    put("enckeys", listOf(enckeys.toString()))
-                }
                 if (fileName != null) {
                     put("fileName", listOf(fileName.toString()))
                 }
@@ -385,10 +371,10 @@ class DocumentApi(
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/rest/v2/document/{documentId}/attachment/{attachmentId}".replace(
+            path = "/rest/v2/document/{documentId}/attachment".replace(
                 "{" + "documentId" + "}",
                 URLEncoder.encode(documentId, Charsets.UTF_8)
-            ).replace("{" + "attachmentId" + "}", URLEncoder.encode(attachmentId, Charsets.UTF_8)),
+            ),
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

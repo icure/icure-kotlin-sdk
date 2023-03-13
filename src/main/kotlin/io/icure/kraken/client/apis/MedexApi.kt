@@ -18,7 +18,8 @@ import io.icure.kraken.client.infrastructure.*
 import io.icure.kraken.client.security.AuthProvider
 import io.icure.kraken.client.security.NoAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.taktik.icure.services.external.rest.v2.dto.MedexInfoDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import java.util.*
 import javax.inject.Named
 
@@ -79,3 +80,36 @@ class MedexApi(
     }
 
 }
+
+data class MedexInfoDto(
+    val beginDate: Long,
+    val endDate: Long,
+    val author: HealthcarePartyDto? = null,
+    val patient: PatientDto? = null,
+    val patientLanguage: String = "fr",
+    val incapacityType: String = "incapacity", // incapacity or incapacityextension
+
+    /*
+        Possible values:
+        illness
+        hospitalisation
+        sickness
+        pregnancy
+        workaccident
+        occupationaldisease
+     */
+    val incapacityReason: String = "sickness",
+    val outOfHomeAllowed: Boolean = true,
+
+    /*
+    "Optional field
+    But mandatory when incapacityreason = workaccident; this field must contain the accident date.
+    when incapacityreason = occupationaldisease this field must contain the request date for a dossier for occupatialdesease.
+    This date must be < or =  beginmoment of the incapacity period."
+     */
+    val certificateDate: Long? = null,
+    val contentDate: Long? = null,
+    val diagnosisICPC: String? = null,
+    val diagnosisICD: String? = null,
+    val diagnosisDescr: String? = null
+)

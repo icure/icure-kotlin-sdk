@@ -1,6 +1,5 @@
 package io.icure.kraken.client.security
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.icure.kraken.client.apis.AuthApi
 import io.icure.kraken.client.models.LoginCredentials
 import io.jsonwebtoken.Jwts
@@ -14,19 +13,17 @@ import java.util.*
 class JWTProvider(
     basePath: String,
     private val username: String,
-    private val password: String
+    private val password: String,
+    private val refreshPadding: Long = 30_000
 ) : AuthProvider {
 
     private val mutex = Mutex()
     private val authApi = AuthApi(basePath)
-    private val mapper = ObjectMapper()
     private var authJWT: String? = null
     private var refreshJWT: String? = null
 
     override suspend fun getAuthHeader(): String =
         mutex.withLock {
-            println(authJWT)
-            println(authJWT == null || isJwtExpired(authJWT!!))
             if (authJWT == null || isJwtExpired(authJWT!!)) {
                 refreshAuthenticationJWT()
             }
@@ -39,7 +36,7 @@ class JWTProvider(
             authApi.refresh(refreshJWT!!)
         }.let {
             authJWT = it.token!!
-            refreshJWT = it.refreshToken!!
+            refreshJWT = it.refreshToken ?: refreshJWT
         }
 
     private fun isJwtExpired(token: String): Boolean {
@@ -48,7 +45,7 @@ class JWTProvider(
         return try {
             val expiration =
                 (Jwts.parserBuilder().build().parse("${parts[0]}.${parts[1]}.").body as DefaultClaims).expiration
-            expiration < Date(System.currentTimeMillis())
+            expiration < Date(System.currentTimeMillis() + refreshPadding)
         } catch (e: Exception) {
             true
         }

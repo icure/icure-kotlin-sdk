@@ -12,12 +12,10 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.DeviceDto
-import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
 
 
 /**
@@ -34,13 +32,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class PaginatedListDeviceDto (
 
     @field:JsonProperty("pageSize")
-    val pageSize: kotlin.Int,
+    val pageSize: Int,
 
     @field:JsonProperty("totalSize")
-    val totalSize: kotlin.Int,
+    val totalSize: Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<DeviceDto> = listOf(),
+    val rows: List<DeviceDto> = listOf(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

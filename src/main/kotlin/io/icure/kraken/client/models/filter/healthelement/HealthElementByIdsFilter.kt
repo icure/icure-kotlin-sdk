@@ -20,13 +20,13 @@ package io.icure.kraken.client.models.filter.healthelement
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.HealthElementDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class HealthElementByIdsFilter(
-        val ids: Set<String>,
-        override val desc: String? = null
+    val ids: Set<String>,
+    override val desc: String? = null
 ) : AbstractFilterDto<HealthElementDto>
 

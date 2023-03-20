@@ -13,7 +13,7 @@
 package io.icure.kraken.client.models
 
 import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
-import io.icure.kraken.client.models.TarificationDto
+import org.taktik.icure.services.external.rest.v2.dto.TarificationDto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

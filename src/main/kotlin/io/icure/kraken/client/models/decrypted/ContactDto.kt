@@ -15,11 +15,10 @@ package io.icure.kraken.client.models.decrypted
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.IdentifierDto
-import io.icure.kraken.client.models.SubContactDto
-
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.SubContactDto
 
 /**
  * This entity is a root-level object. It represents a contact. It is serialized in JSON and saved in the underlying icure-contact CouchDB database. The contact is the entity that records the medical information about the patient chronologically. A visit to the patient's house, a consultation at the practice, a phone call between the patient and the healthcare party or integrating lab reports into the medical file are examples of when a contact can be recorded. A contact can occur with or without direct interaction between the patient and the healthcare party. For example, when a healthcare party encodes data received from laboratory's test result, this is done in the absence of a patient. A contact groups together pieces of information collected during one single event, for one single patient and for one or more healthcare parties. Patient's complaints, the diagnosis of a new problem, a surgical procedure, etc. are collected inside a contact. The main sub-element of the contact is the service. Each atomic piece of information collected during a contact is a service and is stored inside the services list of a contact.
@@ -55,118 +54,118 @@ import io.icure.kraken.client.models.SubContactDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ContactDto (
+data class ContactDto(
 
     /* the Id of the contact. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val tags: List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val codes: List<CodeStubDto> = emptyList(),
 
     /* The identifiers of the Contact */
     @field:JsonProperty("identifier")
-    val identifier: kotlin.collections.List<IdentifierDto> = emptyList(),
+    val identifier: List<IdentifierDto> = emptyList(),
 
     /* Set of all sub-contacts recorded during the given contact. Sub-contacts are used to link services embedded inside this contact to healthcare elements, healthcare approaches and/or forms. */
     @field:JsonProperty("subContacts")
-    val subContacts: kotlin.collections.List<SubContactDto> = emptyList(),
+    val subContacts: List<SubContactDto> = emptyList(),
 
     /* Set of all services provided to the patient during the contact. */
     @field:JsonProperty("services")
-    val services: kotlin.collections.List<ServiceDto> = emptyList(),
+    val services: List<ServiceDto> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: List<String> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val cryptedForeignKeys: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val delegations: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val encryptionKeys: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* the revision of the contact in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("created")
-    val created: kotlin.Long? = null,
+    val created: Long? = null,
 
     /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("modified")
-    val modified: kotlin.Long? = null,
+    val modified: Long? = null,
 
     /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("author")
-    val author: kotlin.String? = null,
+    val author: String? = null,
 
     /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("responsible")
-    val responsible: kotlin.String? = null,
+    val responsible: String? = null,
 
     /* The id of the medical location where this entity was created. */
     @field:JsonProperty("medicalLocationId")
-    val medicalLocationId: kotlin.String? = null,
+    val medicalLocationId: String? = null,
 
     /* Soft delete (unix epoch in ms) timestamp of the object. */
     @field:JsonProperty("endOfLife")
-    val endOfLife: kotlin.Long? = null,
+    val endOfLife: Long? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     /* Separate contacts can merged in one logical contact if they share the same groupId. When a contact must be split to selectively assign rights to healthcare parties, the split contacts all share the same groupId */
     @field:JsonProperty("groupId")
-    val groupId: kotlin.String? = null,
+    val groupId: String? = null,
 
     /* The date (YYYYMMDDhhmmss) of the start of the contact. */
     @field:JsonProperty("openingDate")
-    val openingDate: kotlin.Long? = null,
+    val openingDate: Long? = null,
 
     /* The date (YYYYMMDDhhmmss) marking the end of the contact. */
     @field:JsonProperty("closingDate")
-    val closingDate: kotlin.Long? = null,
+    val closingDate: Long? = null,
 
     /* Description of the contact */
     @field:JsonProperty("descr")
-    val descr: kotlin.String? = null,
+    val descr: String? = null,
 
     /* Location where the contact was recorded. */
     @field:JsonProperty("location")
-    val location: kotlin.String? = null,
+    val location: String? = null,
 
     /* An external (from another source) id with no guarantee or requirement for unicity. */
     @field:JsonProperty("externalId")
-    val externalId: kotlin.String? = null,
+    val externalId: String? = null,
 
     @field:JsonProperty("encounterType")
     val encounterType: CodeStubDto? = null,
 
     @field:JsonProperty("healthcarePartyId")
     @Deprecated(message = "This property is deprecated.")
-    val healthcarePartyId: kotlin.String? = null,
+    val healthcarePartyId: String? = null,
 
     @field:JsonProperty("modifiedContactId")
     @Deprecated(message = "This property is deprecated.")
-    val modifiedContactId: kotlin.String? = null,
+    val modifiedContactId: String? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: kotlin.String? = null
+    val encryptedSelf: String? = null
 
 )
 

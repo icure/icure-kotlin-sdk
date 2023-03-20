@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface TimeTableMapper {
-    fun map(timeTable: TimeTableDto): io.icure.kraken.client.models.TimeTableDto
-    fun map(timeTable: io.icure.kraken.client.models.TimeTableDto): TimeTableDto
+    fun map(timeTable: TimeTableDto): org.taktik.icure.services.external.rest.v2.dto.TimeTableDto
+    fun map(timeTable: org.taktik.icure.services.external.rest.v2.dto.TimeTableDto): TimeTableDto
 }
 
 object TimeTableMapperFactory {

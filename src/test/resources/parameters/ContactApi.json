@@ -32,6 +32,7 @@
     "startKey": null,
     "startDocumentId": null,
     "limit": 20,
+    "skipEndpoint": true,
     "filterChainContact": {"filter" :{"$type": "ContactByHcPartyPatientTagCodeDateFilter", "healthcarePartyId": "782f1bcd-9f3f-408a-af1b-cd9f3f908a98", "startServiceValueDate": 12345}}
   },
   "filterServicesBy": {
@@ -72,7 +73,7 @@
     "secretFKeys": "77b06f59-a584-403c-b522-407fc12e8b2e"
   },
   "getContact": {
-    "contactId": "00279fe4-214a-41f0-a79f-e4214ae1f088"
+    "contactId": "968619d0-5e9c-49d6-b140-7eb6b93c5c37"
   },
   "getContacts": {
     "listOfIdsDto": {
@@ -89,7 +90,8 @@
     "endKey": 20190130174104,
     "hcpartyid": "cc4dab7e-fe83-41f0-8dab-7efe83e1f018",
     "startDocumentId": null,
-    "limit": 20
+    "limit": 20,
+    "skipEndpoint": true
   },
   "matchContactsBy": {
     "skipEndpoint": true,

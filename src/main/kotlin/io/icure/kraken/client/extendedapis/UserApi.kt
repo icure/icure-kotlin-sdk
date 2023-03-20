@@ -1,6 +1,6 @@
 package io.icure.kraken.client.extendedapis
 
-import io.icure.kraken.client.models.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
 
 fun UserDto.dataOwnerId() =
     this.healthcarePartyId ?: this.patientId ?: this.deviceId

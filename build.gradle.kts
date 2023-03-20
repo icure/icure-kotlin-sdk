@@ -1,11 +1,12 @@
-val kotlinVersion = "1.6.21"
+val kotlinVersion = "1.8.0"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
-val kmapVersion = "0.1.33-b53d7e7ec1"
+val kmapVersion = "0.1.52-main.8d4a565b58"
+val krakenLibsVersion = "4.0.120-g7036ad3fe6"
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    id("com.google.devtools.ksp") version "1.6.21-1.0.5"
+    kotlin("jvm") version "1.8.0"
+    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     id("jacoco")
     id("org.sonarqube") version "3.3"
 }
@@ -55,6 +56,10 @@ dependencies {
     implementation(group = "io.icure", name = "kmap", version = kmapVersion)
     ksp(group = "io.icure", name = "kmap", version = kmapVersion)
 
+    //Kraken DTOs
+    implementation(group = "org.taktik.icure", name = "dto", version = krakenLibsVersion)
+    implementation(group = "org.taktik.icure", name = "domain", version = krakenLibsVersion)
+
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
 
     implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
@@ -76,6 +81,9 @@ dependencies {
     implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
     implementation(group = "ch.qos.logback", name = "logback-access", version = "1.2.3")
 
+    //Apple Silicon Compatibility
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64")
+
     implementation(group = "org.slf4j", name = "slf4j-api", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jul-to-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")
@@ -87,6 +95,10 @@ dependencies {
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
     implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
+
+    implementation(group = "io.jsonwebtoken", name = "jjwt-api", version = "0.11.5")
+    implementation(group = "io.jsonwebtoken", name = "jjwt-impl", version = "0.11.5")
+    implementation(group = "io.jsonwebtoken", name = "jjwt-jackson", version = "0.11.5")
 
     testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")

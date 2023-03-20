@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface HealthElementMapper {
-    fun map(healthElement: HealthElementDto): io.icure.kraken.client.models.HealthElementDto
-    fun map(healthElement: io.icure.kraken.client.models.HealthElementDto): HealthElementDto
+    fun map(healthElement: HealthElementDto): org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
+    fun map(healthElement: org.taktik.icure.services.external.rest.v2.dto.HealthElementDto): HealthElementDto
 }
 
 object HealthElementMapperFactory {

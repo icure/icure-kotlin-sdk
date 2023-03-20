@@ -17,12 +17,7 @@ package io.icure.kraken.client.apis
 import io.icure.kraken.client.models.DocIdentifier
 
 import io.icure.kraken.client.models.PaginatedListUserDto
-import io.icure.kraken.client.models.PropertyStubDto
-import io.icure.kraken.client.models.TokenWithGroupDto
-import io.icure.kraken.client.models.UserDto
-import io.icure.kraken.client.models.UserGroupDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
+import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -35,21 +30,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -58,12 +46,13 @@ import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
+import org.taktik.icure.services.external.rest.v2.dto.UserGroupDto
+import org.taktik.icure.services.external.rest.v2.dto.security.TokenWithGroupDto
 
 /**
  * API tests for UserApi
@@ -80,7 +69,7 @@ class UserApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = UserApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = UserApi(basePath = java.lang.System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -692,12 +681,12 @@ class UserApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterUsersBy")
-                val filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>>(fileName, "filterUsersBy.filterChainUser")!!.let {
+                val filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<UserDto>>(fileName, "filterUsersBy.filterChainUser")!!.let {
                     (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<UserDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterUsersBy.startDocumentId")?.let {
                     (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersBy") }?.let {
@@ -779,12 +768,12 @@ class UserApiTest() {
                     it.copy(rev = currentRev)
                     } as? kotlin.String ?: it
                     }
-                val filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto>>(fileName, "filterUsersInGroupBy.filterChainUser")!!.let {
+                val filterChainUser: io.icure.kraken.client.models.filter.chain.FilterChain<UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<UserDto>>(fileName, "filterUsersInGroupBy.filterChainUser")!!.let {
                     (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersInGroupBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.UserDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<UserDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterUsersInGroupBy.startDocumentId")?.let {
                     (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterUsersInGroupBy") }?.let {
@@ -1669,12 +1658,12 @@ class UserApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchUsersBy")
-                val abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto>>(fileName, "matchUsersBy.abstractFilterDtoUser")!!.let {
+                val abstractFilterDtoUser: io.icure.kraken.client.models.filter.AbstractFilterDto<UserDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<UserDto>>(fileName, "matchUsersBy.abstractFilterDtoUser")!!.let {
                     (it as? UserDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchUsersBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getUser(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.UserDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<UserDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchUsersBy(abstractFilterDtoUser = abstractFilterDtoUser)

@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface ReceiptMapper {
-    fun map(receipt: ReceiptDto): io.icure.kraken.client.models.ReceiptDto
-    fun map(receipt: io.icure.kraken.client.models.ReceiptDto): ReceiptDto
+    fun map(receipt: ReceiptDto): org.taktik.icure.services.external.rest.v2.dto.ReceiptDto
+    fun map(receipt: org.taktik.icure.services.external.rest.v2.dto.ReceiptDto): ReceiptDto
 }
 
 object ReceiptMapperFactory {

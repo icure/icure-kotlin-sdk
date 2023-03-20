@@ -46,11 +46,17 @@ object CryptoUtils {
     }
 
     fun decryptAESWithAnyKey(data: ByteArray, enckeys: List<String>) =
-        enckeys.fold(null) { decrypted: ByteArray?, key: String ->  decrypted ?: try { decryptAES(data, ByteBuffer.wrap(ByteArray(16)).also {
-            val uuid: UUID = UUID.fromString(key)
-            it.putLong(uuid.mostSignificantBits)
-            it.putLong(uuid.leastSignificantBits)
-        }.array()) } catch (e:Exception) { null } } ?: throw BadPaddingException("Invalid keys")
+        enckeys.fold(null) { decrypted: ByteArray?, key: String ->
+            decrypted ?: try {
+                decryptAES(data, ByteBuffer.wrap(ByteArray(16)).also {
+                    val uuid: UUID = UUID.fromString(key)
+                    it.putLong(uuid.mostSignificantBits)
+                    it.putLong(uuid.leastSignificantBits)
+                }.array())
+            } catch (e: Exception) {
+                null
+            }
+        } ?: throw BadPaddingException("Invalid keys")
 
     fun encryptAESWithAnyKey(data: ByteArray, key: String) = encryptAES(data, ByteBuffer.wrap(ByteArray(16)).also {
         val uuid: UUID = UUID.fromString(key)
@@ -96,7 +102,7 @@ object CryptoUtils {
 @ExperimentalUnsignedTypes // just to make it clear that the experimental unsigned types are used
 fun ByteArray.keyToHexString() = asUByteArray().joinToString("") { it.toString(16).padStart(2, '0') }
 fun String.keyFromHexString(): ByteArray {
-    this.replace("-","").let {
+    this.replace("-", "").let {
         check(it.length % 2 == 0) { "Must have an even length" }
 
         return it.chunked(2)
@@ -105,18 +111,24 @@ fun String.keyFromHexString(): ByteArray {
 
     }
 }
-fun String.toPublicKey() = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(keyFromHexString())) as RSAPublicKey
+
+fun String.toPublicKey() =
+    KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(keyFromHexString())) as RSAPublicKey
 
 fun String.toPrivateKey() = KeyFactory.getInstance("RSA").generatePrivate(
     PKCS8EncodedKeySpec(
         keyFromHexString()
-    )) as RSAPrivateKey
+    )
+) as RSAPrivateKey
 
 @ExperimentalUnsignedTypes
 fun KeyPair.publicKeyAsString() = this.public.pubKeyAsString()
+
 @ExperimentalUnsignedTypes
 fun KeyPair.privateKeyAsString() = this.private.privKeyAsString()
+
 @ExperimentalUnsignedTypes
 fun PublicKey.pubKeyAsString() = this.encoded.keyToHexString()
+
 @ExperimentalUnsignedTypes
 fun PrivateKey.privKeyAsString() = this.encoded.keyToHexString()

@@ -12,11 +12,10 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStub
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.taktik.icure.entities.base.CodeStub
 
 
 /**
@@ -34,19 +33,19 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class ImportMapping (
 
     @field:JsonProperty("label")
-    val label: kotlin.collections.Map<kotlin.String, kotlin.String> = mapOf(),
+    val label: Map<String, String> = mapOf(),
 
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStub> = listOf(),
+    val tags: List<CodeStub> = listOf(),
 
     @field:JsonProperty("lifecycle")
-    val lifecycle: kotlin.String? = null,
+    val lifecycle: String? = null,
 
     @field:JsonProperty("content")
-    val content: kotlin.String? = null,
+    val content: String? = null,
 
     @field:JsonProperty("cdLocal")
-    val cdLocal: kotlin.String? = null
+    val cdLocal: String? = null
 
 )
 

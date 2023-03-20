@@ -3,9 +3,9 @@ package io.icure.kraken.client.extendedapis
 import io.icure.kraken.client.apis.DeviceApi
 import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.PatientApi
-import io.icure.kraken.client.models.DeviceDto
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.PatientDto
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -13,16 +13,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class DataOwnerApi(val healthcarePartyApi: HealthcarePartyApi, val patientApi: PatientApi, val deviceApi: DeviceApi) {
     suspend inline fun <reified T> getDataOwner(dataOwnerId: String): T? {
         return try {
-            when(T::class){
-                HealthcarePartyDto::class -> healthcarePartyApi.getHealthcareParty(dataOwnerId) as? T?
-                PatientDto::class -> patientApi.getPatient(dataOwnerId) as? T?
-                DeviceDto::class -> deviceApi.getDevice(dataOwnerId) as? T?
+            when (T::class) {
+                HealthcarePartyDto::class -> healthcarePartyApi.getHealthcareParty(dataOwnerId) as T
+                PatientDto::class -> patientApi.getPatient(dataOwnerId) as T
+                DeviceDto::class -> deviceApi.getDevice(dataOwnerId) as T
                 else -> null
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             null
         }
     }
+
     suspend fun createDataOwner(dataOwner: HealthcarePartyDto): HealthcarePartyDto {
         return healthcarePartyApi.createHealthcareParty(dataOwner)
     }

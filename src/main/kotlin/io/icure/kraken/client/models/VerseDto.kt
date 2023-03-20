@@ -12,8 +12,6 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AddedDocumentDto
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -72,134 +70,134 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class VerseDto (
 
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     @field:JsonProperty("addedDocuments")
-    val addedDocuments: kotlin.collections.List<AddedDocumentDto> = listOf(),
+    val addedDocuments: List<AddedDocumentDto> = listOf(),
 
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     @field:JsonProperty("chapterName")
-    val chapterName: kotlin.String? = null,
+    val chapterName: String? = null,
 
     @field:JsonProperty("paragraphName")
-    val paragraphName: kotlin.String? = null,
+    val paragraphName: String? = null,
 
     @field:JsonProperty("verseSeq")
-    val verseSeq: kotlin.Long? = null,
+    val verseSeq: Long? = null,
 
     @field:JsonProperty("startDate")
-    val startDate: kotlin.Long? = null,
+    val startDate: Long? = null,
 
     @field:JsonProperty("createdTms")
-    val createdTms: kotlin.Long? = null,
+    val createdTms: Long? = null,
 
     @field:JsonProperty("createdUserId")
-    val createdUserId: kotlin.String? = null,
+    val createdUserId: String? = null,
 
     @field:JsonProperty("endDate")
-    val endDate: kotlin.Long? = null,
+    val endDate: Long? = null,
 
     @field:JsonProperty("verseNum")
-    val verseNum: kotlin.Long? = null,
+    val verseNum: Long? = null,
 
     @field:JsonProperty("verseSeqParent")
-    val verseSeqParent: kotlin.Long? = null,
+    val verseSeqParent: Long? = null,
 
     @field:JsonProperty("verseLevel")
-    val verseLevel: kotlin.Long? = null,
+    val verseLevel: Long? = null,
 
     @field:JsonProperty("verseType")
-    val verseType: kotlin.String? = null,
+    val verseType: String? = null,
 
     @field:JsonProperty("checkBoxInd")
-    val checkBoxInd: kotlin.String? = null,
+    val checkBoxInd: String? = null,
 
     @field:JsonProperty("minCheckNum")
-    val minCheckNum: kotlin.Long? = null,
+    val minCheckNum: Long? = null,
 
     @field:JsonProperty("andClauseNum")
-    val andClauseNum: kotlin.Long? = null,
+    val andClauseNum: Long? = null,
 
     @field:JsonProperty("textFr")
-    val textFr: kotlin.String? = null,
+    val textFr: String? = null,
 
     @field:JsonProperty("textNl")
-    val textNl: kotlin.String? = null,
+    val textNl: String? = null,
 
     @field:JsonProperty("requestType")
-    val requestType: kotlin.String? = null,
+    val requestType: String? = null,
 
     @field:JsonProperty("agreementTerm")
-    val agreementTerm: kotlin.Long? = null,
+    val agreementTerm: Long? = null,
 
     @field:JsonProperty("agreementTermUnit")
-    val agreementTermUnit: kotlin.String? = null,
+    val agreementTermUnit: String? = null,
 
     @field:JsonProperty("maxPackageNumber")
-    val maxPackageNumber: kotlin.Long? = null,
+    val maxPackageNumber: Long? = null,
 
     @field:JsonProperty("purchasingAdvisorQualList")
-    val purchasingAdvisorQualList: kotlin.String? = null,
+    val purchasingAdvisorQualList: String? = null,
 
     @field:JsonProperty("legalReference")
-    val legalReference: kotlin.String? = null,
+    val legalReference: String? = null,
 
     @field:JsonProperty("modificationDate")
-    val modificationDate: kotlin.Long? = null,
+    val modificationDate: Long? = null,
 
     @field:JsonProperty("agreementYearMax")
-    val agreementYearMax: kotlin.Long? = null,
+    val agreementYearMax: Long? = null,
 
     @field:JsonProperty("agreementRenewalMax")
-    val agreementRenewalMax: kotlin.Long? = null,
+    val agreementRenewalMax: Long? = null,
 
     @field:JsonProperty("sexRestricted")
-    val sexRestricted: kotlin.String? = null,
+    val sexRestricted: String? = null,
 
     @field:JsonProperty("minimumAgeAuthorized")
-    val minimumAgeAuthorized: kotlin.Double? = null,
+    val minimumAgeAuthorized: Double? = null,
 
     @field:JsonProperty("maximumAgeAuthorized")
-    val maximumAgeAuthorized: kotlin.Double? = null,
+    val maximumAgeAuthorized: Double? = null,
 
     @field:JsonProperty("maximumContentQuantity")
-    val maximumContentQuantity: kotlin.Double? = null,
+    val maximumContentQuantity: Double? = null,
 
     @field:JsonProperty("maximumContentUnit")
-    val maximumContentUnit: kotlin.String? = null,
+    val maximumContentUnit: String? = null,
 
     @field:JsonProperty("maximumStrengthQuantity")
-    val maximumStrengthQuantity: kotlin.Double? = null,
+    val maximumStrengthQuantity: Double? = null,
 
     @field:JsonProperty("maximumStrengthUnit")
-    val maximumStrengthUnit: kotlin.String? = null,
+    val maximumStrengthUnit: String? = null,
 
     @field:JsonProperty("maximumDurationQuantity")
-    val maximumDurationQuantity: kotlin.Double? = null,
+    val maximumDurationQuantity: Double? = null,
 
     @field:JsonProperty("maximumDurationUnit")
-    val maximumDurationUnit: kotlin.String? = null,
+    val maximumDurationUnit: String? = null,
 
     @field:JsonProperty("otherAddedDocumentInd")
-    val otherAddedDocumentInd: kotlin.String? = null,
+    val otherAddedDocumentInd: String? = null,
 
     @field:JsonProperty("minimumAgeAuthorizedUnit")
-    val minimumAgeAuthorizedUnit: kotlin.String? = null,
+    val minimumAgeAuthorizedUnit: String? = null,
 
     @field:JsonProperty("maximumAgeAuthorizedUnit")
-    val maximumAgeAuthorizedUnit: kotlin.String? = null,
+    val maximumAgeAuthorizedUnit: String? = null,
 
     @field:JsonProperty("modificationStatus")
-    val modificationStatus: kotlin.String? = null,
+    val modificationStatus: String? = null,
 
     @field:JsonProperty("children")
-    val children: kotlin.collections.List<VerseDto>? = null
+    val children: List<VerseDto>? = null
 
 )
 

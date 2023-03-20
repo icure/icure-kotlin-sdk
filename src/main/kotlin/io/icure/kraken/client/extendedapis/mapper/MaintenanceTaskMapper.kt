@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface MaintenanceTaskMapper {
-    fun map(maintenanceTask: MaintenanceTaskDto): io.icure.kraken.client.models.MaintenanceTaskDto
-    fun map(maintenanceTask: io.icure.kraken.client.models.MaintenanceTaskDto): MaintenanceTaskDto
+    fun map(maintenanceTask: MaintenanceTaskDto): org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto
+    fun map(maintenanceTask: org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto): MaintenanceTaskDto
 }
 
 object MaintenanceTaskMapperFactory {

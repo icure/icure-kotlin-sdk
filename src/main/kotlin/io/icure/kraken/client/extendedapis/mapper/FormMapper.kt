@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface FormMapper {
-    fun map(form: FormDto): io.icure.kraken.client.models.FormDto
-    fun map(form: io.icure.kraken.client.models.FormDto): FormDto
+    fun map(form: FormDto): org.taktik.icure.services.external.rest.v2.dto.FormDto
+    fun map(form: org.taktik.icure.services.external.rest.v2.dto.FormDto): FormDto
 }
 
 object FormMapperFactory {

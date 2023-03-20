@@ -14,7 +14,7 @@
 package io.icure.kraken.client.apis
 
 import io.icure.kraken.client.models.DocIdentifier
-import io.icure.kraken.client.models.MaintenanceTaskDto
+import org.taktik.icure.services.external.rest.v2.dto.MaintenanceTaskDto
 import io.icure.kraken.client.models.PaginatedListMaintenanceTaskDto
 import java.io.*
 
@@ -64,7 +64,7 @@ class MaintenanceTaskApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = MaintenanceTaskApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = MaintenanceTaskApi(basePath = java.lang.System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())

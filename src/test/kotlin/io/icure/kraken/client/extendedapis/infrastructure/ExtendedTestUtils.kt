@@ -8,33 +8,35 @@ import io.icure.kraken.client.crypto.toPublicKey
 import io.icure.kraken.client.extendedapis.DataOwner
 import io.icure.kraken.client.extendedapis.DataOwnerResolver
 import io.icure.kraken.client.extendedapis.dataOwnerId
-import io.icure.kraken.client.models.UserDto
+import io.icure.kraken.client.security.AuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import org.taktik.icure.services.external.rest.v2.dto.UserDto
 import java.security.interfaces.RSAPrivateKey
 
 @FlowPreview
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
+@ExperimentalUnsignedTypes
 object ExtendedTestUtils {
 
     fun localCrypto(basePath: String,
-                    authHeader: String,
+                    authProvider: AuthProvider,
                     privKey: RSAPrivateKey,
                     user: UserDto,
                     dataOwner: DataOwner
     ) : LocalCrypto {
         return LocalCrypto(
-            dataOwnerWrapperFor(basePath, authHeader), mapOf(
+            dataOwnerWrapperFor(basePath, authProvider), mapOf(
                 user.dataOwnerId() to listOf(privKey to dataOwner.publicKey!!.toPublicKey())
             )
         )
     }
 
-    fun dataOwnerWrapperFor(basePath: String, authHeader: String) : DataOwnerResolver {
-        val hcPartyApi = HealthcarePartyApi(basePath = basePath, authHeader = authHeader)
-        val patientApi = PatientApi(basePath = basePath, authHeader = authHeader)
-        val deviceApi = DeviceApi(basePath = basePath, authHeader = authHeader)
+    fun dataOwnerWrapperFor(basePath: String, authProvider: AuthProvider) : DataOwnerResolver {
+        val hcPartyApi = HealthcarePartyApi(basePath = basePath, authProvider = authProvider)
+        val patientApi = PatientApi(basePath = basePath, authProvider = authProvider)
+        val deviceApi = DeviceApi(basePath = basePath, authProvider = authProvider)
 
         return DataOwnerResolver(hcPartyApi, patientApi, deviceApi)
     }

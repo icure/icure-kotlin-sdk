@@ -12,14 +12,12 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.DelegationDto
-import io.icure.kraken.client.models.MessageReadStatusDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.MessageReadStatusDto
 
 /**
  * This entity is a root level object. It represents a Message. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -65,146 +63,146 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class MessageDto (
+data class MessageDto(
 
     /* The ID of the message. We encourage using either a v4 UUID or a HL7 Id. */
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     /* A tag is an item from a codification system that qualifies an entity as being member of a certain class, whatever the value it might have taken. If the tag qualifies the content of a field, it means that whatever the content of the field, the tag will always apply. For example, the label of a field is qualified using a tag. LOINC is a codification system typically used for tags. */
     @field:JsonProperty("tags")
-    val tags: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val tags: List<CodeStubDto> = emptyList(),
 
     /* A code is an item from a codification system that qualifies the content of this entity. SNOMED-CT, ICPC-2 or ICD-10 codifications systems can be used for codes */
     @field:JsonProperty("codes")
-    val codes: kotlin.collections.List<CodeStubDto> = emptyList(),
+    val codes: List<CodeStubDto> = emptyList(),
 
     /* List of IDs of healthcare parties to whom the message is addressed */
     @field:JsonProperty("recipients")
-    val recipients: kotlin.collections.List<kotlin.String> = emptyList(),
+    val recipients: List<String> = emptyList(),
 
     /* The address of the recipient of the message. Format is of an email address with extra domains defined for mycarenet and ehealth: (efact.mycarenet.be/eattest.mycarenet.be/chapter4.mycarenet.be/ehbox.ehealth.fgov.be) */
     @field:JsonProperty("toAddresses")
-    val toAddresses: kotlin.collections.List<kotlin.String> = emptyList(),
+    val toAddresses: List<String> = emptyList(),
 
     @field:JsonProperty("metas")
-    val metas: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val metas: Map<String, String> = emptyMap(),
 
     /* Status showing whether the message is read or not and the time of reading */
     @field:JsonProperty("readStatus")
-    val readStatus: kotlin.collections.Map<kotlin.String, MessageReadStatusDto> = emptyMap(),
+    val readStatus: Map<String, MessageReadStatusDto> = emptyMap(),
 
     /* Set of IDs for invoices in the message */
     @field:JsonProperty("invoiceIds")
-    val invoiceIds: kotlin.collections.List<kotlin.String> = emptyList(),
+    val invoiceIds: List<String> = emptyList(),
 
     @field:JsonProperty("unassignedResults")
-    val unassignedResults: kotlin.collections.List<kotlin.String> = emptyList(),
+    val unassignedResults: List<String> = emptyList(),
 
     @field:JsonProperty("assignedResults")
-    val assignedResults: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val assignedResults: Map<String, String> = emptyMap(),
 
     @field:JsonProperty("senderReferences")
-    val senderReferences: kotlin.collections.Map<kotlin.String, kotlin.String> = emptyMap(),
+    val senderReferences: Map<String, String> = emptyMap(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find all contacts for a specific patient. These keys are in clear. You can have several to partition the medical document space. */
     @field:JsonProperty("secretForeignKeys")
-    val secretForeignKeys: kotlin.collections.List<kotlin.String> = emptyList(),
+    val secretForeignKeys: List<String> = emptyList(),
 
     /* The secretForeignKeys are filled at the to many end of a one to many relationship (for example inside Contact for the Patient -> Contacts relationship). Used when we want to find the patient for a specific contact. These keys are the encrypted id (using the hcParty key for the delegate) that can be found in clear inside the patient. ids encrypted using the hcParty keys. */
     @field:JsonProperty("cryptedForeignKeys")
-    val cryptedForeignKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val cryptedForeignKeys: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* When a document is created, the responsible generates a cryptographically random master key (never to be used for something else than referencing from other entities). He/she encrypts it using his own AES exchange key and stores it as a delegation. The responsible is thus always in the delegations as well */
     @field:JsonProperty("delegations")
-    val delegations: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val delegations: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* When a document needs to be encrypted, the responsible generates a cryptographically random master key (different from the delegation key, never to appear in clear anywhere in the db. He/she encrypts it using his own AES exchange key and stores it as a delegation */
     @field:JsonProperty("encryptionKeys")
-    val encryptionKeys: kotlin.collections.Map<kotlin.String, kotlin.collections.Set<DelegationDto>> = emptyMap(),
+    val encryptionKeys: Map<String, Set<DelegationDto>> = emptyMap(),
 
     /* The revision of the message in the database, used for conflict management / optimistic locking. */
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* The timestamp (unix epoch in ms) of creation of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("created")
-    val created: kotlin.Long? = null,
+    val created: Long? = null,
 
     /* The date (unix epoch in ms) of the latest modification of this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("modified")
-    val modified: kotlin.Long? = null,
+    val modified: Long? = null,
 
     /* The id of the User that has created this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("author")
-    val author: kotlin.String? = null,
+    val author: String? = null,
 
     /* The id of the HealthcareParty that is responsible for this entity, will be filled automatically if missing. Not enforced by the application server. */
     @field:JsonProperty("responsible")
-    val responsible: kotlin.String? = null,
+    val responsible: String? = null,
 
     /* The id of the medical location where this entity was created. */
     @field:JsonProperty("medicalLocationId")
-    val medicalLocationId: kotlin.String? = null,
+    val medicalLocationId: String? = null,
 
     /* Soft delete (unix epoch in ms) timestamp of the object. */
     @field:JsonProperty("endOfLife")
-    val endOfLife: kotlin.Long? = null,
+    val endOfLife: Long? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     /* Address of the sender of the message */
     @field:JsonProperty("fromAddress")
-    val fromAddress: kotlin.String? = null,
+    val fromAddress: String? = null,
 
     /* ID of the healthcare party sending the message */
     @field:JsonProperty("fromHealthcarePartyId")
-    val fromHealthcarePartyId: kotlin.String? = null,
+    val fromHealthcarePartyId: String? = null,
 
     @field:JsonProperty("formId")
-    val formId: kotlin.String? = null,
+    val formId: String? = null,
 
     /* Status of the message */
     @field:JsonProperty("status")
-    val status: kotlin.Int? = null,
+    val status: Int? = null,
 
     /* The type of user who is the recipient of this message */
     @field:JsonProperty("recipientsType")
-    val recipientsType: kotlin.String? = null,
+    val recipientsType: String? = null,
 
     /* The timestamp (unix epoch in ms) when the message was received */
     @field:JsonProperty("received")
-    val received: kotlin.Long? = null,
+    val received: Long? = null,
 
     /* The timestamp (unix epoch in ms) when the message was sent */
     @field:JsonProperty("sent")
-    val sent: kotlin.Long? = null,
+    val sent: Long? = null,
 
     @field:JsonProperty("transportGuid")
-    val transportGuid: kotlin.String? = null,
+    val transportGuid: String? = null,
 
     @field:JsonProperty("remark")
-    val remark: kotlin.String? = null,
+    val remark: String? = null,
 
     @field:JsonProperty("conversationGuid")
-    val conversationGuid: kotlin.String? = null,
+    val conversationGuid: String? = null,
 
     /* Subject for the message */
     @field:JsonProperty("subject")
-    val subject: kotlin.String? = null,
+    val subject: String? = null,
 
     /* ID of a parent in a message conversation */
     @field:JsonProperty("parentId")
-    val parentId: kotlin.String? = null,
+    val parentId: String? = null,
 
     @field:JsonProperty("externalRef")
-    val externalRef: kotlin.String? = null,
+    val externalRef: String? = null,
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: kotlin.String? = null
+    val encryptedSelf: String? = null
 
 )
 

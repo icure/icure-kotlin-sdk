@@ -14,11 +14,12 @@ import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.data
 import io.icure.kraken.client.extendedapis.infrastructure.ExtendedTestUtils.localCrypto
 import io.icure.kraken.client.extendedapis.mapper.ContactMapperFactory
 import io.icure.kraken.client.infrastructure.ApiClient
-import io.icure.kraken.client.models.CodeStubDto
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import io.icure.kraken.client.models.decrypted.ContactDto
 import io.icure.kraken.client.models.decrypted.ContentDto
 import io.icure.kraken.client.models.decrypted.PatientDto
 import io.icure.kraken.client.models.decrypted.ServiceDto
+import io.icure.kraken.client.security.BasicAuthProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.runBlocking
@@ -32,26 +33,26 @@ import java.util.*
 internal class ContactApiKtTest {
     private val iCureBackendUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
 
-    private val parentAuthorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("PARENT_HCP_USERNAME")}:${System.getenv("PARENT_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
-    private val child1Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_1_HCP_USERNAME")}:${System.getenv("CHILD_1_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
-    private val child2Authorization = "Basic " + Base64.getEncoder().encodeToString("${System.getenv("CHILD_2_HCP_USERNAME")}:${System.getenv("CHILD_2_HCP_PASSWORD")}".toByteArray(Charsets.UTF_8))
+    private val parentAuthorization = BasicAuthProvider(System.getenv("PARENT_HCP_USERNAME"), System.getenv("PARENT_HCP_PASSWORD"))
+    private val child1Authorization = BasicAuthProvider(System.getenv("CHILD_1_HCP_USERNAME"),System.getenv("CHILD_1_HCP_PASSWORD"))
+    private val child2Authorization = BasicAuthProvider(System.getenv("CHILD_2_HCP_USERNAME"), System.getenv("CHILD_2_HCP_PASSWORD"))
 
     private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
     private val child1PrivKey = System.getenv("CHILD_1_HCP_PRIV_KEY").toPrivateKey()
     private val child2PrivKey = System.getenv("CHILD_2_HCP_PRIV_KEY").toPrivateKey()
 
-    private val userApi = UserApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
-    private val hcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
-    private val contactApi = ContactApi(basePath = iCureBackendUrl, authHeader = parentAuthorization)
+    private val userApi = UserApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
+    private val hcPartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
+    private val contactApi = ContactApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
 
-    private val child1UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
-    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
-    private val child1ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
-    private val child1PatientApi = PatientApi(basePath = iCureBackendUrl, authHeader = child1Authorization)
+    private val child1UserApi = UserApi(basePath = iCureBackendUrl, authProvider = child1Authorization)
+    private val child1HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = child1Authorization)
+    private val child1ContactApi = ContactApi(basePath = iCureBackendUrl, authProvider = child1Authorization)
+    private val child1PatientApi = PatientApi(basePath = iCureBackendUrl, authProvider = child1Authorization)
 
-    private val child2UserApi = UserApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
-    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
-    private val child2ContactApi = ContactApi(basePath = iCureBackendUrl, authHeader = child2Authorization)
+    private val child2UserApi = UserApi(basePath = iCureBackendUrl, authProvider = child2Authorization)
+    private val child2HealthcarePartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = child2Authorization)
+    private val child2ContactApi = ContactApi(basePath = iCureBackendUrl, authProvider = child2Authorization)
 
     @Test
     fun testCreateContactUsingDefaultCryptoConfig() = runBlocking {
@@ -198,7 +199,7 @@ internal class ContactApiKtTest {
     )
 
     private fun customContactCrypto(crypto: LocalCrypto) =
-        CryptoConfig<ContactDto, io.icure.kraken.client.models.ContactDto>(
+        CryptoConfig<ContactDto, org.taktik.icure.services.external.rest.v2.dto.ContactDto>(
             crypto = crypto,
             marshaller = { c ->
                 ContactMapperFactory.instance.map(c).copy(

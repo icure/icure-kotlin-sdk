@@ -14,14 +14,12 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.DeviceDto
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.IdWithRevDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.IdWithRevDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListDeviceDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -34,21 +32,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
+import java.util.ArrayList
+import java.util.List
+import java.util.Map
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -57,11 +48,9 @@ import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 
 /**
@@ -79,7 +68,7 @@ class DeviceApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = DeviceApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = DeviceApi(basePath = java.lang.System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -472,12 +461,12 @@ class DeviceApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterDevicesBy")
-                val filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto>>(fileName, "filterDevicesBy.filterChainDevice")!!.let {
+                val filterChainDevice: io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto>>(fileName, "filterDevicesBy.filterChainDevice")!!.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.DeviceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<DeviceDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterDevicesBy.startDocumentId")?.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterDevicesBy") }?.let {
@@ -684,12 +673,12 @@ class DeviceApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchDevicesBy")
-                val abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto>>(fileName, "matchDevicesBy.abstractFilterDtoDevice")!!.let {
+                val abstractFilterDtoDevice: io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto>>(fileName, "matchDevicesBy.abstractFilterDtoDevice")!!.let {
                     (it as? DeviceDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchDevicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getDevice(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.DeviceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<DeviceDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchDevicesBy(abstractFilterDtoDevice = abstractFilterDtoDevice)

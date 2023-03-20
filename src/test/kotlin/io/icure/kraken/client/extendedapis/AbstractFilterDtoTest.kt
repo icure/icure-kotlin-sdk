@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.icure.kraken.client.infrastructure.*
-import io.icure.kraken.client.models.HealthElementDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 import io.icure.kraken.client.models.filter.chain.FilterChain
 

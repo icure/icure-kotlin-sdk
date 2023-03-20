@@ -12,13 +12,12 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.MeasureDto
-import io.icure.kraken.client.models.MedicationDto
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.TimeSeriesDto
+import com.fasterxml.jackson.annotation.JsonProperty
+import org.taktik.icure.services.external.rest.v2.dto.embed.MeasureDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.MedicationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.TimeSeriesDto
 
 /**
  * Information contained in the service. Content is localized, using ISO language code as key
@@ -40,30 +39,30 @@ import io.icure.kraken.client.models.TimeSeriesDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ContentDto (
+data class ContentDto(
 
     @field:JsonProperty("stringValue")
-    val stringValue: kotlin.String? = null,
+    val stringValue: String? = null,
 
     @field:JsonProperty("numberValue")
-    val numberValue: kotlin.Double? = null,
+    val numberValue: Double? = null,
 
     @field:JsonProperty("booleanValue")
-    val booleanValue: kotlin.Boolean? = null,
+    val booleanValue: Boolean? = null,
 
     @field:JsonProperty("instantValue")
     val instantValue: java.time.OffsetDateTime? = null,
 
     /* Value as date. The format could have a all three (day, month and year) or values on any of these three, whatever is known. */
     @field:JsonProperty("fuzzyDateValue")
-    val fuzzyDateValue: kotlin.Long? = null,
+    val fuzzyDateValue: Long? = null,
 
     @field:JsonProperty("binaryValue")
     val binaryValue: io.icure.kraken.client.infrastructure.ByteArrayWrapper? = null,
 
     /* Id of the document in which the content is being filled. */
     @field:JsonProperty("documentId")
-    val documentId: kotlin.String? = null,
+    val documentId: String? = null,
 
     @field:JsonProperty("measureValue")
     val measureValue: MeasureDto? = null,
@@ -75,13 +74,13 @@ data class ContentDto (
     val timeSeries: TimeSeriesDto? = null,
 
     @field:JsonProperty("compoundValue")
-    val compoundValue: kotlin.collections.List<ServiceDto>? = null,
+    val compoundValue: List<ServiceDto>? = null,
 
     @field:JsonProperty("ratio")
-    val ratio: kotlin.collections.List<MeasureDto>? = null,
+    val ratio: List<MeasureDto>? = null,
 
     @field:JsonProperty("range")
-    val range: kotlin.collections.List<MeasureDto>? = null
+    val range: List<MeasureDto>? = null
 
 )
 

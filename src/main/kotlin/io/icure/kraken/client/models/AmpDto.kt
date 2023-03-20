@@ -12,10 +12,8 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.AmpComponentDto
 import io.icure.kraken.client.models.AmppDto
 import io.icure.kraken.client.models.CompanyDto
-import io.icure.kraken.client.models.SamTextDto
 import io.icure.kraken.client.models.VmpStubDto
 
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -14,15 +14,13 @@
 package io.icure.kraken.client.apis
 
 
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 
-import io.icure.kraken.client.models.HealthElementDto
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthElementDto
+import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListHealthElementDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -35,21 +33,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -58,11 +49,9 @@ import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 
 /**
@@ -80,7 +69,7 @@ class HealthElementApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = HealthElementApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = HealthElementApi(basePath = java.lang.System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -341,12 +330,12 @@ class HealthElementApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterHealthElementsBy")
-                val filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto>>(fileName, "filterHealthElementsBy.filterChainHealthElement")!!.let {
+                val filterChainHealthElement: io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto>>(fileName, "filterHealthElementsBy.filterChainHealthElement")!!.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthElementsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.HealthElementDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<HealthElementDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterHealthElementsBy.startDocumentId")?.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterHealthElementsBy") }?.let {
@@ -699,12 +688,12 @@ class HealthElementApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchHealthElementsBy")
-                val abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto>>(fileName, "matchHealthElementsBy.abstractFilterDtoHealthElement")!!.let {
+                val abstractFilterDtoHealthElement: io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto>>(fileName, "matchHealthElementsBy.abstractFilterDtoHealthElement")!!.let {
                     (it as? HealthElementDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchHealthElementsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getHealthElement(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.HealthElementDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<HealthElementDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchHealthElementsBy(abstractFilterDtoHealthElement = abstractFilterDtoHealthElement)

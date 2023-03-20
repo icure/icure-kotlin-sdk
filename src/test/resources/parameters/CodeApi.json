@@ -69,6 +69,12 @@
     "code": "A0",
     "version": "1"
   },
+  "findCodesByType": {
+    "region": "BE",
+    "type": "normal",
+    "code": "A0",
+    "version": "1"
+  },
   "findCodesByLabel": {
     "skipEndpoint": true,
     "region": "be",

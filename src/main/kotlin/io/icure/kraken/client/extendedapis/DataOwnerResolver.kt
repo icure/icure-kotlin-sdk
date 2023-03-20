@@ -7,19 +7,13 @@ import io.icure.kraken.client.apis.HealthcarePartyApi
 import io.icure.kraken.client.apis.PatientApi
 import io.icure.kraken.client.defGet
 import io.icure.kraken.client.defPut
-import io.icure.kraken.client.models.DeviceDto
-import io.icure.kraken.client.models.HealthcarePartyDto
-import io.icure.kraken.client.models.PatientDto
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
+import org.taktik.icure.services.external.rest.v2.dto.HealthcarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.PatientDto
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flattenMerge
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -31,17 +25,17 @@ class DataOwnerResolver(
     private val patientApi: PatientApi,
     private val deviceApi: DeviceApi
 ) {
-    private val hcParties : Cache<String, Deferred<Optional<HealthcarePartyDto>>> = Caffeine.newBuilder()
+    private val hcParties: Cache<String, Deferred<Optional<HealthcarePartyDto>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
 
-    private val patients : Cache<String, Deferred<Optional<PatientDto>>> = Caffeine.newBuilder()
+    private val patients: Cache<String, Deferred<Optional<PatientDto>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
 
-    private val devices : Cache<String, Deferred<Optional<DeviceDto>>> = Caffeine.newBuilder()
+    private val devices: Cache<String, Deferred<Optional<DeviceDto>>> = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterWrite(5, TimeUnit.MINUTES)
         .build()
@@ -64,25 +58,50 @@ class DataOwnerResolver(
      *
      * @return the updated data owner
      */
-    suspend fun updateDataOwnerWithNewAesExchangeKeys(dataOwnerType: DataOwnerType, dataOwnerId: String, dataOwnerPubKey: String, newAesExchangeKeys: Pair<String, List<Pair<String, String>>>) : DataOwner {
-        return when(dataOwnerType) {
+    suspend fun updateDataOwnerWithNewAesExchangeKeys(
+        dataOwnerType: DataOwnerType,
+        dataOwnerId: String,
+        dataOwnerPubKey: String,
+        newAesExchangeKeys: Pair<String, List<Pair<String, String>>>
+    ): DataOwner {
+        return when (dataOwnerType) {
             DataOwnerType.HCP -> hcParties.defGet(dataOwnerId) { hcpartyApi.getHealthcareParty(dataOwnerId) }
                 ?.let { hcp ->
-                    val updatedHcp = hcpartyApi.modifyHealthcareParty(createHcpWithUpdatedHcPartyKeys(hcp, dataOwnerPubKey, newAesExchangeKeys))
+                    val updatedHcp = hcpartyApi.modifyHealthcareParty(
+                        createHcpWithUpdatedHcPartyKeys(
+                            hcp,
+                            dataOwnerPubKey,
+                            newAesExchangeKeys
+                        )
+                    )
                     hcParties.defPut(dataOwnerId) { updatedHcp }
                     updatedHcp
                 }
                 ?.toDataOwner()
+
             DataOwnerType.PATIENT -> patients.defGet(dataOwnerId) { patientApi.getPatient(dataOwnerId) }
                 ?.let { patient ->
-                    val updatedPatient = patientApi.modifyPatient(createPatientWithUpdatedHcPartyKeys(patient, dataOwnerPubKey, newAesExchangeKeys))
+                    val updatedPatient = patientApi.modifyPatient(
+                        createPatientWithUpdatedHcPartyKeys(
+                            patient,
+                            dataOwnerPubKey,
+                            newAesExchangeKeys
+                        )
+                    )
                     patients.defPut(dataOwnerId) { updatedPatient }
                     updatedPatient
                 }
                 ?.toDataOwner()
+
             DataOwnerType.DEVICE -> devices.defGet(dataOwnerId) { deviceApi.getDevice(dataOwnerId) }
                 ?.let { device ->
-                    val updatedDevice = deviceApi.updateDevice(createDeviceWithUpdatedHcPartyKeys(device, dataOwnerPubKey, newAesExchangeKeys))
+                    val updatedDevice = deviceApi.updateDevice(
+                        createDeviceWithUpdatedHcPartyKeys(
+                            device,
+                            dataOwnerPubKey,
+                            newAesExchangeKeys
+                        )
+                    )
                     devices.defPut(dataOwnerId) { updatedDevice }
                     updatedDevice
                 }
@@ -90,27 +109,39 @@ class DataOwnerResolver(
         } ?: throw RuntimeException("Could not add new hcpartyKeys to data owner $dataOwnerId")
     }
 
-    private fun createHcpWithUpdatedHcPartyKeys(hcp: HealthcarePartyDto, hcpPubKey: String, newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>): HealthcarePartyDto {
+    private fun createHcpWithUpdatedHcPartyKeys(
+        hcp: HealthcarePartyDto,
+        hcpPubKey: String,
+        newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>
+    ): HealthcarePartyDto {
         return hcp.toDataOwner()
             .updateAesExchangeKeys(hcpPubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                hcp.copy(hcPartyKeys = dataOwner.hcPartyKeys, aesExchangeKeys = dataOwner.aesExchangeKeys)
+                hcp.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 
-    private fun createPatientWithUpdatedHcPartyKeys(patient: PatientDto, patientPubKey: String, newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>): PatientDto {
+    private fun createPatientWithUpdatedHcPartyKeys(
+        patient: PatientDto,
+        patientPubKey: String,
+        newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>
+    ): PatientDto {
         return patient.toDataOwner()
             .updateAesExchangeKeys(patientPubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                patient.copy(hcPartyKeys = dataOwner.hcPartyKeys, aesExchangeKeys = dataOwner.aesExchangeKeys)
+                patient.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 
-    private fun createDeviceWithUpdatedHcPartyKeys(device: DeviceDto, devicePubKey: String, newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>): DeviceDto {
+    private fun createDeviceWithUpdatedHcPartyKeys(
+        device: DeviceDto,
+        devicePubKey: String,
+        newHcPartyKeysForPubKey: Pair<String, List<Pair<String, String>>>
+    ): DeviceDto {
         return device.toDataOwner()
             .updateAesExchangeKeys(devicePubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                device.copy(hcPartyKeys = dataOwner.hcPartyKeys, aesExchangeKeys = dataOwner.aesExchangeKeys)
+                device.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 
@@ -118,19 +149,35 @@ class DataOwnerResolver(
      * @return The Map containing all aesExchangeKeys concerning the dataOwner identified as delegateId.
      * The structure of the returned map is the following : { delegatorId: { slicedDelegatorPubKey: { delegatePubKey: encAesKey } } }
      */
-    suspend fun getDataOwnerAesExchangeKeysForDelegate(delegateId: String) : Map<String, Map<String, Map<String, String>>> {
+    suspend fun getDataOwnerAesExchangeKeysForDelegate(delegateId: String): Map<String, Map<String, Map<String, String>>> {
         return flowOf(
-            flow { emit(try {
-                hcpartyApi.getAesExchangeKeysForDelegate(delegateId)
-            } catch(e: Exception) {
-                emptyMap()
-            }) },
-            flow { emit(try {
-                patientApi.getPatientAesExchangeKeysForDelegate(delegateId)
-            } catch(e: Exception) {
-                emptyMap()
-            }) },
-            flow { emit(try { deviceApi.getDeviceAesExchangeKeysForDelegate(delegateId) } catch(e: Exception) { emptyMap() }) }
+            flow {
+                emit(
+                    try {
+                        hcpartyApi.getAesExchangeKeysForDelegate(delegateId)
+                    } catch (e: Exception) {
+                        emptyMap()
+                    }
+                )
+            },
+            flow {
+                emit(
+                    try {
+                        patientApi.getPatientAesExchangeKeysForDelegate(delegateId)
+                    } catch (e: Exception) {
+                        emptyMap()
+                    }
+                )
+            },
+            flow {
+                emit(
+                    try {
+                        deviceApi.getDeviceAesExchangeKeysForDelegate(delegateId)
+                    } catch (e: Exception) {
+                        emptyMap()
+                    }
+                )
+            }
         )
             .flattenMerge(3)
             .filter { hcPartyKeys -> hcPartyKeys.isNotEmpty() }
@@ -139,7 +186,7 @@ class DataOwnerResolver(
             .associate { (key, value) -> key to value }
     }
 
-    suspend fun getDataOwner(dataOwnerId: String) : DataOwner {
+    suspend fun getDataOwner(dataOwnerId: String): DataOwner {
         return flowOf(
             flow { emit(getHcpDataOwner(dataOwnerId)) },
             flow { emit(getPatientDataOwner(dataOwnerId)) },
@@ -151,39 +198,57 @@ class DataOwnerResolver(
             ?: throw IllegalArgumentException("$dataOwnerId is not a data owner")
     }
 
-    private suspend fun getHcpDataOwner(hcpId: String) : DataOwner? {
+    private suspend fun getHcpDataOwner(hcpId: String): DataOwner? {
         return try {
             hcParties.defGet(hcpId) { hcpartyApi.getHealthcareParty(hcpId) }?.toDataOwner()
-        } catch (e: Exception) { null }
+        } catch (e: Exception) {
+            null
+        }
     }
 
-    private suspend fun getPatientDataOwner(patientId: String) : DataOwner? {
+    private suspend fun getPatientDataOwner(patientId: String): DataOwner? {
         return try {
             patients.defGet(patientId) { patientApi.getPatient(patientId) }?.toDataOwner()
-        } catch (e: Exception) { null }
+        } catch (e: Exception) {
+            null
+        }
     }
 
-    private suspend fun getDeviceDataOwner(deviceId: String) : DataOwner? {
+    private suspend fun getDeviceDataOwner(deviceId: String): DataOwner? {
         return try {
             devices.defGet(deviceId) { deviceApi.getDevice(deviceId) }?.toDataOwner()
-        } catch (e: Exception) { null }
+        } catch (e: Exception) {
+            null
+        }
     }
 }
 
-fun HealthcarePartyDto.toDataOwner() : DataOwner {
+fun HealthcarePartyDto.toDataOwner(): DataOwner {
     return DataOwner(
         type = DataOwnerType.HCP,
         dataOwnerId = this.id,
         rev = this.rev,
         publicKey = this.publicKey,
-        hcPartyKeys = this.hcPartyKeys,
+        hcPartyKeys = this.hcPartyKeys.map { it.key to it.value.toList() }.toMap(),
         aesExchangeKeys = this.aesExchangeKeys,
         transferKeys = this.transferKeys,
         parentId = this.parentId
     )
 }
 
-fun PatientDto.toDataOwner() : DataOwner {
+fun PatientDto.toDataOwner(): DataOwner {
+    return DataOwner(
+        type = DataOwnerType.PATIENT,
+        dataOwnerId = this.id,
+        rev = this.rev,
+        publicKey = this.publicKey,
+        hcPartyKeys = this.hcPartyKeys.map { it.key to it.value.toList() }.toMap(),
+        aesExchangeKeys = this.aesExchangeKeys,
+        transferKeys = this.transferKeys
+    )
+}
+
+fun io.icure.kraken.client.models.decrypted.PatientDto.toDataOwner(): DataOwner {
     return DataOwner(
         type = DataOwnerType.PATIENT,
         dataOwnerId = this.id,
@@ -195,25 +260,13 @@ fun PatientDto.toDataOwner() : DataOwner {
     )
 }
 
-fun io.icure.kraken.client.models.decrypted.PatientDto.toDataOwner() : DataOwner {
-    return DataOwner(
-        type = DataOwnerType.PATIENT,
-        dataOwnerId = this.id,
-        rev = this.rev,
-        publicKey = this.publicKey,
-        hcPartyKeys = this.hcPartyKeys,
-        aesExchangeKeys = this.aesExchangeKeys,
-        transferKeys = this.transferKeys
-    )
-}
-
-fun DeviceDto.toDataOwner() : DataOwner {
+fun DeviceDto.toDataOwner(): DataOwner {
     return DataOwner(
         type = DataOwnerType.DEVICE,
         dataOwnerId = this.id,
         rev = this.rev,
         publicKey = this.publicKey,
-        hcPartyKeys = this.hcPartyKeys,
+        hcPartyKeys = this.hcPartyKeys.map { it.key to it.value.toList() }.toMap(),
         aesExchangeKeys = this.aesExchangeKeys,
         transferKeys = this.transferKeys,
         parentId = this.parentId
@@ -243,7 +296,11 @@ data class DataOwner(
         }
 
         return if (this.publicKey in dataOwnerPublicKeys) {
-            aesExchangeKeysOfDataOwner.plus(this.publicKey!! to this.hcPartyKeys.map { (delegateId, v) -> delegateId to mapOf(this.publicKey.takeLast(12) to v[0]) }.toMap())
+            aesExchangeKeysOfDataOwner.plus(this.publicKey!! to this.hcPartyKeys.map { (delegateId, v) ->
+                delegateId to mapOf(
+                    this.publicKey.takeLast(12) to v[0]
+                )
+            }.toMap())
         } else {
             aesExchangeKeysOfDataOwner
         }
@@ -252,7 +309,7 @@ data class DataOwner(
     fun updateAesExchangeKeys(
         dataOwnerPubKey: String,
         newAesExchangeKeys: Pair<String, List<Pair<String, String>>>
-    ) : DataOwner {
+    ): DataOwner {
         val (delegateId, keysForDelegate) = newAesExchangeKeys
         return if (this.publicKey == dataOwnerPubKey && keysForDelegate.size > 2) {
             this.addNewHcPartyKeys(delegateId, keysForDelegate)
@@ -260,6 +317,7 @@ data class DataOwner(
             this.addNewAesExchangeKeys(dataOwnerPubKey, delegateId, keysForDelegate)
         }
     }
+
     private fun addNewAesExchangeKeys(
         dataOwnerPubKey: String,
         delegateId: String,

@@ -12,12 +12,10 @@
  */
 package io.icure.kraken.client.models.decrypted
 
-import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
-
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.ClassificationDto
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.icure.kraken.client.models.PaginatedDocumentKeyIdPairObject
 
 /**
  *
@@ -30,16 +28,16 @@ import io.icure.kraken.client.models.ClassificationDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class PaginatedListClassificationDto (
+data class PaginatedListClassificationDto(
 
     @field:JsonProperty("pageSize")
-    val pageSize: kotlin.Int,
+    val pageSize: Int,
 
     @field:JsonProperty("totalSize")
-    val totalSize: kotlin.Int,
+    val totalSize: Int,
 
     @field:JsonProperty("rows")
-    val rows: kotlin.collections.List<ClassificationDto> = emptyList(),
+    val rows: List<ClassificationDto> = emptyList(),
 
     @field:JsonProperty("nextKeyPair")
     val nextKeyPair: PaginatedDocumentKeyIdPairObject? = null

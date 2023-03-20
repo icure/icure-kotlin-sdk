@@ -1,6 +1,7 @@
 package io.icure.kraken.client.models.filter.code
 
 import io.icure.kraken.client.apis.CodeApi
+
 import io.icure.kraken.client.infrastructure.UsernamePassword
 import io.icure.kraken.client.models.filter.chain.FilterChain
 import io.kotest.core.spec.style.StringSpec
@@ -15,7 +16,7 @@ import kotlin.random.Random
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class CodeIdsByTypeCodeVersionIntervalFilterTest : StringSpec({
     val iCureUrl = System.getenv("ICURE_BE_URL") ?: "https://kraken.icure.dev"
-    val api = CodeApi(basePath = iCureUrl, authHeader = UsernamePassword(System.getenv("ICURE_USR"), System.getenv("ICURE_PWD")).toBasicAuth())
+    val api = CodeApi(basePath = iCureUrl, authProvider = UsernamePassword(System.getenv("ICURE_USR"), System.getenv("ICURE_PWD")).toBasicAuth())
     val testBatchSize = 40
     val codeGenerator = CodeBatchGenerator()
     val testBatch = codeGenerator.createBatchOfUniqueCodes(testBatchSize).associateBy { it.id }

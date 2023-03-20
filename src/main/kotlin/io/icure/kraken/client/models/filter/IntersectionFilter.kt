@@ -10,6 +10,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class IntersectionFilter<O>(
-        override val desc: String? = null,
-        val filters: List<AbstractFilterDto<O>> = emptyList()
+    override val desc: String? = null,
+    val filters: List<AbstractFilterDto<O>> = emptyList()
 ) : AbstractFilterDto<O>

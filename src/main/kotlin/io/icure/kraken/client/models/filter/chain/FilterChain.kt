@@ -10,7 +10,7 @@ import io.icure.kraken.client.models.filter.predicate.Predicate
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class FilterChain<O> (
-        val filter: AbstractFilterDto<O>,
-        val predicate: Predicate? = null
+data class FilterChain<O>(
+    val filter: AbstractFilterDto<O>,
+    val predicate: Predicate? = null
 )

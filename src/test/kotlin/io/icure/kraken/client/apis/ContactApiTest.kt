@@ -15,20 +15,17 @@ package io.icure.kraken.client.apis
 
 
 
-import io.icure.kraken.client.models.ContactDto
-import io.icure.kraken.client.models.ContentDto
-import io.icure.kraken.client.models.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.ContactDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.ContentDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import io.icure.kraken.client.models.DocIdentifier
 
 
-import io.icure.kraken.client.models.IcureStubDto
-import io.icure.kraken.client.models.LabelledOccurenceDto
-import io.icure.kraken.client.models.ListOfIdsDto
+import org.taktik.icure.services.external.rest.v2.dto.IcureStubDto
+import org.taktik.icure.services.external.rest.v2.dto.ListOfIdsDto
 import io.icure.kraken.client.models.PaginatedListContactDto
 import io.icure.kraken.client.models.PaginatedListServiceDto
-import io.icure.kraken.client.models.ServiceDto
-import assertk.assertThat
-import assertk.assertions.isEqualToIgnoringGivenProperties
+import org.taktik.icure.services.external.rest.v2.dto.embed.ServiceDto
 import java.io.*
 
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -41,21 +38,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.icure.kraken.client.infrastructure.*
 
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kotlin.reflect.KProperty1
-import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.full.memberProperties
 
@@ -64,12 +54,11 @@ import io.icure.kraken.client.infrastructure.TestUtils
 import io.icure.kraken.client.infrastructure.TestUtils.Companion.basicAuth
 import io.icure.kraken.client.infrastructure.differences
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.fold
 import java.nio.ByteBuffer
 import kotlin.reflect.full.callSuspendBy
 import kotlin.reflect.javaType
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
+import org.taktik.icure.services.external.rest.v2.dto.data.LabelledOccurenceDto
 
 /**
  * API tests for ContactApi
@@ -86,7 +75,7 @@ class ContactApiTest() {
     }
 
     // http://127.0.0.1:16043
-    fun api(fileName: String) = ContactApi(basePath = java.lang.System.getProperty("API_URL"), authHeader = fileName.basicAuth())
+    fun api(fileName: String) = ContactApi(basePath = System.getProperty("API_URL"), authProvider = fileName.basicAuth())
     private val workingFolder = "/tmp/icureTests/"
     private val objectMapper = ObjectMapper()
         .registerModule(KotlinModule())
@@ -105,14 +94,12 @@ class ContactApiTest() {
         configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
 
-    suspend fun createForModification(fileName: String){
+    suspend fun createForModification(fileName: String) {
         if (canCreateForModificationObjects(fileName)) {
             TestUtils.getParameters<Any>(fileName, "beforeElements.bodies")?.let {bodies ->
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "createDto")
                 val createFunction = api(credentialsFile)::class.memberFunctions
                     .firstOrNull { it.parameters.size == 3; it.name.startsWith("create") }
-                val deleteFunction = api(credentialsFile)::class.memberFunctions
-                    .firstOrNull { it.parameters.size == 3 && it.name.startsWith("delete") }
                 bodies.forEach {body ->
                     //deleteFunction?.call(api, body?.id)
                     val parameters = createFunction!!.parameters.mapNotNull {
@@ -420,12 +407,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterContactsBy")
-                val filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto>>(fileName, "filterContactsBy.filterChainContact")!!.let {
+                val filterChainContact: io.icure.kraken.client.models.filter.chain.FilterChain<ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<ContactDto>>(fileName, "filterContactsBy.filterChainContact")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterContactsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ContactDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<ContactDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterContactsBy.startDocumentId")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterContactsBy") }?.let {
@@ -500,12 +487,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "filterServicesBy")
-                val filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto>>(fileName, "filterServicesBy.filterChainService")!!.let {
+                val filterChainService: io.icure.kraken.client.models.filter.chain.FilterChain<ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.chain.FilterChain<ServiceDto>>(fileName, "filterServicesBy.filterChainService")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterServicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<io.icure.kraken.client.models.ServiceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.chain.FilterChain<ServiceDto> ?: it
                     }
                 val startDocumentId: kotlin.String? = TestUtils.getParameter<kotlin.String>(fileName, "filterServicesBy.startDocumentId")?.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "filterServicesBy") }?.let {
@@ -674,12 +661,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "getContact")
-                val contactId: kotlin.String = TestUtils.getParameter<kotlin.String>(fileName, "getContact.contactId")!!.let {
-                    (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContact") }?.let {
-                    val id = it::class.memberProperties.first { it.name == "id" }
-                    val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
-                    it.copy(rev = currentRev)
-                    } as? kotlin.String ?: it
+                val contactId: String = TestUtils.getParameter<String>(fileName, "getContact.contactId")!!.let { rawContact ->
+                        (rawContact as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "getContact") }?.let {
+                            val id = it::class.memberProperties.first { it.name == "id" }
+                            val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
+                            it.copy(rev = currentRev)
+                        } as? String ?: rawContact
                     }
 
                 val response = api(credentialsFile).getContact(contactId = contactId)
@@ -1734,12 +1721,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchContactsBy")
-                val abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto>>(fileName, "matchContactsBy.abstractFilterDtoContact")!!.let {
+                val abstractFilterDtoContact: io.icure.kraken.client.models.filter.AbstractFilterDto<ContactDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<ContactDto>>(fileName, "matchContactsBy.abstractFilterDtoContact")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchContactsBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ContactDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<ContactDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchContactsBy(abstractFilterDtoContact = abstractFilterDtoContact)
@@ -1800,12 +1787,12 @@ class ContactApiTest() {
             try{
                 createForModification(fileName)
                 val credentialsFile = TestUtils.getCredentialsFile(fileName, "matchServicesBy")
-                val abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto>>(fileName, "matchServicesBy.abstractFilterDtoService")!!.let {
+                val abstractFilterDtoService: io.icure.kraken.client.models.filter.AbstractFilterDto<ServiceDto> = TestUtils.getParameter<io.icure.kraken.client.models.filter.AbstractFilterDto<ServiceDto>>(fileName, "matchServicesBy.abstractFilterDtoService")!!.let {
                     (it as? ContactDto)?.takeIf { TestUtils.isAutoRev(fileName, "matchServicesBy") }?.let {
                     val id = it::class.memberProperties.first { it.name == "id" }
                     val currentRev = api(credentialsFile).getContact(id.getter.call(it) as String).rev
                     it.copy(rev = currentRev)
-                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<io.icure.kraken.client.models.ServiceDto> ?: it
+                    } as? io.icure.kraken.client.models.filter.AbstractFilterDto<ServiceDto> ?: it
                     }
 
                 val response = api(credentialsFile).matchServicesBy(abstractFilterDtoService = abstractFilterDtoService)

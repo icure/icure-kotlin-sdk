@@ -20,11 +20,11 @@ package io.icure.kraken.client.models.filter.device
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import io.icure.kraken.client.models.DeviceDto
+import org.taktik.icure.services.external.rest.v2.dto.DeviceDto
 import io.icure.kraken.client.models.filter.AbstractFilterDto
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class AllDevicesFilter(
-        override val desc:String? = null,
+    override val desc: String? = null,
 ) : AbstractFilterDto<DeviceDto>

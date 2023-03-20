@@ -12,12 +12,10 @@
  */
 package io.icure.kraken.client.models
 
-import io.icure.kraken.client.models.CodeStubDto
-import io.icure.kraken.client.models.SamTextDto
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 
 
 /**
@@ -36,20 +34,20 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class PharmaceuticalFormDto (
 
     @field:JsonProperty("id")
-    val id: kotlin.String,
+    val id: String,
 
     @field:JsonProperty("standardForms")
-    val standardForms: kotlin.collections.List<CodeStubDto> = listOf(),
+    val standardForms: List<CodeStubDto> = listOf(),
 
     @field:JsonProperty("rev")
-    val rev: kotlin.String? = null,
+    val rev: String? = null,
 
     /* hard delete (unix epoch in ms) timestamp of the object. Filled automatically when deletePatient is called. */
     @field:JsonProperty("deletionDate")
-    val deletionDate: kotlin.Long? = null,
+    val deletionDate: Long? = null,
 
     @field:JsonProperty("code")
-    val code: kotlin.String? = null,
+    val code: String? = null,
 
     @field:JsonProperty("name")
     val name: SamTextDto? = null

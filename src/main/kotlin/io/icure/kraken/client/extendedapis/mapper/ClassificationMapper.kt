@@ -5,8 +5,8 @@ import org.mapstruct.Mapper
 
 @Mapper
 interface ClassificationMapper {
-    fun map(classification: ClassificationDto): io.icure.kraken.client.models.ClassificationDto
-    fun map(classification: io.icure.kraken.client.models.ClassificationDto): ClassificationDto
+    fun map(classification: ClassificationDto): org.taktik.icure.services.external.rest.v2.dto.ClassificationDto
+    fun map(classification: org.taktik.icure.services.external.rest.v2.dto.ClassificationDto): ClassificationDto
 }
 
 object ClassificationMapperFactory {

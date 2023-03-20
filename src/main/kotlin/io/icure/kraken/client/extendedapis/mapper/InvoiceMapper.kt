@@ -6,8 +6,8 @@ import org.mapstruct.Mapper
 
 @Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 interface InvoiceMapper {
-    fun map(invoice: InvoiceDto): io.icure.kraken.client.models.InvoiceDto
-    fun map(invoice: io.icure.kraken.client.models.InvoiceDto): InvoiceDto
+    fun map(invoice: InvoiceDto): org.taktik.icure.services.external.rest.v2.dto.InvoiceDto
+    fun map(invoice: org.taktik.icure.services.external.rest.v2.dto.InvoiceDto): InvoiceDto
 }
 
 object InvoiceMapperFactory {

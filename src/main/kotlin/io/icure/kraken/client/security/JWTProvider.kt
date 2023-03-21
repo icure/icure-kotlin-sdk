@@ -23,6 +23,10 @@ class JWTProvider(
     private var authJWT: String? = null
     private var refreshJWT: String? = null
 
+    /**
+     * Provides the current Authentication header data for the JWT authentication. Refreshes the JWT if expired and
+     * obtains a new Refresh JWT if expired.
+     */
     override suspend fun getAuthHeader(): String =
         mutex.withLock {
             if (authJWT == null || isJwtExpired(authJWT!!)) {

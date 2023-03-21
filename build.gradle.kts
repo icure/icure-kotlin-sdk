@@ -121,7 +121,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 tasks.getByName("publish") {
-    dependsOn("apiGenerate", "build")
+    dependsOn("build")
 }
 
 tasks.register("apiGenerate", Jar::class) {

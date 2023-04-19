@@ -1740,11 +1740,11 @@ class PatientApi(
 
     /**
      * Register a patient
-     * Register a new patient into the system without setting up an auto-delegation for the HCP
-     * @param groupId
+     * Register a new patient into the system with the current HCP
      * @param patientDto
      * @param token  (optional)
      * @param useShortToken  (optional)
+     * @param createAutoDelegation (optional)
      * @return DataOwnerRegistrationSuccessDto
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
      * @throws ClientException If the API returns a client error response
@@ -1753,16 +1753,16 @@ class PatientApi(
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun registerPatientInGroup(
-        groupId: String,
         patientDto: PatientDto,
         token: String?,
-        useShortToken: Boolean?
+        useShortToken: Boolean?,
+        createAutoDelegation: Boolean?
     ): DataOwnerRegistrationSuccessDto {
         val localVariableConfig = registerPatientInGroupRequestConfig(
-            groupId = groupId,
             patientDto = patientDto,
             token = token,
-            useShortToken = useShortToken
+            useShortToken = useShortToken,
+            createAutoDelegation = createAutoDelegation
         )
 
         return request<PatientDto, DataOwnerRegistrationSuccessDto>(
@@ -1773,17 +1773,17 @@ class PatientApi(
     /**
      * To obtain the request config of the operation registerPatient
      *
-     * @param groupId
      * @param patientDto
      * @param token  (optional)
      * @param useShortToken  (optional)
+     * @param createAutoDelegation (optional)
      * @return RequestConfig
      */
     fun registerPatientInGroupRequestConfig(
-        groupId: String,
         patientDto: PatientDto,
         token: String?,
-        useShortToken: Boolean?
+        useShortToken: Boolean?,
+        createAutoDelegation: Boolean?
     ): RequestConfig<PatientDto> {
         // val localVariableBody = patientDto
         val localVariableQuery: MultiValueMap = mutableMapOf<String, List<String>>()
@@ -1794,6 +1794,9 @@ class PatientApi(
                 if (useShortToken != null) {
                     put("useShortToken", listOf(useShortToken.toString()))
                 }
+                if (createAutoDelegation != null) {
+                    put("createAutoDelegation", listOf(createAutoDelegation.toString()))
+                }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
         localVariableHeaders["Accept"] = "*/*"
@@ -1801,10 +1804,7 @@ class PatientApi(
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/rest/v2/patient/register/inGroup/{groupId}".replace(
-                "{" + "groupId" + "}",
-                URLEncoder.encode(groupId, Charsets.UTF_8)
-            ),
+            path = "/rest/v2/patient/register",
             query = localVariableQuery,
             headers = localVariableHeaders,
             body = localVariableBody

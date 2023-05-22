@@ -18,7 +18,17 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
 import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
-import org.taktik.icure.services.external.rest.v2.dto.embed.*
+import org.taktik.icure.services.external.rest.v2.dto.embed.AddressDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.EmploymentInfoDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.FinancialInstitutionInformationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.InsurabilityDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.MedicalHouseContractDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.PartnershipDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.PatientHealthCarePartyDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.PersonNameDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.SchoolingInfoDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.SecurityMetadataDto
 
 /**
  * This entity is a root level object. It represents a patient It is serialized in JSON and saved in the underlying icure-patient CouchDB database.
@@ -401,7 +411,13 @@ data class PatientDto(
     val socialStatus: CodeStubDto? = null,
 
     @field:JsonProperty("mainSourceOfIncome")
-    val mainSourceOfIncome: CodeStubDto? = null
+    val mainSourceOfIncome: CodeStubDto? = null,
+
+    @field:JsonProperty("publicKeysForOaepWithSha256")
+    val publicKeysForOaepWithSha256: Set<String> = emptySet(),
+
+    @field:JsonProperty("securityMetadata")
+    val securityMetadata: SecurityMetadataDto? = null
 
 ) {
 

@@ -19,7 +19,7 @@ import org.taktik.icure.services.external.rest.v2.dto.PropertyStubDto
 import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
-
+import org.taktik.icure.services.external.rest.v2.dto.embed.SecurityMetadataDto
 
 /**
  *
@@ -123,7 +123,10 @@ data class MaintenanceTaskDto(
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: String? = null
+    val encryptedSelf: String? = null,
+
+    @field:JsonProperty("securityMetadata")
+    val securityMetadata: SecurityMetadataDto? = null
 
 ) {
 

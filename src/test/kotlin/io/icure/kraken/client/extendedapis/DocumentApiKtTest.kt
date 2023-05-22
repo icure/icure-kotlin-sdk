@@ -26,7 +26,7 @@ internal class DocumentApiKtTest {
 
     private val parentAuthorization = BasicAuthProvider(System.getenv("PARENT_HCP_USERNAME"), System.getenv("PARENT_HCP_PASSWORD"))
     private val parentPrivKey = System.getenv("PARENT_HCP_PRIV_KEY").toPrivateKey()
-    
+
     private val userApi = UserApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
     private val hcpartyApi = HealthcarePartyApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
     private val documentApi = DocumentApi(basePath = iCureBackendUrl, authProvider = parentAuthorization)
@@ -58,9 +58,12 @@ internal class DocumentApiKtTest {
             val docWithAttachment = documentApi.setDocumentAttachment(
                 user = currentUser,
                 documentId = createdDocument.id,
+                rev = createdDocument.rev!!,
                 requestBody = flowOf(ByteBuffer.wrap(attachmentToAdd)),
+                contentLength = attachmentToAdd.size.toLong(),
                 enckeys = docEncKeys.firstOrNull(),
-                config = documentConfig
+                config = documentConfig,
+                utis = emptyList()
             )
 
             // Then

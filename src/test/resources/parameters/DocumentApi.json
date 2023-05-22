@@ -23,6 +23,7 @@
   },
   "deleteAttachment": {
     "documentId": "52a2a436-8154-4df5-816b-cc7ef4aac5aa",
+    "rev": "1-52a2a436-8154-4df5-816b-cc7ef4aac5aa",
     "attachmentId": "76cb2e1f-e46d-4f6e-a402-23803547adda",
     "skipEndpoint": true
   },

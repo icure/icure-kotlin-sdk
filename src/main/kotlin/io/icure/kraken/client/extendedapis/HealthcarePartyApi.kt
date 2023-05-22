@@ -18,7 +18,7 @@ suspend fun HealthcarePartyDto.addNewKeyPair(
     this.copy(
         rev = dataOwner.rev,
         publicKey = dataOwner.publicKey,
-        hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(),
+        hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value }.toMap(),
         aesExchangeKeys = dataOwner.aesExchangeKeys,
         transferKeys = dataOwner.transferKeys
     )

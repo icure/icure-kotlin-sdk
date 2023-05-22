@@ -14,7 +14,7 @@ suspend fun DeviceDto.addNewKeyPair(
 ) = crypto.addNewKeyPairTo(user, this.toDataOwner(), devicePublicKey, devicePrivateKey).let { dataOwner ->
     this.copy(
         publicKey = dataOwner.publicKey,
-        hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(),
+        hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value }.toMap(),
         aesExchangeKeys = dataOwner.aesExchangeKeys,
         transferKeys = dataOwner.transferKeys
     )

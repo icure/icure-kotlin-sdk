@@ -117,7 +117,7 @@ class DataOwnerResolver(
         return hcp.toDataOwner()
             .updateAesExchangeKeys(hcpPubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                hcp.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
+                hcp.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 
@@ -129,7 +129,7 @@ class DataOwnerResolver(
         return patient.toDataOwner()
             .updateAesExchangeKeys(patientPubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                patient.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
+                patient.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 
@@ -141,7 +141,7 @@ class DataOwnerResolver(
         return device.toDataOwner()
             .updateAesExchangeKeys(devicePubKey, newHcPartyKeysForPubKey)
             .let { dataOwner ->
-                device.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value.toTypedArray() }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
+                device.copy(hcPartyKeys = dataOwner.hcPartyKeys.map { it.key to it.value }.toMap(), aesExchangeKeys = dataOwner.aesExchangeKeys)
             }
     }
 

@@ -19,6 +19,7 @@ import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.AnnotationDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.SecurityMetadataDto
 
 /**
  * This entity represents a Service. A Service is created in the course a contact. Services include subjective information provided by the patient, such as complaints, reason for visit, feelings, etc. or objective information like bio-metric measures (blood pressure, temperature, heart beat, etc.), or physical exam description, diagnosis, prescription, integration of lab reports from another healthcare party, action plan, etc. Any action performed by the healthcare party which is relevant for the healthcare element of a patient is considered a service. The services can be linked to healthcare elements or other structuring elements of the medical record
@@ -199,7 +200,10 @@ data class ServiceDto(
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: String? = null
+    val encryptedSelf: String? = null,
+
+    @field:JsonProperty("securityMetadata")
+    val securityMetadata: SecurityMetadataDto? = null
 
 ) {
     enum class LinkQualification(val value: String) {

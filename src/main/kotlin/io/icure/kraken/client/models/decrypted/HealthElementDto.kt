@@ -21,6 +21,7 @@ import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.CareTeamMemberDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.EpisodeDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.PlanOfActionDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.SecurityMetadataDto
 
 /**
  * This entity is a root level object. It represents a healthcare element. It is serialized in JSON and saved in the underlying CouchDB database.
@@ -187,7 +188,10 @@ data class HealthElementDto(
 
     /* The base64 encoded data of this object, formatted as JSON and encrypted in AES using the random master key from encryptionKeys. */
     @field:JsonProperty("encryptedSelf")
-    val encryptedSelf: String? = null
+    val encryptedSelf: String? = null,
+
+    @field:JsonProperty("securityMetadata")
+    val securityMetadata: SecurityMetadataDto? = null
 
 ) {
 

@@ -2,7 +2,7 @@ val kotlinVersion = "1.8.0"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
 val kmapVersion = "0.1.52-main.8d4a565b58"
-val krakenLibsVersion = "4.0.212-g4909f6884f"
+val krakenLibsVersion = "4.0.215-g12f6355569"
 
 plugins {
     kotlin("jvm") version "1.8.0"

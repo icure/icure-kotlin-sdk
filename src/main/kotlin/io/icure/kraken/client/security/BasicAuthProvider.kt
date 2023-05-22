@@ -1,9 +1,9 @@
 package io.icure.kraken.client.security
 
 class BasicAuthProvider(
-    private val username: String?,
-    private val password: String?,
-    private val basicToken: String?
+    private val username: String? = null,
+    private val password: String? = null,
+    private val basicToken: String? = null
 ) : AuthProvider {
     override suspend fun getAuthHeader(): String = when {
         !username.isNullOrEmpty() && !password.isNullOrEmpty() -> getAuthString(username, password)

@@ -193,7 +193,7 @@ suspend fun ContactApi.updateServices(
     val serviceIds = services.map { it.id }
     val contactIds = this.matchContactsBy(ContactByServiceIdsFilter(ids = serviceIds))
 
-    return this.getContacts(user, ListOfIdsDto().apply { this.ids =contactIds }, config).map { contactDto ->
+    return this.getContacts(user, ListOfIdsDto(contactIds), config).map { contactDto ->
         val contactServiceIds = contactDto.services.map { service -> service.id }.intersect(serviceIds.toSet())
         val contactServices = services.filter { service -> service.id in contactServiceIds }
         val subContacts =

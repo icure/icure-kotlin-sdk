@@ -1739,6 +1739,79 @@ class PatientApi(
     }
 
     /**
+     * Register a patient
+     * Register a new patient into the system with the current HCP
+     * @param patientDto
+     * @param token  (optional)
+     * @param useShortToken  (optional)
+     * @param createAutoDelegation (optional)
+     * @return DataOwnerRegistrationSuccessDto
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun registerPatientInGroup(
+        patientDto: PatientDto,
+        token: String?,
+        useShortToken: Boolean?,
+        createAutoDelegation: Boolean?
+    ): DataOwnerRegistrationSuccessDto {
+        val localVariableConfig = registerPatientInGroupRequestConfig(
+            patientDto = patientDto,
+            token = token,
+            useShortToken = useShortToken,
+            createAutoDelegation = createAutoDelegation
+        )
+
+        return request<PatientDto, DataOwnerRegistrationSuccessDto>(
+            localVariableConfig
+        )!!
+    }
+
+    /**
+     * To obtain the request config of the operation registerPatient
+     *
+     * @param patientDto
+     * @param token  (optional)
+     * @param useShortToken  (optional)
+     * @param createAutoDelegation (optional)
+     * @return RequestConfig
+     */
+    fun registerPatientInGroupRequestConfig(
+        patientDto: PatientDto,
+        token: String?,
+        useShortToken: Boolean?,
+        createAutoDelegation: Boolean?
+    ): RequestConfig<PatientDto> {
+        // val localVariableBody = patientDto
+        val localVariableQuery: MultiValueMap = mutableMapOf<String, List<String>>()
+            .apply {
+                if (token != null) {
+                    put("token", listOf(token.toString()))
+                }
+                if (useShortToken != null) {
+                    put("useShortToken", listOf(useShortToken.toString()))
+                }
+                if (createAutoDelegation != null) {
+                    put("createAutoDelegation", listOf(createAutoDelegation.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "application/json")
+        localVariableHeaders["Accept"] = "*/*"
+        val localVariableBody = patientDto
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/rest/v2/patient/register",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            body = localVariableBody
+        )
+    }
+
+    /**
      * undelete previously deleted patients
      * Response is an array containing the ID of undeleted patient..
      * @param patientIds

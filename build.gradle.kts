@@ -1,3 +1,6 @@
+import com.github.jk1.license.render.CsvReportRenderer
+import com.github.jk1.license.render.ReportRenderer
+
 val kotlinVersion = "1.8.0"
 val kotlinCoroutinesVersion = "1.6.2"
 val jacksonVersion = "2.12.5"
@@ -9,6 +12,11 @@ plugins {
     id("com.google.devtools.ksp") version "1.8.0-1.0.8"
     id("jacoco")
     id("org.sonarqube") version "3.3"
+    id("com.github.jk1.dependency-license-report") version "2.0"
+}
+
+licenseReport {
+    renderers = arrayOf<ReportRenderer>(CsvReportRenderer())
 }
 
 sonarqube {

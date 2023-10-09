@@ -1,15 +1,17 @@
 import com.github.jk1.license.render.CsvReportRenderer
 import com.github.jk1.license.render.ReportRenderer
 
-val kotlinVersion = "1.8.0"
-val kotlinCoroutinesVersion = "1.6.2"
-val jacksonVersion = "2.12.5"
+val kotlinVersion = "1.8.10"
+val kotlinCoroutinesVersion = "1.6.4"
+val jacksonVersion = "2.13.5"
 val kmapVersion = "0.1.52-main.8d4a565b58"
-val krakenLibsVersion = "4.0.215-g12f6355569"
+val krakenLibsVersion = "4.0.430-ga8e0fb63c2"
+val reactorNettyVersion = "1.0.35"
+val reactorVersion = "3.4.32"
 
 plugins {
-    kotlin("jvm") version "1.8.0"
-    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
+    kotlin("jvm") version "1.8.10"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
     id("jacoco")
     id("org.sonarqube") version "3.3"
     id("com.github.jk1.dependency-license-report") version "2.0"
@@ -79,7 +81,7 @@ dependencies {
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
     implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
 
-    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.1.15-9cf193799d")
+    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.2.18-gaa54ddb623")
     implementation(group = "io.icure", name = "mapper-processor", version = "0.1.1-32d45af2a6")
     implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
 
@@ -97,8 +99,8 @@ dependencies {
     implementation(group = "org.slf4j", name = "jcl-over-slf4j", version = "1.7.12")
     implementation(group = "org.slf4j", name = "log4j-over-slf4j", version = "1.7.12")
 
-    implementation(group = "io.projectreactor", name = "reactor-core", version = "3.4.10")
-    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = "1.0.11")
+    implementation(group = "io.projectreactor", name = "reactor-core", version = reactorVersion)
+    implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = reactorNettyVersion)
 
     // Bouncy Castle
     implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
@@ -118,14 +120,14 @@ dependencies {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
         languageVersion = "1.8"
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 

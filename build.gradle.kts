@@ -12,6 +12,8 @@ plugins {
     alias(coreLibs.plugins.ksp) apply(true)
     alias(coreLibs.plugins.mavenRepository) apply(true)
     alias(coreLibs.plugins.gitVersion) apply(true)
+
+    `maven-publish`
 }
 
 licenseReport {
@@ -274,5 +276,22 @@ tasks.test {
 
     filter {
         excludeTestsMatching("io.icure.kraken.client.apis.*")
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("icure-kotlin-sdk") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.withType<PublishToMavenLocal>().configureEach {
+    val predicate = provider {
+        publication == publishing.publications["icure-kotlin-sdk"]
+    }
+    onlyIf("publishing to maven local") {
+        predicate.get()
     }
 }

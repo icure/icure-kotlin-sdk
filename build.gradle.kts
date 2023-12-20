@@ -1,20 +1,17 @@
 import com.github.jk1.license.render.CsvReportRenderer
 import com.github.jk1.license.render.ReportRenderer
 
-val kotlinVersion = "1.8.10"
-val kotlinCoroutinesVersion = "1.6.4"
-val jacksonVersion = "2.13.5"
-val kmapVersion = "0.1.52-main.8d4a565b58"
-val krakenLibsVersion = "4.0.430-ga8e0fb63c2"
 val reactorNettyVersion = "1.0.35"
 val reactorVersion = "3.4.32"
 
 plugins {
-    kotlin("jvm") version "1.8.10"
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
-    id("jacoco")
-    id("org.sonarqube") version "3.3"
-    id("com.github.jk1.dependency-license-report") version "2.0"
+    id("com.icure.kotlin-library-conventions")
+
+    alias(sdkLibs.plugins.sonarqube) apply(true)
+    alias(coreLibs.plugins.licenceReport) apply(true)
+    alias(coreLibs.plugins.ksp) apply(true)
+    alias(coreLibs.plugins.mavenRepository) apply(true)
+    alias(coreLibs.plugins.gitVersion) apply(true)
 }
 
 licenseReport {
@@ -29,30 +26,10 @@ sonarqube {
     }
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://maven.taktik.be/content/groups/public") }
-    }
-    dependencies {
-        classpath("com.taktik.gradle:gradle-plugin-git-version:2.0.2")
-        classpath("com.taktik.gradle:gradle-plugin-maven-repository:1.0.2")
-    }
-}
-
-apply(plugin = "git-version")
-apply(plugin = "maven-repository")
 val gitVersion: String? by project
 
 group = "io.icure"
 version = gitVersion ?: "0.0.1-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("https://maven.taktik.be/content/groups/public")
-    }
-}
 
 kotlin {
     sourceSets {
@@ -63,30 +40,31 @@ kotlin {
 }
 
 dependencies {
-    implementation(group = "io.icure", name = "kmap", version = kmapVersion)
-    ksp(group = "io.icure", name = "kmap", version = kmapVersion)
+    implementation(coreLibs.kmapKsp)
+    ksp(group = "io.icure", name = "kmap", version = coreLibs.versions.kmap.orNull)
 
-    //Kraken DTOs
-    implementation(group = "org.taktik.icure", name = "dto", version = krakenLibsVersion)
-    implementation(group = "org.taktik.icure", name = "domain", version = krakenLibsVersion)
+    implementation(project(":kraken-core:dto"))
+    implementation(project(":kraken-core:domain"))
+    implementation(project(":kraken-core:utils"))
 
-    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = kotlinVersion)
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = coreLibs.versions.kotlin.orNull)
 
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactive", version = kotlinCoroutinesVersion)
-    implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version = kotlinCoroutinesVersion)
+    implementation(coreLibs.kotlinxCoroutinesCore)
+    implementation(coreLibs.kotlinxCoroutinesReactor)
+    implementation(coreLibs.kotlinxCoroutinesReactive)
 
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = jacksonVersion)
-    implementation(group = "com.fasterxml.jackson.core", name = "jackson-databind", version = jacksonVersion)
-    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version = jacksonVersion)
-    implementation(group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version = jacksonVersion)
+    implementation(group = "com.fasterxml.jackson.core", name = "jackson-core", version = coreLibs.versions.jackson.orNull)
+    implementation(coreLibs.jacksonDatabind)
+    implementation(coreLibs.jacksonKotlin)
+    implementation(coreLibs.jacksonJsr310)
 
-    implementation(group = "io.icure", name = "async-jackson-http-client", version = "0.2.18-gaa54ddb623")
-    implementation(group = "io.icure", name = "mapper-processor", version = "0.1.1-32d45af2a6")
-    implementation(group = "org.mapstruct", name = "mapstruct", version = "1.3.1.Final")
+    implementation(coreLibs.asyncJacksonHttpClient)
+    implementation(coreLibs.mapstruct)
+    // implementation(group = "io.icure", name = "mapper-processor", version = "0.1.1-32d45af2a6")
+
 
     implementation(group = "javax.inject", name = "javax.inject", version = "1")
-    implementation(group = "com.github.ben-manes.caffeine", name = "caffeine", version = "3.0.3")
+    implementation(coreLibs.caffeine)
 
     implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
     implementation(group = "ch.qos.logback", name = "logback-access", version = "1.2.3")
@@ -103,78 +81,64 @@ dependencies {
     implementation(group = "io.projectreactor.netty", name = "reactor-netty", version = reactorNettyVersion)
 
     // Bouncy Castle
-    implementation(group = "org.bouncycastle", name = "bcprov-jdk15on", version = "1.69")
-    implementation(group = "org.bouncycastle", name = "bcmail-jdk15on", version = "1.69")
+    implementation(coreLibs.bouncyCastleBcprov)
+    implementation(coreLibs.bouncyCastleBcmail)
 
-    implementation(group = "io.jsonwebtoken", name = "jjwt-api", version = "0.11.5")
-    implementation(group = "io.jsonwebtoken", name = "jjwt-impl", version = "0.11.5")
-    implementation(group = "io.jsonwebtoken", name = "jjwt-jackson", version = "0.11.5")
+    implementation(coreLibs.jsonWebTokenApi)
+    implementation(coreLibs.jsonWebTokenImpl)
+    implementation(coreLibs.jsonWebTokenJackson)
 
     testImplementation(group = "io.kotlintest", name = "kotlintest", version = "2.0.7")
-    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.7.0")
+    testImplementation(coreLibs.jupiter)
     testImplementation(group = "com.willowtreeapps.assertk", name = "assertk-jvm", version = "0.24")
-    testImplementation(group = "io.kotest", name = "kotest-assertions-core", version = "5.4.0")
-    testImplementation(group = "io.kotest", name = "kotest-runner-junit5", version = "5.4.0")
+    testImplementation(coreLibs.kotestAssertionsCore)
+    testImplementation(coreLibs.kotestRunnerJunit5)
 }
 
+//tasks.getByName("publish") {
+//    dependsOn("build")
+//}
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
-        languageVersion = "1.8"
-        jvmTarget = "17"
-    }
-}
-
-tasks.getByName("publish") {
-    dependsOn("build")
-}
-
-tasks.register("apiGenerate", Jar::class) {
-    inputs.files(fileTree("openApiTemplates"), File("${rootDir}/icure-openapi-spec.json"))
-        .withPropertyName("sourceFiles")
-        .withPathSensitivity(PathSensitivity.RELATIVE)
-    doLast {
-        javaexec {
-            main = "-jar"
-            args = listOf(
-                "${rootDir}/openapi-generator-cli.jar",
-                "generate",
-                "-i",
-                "${rootDir}/icure-openapi-spec.json",
-                "-g",
-                "kotlin",
-                "-o",
-                "$rootDir",
-
-                "--model-package",
-                "io.icure.kraken.client.models",
-                "--api-package",
-                "io.icure.kraken.client.apis",
-                "--package-name",
-                "io.icure.kraken.client",
-                "--group-id",
-                "io.icure",
-                "--artifact-id",
-                project.name,
-                "--artifact-version",
-                "0.0.1-SNAPSHOT",
-                "--template-dir",
-                "$rootDir/openApiTemplates",
-                "--additional-properties",
-                "useCoroutines=true,serializationLibrary=jackson"
-            )
-        }
-    }
-    dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
-
-    finalizedBy("apply-custom-fixes", "delete-unused-filter-files", "delete-unused-tests-files")
-}
+// tasks.register("apiGenerate", Jar::class) {
+//     inputs.files(fileTree("openApiTemplates"), File("${rootDir}/icure-openapi-spec.json"))
+//         .withPropertyName("sourceFiles")
+//         .withPathSensitivity(PathSensitivity.RELATIVE)
+//     doLast {
+//         javaexec {
+//             main = "-jar"
+//             args = listOf(
+//                 "${rootDir}/openapi-generator-cli.jar",
+//                 "generate",
+//                 "-i",
+//                 "${rootDir}/icure-openapi-spec.json",
+//                 "-g",
+//                 "kotlin",
+//                 "-o",
+//                 "$rootDir",
+//
+//                 "--model-package",
+//                 "io.icure.kraken.client.models",
+//                 "--api-package",
+//                 "io.icure.kraken.client.apis",
+//                 "--package-name",
+//                 "io.icure.kraken.client",
+//                 "--group-id",
+//                 "io.icure",
+//                 "--artifact-id",
+//                 project.name,
+//                 "--artifact-version",
+//                 "0.0.1-SNAPSHOT",
+//                 "--template-dir",
+//                 "$rootDir/openApiTemplates",
+//                 "--additional-properties",
+//                 "useCoroutines=true,serializationLibrary=jackson"
+//             )
+//         }
+//     }
+//     dependsOn.add("download-openapi-spec") // required due to https://github.com/OpenAPITools/openapi-generator/issues/8255
+//
+//     finalizedBy("apply-custom-fixes", "delete-unused-filter-files", "delete-unused-tests-files")
+// }
 
 tasks.register("download-openapi-spec") {
     doLast {
@@ -299,11 +263,11 @@ tasks.create<Delete>("delete-unused-tests-files") {
     delete(File("$rootDir/src/test/kotlin/io/icure/kraken/client/apis/PermissionApiTest.kt"))
 }
 
-tasks.jacocoTestReport {
-    reports {
-        xml.isEnabled = true
-    }
-}
+// tasks.jacocoTestReport {
+//     reports {
+//         xml.isEnabled = true
+//     }
+// }
 
 tasks.test {
     useJUnitPlatform()

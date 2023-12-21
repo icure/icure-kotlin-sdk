@@ -822,7 +822,7 @@ class CodeApi(
     @Suppress("UNCHECKED_CAST")
     @Throws(UnsupportedOperationException::class, ClientException::class, ServerException::class)
     suspend fun getCodeByRegionLanguagesTypeLabel(
-        region: String,
+        region: String?,
         label: String,
         type: String,
         languages: List<String> = listOf("nl", "fr")
@@ -843,18 +843,21 @@ class CodeApi(
      * @return RequestConfig
      */
     fun getCodeByRegionLanguagesTypeLabelRequestConfig(
-        region: String,
+        region: String?,
         label: String,
         type: String,
         languages: List<String>
     ): RequestConfig<Unit> {
         // val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf(
-            "region" to listOf(region),
             "label" to listOf(label),
             "type" to listOf(type),
             "languages" to listOf(languages.joinToString(separator = ","){ it })
-        )
+        ).apply {
+            if(region != null) {
+                put("region", listOf(region))
+            }
+        }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "*/*"
         val localVariableBody = null

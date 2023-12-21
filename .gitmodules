@@ -1,0 +1,3 @@
+[submodule "kraken-core"]
+	path = kraken-core
+	url = git@github.com:icure/kraken-core.git

@@ -1,7 +1,7 @@
 rootProject.name = "icure-reactive-kotlin-client"
 
 pluginManagement {
-    includeBuild("./kraken-core/build-logic")
+    includeBuild("./kraken-common/build-logic")
 
     repositories {
         mavenLocal()
@@ -30,7 +30,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         create("coreLibs") {
-            from(files("./kraken-core/libs.versions.toml"))
+            from(files("./kraken-common/libs.versions.toml"))
         }
         create("sdkLibs") {
             from(files("./libs.versions.toml"))
@@ -51,5 +51,5 @@ val sharedDeps = listOf(
 )
 
 include(
-    sharedDeps.map { ":kraken-core:$it" }
+    sharedDeps.map { ":kraken-common:$it" }
 )

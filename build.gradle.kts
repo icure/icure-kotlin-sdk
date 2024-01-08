@@ -45,9 +45,9 @@ dependencies {
     implementation(coreLibs.kmapKsp)
     ksp(group = "io.icure", name = "kmap", version = coreLibs.versions.kmap.orNull)
 
-    implementation(project(":kraken-core:dto"))
-    implementation(project(":kraken-core:domain"))
-    implementation(project(":kraken-core:utils"))
+    implementation(project(":kraken-common:dto"))
+    implementation(project(":kraken-common:domain"))
+    implementation(project(":kraken-common:utils"))
 
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version = coreLibs.versions.kotlin.orNull)
 

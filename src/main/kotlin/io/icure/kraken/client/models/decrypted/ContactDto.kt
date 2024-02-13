@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.taktik.icure.services.external.rest.v2.dto.base.CodeStubDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.DelegationDto
 import org.taktik.icure.services.external.rest.v2.dto.base.IdentifierDto
+import org.taktik.icure.services.external.rest.v2.dto.embed.AnnotationDto
 import org.taktik.icure.services.external.rest.v2.dto.embed.SecurityMetadataDto
 
 import org.taktik.icure.services.external.rest.v2.dto.embed.SubContactDto
@@ -170,7 +171,9 @@ data class ContactDto(
     val encryptedSelf: String? = null,
 
     @field:JsonProperty("securityMetadata")
-    val securityMetadata: SecurityMetadataDto? = null
+    val securityMetadata: SecurityMetadataDto? = null,
 
+    @field:JsonProperty("notes")
+    val notes: List<AnnotationDto> = emptyList(),
 )
 

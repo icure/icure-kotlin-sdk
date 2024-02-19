@@ -252,7 +252,9 @@ data class ServiceDto(
         @JsonProperty("specimen")
         specimen("specimen"),
         @JsonProperty("resultInterpreter")
-        resultInterpreter("resultInterpreter");
+        resultInterpreter("resultInterpreter"),
+        @JsonProperty("request")
+        request("request");
     }
 }
 
